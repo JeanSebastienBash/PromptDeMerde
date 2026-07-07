@@ -1,0 +1,833 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<script>
+(function(){
+    var p = location.pathname;
+    if (!p.endsWith('/')) {
+        var i = p.lastIndexOf('/');
+        p = i >= 0 ? p.slice(0, i + 1) : '/';
+    }
+    var base = document.createElement('base');
+    base.href = location.origin + p;
+    document.head.appendChild(base);
+})();
+</script>
+<title>PromptDeMerde.com — Transforme ton prompt de merde en prompt de sniper</title>
+<meta name="description" content="Transforme n'importe quelle instruction IA foireuse en commande chirurgicale. Gratuit, open source, z&#233;ro bullshit.">
+<link rel="stylesheet" href="assets/css/style.css">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ctext y='28' font-size='28'%3E%F0%9F%92%A9%3C/text%3E%3C/svg%3E">
+<link rel="stylesheet" href="assets/css/polish.css">
+</head>
+<body>
+
+<!-- NOTIFS -->
+<div id="notif-box"></div>
+
+<!-- LOADER -->
+<div id="loader">
+    <div style="text-align:center">
+        <div class="spin"></div>
+        <div class="loader-msg">SNIPERISATION EN COURS...</div>
+    </div>
+</div>
+
+<!-- ===== GLOBAL NAV HEADER ===== -->
+<header id="main-nav">
+    <div class="container">
+        <div class="nav-row">
+            <a class="nav-logo" href="#workspace" id="nav-logo-link"><span class="logo-gt">&gt;_</span> Prompt<span class="red">DeMerde</span><span class="logo-dotcom">.com</span></a>
+            <button id="nav-burger" type="button" class="nav-burger" aria-label="Menu" aria-expanded="false">&#9776;</button>
+            <nav class="nav-links" id="nav-links">
+                <a href="#landing" data-nav="landing" id="nav-link-landing" hidden>Accueil</a>
+                <a href="#workspace" data-nav="workspace">Workspace</a>
+                <a href="#prompts" data-nav="prompts">Prompts</a>
+                <a href="#settings" data-nav="settings">Options</a>
+                <div class="nav-links-info">
+                    <button id="theme-toggle-mobile" class="nav-theme-btn" title="Changer de th&#232;me">&#127769; Th&#232;me</button>
+                </div>
+            </nav>
+            <div class="nav-right">
+                <button id="theme-toggle" title="Changer de th&#232;me">&#127769;</button>
+            </div>
+        </div>
+        <div class="nav-prompt">$ chnek@promptdemerde:~# <span class="cursor">&#9608;</span></div>
+    </div>
+</header>
+
+<!-- ============ LANDING (injectée depuis assets/homepage/ si bundle présent) ============ -->
+<section id="section-landing" class="section"></section>
+
+<!-- ============ WORKSPACE ============ -->
+<section id="section-workspace" class="section active">
+<div class="container">
+
+<div class="ws-grid">
+    <div class="ws-panel ws-input">
+        <label class="form-label" for="ws-input" style="margin-bottom:12px">COLLE TON PROMPT DE MERDE ICI</label>
+        <textarea id="ws-input" class="ws-textarea" placeholder="Ex: &#233;cris un truc cool sur les chats" maxlength="50000"></textarea>
+        <div class="ws-input-toolbar">
+            <div id="char-count" class="char-count">0 / 50000</div>
+            <button id="ws-input-clear" type="button" class="btn-ghost btn-sm" title="Effacer le contenu de la zone de saisie">&#128465; EFFACER</button>
+        </div>
+
+        <div id="stt-block" class="stt-block stt-block-compact">
+            <div class="stt-row">
+                <button id="stt-btn" type="button" class="btn secondary btn-sm" aria-pressed="false">&#127908; DICT&#201;E VOCALE</button>
+            </div>
+            <div class="stt-status-grid" aria-live="polite">
+                <div class="stt-model-status-bar">
+                    <span class="stt-status-key">Moteur</span>
+                    <span class="stt-model-badge stt-model-badge-pending" data-stt-model-badge>&#8212;</span>
+                    <span class="stt-status-val" data-stt-model-text>En attente</span>
+                </div>
+                <div class="stt-mic-status-bar">
+                    <span class="stt-status-key">Micro</span>
+                    <span class="stt-mic-badge stt-mic-badge-unknown" data-stt-mic-badge>&#8212;</span>
+                    <span class="stt-status-val" data-stt-mic-text>V&#233;rification&#8230;</span>
+                </div>
+            </div>
+            <div id="stt-load-panel" class="stt-load-panel" hidden>
+                <p class="stt-load-label" data-stt-load-label>Chargement du mod&#232;le&#8230;</p>
+                <div class="stt-load-bar" data-stt-load-bar role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+                    <div class="stt-load-fill" data-stt-load-fill></div>
+                </div>
+                <p class="stt-load-detail" data-stt-load-detail></p>
+            </div>
+            <div id="stt-ws-lan-hint" class="stt-ws-lan-hint" hidden>
+                <p class="stt-ws-lan-title"><strong>Micro bloqu&#233; en HTTP (Chromium)</strong></p>
+                <p class="stt-ws-lan-desc">Sur une adresse IP en HTTP, le navigateur refuse le micro. Le cadenas du site ne permet pas de le d&#233;bloquer.</p>
+                <p class="stt-ws-lan-actions">
+                    <a href="#settings" class="stt-ws-lan-settings-link">Ouvrir Options &#8594; Dict&#233;e vocale</a>
+                    <span id="stt-ws-localhost-row" class="stt-ws-localhost-row" hidden>
+                        &#183; Sur cette machine&nbsp;: <a id="stt-ws-localhost-link" href="#"></a>
+                    </span>
+                </p>
+            </div>
+        </div>
+
+        <button id="sniperise-btn" class="btn" style="width:100%;margin-top:8px">NETTOYER CE TAS DE MERDE &#8594;</button>
+        <div id="ws-prompt-guard" class="ws-prompt-guard" style="display:none" role="alert">
+            <strong>Nettoyage bloqu&#233;.</strong> Active le <a href="#prompts">prompt syst&#232;me</a> ou au moins un <a href="#prompts">prompt de contexte</a> (tag rouge) pour lancer le LLM.
+        </div>
+        <button id="cancel-btn" class="btn secondary" style="width:100%;display:none;margin-top:6px;background:#a00;color:#fff">⏹ ARRÊTER L'INFÉRENCE</button>
+
+        <details id="context-panel" class="context-panel">
+            <summary class="context-summary">
+                <span class="context-title">Prompts de contexte</span>
+                <span id="context-active-count" class="context-badge">0 actif</span>
+            </summary>
+            <div class="context-body">
+                <div class="context-bulk-actions">
+                    <button id="context-select-all-btn" type="button" class="btn-ghost btn-sm">TOUT S&#201;LECTIONNER</button>
+                    <button id="context-clear-all-btn" type="button" class="btn-ghost btn-sm">TOUT D&#201;S&#201;LECTIONNER</button>
+                </div>
+                <div id="profiles-tags" class="profiles-tags"></div>
+                <a href="#prompts" class="tag-link context-manage-link">Cr&#233;er ou modifier ces options &#8594;</a>
+            </div>
+        </details>
+    </div>
+
+    <div class="ws-panel ws-output">
+        <label class="form-label" style="margin-bottom:12px">PROMPT DE SNIPER</label>
+        <div id="output-box" class="output-box">
+            <details id="thinking-panel" class="thinking-panel">
+                <summary class="thinking-summary">
+                    <span class="thinking-title">&#129504; R&#233;flexion du mod&#232;le</span>
+                    <span id="thinking-badge" class="thinking-badge"></span>
+                </summary>
+                <div class="thinking-body">
+                    <p id="thinking-unavailable-msg" class="thinking-unavailable cfg-desc" hidden></p>
+                    <textarea id="thinking-text" class="thinking-text" readonly placeholder="La r&#233;flexion appara&#238;tra ici en direct&#8230;"></textarea>
+                    <button id="copy-thinking-btn" type="button" class="btn-ghost btn-sm">COPIER LA R&#201;FLEXION</button>
+                </div>
+            </details>
+            <textarea id="output-text" class="output-text" readonly placeholder="Le prompt nettoy&#233; appara&#238;tra ici&#8230;"></textarea>
+            <div id="output-meta" class="output-meta"></div>
+            <div class="output-actions">
+                <button id="copy-btn" class="btn-ghost btn-sm">COPIER CE PUTAIN DE PROMPT</button>
+                <button id="again-btn" class="btn-ghost btn-sm">EN FAIRE UN AUTRE</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="ws-bar">
+    <div class="ws-bar-label">Mod&#232;le actif</div>
+    <div class="ws-bar-fields">
+        <span id="ws-model-name" class="ws-model-name">—</span>
+    </div>
+</div>
+
+<div class="ws-history-section" id="ws-history-section">
+    <div class="ws-history-head">
+        <h2 class="ws-history-title" id="ws-history-title">Historique LLM texte</h2>
+        <button id="ws-history-clear" type="button" class="btn-ghost btn-sm" title="Supprimer tous les historiques locaux">VIDER TOUS LES HISTORIQUES</button>
+    </div>
+    <div class="history-subsection">
+        <h3 class="history-subtitle">Prompts LLM texte</h3>
+        <p id="ws-history-empty" class="ws-history-empty">Aucune entr&#233;e.</p>
+        <div id="ws-history-list" class="ws-history-list" aria-live="polite"></div>
+    </div>
+</div>
+
+</div>
+</section>
+
+<!-- ============ OPTIONS (fusion config + réglages) ============ -->
+<section id="section-settings" class="section">
+<div class="container">
+<div class="stg-wrap">
+
+<div class="stg-card" id="llm-settings-card">
+    <div class="stg-title">INTELLIGENCE ARTIFICIELLE</div>
+
+    <label class="form-label" for="llm-provider-select">S&#233;lectionner un fournisseur</label>
+    <select id="llm-provider-select" class="stg-select"></select>
+
+    <div id="llm-endpoint-wrap" class="cfg-custom-model">
+        <label class="form-label" for="llm-endpoint-url">URL du moteur LLM</label>
+        <input id="llm-endpoint-url" class="cfg-input" type="text" placeholder="">
+    </div>
+    <div class="cfg-test-row">
+        <button id="btn-test-llm" type="button" class="btn secondary btn-sm">&#128268; Tester la connexion LLM</button>
+    </div>
+    <p id="llm-test-status" class="conn-status"></p>
+
+    <label class="form-label" for="config-model">S&#233;lectionner un mod&#232;le</label>
+    <select id="config-model" class="cfg-select"></select>
+    <div id="config-model-info" class="cfg-desc"></div>
+
+    <label class="form-label">R&#233;flexion du mod&#232;le</label>
+    <div class="llm-thinking-options context-inject-options">
+        <label class="context-inject-option">
+            <input type="radio" name="llm-thinking-mode" id="llm-thinking-off" value="off" checked>
+            D&#233;sactiv&#233;e
+        </label>
+        <label class="context-inject-option">
+            <input type="radio" name="llm-thinking-mode" id="llm-thinking-on" value="on">
+            Activ&#233;e
+        </label>
+    </div>
+    <p id="llm-thinking-hint" class="cfg-desc llm-thinking-hint" hidden></p>
+</div>
+
+<div class="stg-card">
+    <div class="stg-title">TH&#200;ME DE COULEUR</div>
+    <div id="theme-picker" class="theme-picker"></div>
+</div>
+
+<div class="stg-card">
+    <div class="stg-title">LANGUE</div>
+    <select id="settings-lang" class="stg-select">
+        <option value="fr">Fran&#231;ais</option>
+        <option value="en">English</option>
+    </select>
+</div>
+
+<div class="stg-card" id="stt-settings-card">
+    <div class="stg-title">DICT&#201;E VOCALE</div>
+    <div id="stt-settings" class="stt-settings">
+        <div class="stt-row stt-settings-actions">
+            <button id="stt-perm-btn" type="button" class="btn btn-sm stt-perm-btn" style="display:none">&#128275; AUTORISER LE MICRO</button>
+        </div>
+        <div class="stt-status-grid stt-status-grid-settings" aria-live="polite">
+            <div class="stt-model-status-bar">
+                <span class="stt-status-key">Moteur</span>
+                <span class="stt-model-badge stt-model-badge-pending" data-stt-model-badge>&#8212;</span>
+                <span class="stt-status-val" data-stt-model-text>En attente</span>
+            </div>
+            <div class="stt-mic-status-bar">
+                <span class="stt-status-key">Micro</span>
+                <span class="stt-mic-badge stt-mic-badge-unknown" data-stt-mic-badge>&#8212;</span>
+                <span class="stt-status-val" data-stt-mic-text>V&#233;rification&#8230;</span>
+            </div>
+        </div>
+        <div id="stt-settings-load-panel" class="stt-load-panel" hidden>
+            <p class="stt-load-label" data-stt-load-label>Chargement du mod&#232;le&#8230;</p>
+            <div class="stt-load-bar" data-stt-load-bar role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+                <div class="stt-load-fill" data-stt-load-fill></div>
+            </div>
+            <p class="stt-load-detail" data-stt-load-detail></p>
+        </div>
+        <div id="stt-denied-panel" class="stt-denied-panel" style="display:none" role="region" aria-label="Permission micro bloquée">
+            <p class="stt-denied-title"><strong>Permission micro bloquée pour ce site</strong></p>
+            <p class="stt-denied-desc">Le navigateur ne peut plus afficher la popup : tu dois réinitialiser l'autorisation dans les réglages du site, puis revenir ici.</p>
+            <details class="stt-denied-details" open>
+                <summary>Chrome / Edge</summary>
+                <ol class="stt-denied-steps">
+                    <li>Clique le <strong>cadenas</strong> (ou l'icône à gauche de l'URL).</li>
+                    <li>Ouvre <strong>Paramètres du site</strong> (ou Autorisations du site).</li>
+                    <li>Passe <strong>Microphone</strong> sur <strong>Autoriser</strong>, ou clique <strong>Réinitialiser les autorisations</strong>.</li>
+                    <li>Reviens sur cet onglet et clique le bouton ci-dessous.</li>
+                </ol>
+            </details>
+            <details class="stt-denied-details">
+                <summary>Firefox</summary>
+                <ol class="stt-denied-steps">
+                    <li>Clique le <strong>cadenas</strong> dans la barre d'adresse.</li>
+                    <li>Dans <strong>Autorisations</strong>, mets <strong>Utiliser le microphone</strong> sur <strong>Autoriser</strong>.</li>
+                    <li>Ou clique <strong>Effacer les permissions</strong> puis recharge la page.</li>
+                    <li>Reviens ici et clique le bouton ci-dessous.</li>
+                </ol>
+            </details>
+            <details class="stt-denied-details">
+                <summary>Safari</summary>
+                <ol class="stt-denied-steps">
+                    <li>Menu <strong>Safari</strong> &#8594; <strong>Réglages</strong> &#8594; <strong>Sites web</strong> &#8594; <strong>Microphone</strong>.</li>
+                    <li>Trouve ce site et passe-le sur <strong>Autoriser</strong>.</li>
+                    <li>Reviens sur cet onglet et clique le bouton ci-dessous.</li>
+                </ol>
+            </details>
+            <button id="stt-denied-retry" type="button" class="btn secondary btn-sm stt-denied-retry">&#128260; J'AI MODIFIÉ LES RÉGLAGES — RÉESSAYER</button>
+        </div>
+        <div class="stt-device-row" id="stt-compute-row">
+            <label class="form-label stt-device-label" for="stt-compute-select">Acc&#233;l&#233;ration</label>
+            <select id="stt-compute-select" class="select-mini stt-compute-select stg-select" title="CPU (WASM) ou GPU (WebGPU) pour Whisper et Parakeet ; Vosk reste en CPU">
+                <option value="cpu">CPU (WASM)</option>
+                <option value="gpu">GPU (WebGPU)</option>
+            </select>
+        </div>
+        <p id="stt-compute-hint" class="stt-help cfg-desc" aria-live="polite"></p>
+        <div class="stt-device-row">
+            <label class="form-label stt-device-label" for="stt-engine-select">Moteur vocal</label>
+            <select id="stt-engine-select" class="select-mini stt-engine-select stg-select" title="Vosk Mini, Vosk Maxi, Whisper Mini, Whisper Maxi, Parakeet">
+                <option value="vosk-mini">Vosk Mini</option>
+                <option value="vosk-maxi">Vosk Maxi</option>
+                <option value="whisper-mini">Whisper Mini</option>
+                <option value="whisper-maxi">Whisper Maxi</option>
+                <option value="parakeet">Parakeet</option>
+            </select>
+        </div>
+        <div class="stt-device-row">
+            <label class="form-label stt-device-label" for="stt-device-select">Microphone</label>
+            <select id="stt-device-select" class="select-mini stt-device-select stg-select" disabled title="Autorise le micro pour lister les p&#233;riph&#233;riques">
+                <option value="">Micro par d&#233;faut</option>
+            </select>
+            <button id="stt-refresh-devices" type="button" class="btn-ghost btn-sm" title="Rafra&#238;chir la liste des micros">&#128260;</button>
+        </div>
+        <p id="stt-help" class="stt-help cfg-desc" hidden></p>
+        <div id="stt-lan-panel" class="stt-lan-panel" style="display:none" role="region" aria-label="Dictée en HTTP sur le réseau local">
+            <p class="stt-lan-title"><strong>Micro bloqué en HTTP (réseau local)</strong></p>
+            <p class="stt-lan-desc">Les navigateurs refusent le micro hors HTTPS — sauf <strong>localhost</strong>, un contournement navigateur, ou un passage en HTTPS.</p>
+            <p id="stt-lan-chromium-note" class="stt-lan-note" style="display:none">
+                <strong>Chromium (Chrome, Edge, Brave…) :</strong> dans les paramètres du site, le micro est <strong>grisé et bloqué</strong> («&nbsp;Bloquée pour protéger la confidentialité&nbsp;»). Le cadenas ne permet pas de l'autoriser : il faut <strong>localhost</strong>, <strong>HTTPS</strong>, ou le <strong>flag de lancement</strong> ci-dessous.
+            </p>
+            <details id="stt-lan-chrome-details" class="stt-lan-details">
+                <summary>Chrome / Edge / Chromium — autoriser ton URL en HTTP</summary>
+                <ol class="stt-lan-steps">
+                    <li><strong>Le cadenas ne fonctionne pas</strong> sur une IP en HTTP : le micro reste sur «&nbsp;Bloquer&nbsp;» et grisé.</li>
+                    <li>Sur <strong>cette machine</strong>, ouvre plutôt le lien <strong>localhost</strong> ci-dessous (recommandé).</li>
+                    <li>Ou ferme Chromium et relance-le avec le flag&nbsp;:<br><code id="stt-lan-chrome-flag">--unsafely-treat-insecure-origin-as-secure=http://ton-ip/</code></li>
+                    <li>Ou sers le site en <strong>HTTPS</strong> (certificat auto-signé sur ton serveur web).</li>
+                    <li><strong>Recharge cette page</strong>, puis lance la dict&#233;e depuis le Workspace.</li>
+                </ol>
+            </details>
+            <details id="stt-lan-firefox-details" class="stt-lan-details" open>
+                <summary>Firefox — autoriser le micro en HTTP (LAN)</summary>
+                <ol class="stt-lan-steps">
+                    <li>Ouvre <code>about:config</code> dans la barre d'adresse, accepte l'avertissement.</li>
+                    <li>Passe <code>media.devices.insecure.enabled</code> à <strong>true</strong> (détection du micro).</li>
+                    <li>Passe <strong>aussi</strong> <code>media.getusermedia.insecure.enabled</code> à <strong>true</strong> (accès au micro — indispensable).</li>
+                    <li><strong>Recharge cette page</strong>, puis lance la dict&#233;e depuis le Workspace.</li>
+                </ol>
+                <p class="stt-lan-note">Les <strong>deux</strong> réglages sont nécessaires : le premier détecte le micro, le second autorise son utilisation.</p>
+            </details>
+            <p id="stt-lan-localhost-row" class="stt-lan-localhost" style="display:none">
+                Sur <strong>cette machine</strong>, solution la plus simple — ouvre&nbsp;:
+                <a id="stt-lan-localhost-link" href="#">localhost</a>
+                <span class="stt-lan-localhost-hint"> (Chromium autorise le micro sur localhost en HTTP)</span>
+            </p>
+            <button id="stt-lan-retry" type="button" class="btn secondary btn-sm stt-lan-retry">&#128260; VÉRIFIER / RECHARGER</button>
+        </div>
+    </div>
+</div>
+
+<div class="stg-card" id="api-elite-card" style="display:none" aria-hidden="true"></div>
+
+<div class="stg-card">
+    <div class="stg-title">SAUVEGARDE &amp; RESTAURATION</div>
+    <div class="danger-actions">
+        <button id="config-export-btn" class="btn-ghost btn-sm">EXPORTER MA CONFIGURATION</button>
+        <button id="config-import-btn" class="btn-ghost btn-sm">IMPORTER UNE CONFIGURATION</button>
+        <input type="file" id="config-import-file" accept=".json,application/json" style="display:none">
+    </div>
+</div>
+
+<div class="stg-card stg-danger">
+    <div class="stg-title">ZONE DANGER</div>
+    <div style="margin-top:12px">
+        <button id="clear-btn" class="btn-danger btn-sm">TOUT EFFACER</button>
+    </div>
+</div>
+
+</div>
+</div>
+</section>
+
+<!-- ============ PROMPTS ============ -->
+<section id="section-prompts" class="section">
+<div class="container">
+<div class="prm-wrap">
+
+<div class="prm-card">
+    <div class="system-prompt-head">
+        <div class="prm-title">PROMPT SYST&#200;ME (OPTIONNEL)</div>
+        <label class="toggle-wrap" id="system-prompt-toggle-wrap" title="Active ou d&#233;sactive le prompt syst&#232;me lors du nettoyage">
+            <input type="checkbox" id="system-prompt-enabled" checked>
+            <span id="system-prompt-toggle-label"> Actif</span>
+        </label>
+    </div>
+    <div id="prompts-system-lock" class="cfg-lock" style="display:none"></div>
+    <textarea id="prompts-system" class="cfg-ta" style="min-height:280px" placeholder="Tu es un Nettoyeur / Reformulateur de prompts.
+
+R&#212;LE UNIQUE : reprendre le prompt de l'utilisateur et le restituer en fran&#231;ais correct, clair et fluide. Tu ne fais RIEN d'autre.
+
+R&#200;GLES :
+1. REFORMULER mot pour mot l'intention originale, en fran&#231;ais correct (orthographe, grammaire, syntaxe, ponctuation).
+2. NE JAMAIS interpr&#233;ter, ex&#233;cuter, analyser ou r&#233;pondre &#224; la demande.
+3. NE JAMAIS poser de questions &#224; l'utilisateur.
+4. NE JAMAIS demander de pr&#233;cisions, de contexte ou d'exemples.
+5. NE JAMAIS ajouter de sections, de structure ou de formatage qui ne sont pas dans le texte source.
+6. NE JAMAIS inventer de contraintes, de comp&#233;tences, de r&#244;les ou de contexte qui ne sont pas d&#233;j&#224; implicites dans le texte source.
+7. Si une information essentielle est absolument indispensable et strictement ind&#233;ductible du texte source, remplacer par [&#224; pr&#233;ciser] UNE SEULE FOIS, entre crochets, sans commentaire.
+8. Garder le m&#234;me registre (tutoiement/vouvoiement) et le m&#234;me ton que le texte source.
+9. Supprimer les fautes de frappe, les r&#233;p&#233;titions, les anglicismes mal employ&#233;s et les expressions famili&#232;res inutiles, sauf si elles font partie du style voulu.
+10. Pr&#233;server l'ordre logique des id&#233;es ; on peut r&#233;organiser l'ordre des mots ou des phrases pour un fran&#231;ais plus naturel.
+11. La sortie doit &#234;tre UNIQUEMENT le texte reformul&#233;, sans pr&#233;ambule, sans conclusion, sans explication, sans markdown superflu.
+
+EXEMPLES :
+- Input : &#171; il faut remonter le slogan vers le haut (l&#224; il est vers le bas de la vignette) putain ! &#187;
+  Output : &#171; Il faut remonter le slogan vers le haut (actuellement, il est positionn&#233; vers le bas de la vignette). &#187;
+- Input : &#171; fait moi un mail pour dire au client quon a recaler son offre car trop cherre &#187;
+  Output : &#171; R&#233;dige un mail au client pour l'informer que son offre a &#233;t&#233; refus&#233;e en raison d'un prix trop &#233;lev&#233;. &#187;
+
+RAPPEL : tu es un nettoyeur de texte, pas un assistant conversationnel."></textarea>
+</div>
+
+<div class="prm-card">
+    <div class="prm-title">PROMPTS DE CONTEXTE</div>
+
+    <div class="context-inject-box">
+        <div class="context-inject-title">Ordre d&#8217;injection par rapport au prompt syst&#232;me</div>
+        <div class="context-inject-options">
+            <label class="context-inject-option">
+                <input type="radio" name="context-position" id="context-inject-after" value="after_system" checked>
+                Contexte <strong>apr&#232;s</strong> le prompt syst&#232;me <span class="context-inject-rec">(recommand&#233;)</span>
+            </label>
+            <label class="context-inject-option">
+                <input type="radio" name="context-position" id="context-inject-before" value="before_system">
+                Contexte <strong>avant</strong> le prompt syst&#232;me
+            </label>
+        </div>
+        <div id="context-inject-diagram" class="context-inject-diagram" style="margin-top:12px"></div>
+    </div>
+
+    <details class="context-quick-add">
+        <summary class="context-quick-add-summary">Ajouter un prompt de contexte</summary>
+        <div class="context-quick-add-body">
+            <label class="form-label" for="context-new-tag">Tag (ex. TonFormel)</label>
+            <input id="context-new-tag" class="cfg-input" type="text" placeholder="Ex: TonFormel">
+            <label class="form-label" for="context-new-prompt" style="margin-top:10px">Instructions du contexte</label>
+            <textarea id="context-new-prompt" class="cfg-ta" style="min-height:100px" placeholder="Ex: Adopte un ton formel et professionnel dans le prompt reformul&#233;."></textarea>
+            <button id="context-add-btn" type="button" class="btn secondary btn-sm" style="margin-top:10px">Ajouter ce prompt</button>
+        </div>
+    </details>
+
+    <details class="context-generate-box">
+        <summary class="context-generate-summary">G&#233;n&#233;ration de prompt de contexte (par titre)</summary>
+        <div class="context-generate-body">
+            <label class="form-label" for="context-title-input">Titre du contexte</label>
+            <input id="context-title-input" class="cfg-input" type="text" placeholder="Ex: TonFormel">
+            <button id="context-title-gen-btn" type="button" class="btn btn-sm" style="margin-top:10px">G&#233;n&#233;rer le prompt</button>
+            <p id="context-title-gen-status" class="conn-status" style="margin-top:8px"></p>
+        </div>
+    </details>
+
+    <details class="context-generate-box">
+        <summary class="context-generate-summary">G&#233;n&#233;rer un prompt de contexte avec l&#8217;IA (par intention)</summary>
+        <div class="context-generate-body">
+            <textarea id="context-generate-intent" class="cfg-ta" style="min-height:90px" placeholder="Ex: Je veux que la r&#233;ponse soit toujours EN MAJUSCULE. #UpperCase"></textarea>
+            <button id="context-generate-btn" type="button" class="btn btn-sm" style="margin-top:10px">G&#233;n&#233;rer le meilleur contexte</button>
+            <p id="context-generate-status" class="conn-status" style="margin-top:8px"></p>
+        </div>
+    </details>
+
+    <div id="prompts-context-lock" class="cfg-lock" style="display:none"></div>
+    <div id="profile-count" class="profile-counter"><span class="num">0/&#8734;</span> prompts utilis&#233;s</div>
+    <div id="profiles-list"></div>
+    <button id="add-profile-btn" class="btn-add">AJOUTER UN PROMPT VIDE +</button>
+</div>
+
+<div class="prm-card" id="prompts-history-card">
+    <div class="prm-title">HISTORIQUES LLM</div>
+    <div class="history-subsection">
+        <h3 class="history-subtitle">Prompts LLM texte</h3>
+    <p id="prompts-history-empty" class="ws-history-empty">Aucune entr&#233;e.</p>
+    <div id="prompts-history-list" class="ws-history-list prompts-history-list" aria-live="polite"></div>
+    </div>
+    <div class="prompts-history-actions">
+        <button id="prompts-history-clear" type="button" class="btn-ghost btn-sm">VIDER TOUS LES HISTORIQUES</button>
+        <a href="#workspace" class="tag-link">Aller au Workspace &#8594;</a>
+    </div>
+</div>
+
+</div>
+</div>
+</section>
+
+<!-- ============ DOCUMENTATION ============ -->
+<section id="section-documentation" class="section legal-section">
+<div class="container">
+<div class="legal-content doc-content">
+<a href="#landing" class="btn-back">&#8592; Retour</a>
+<h1 class="legal-title">Documentation</h1>
+<p class="legal-update">Derni&#232;re mise &#224; jour : juillet 2026</p>
+
+<h2>Workspace</h2>
+<p>Colle ou dicte ton prompt dans la zone de saisie, active les <strong>prompts de contexte</strong> souhait&#233;s (tags rouges), puis lance le nettoyage. Le r&#233;sultat appara&#238;t &#224; droite ; tu peux copier le prompt nettoy&#233; ou relancer une passe.</p>
+<ul>
+<li><strong>Dict&#233;e vocale</strong> : option secondaire, 100&#8239;% locale. Le texte dict&#233; reste modifiable avant nettoyage. Micro et moteur vocal se r&#232;glent dans <a href="#settings">Options &#8594; Dict&#233;e vocale</a>.</li>
+<li><strong>Prompts de contexte</strong> : clique sur un tag pour l&#8217;activer (rouge = actif). L&#8217;ordre d&#8217;injection par rapport au prompt syst&#232;me se configure dans <a href="#prompts">Prompts</a>.</li>
+<li><strong>Historique</strong> : chaque nettoyage texte est enregistr&#233; localement. Les entr&#233;es peuvent &#234;tre supprim&#233;es une par une ou vid&#233;es en bloc.</li>
+<li><strong>Nettoyage bloqu&#233;</strong> : active le prompt syst&#232;me ou au moins un prompt de contexte dans l&#8217;onglet Prompts.</li>
+</ul>
+
+<h2>Prompts</h2>
+<h3>Prompt syst&#232;me (optionnel)</h3>
+<p>Quand il est <strong>actif</strong>, ses r&#232;gles s&#8217;appliquent &#224; chaque nettoyage. Quand il est <strong>inactif</strong>, seuls les prompts de contexte actifs sont envoy&#233;s au mod&#232;le.</p>
+<p>Laiss&#233; vide, le prompt par d&#233;faut de PromptDeMerde est utilis&#233;.</p>
+
+<h3>Prompts de contexte</h3>
+<p>Cr&#233;e autant de contextes que n&#233;cessaire (un tag avec <code>#</code>, ex. <code>#TonFormel</code>, plus des instructions). Choisis si les contextes passent <strong>avant</strong> ou <strong>apr&#232;s</strong> le prompt syst&#232;me ; le sch&#233;ma se met &#224; jour selon ton choix.</p>
+<p>La g&#233;n&#233;ration assist&#233;e (par titre ou par intention) utilise le fournisseur et le mod&#232;le configur&#233;s dans le Workspace.</p>
+
+<h3>Historiques LLM</h3>
+<p>Journal local des nettoyages texte (<code>pdm_clean_history</code>). Chaque entr&#233;e peut &#234;tre supprim&#233;e individuellement via le bouton d&#233;di&#233;.</p>
+
+<h2>Options</h2>
+<h3>Intelligence artificielle</h3>
+<p>Choisis le fournisseur, l&#8217;URL du moteur LLM et le mod&#232;le. Teste la connexion avant usage. La <strong>r&#233;flexion du mod&#232;le</strong> n&#8217;est disponible que sur les mod&#232;les qui la supportent.</p>
+
+<h3>Th&#232;me</h3>
+<p>Le s&#233;lecteur de th&#232;me choisit l&#8217;apparence ; le bouton &#127769; dans le header bascule clair/sombre.</p>
+
+<h3>Dict&#233;e vocale</h3>
+<p>Moteurs 100&#8239;% locaux dans le navigateur :</p>
+<ul>
+<li><strong>Vosk Mini</strong> (~39&#8239;Mo) : l&#233;ger, articulation nette, pas d&#8217;autocorrection.</li>
+<li><strong>Vosk Maxi</strong> (~41&#8239;Mo) : meilleur Vosk compatible navigateur.</li>
+<li><strong>Whisper</strong> (4 bits / q8) : autocorrection, GPU conseill&#233;.</li>
+<li><strong>Parakeet</strong> (~409&#8239;Mo) : pr&#233;cis, GPU conseill&#233;. Si le mod&#232;le manque : <code>bash assets/stt/parakeet/restore-encoder.sh</code>.</li>
+</ul>
+<p>En HTTP sur une IP (hors localhost), Chromium bloque le micro : utilise localhost, HTTPS ou les contournements d&#233;crits dans Options quand le panneau s&#8217;affiche.</p>
+
+<h3>Sauvegarde &amp; restauration</h3>
+<p>L&#8217;application ne stocke <strong>rien sur le serveur</strong>. Options, param&#232;tres, historique et brouillon Workspace r&#233;sident dans le navigateur (<code>localStorage</code>).</p>
+<p>L&#8217;<strong>export JSON</strong> produit un fichier <code>promptdemerde-config-v1.4.0.json</code> de type <code>pdm-config</code> : sauvegarde <strong>compl&#232;te</strong> (prompts, LLM, dict&#233;e, historique, th&#232;me, token API Ollama). L&#8217;<strong>import</strong> <strong>remplace int&#233;gralement</strong> les donn&#233;es locales apr&#232;s confirmation.</p>
+
+<h4>Format <code>pdm-config</code> — r&#232;gles strictes</h4>
+<p>Le JSON est la base de donn&#233;es portable de l&#8217;application. Tu peux l&#8217;&#233;diter &#224; la main, mais l&#8217;import exige un fichier <strong>complet et valide</strong> :</p>
+<ul>
+<li><strong>Toutes les cl&#233;s obligatoires</strong> doivent &#234;tre pr&#233;sentes (17 cl&#233;s <code>pdm_*</code> + <code>version</code> + <code>type</code>).</li>
+<li><strong>Aucune cl&#233; invent&#233;e</strong> &#224; la racine (ex. <code>pdm_foo</code> &#8594; rejet).</li>
+<li><strong>Types et valeurs contr&#244;l&#233;s</strong> : bool&#233;ens natifs (<code>true</code>/<code>false</code>), enums (langue, th&#232;me, moteur STT&#8230;), URL Ollama valide, tags profils conformes.</li>
+<li><strong>Pas d&#8217;import partiel</strong> : les anciens formats <code>system-prompt</code> et <code>prompts</code> ne sont plus accept&#233;s.</li>
+<li><strong>Rejet sans perte</strong> : si le fichier est invalide, ta session actuelle n&#8217;est pas effac&#233;e ; un message d&#8217;erreur d&#233;taill&#233; s&#8217;affiche.</li>
+</ul>
+
+<h4>Cl&#233;s du fichier export&#233;</h4>
+<table class="legal-table">
+<thead><tr><th>Cl&#233;</th><th>Contenu</th></tr></thead>
+<tbody>
+<tr><td><code>version</code>, <code>type</code>, <code>exportedAt</code></td><td>M&#233;tadonn&#233;es (type = <code>pdm-config</code>)</td></tr>
+<tr><td><code>pdm_provider</code>, <code>pdm_model</code>, <code>pdm_ollama_url</code></td><td>Configuration LLM</td></tr>
+<tr><td><code>pdm_token_ollama</code></td><td>Token API Ollama (cha&#238;ne, vide si absent)</td></tr>
+<tr><td><code>pdm_llm_thinking_enabled</code></td><td>R&#233;flexion du mod&#232;le</td></tr>
+<tr><td><code>pdm_system_prompt</code>, <code>pdm_system_prompt_enabled</code></td><td>Prompt syst&#232;me</td></tr>
+<tr><td><code>pdm_profiles</code>, <code>pdm_context_position</code></td><td>Prompts de contexte et ordre d&#8217;injection</td></tr>
+<tr><td><code>pdm_workspace</code></td><td>Brouillon (input, output, r&#233;flexion, savedAt)</td></tr>
+<tr><td><code>pdm_language</code>, <code>pdm_theme</code></td><td>Langue UI et th&#232;me visuel</td></tr>
+<tr><td><code>pdm_stt_engine</code>, <code>pdm_stt_compute</code>, <code>pdm_stt_device_id</code></td><td>Dict&#233;e vocale</td></tr>
+<tr><td><code>pdm_history_count</code>, <code>pdm_clean_history</code></td><td>Historique des nettoyages (max 100)</td></tr>
+</tbody>
+</table>
+<p>Sch&#233;ma technique : <code>assets/config/pdm-config.schema.json</code> (d&#233;p&#244;t). Norme mainteneurs : Bible PromptDeMerde <code>RFC.md</code> &#167;08.</p>
+<p class="legal-update">Sauvegarde JSON — mise &#224; jour : juillet 2026 (validation stricte <code>pdm-config</code>)</p>
+
+<h3>Zone danger</h3>
+<p>Le bouton <strong>Tout effacer</strong> supprime toutes les donn&#233;es locales (profils, configuration, historique). Exporte d&#8217;abord ta configuration si tu veux la conserver.</p>
+
+<h2>Donn&#233;es &amp; confidentialit&#233;</h2>
+<p>Aucune base de donn&#233;es c&#244;t&#233; serveur. D&#233;tails complets : <a href="#privacy">Politique de confidentialit&#233;</a>.</p>
+
+<h2>Support</h2>
+<p>Bug ou question : <a href="#support">page Support</a> ou <a href="https://github.com/JeanSebastienBash/promptdemerde" target="_blank" rel="noopener">GitHub</a>.</p>
+
+</div>
+</div>
+</section>
+
+<!-- ============ MENTIONS LEGALES ============ -->
+<section id="section-mentions" class="section legal-section">
+<div class="container">
+<div class="legal-content">
+<a href="#landing" class="btn-back">&#8592; Retour</a>
+<h1 class="legal-title">Mentions L&#233;gales</h1>
+<p class="legal-update">Derni&#232;re mise &#224; jour : 14 juin 2026</p>
+
+<h2>1. &#201;diteur du site</h2>
+<p>Le site <strong>PromptDeMerde.com</strong> est &#233;dit&#233; par <strong>DreamProjectAI</strong>, association loi 1901.</p>
+<ul>
+<li><strong>Si&#232;ge social :</strong> 12 rue des Prompts, 75011 Paris, France</li>
+<li><strong>Email :</strong> <a href="mailto:contact@dreamproject.online">contact@dreamproject.online</a></li>
+<li><strong>Site web :</strong> <a href="https://dreamproject.online" target="_blank" rel="noopener">dreamproject.online</a></li>
+<li><strong>Directeur de la publication :</strong> Responsable DreamProjectAI</li>
+</ul>
+
+<h2>2. H&#233;bergeur</h2>
+<p><strong>OVH SAS</strong> &#8212; 2 rue Kellermann, 59100 Roubaix, France &#8212; T&#233;l. : +33 9 72 10 10 07</p>
+
+<h2>3. Propri&#233;t&#233; intellectuelle</h2>
+<p>L&#8217;ensemble du contenu pr&#233;sent sur le site PromptDeMerde.com (textes, images, graphismes, logo, ic&#244;nes, logiciels) est la propri&#233;t&#233; exclusive de DreamProjectAI, sauf mention contraire.</p>
+<p>Toute reproduction, distribution, modification, adaptation, retransmission ou publication de ces diff&#233;rents &#233;l&#233;ments est strictement interdite sans l&#8217;accord &#233;crit pr&#233;alable de DreamProjectAI. Cette repr&#233;sentation ou reproduction, par quelque proc&#233;d&#233; que ce soit, constitue une contrefa&#231;on sanctionn&#233;e par les articles L.335-2 et suivants du Code de la propri&#233;t&#233; intellectuelle.</p>
+
+<h2>4. Limitation de responsabilit&#233;</h2>
+<p>DreamProjectAI s&#8217;efforce d&#8217;assurer l&#8217;exactitude et la mise &#224; jour des informations diffus&#233;es sur le site, dont elle se r&#233;serve le droit de corriger le contenu &#224; tout moment et sans pr&#233;avis.</p>
+<p>DreamProjectAI d&#233;cline toute responsabilit&#233; en cas de :</p>
+<ul>
+<li>Interruption du site pour des raisons de maintenance ou techniques</li>
+<li>Dysfonctionnement li&#233; &#224; l&#8217;utilisation des services tiers (fournisseurs LLM)</li>
+<li>Perte de donn&#233;es stock&#233;es localement dans le navigateur de l&#8217;utilisateur</li>
+</ul>
+
+<h2>5. Droit applicable</h2>
+<p>Les pr&#233;sentes mentions l&#233;gales sont r&#233;gies par le droit fran&#231;ais, conform&#233;ment &#224; la loi n&#176; 2004-575 du 21 juin 2004 pour la confiance dans l&#8217;&#233;conomie num&#233;rique (LCEN).</p>
+</div>
+</div>
+</section>
+
+<!-- ============ CGU ============ -->
+<section id="section-cgu" class="section legal-section">
+<div class="container">
+<div class="legal-content">
+<a href="#landing" class="btn-back">&#8592; Retour</a>
+<h1 class="legal-title">Conditions G&#233;n&#233;rales d&#8217;Utilisation</h1>
+<p class="legal-update">Derni&#232;re mise &#224; jour : 14 juin 2026</p>
+
+<h2>1. Objet</h2>
+<p>Les pr&#233;sentes Conditions G&#233;n&#233;rales d&#8217;Utilisation (CGU) d&#233;finissent les modalit&#233;s d&#8217;acc&#232;s et d&#8217;utilisation du service <strong>PromptDeMerde.com</strong>, propos&#233; par <strong>DreamProjectAI</strong>.</p>
+<p>PromptDeMerde.com est un outil de reformulation de prompts destin&#233;s aux mod&#232;les de langage (LLM). Le service transforme des instructions utilisateur en prompts structur&#233;s et optimis&#233;s.</p>
+
+<h2>2. Acceptation des CGU</h2>
+<p>L&#8217;acc&#232;s et l&#8217;utilisation du service impliquent l&#8217;acceptation sans r&#233;serve des pr&#233;sentes CGU. Si vous n&#8217;acceptez pas ces conditions, vous devez cesser d&#8217;utiliser le service.</p>
+
+<h2>3. Acc&#232;s au service</h2>
+<p>Le service est <strong>gratuit et open source</strong>. Aucune inscription, aucun compte, aucun abonnement ni quota commercial n&#8217;est requis.</p>
+<ul>
+<li data-pdm-copy="legal.features">Acc&#232;s libre &#224; toutes les fonctionnalit&#233;s : moteur LLM local, prompts de contexte illimit&#233;s, prompt syst&#232;me personnalisable, dict&#233;e vocale (Vosk Mini par d&#233;faut, Vosk Maxi, Whisper et Parakeet en option), export/import de configuration.</li>
+<li>Les pr&#233;f&#233;rences et l&#8217;historique sont conserv&#233;s dans le navigateur ; la <strong>sauvegarde durable</strong> s&#8217;effectue via export/import JSON (Options).</li>
+<li>Le projet se t&#233;l&#233;charge depuis <a href="https://github.com/JeanSebastienBash/promptdemerde" target="_blank" rel="noopener">GitHub</a> et s&#8217;installe en local sur votre serveur PHP. Aucun compte, aucun abonnement.</li>
+</ul>
+<p>DreamProjectAI se r&#233;serve le droit de modifier les fonctionnalit&#233;s du service &#224; tout moment, avec information sur le site en cas de changement substantiel.</p>
+
+<h2>4. Responsabilit&#233; de l&#8217;utilisateur</h2>
+<p>L&#8217;utilisateur s&#8217;engage &#224; :</p>
+<ul>
+<li>Ne pas utiliser le service &#224; des fins ill&#233;gales ou malveillantes</li>
+<li>Ne pas tenter de perturber le fonctionnement du service</li>
+<li data-pdm-copy="legal.prereq">Disposer d&#8217;un moteur LLM fonctionnel pour le nettoyage des prompts</li>
+</ul>
+
+<h2>5. Propri&#233;t&#233; intellectuelle</h2>
+<p>Les prompts reformul&#233;s par le service restent la propri&#233;t&#233; de l&#8217;utilisateur. DreamProjectAI ne revendique aucun droit sur le contenu g&#233;n&#233;r&#233;.</p>
+<p>Le code source, le design, la marque et les algorithmes de PromptDeMerde.com sont la propri&#233;t&#233; exclusive de DreamProjectAI.</p>
+
+<h2>6. Responsabilit&#233; du service</h2>
+<p>DreamProjectAI fournit le service &#171; en l&#8217;&#233;tat &#187;, sans garantie de r&#233;sultat. Les prompts reformul&#233;s sont des suggestions et l&#8217;utilisateur reste responsable de leur utilisation finale.</p>
+<p>DreamProjectAI n&#8217;est pas responsable :</p>
+<ul>
+<li data-pdm-copy="legal.output">Des r&#233;ponses g&#233;n&#233;r&#233;es par votre mod&#232;le LLM local</li>
+<li>De la perte de donn&#233;es stock&#233;es localement dans le navigateur</li>
+</ul>
+
+<h2>7. R&#233;siliation</h2>
+<p>L&#8217;utilisateur peut cesser d&#8217;utiliser le service &#224; tout moment. DreamProjectAI se r&#233;serve le droit de suspendre l&#8217;acc&#232;s d&#8217;un utilisateur en cas de non-respect des CGU, sans pr&#233;avis ni indemnisation.</p>
+
+<h2>8. Modification des CGU</h2>
+<p>DreamProjectAI se r&#233;serve le droit de modifier les pr&#233;sentes CGU &#224; tout moment. Les utilisateurs seront inform&#233;s des modifications substantielles via le site ou par email.</p>
+
+<h2>9. Droit applicable et litiges</h2>
+<p>Les pr&#233;sentes CGU sont r&#233;gies par le droit fran&#231;ais. En cas de litige, les parties s&#8217;efforceront de trouver une solution amiable. &#192; d&#233;faut, les tribunaux fran&#231;ais seront comp&#233;tents.</p>
+</div>
+</div>
+</section>
+
+<!-- ============ POLITIQUE DE CONFIDENTIALITE ============ -->
+<section id="section-privacy" class="section legal-section">
+<div class="container">
+<div class="legal-content">
+<a href="#landing" class="btn-back">&#8592; Retour</a>
+<h1 class="legal-title">Politique de Confidentialit&#233;</h1>
+<p class="legal-update">Derni&#232;re mise &#224; jour : 14 juin 2026</p>
+
+<h2>1. R&#233;sum&#233; ex&#233;cutif</h2>
+<p><strong>PromptDeMerde.com ne conserve aucune donn&#233;e sur le serveur.</strong> Aucune base de donn&#233;es, aucun compte utilisateur. Vos options, param&#232;tres, historique des nettoyages et brouillons sont enregistr&#233;s <strong>uniquement dans le stockage local</strong> de votre navigateur.</p>
+<p data-pdm-copy="privacy.llm">Le traitement des prompts s&#8217;effectue via un moteur LLM local, &#224; configurer sur votre machine ou votre r&#233;seau. Un relais technique assure la connexion, <strong>sans persistance</strong> des contenus transit&#233;s.</p>
+<p>Pour <strong>sauvegarder, transf&#233;rer ou restaurer</strong> l&#8217;ensemble de vos donn&#233;es d&#8217;usage (<span data-pdm-copy="privacy.backup">r&#233;glages, prompts, historique, configuration LLM, dict&#233;e vocale, token API</span>), utilisez la fonction <strong>Export / Import</strong> dans <em>Options &#8594; Sauvegarde &amp; restauration</em>. Seul un fichier JSON <code>pdm-config</code> complet et valide est accept&#233; &#224; l&#8217;import.</p>
+
+<h2>2. Donn&#233;es stock&#233;es localement</h2>
+<p>Les donn&#233;es suivantes sont conserv&#233;es dans le <code>localStorage</code> de votre navigateur :</p>
+<table class="legal-table">
+<thead><tr><th>Cl&#233;</th><th>Contenu</th><th>Persistant ?</th></tr></thead>
+<tbody>
+<tr><td><code>pdm_provider</code></td><td>Identifiant du moteur LLM actif</td><td>Oui</td></tr>
+<tr><td><code>pdm_model</code></td><td>Mod&#232;le LLM s&#233;lectionn&#233;</td><td>Oui</td></tr>
+<tr><td><code>pdm_llm_thinking_enabled</code></td><td>Activation de la r&#233;flexion du mod&#232;le</td><td>Oui</td></tr>
+<tr><td><code>pdm_ollama_url</code></td><td data-pdm-copy="storage.url.desc">URL du moteur LLM local</td><td>Oui</td></tr>
+<tr><td><code>pdm_token_ollama</code></td><td>Token API Ollama (si configur&#233;)</td><td>Oui</td></tr>
+<tr><td><code>pdm_system_prompt</code></td><td>Prompt syst&#232;me personnalis&#233;</td><td>Oui</td></tr>
+<tr><td><code>pdm_system_prompt_enabled</code></td><td>Activation du prompt syst&#232;me</td><td>Oui</td></tr>
+<tr><td><code>pdm_profiles</code></td><td>Vos prompts de contexte</td><td>Oui</td></tr>
+<tr><td><code>pdm_context_position</code></td><td>Ordre d&#8217;injection du contexte</td><td>Oui</td></tr>
+<tr><td><code>pdm_workspace</code></td><td>Brouillon workspace (input, output, r&#233;flexion)</td><td>Oui</td></tr>
+<tr><td><code>pdm_stt_device_id</code></td><td>Micro pr&#233;f&#233;r&#233; pour la dict&#233;e vocale</td><td>Oui</td></tr>
+<tr><td><code>pdm_stt_engine</code></td><td>Moteur vocal (<code>vosk-maxi</code> par d&#233;faut, <code>vosk-mini</code>, <code>whisper-mini</code>, <code>whisper-maxi</code> ou <code>parakeet</code>)</td><td>Oui</td></tr>
+<tr><td><code>pdm_stt_compute</code></td><td>Acc&#233;l&#233;ration dict&#233;e : <code>cpu</code> ou <code>gpu</code> (si GPU &ge; 1 Go VRAM — seuil test)</td><td>Oui</td></tr>
+<tr><td><code>pdm_language</code></td><td>Langue de l&#8217;interface</td><td>Oui</td></tr>
+<tr><td><code>pdm_theme</code></td><td>Th&#232;me visuel</td><td>Oui</td></tr>
+<tr><td><code>pdm_history_count</code></td><td>Compteur de nettoyages</td><td>Oui</td></tr>
+<tr><td><code>pdm_clean_history</code></td><td>Journal texte LLM (input, r&#233;flexion, output, contextes actifs)</td><td>Oui</td></tr>
+</tbody>
+</table>
+<p>Aucune de ces donn&#233;es n&#8217;est transmise &#224; un serveur distant ni utilis&#233;e &#224; des fins de t&#233;l&#233;m&#233;trie.</p>
+
+<h2>3. Flux de donn&#233;es</h2>
+<p>Lorsque vous utilisez le service :</p>
+<ul>
+<li data-pdm-copy="privacy.transit">Vos prompts et contextes sont transmis &#224; votre moteur LLM local &#8212; <strong>aucune conservation c&#244;t&#233; serveur</strong></li>
+<li>La r&#233;ponse du mod&#232;le revient dans votre navigateur</li>
+<li>Options, historique et brouillons sont enregistr&#233;s <strong>localement dans le navigateur</strong></li>
+<li>La dict&#233;e vocale est trait&#233;e dans le navigateur ; aucun envoi audio vers un service tiers</li>
+<li>La <strong>sauvegarde durable</strong> de l&#8217;ensemble de ces donn&#233;es passe par l&#8217;<strong>export JSON</strong> (Options &#8594; Sauvegarde &amp; restauration)</li>
+</ul>
+
+<h2>4. Cookies</h2>
+<p>PromptDeMerde.com <strong>n&#8217;utilise aucun cookie</strong>, ni cookie de session, ni cookie de tracking, ni cookie tiers.</p>
+
+<h2>5. Tracking et analytique</h2>
+<p>PromptDeMerde.com <strong>ne collecte aucune donn&#233;e analytique</strong>. Pas de Google Analytics, pas de Matomo, pas de pixel de tracking, pas de fingerprinting. Votre navigation est enti&#232;rement priv&#233;e.</p>
+
+<h2>6. Services tiers</h2>
+<p data-pdm-copy="privacy.stt">Le nettoyage des prompts utilise un moteur LLM sur votre machine ou votre r&#233;seau. La dict&#233;e vocale embarque des mod&#232;les locaux (Vosk, Whisper, Parakeet) sans appel &#224; un service cloud pour l&#8217;audio.</p>
+
+<h2>7. Vos droits (RGPD)</h2>
+<p>Conform&#233;ment au R&#232;glement G&#233;n&#233;ral sur la Protection des Donn&#233;es (RGPD), vous disposez des droits suivants :</p>
+<ul>
+<li><strong>Droit d&#8217;acc&#232;s :</strong> vos donn&#233;es &#233;tant stock&#233;es localement, vous y avez un acc&#232;s direct via les outils de d&#233;veloppement de votre navigateur (F12 &#8594; Application &#8594; Local Storage)</li>
+<li><strong>Droit de rectification :</strong> vous pouvez modifier vos donn&#233;es directement dans l&#8217;interface (Options, Prompts)</li>
+<li><strong>Droit &#224; l&#8217;effacement :</strong> utilisez le bouton &#171; Tout Effacer &#187; dans Options, ou effacez les donn&#233;es du site via votre navigateur</li>
+<li><strong>Droit &#224; la portabilit&#233; :</strong> utilisez <em>Exporter ma configuration</em> dans Options pour obtenir un fichier JSON de l&#8217;ensemble de vos donn&#233;es d&#8217;usage</li>
+</ul>
+
+<h2>8. Dur&#233;e de conservation</h2>
+<p>Les donn&#233;es sont conserv&#233;es dans votre navigateur jusqu&#8217;&#224; ce que vous les supprimiez manuellement (bouton &#171; Tout Effacer &#187;) ou via les param&#232;tres de votre navigateur.</p>
+
+<h2>9. Contact</h2>
+<p>Pour toute question relative &#224; la protection de vos donn&#233;es :</p>
+<ul>
+<li>Email : <a href="mailto:privacy@dreamproject.online">privacy@dreamproject.online</a></li>
+<li>Adresse : [&#192; compl&#233;ter]</li>
+</ul>
+</div>
+</div>
+</section>
+
+<!-- ============ SUPPORT ============ -->
+<section id="section-support" class="section legal-section">
+<div class="container">
+<div class="legal-content">
+<a href="#landing" class="btn-back">&#8592; Retour</a>
+<h1 class="legal-title">Support</h1>
+
+<h2>Contact</h2>
+<p>Vous avez une question ou un probl&#232;me ? Contactez-nous :</p>
+<ul>
+<li><strong>Code source &amp; issues :</strong> <a href="https://github.com/JeanSebastienBash/promptdemerde" target="_blank" rel="noopener">github.com/JeanSebastienBash/promptdemerde</a></li>
+<li><strong>Email :</strong> <a href="mailto:contact@dreamproject.online">contact@dreamproject.online</a></li>
+<li><strong>Privacy :</strong> <a href="mailto:privacy@dreamproject.online">privacy@dreamproject.online</a></li>
+</ul>
+
+<h2 style="margin-top:40px">Signaler un bug</h2>
+<p>Vous avez trouv&#233; un bug ? Dites-le nous par email en pr&#233;cisant :</p>
+<ul>
+<li>Votre navigateur et sa version</li>
+<li>Les &#233;tapes pour reproduire le probl&#232;me</li>
+<li>Le comportement attendu vs observ&#233;</li>
+<li>Une capture d&#8217;&#233;cran si possible</li>
+</ul>
+</div>
+</div>
+</section>
+
+<!-- ===== GLOBAL FOOTER ===== -->
+<footer id="main-footer">
+    <div class="container">
+
+        <div class="footer-menus">
+            <nav class="footer-nav" aria-label="Documentation et aide">
+                <div class="footer-nav-heading">Aide</div>
+                <a href="#documentation">Documentation</a>
+                <a href="#support">Support</a>
+                <a href="https://github.com/JeanSebastienBash/promptdemerde" target="_blank" rel="noopener">Code source</a>
+            </nav>
+            <nav class="footer-nav footer-nav-legal" aria-label="Informations l&#233;gales">
+                <div class="footer-nav-heading">L&#233;gal</div>
+                <a href="#mentions">Mentions l&#233;gales</a>
+                <a href="#cgu">CGU</a>
+                <a href="#privacy">Confidentialit&#233;</a>
+            </nav>
+            <nav class="footer-nav" aria-label="Projet">
+                <div class="footer-nav-heading">Projet</div>
+                <a href="https://dreamproject.online" target="_blank" rel="noopener">DreamProject</a>
+                <a href="https://commercify.online" target="_blank" rel="noopener">Commercify</a>
+            </nav>
+        </div>
+
+        <!-- ===== SECTION DONATION / COMMERCIFY ===== -->
+        <div class="footer-commercify">
+            <div class="commercify-divider"></div>
+            <div class="commercify-card">
+                <div class="commercify-ad-label">&#128196; PUBLICIT&#201;</div>
+                <div class="commercify-badge">&#128666; PROJET DREAMPROJECTAI</div>
+                <h3 class="commercify-title">Commercify</h3>
+                <p class="commercify-tagline">La 1&#232;re plateforme globale de petites annonces sur Internet</p>
+
+                <div class="commercify-actions">
+                    <a href="https://commercify.online" target="_blank" rel="noopener" class="commercify-link">
+                        D&#233;couvrir Commercify &#8594;
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- COPYRIGHT -->
+        <p class="footer-copyright">
+            &#169; 2026 <a href="#landing" id="footer-home-link" hidden>PromptDeMerde</a><a href="#workspace" id="footer-app-link">PromptDeMerde</a> &#10084;&#65039; par <a href="https://dreamproject.online" target="_blank" rel="noopener">DreamProjectAI</a>
+        </p>
+        <p class="footer-bottom">
+            <a id="footer-version" href="https://github.com/JeanSebastienBash/promptdemerde" target="_blank" rel="noopener">v1.4.0</a><span id="footer-env-badge" class="footer-env-badge" hidden></span>
+        </p>
+    </div>
+</footer>
+
+<!-- SCRIPTS -->
+<script src="assets/js/config-schema.js"></script>
+<script src="assets/js/storage.js"></script>
+<script src="assets/js/env.js"></script>
+<script src="assets/js/bootstrap.js"></script>
+</body>
+</html>

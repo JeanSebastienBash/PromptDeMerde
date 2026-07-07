@@ -1,0 +1,13 @@
+.DS_Store
+Thumbs.db
+*.bak
+*.tmp
+.env
+.idea/
+.vscode/
+*_sauv*
+# Homepage marketing — présence contrôlée par le script de déploiement preprod2prod.
+/assets/homepage/
+# Anciens modèles Vosk (hors arborescence assets/stt/)
+assets/stt/vosk-mini/model.tar.gz_sauv*
+assets/stt/vosk-maxi/model.tar.gz_sauv*

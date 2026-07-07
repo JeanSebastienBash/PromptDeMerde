@@ -1,0 +1,81 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://promptdemerde.com/schemas/pdm-config.schema.json",
+  "title": "PromptDeMerde pdm-config",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "version",
+    "type",
+    "pdm_provider",
+    "pdm_model",
+    "pdm_system_prompt",
+    "pdm_system_prompt_enabled",
+    "pdm_profiles",
+    "pdm_language",
+    "pdm_theme",
+    "pdm_history_count",
+    "pdm_clean_history",
+    "pdm_workspace",
+    "pdm_stt_device_id",
+    "pdm_stt_engine",
+    "pdm_stt_compute",
+    "pdm_context_position",
+    "pdm_ollama_url",
+    "pdm_llm_thinking_enabled",
+    "pdm_token_ollama"
+  ],
+  "properties": {
+    "version": { "type": "string", "pattern": "^\\d+\\.\\d+\\.\\d+$" },
+    "type": { "const": "pdm-config" },
+    "exportedAt": { "type": "string", "format": "date-time" },
+    "pdm_provider": { "type": "string" },
+    "pdm_model": { "type": "string" },
+    "pdm_system_prompt": { "type": "string" },
+    "pdm_system_prompt_enabled": { "type": "boolean" },
+    "pdm_llm_thinking_enabled": { "type": "boolean" },
+    "pdm_language": { "enum": ["fr", "en"] },
+    "pdm_theme": {
+      "enum": ["light", "dark", "orange", "red", "gray", "yellow", "fuchsia", "ocean", "forest", "cyber", "rose", "terminal"]
+    },
+    "pdm_context_position": { "enum": ["after_system", "before_system"] },
+    "pdm_stt_engine": {
+      "enum": ["vosk-mini", "vosk-maxi", "whisper-mini", "whisper-maxi", "parakeet"]
+    },
+    "pdm_stt_compute": { "enum": ["cpu", "gpu"] },
+    "pdm_stt_device_id": { "type": "string" },
+    "pdm_ollama_url": { "type": "string", "format": "uri" },
+    "pdm_token_ollama": { "type": "string" },
+    "pdm_history_count": { "type": "integer", "minimum": 0, "maximum": 100 },
+    "pdm_profiles": {
+      "type": "array",
+      "maxItems": 999,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "tag", "prompt", "active"],
+        "properties": {
+          "id": { "type": "string", "minLength": 1 },
+          "tag": { "type": "string", "pattern": "^[A-Z][a-zA-Z0-9]*$" },
+          "prompt": { "type": "string" },
+          "active": { "type": "boolean" }
+        }
+      }
+    },
+    "pdm_workspace": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["input", "output", "thinking", "savedAt"],
+      "properties": {
+        "input": { "type": "string" },
+        "output": { "type": "string" },
+        "thinking": { "type": "string" },
+        "savedAt": { "type": ["string", "null"], "format": "date-time" }
+      }
+    },
+    "pdm_clean_history": {
+      "type": "array",
+      "maxItems": 100
+    }
+  }
+}
