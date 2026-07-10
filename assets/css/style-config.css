@@ -1,0 +1,114 @@
+/* ===== CONFIG ===== */
+.cfg-wrap { max-width:660px; margin:0 auto; padding:25px 0; }
+.cfg-card {
+    background:var(--surface);
+    border:2px solid var(--border);
+    padding:28px;
+    margin-bottom:22px;
+}
+.cfg-title {
+    font-family:var(--font-ui);
+    font-size:var(--text-title);
+    font-weight:700;
+    color:var(--accent-red);
+    margin-bottom:18px;
+    text-transform:uppercase;
+}
+.cfg-desc { font-size:var(--text-title); color:var(--text-muted); margin-top:4px; margin-bottom:10px; }
+.llm-config-body { gap:12px; }
+.llm-config-body .cfg-test-row {
+    display:flex;
+    gap:8px;
+    flex-wrap:wrap;
+}
+.llm-config-body .llm-token-actions {
+    display:flex;
+    gap:8px;
+    flex-wrap:wrap;
+    align-items:center;
+}
+.llm-config-body .cfg-note { margin:0; font-size:var(--text-small); }
+#config-provider-info { font-size:var(--text-small); word-break:break-all; overflow-wrap:break-word; }
+.cfg-lock {
+    font-family:var(--font-ui);
+    font-size:var(--text-small);
+    color:var(--accent-red);
+    background:rgba(255,0,64,.1);
+    border:1px solid var(--accent-red);
+    padding:10px 14px;
+    margin-bottom:12px;
+    text-transform:uppercase;
+    letter-spacing:.5px;
+}
+.cfg-note {
+    font-size:var(--text-small);
+    color:var(--success);
+    margin-bottom:10px;
+}
+.cfg-select {
+    width:100%;
+    background:var(--bg-black);
+    border:2px solid var(--border);
+    color:var(--text-white);
+    padding:10px 14px;
+    font-family:var(--font-body);
+    font-size:var(--text-title);
+    cursor:pointer;
+    appearance:none;
+    -webkit-appearance:none;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23888888' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
+    background-repeat:no-repeat;
+    background-position:right 14px center;
+    padding-right:36px;
+}
+.cfg-select:focus { outline:none; border-color:var(--accent-red); }
+.cfg-input {
+    width:100%;
+    background:var(--bg-black);
+    border:2px solid var(--border);
+    color:var(--text-white);
+    padding:10px 14px;
+    font-family:var(--font-body);
+    font-size:var(--text-title);
+    transition:all .2s;
+}
+.cfg-input:focus { outline:none; border-color:var(--accent-red); background:var(--bg-dark); }
+.token-wrap { position:relative; }
+.token-eye {
+    position:absolute; right:10px; top:50%; transform:translateY(-50%);
+    background:none; border:none; color:var(--text-muted); cursor:pointer; font-size:var(--text-body); padding:4px;
+}
+.token-eye:hover { color:var(--text-white); }
+.conn-status {
+    display:flex; align-items:center; gap:8px;
+    font-size:var(--text-title); margin-top:8px; min-height:1.5em;
+}
+.conn-status .dot { width:10px; height:10px; display:inline-block; }
+.conn-status .dot.ok { background:var(--success); }
+.conn-status .dot.fail { background:var(--error); }
+.conn-status .dot.wait { background:var(--text-muted); animation:pulse 1s infinite; }
+@keyframes pulse { 0%,100%{opacity:1} 50%{opacity:.3} }
+.cfg-actions { display:flex; gap:12px; flex-wrap:wrap; margin-top:8px; align-items:center; }
+
+.cfg-custom-model { margin-top:8px; }
+.cfg-custom-model .form-label { font-family:var(--font-body); font-size:var(--text-small); text-transform:uppercase; letter-spacing:1px; color:var(--text-muted); }
+.llm-thinking-options { margin-top:8px; }
+.llm-thinking-hint { margin-top:8px; color:var(--text-muted); }
+.thinking-unavailable { margin:0 0 10px; color:var(--text-muted); font-style:italic; }
+.thinking-panel.thinking-unavailable-active .thinking-text { display:none; }
+
+.cfg-ta {
+    width:100%; min-height:90px;
+    background:var(--bg-black); border:2px solid var(--border);
+    color:var(--text-white); padding:12px;
+    font-family:var(--font-body); font-size:var(--text-ui);
+    resize:vertical; transition:all .2s;
+}
+#config-system::placeholder {
+    color:var(--text-muted);
+    opacity:1;
+    font-size:var(--text-small);
+    line-height:var(--leading-normal);
+}
+.cfg-ta:focus { outline:none; border-color:var(--accent-red); background:var(--bg-dark); }
+

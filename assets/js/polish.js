@@ -1,5 +1,8 @@
 /**
- * PromptDeMerde.com — Micro-interactions UI (navigation, scroll reveal, animations légères).
+ * PromptDeMerde.com — polish.js
+ *
+ * Synopsis : Micro-interactions UI (scroll reveal, animations légères).
+ * Objectif : Améliorer la navigation et les transitions sans modifier la logique métier.
  */
 (function(){
 "use strict";

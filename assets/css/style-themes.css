@@ -1,0 +1,74 @@
+/* ===== THEME TOGGLE ===== */
+#theme-toggle {
+    background:none;
+    border:2px solid var(--border);
+    color:var(--text-muted);
+    font-size:var(--text-title);
+    cursor:pointer;
+    padding:4px 8px;    transition:all .2s;
+    line-height:1;
+}
+#theme-toggle:hover {
+    border-color:var(--accent-red);
+    color:var(--text-white);
+}
+
+/* ===== THEME PICKER ===== */
+.theme-picker {
+    display:flex;
+    gap:12px;
+    flex-wrap:wrap;
+    margin-top:10px;
+}
+.theme-swatch {
+    width:52px;
+    height:52px;
+    border:3px solid var(--border);
+    cursor:pointer;
+    position:relative;
+    transition:all .2s;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    font-size:var(--text-caption);
+    color:var(--text-muted);
+    gap:2px;
+}
+.theme-swatch:hover { border-color:var(--text-muted); box-shadow:0 2px 8px rgba(0,0,0,.2); }
+.theme-swatch.active { border-color:var(--accent-red); box-shadow:0 0 10px rgba(255,0,64,.3); }
+.theme-swatch .swatch-color {
+    width:24px;
+    height:24px;
+    border:1px solid var(--border);
+}
+.theme-swatch .swatch-name { font-family:var(--font-body); }
+
+/* ===== INPUT THEME VARS ===== */
+.form-textarea,
+.ws-textarea,
+.output-text,
+.thinking-text,
+.cfg-ta,
+.cfg-input,
+.profile-tag,
+.profile-prompt,
+.cfg-select,
+.stg-select,
+.select-mini {
+    background:var(--input-bg);
+}
+.form-textarea:focus,
+.ws-textarea:focus,
+.output-text:focus,
+.thinking-text:focus,
+.cfg-ta:focus,
+.cfg-input:focus,
+.profile-tag:focus,
+.profile-prompt:focus,
+.cfg-select:focus,
+.stg-select:focus,
+.select-mini:focus {
+    background:var(--input-focus-bg);
+}
+

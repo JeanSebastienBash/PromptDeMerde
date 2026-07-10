@@ -1,5 +1,8 @@
 /**
- * Worker Whisper — inférence hors thread principal (évite gel UI + perte micro).
+ * PromptDeMerde.com — stt-whisper-worker.js
+ *
+ * Synopsis : Web Worker d'inférence Whisper hors thread principal.
+ * Objectif : Charger transformers.js et exécuter pipeline.transcribe sans geler l'UI.
  */
 import { pipeline, env } from './vendor/transformers/transformers-lib.js';
 

@@ -1,0 +1,17 @@
+/* ── 14. TAG POLISH ── */
+.tag {
+    position: relative;
+    cursor: pointer;
+    user-select: none;
+    transition: transform 0.15s ease, box-shadow 0.15s ease, background 0.15s ease, color 0.15s ease;
+}
+.tag:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 3px 12px rgba(0, 0, 0, 0.3);
+}
+.tag.on {
+    background: var(--accent-red);
+    color: var(--text-on-accent, #fff);
+    box-shadow: 0 0 12px rgba(255, 0, 64, 0.4);
+}
+

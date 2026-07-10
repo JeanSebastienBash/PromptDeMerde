@@ -1,0 +1,271 @@
+/* ── Animation header « Univers inversé » — chnek ↔ sniper (boucle) ──
+ * Effets A–E via .effect-* ; durées pilotées par --inv-collapse-dur / --inv-expand-dur (JS).
+ * GPU-only : transform + opacity.
+ */
+
+.nav-prompt-animated {
+    position: relative;
+}
+
+.prompt-username-inverted {
+    display: inline-block;
+    position: relative;
+    transform-origin: center center;
+    vertical-align: baseline;
+    --inv-collapse-dur: 400ms;
+    --inv-expand-dur: 400ms;
+    --inv-portal-dur: 800ms;
+}
+
+.prompt-letter {
+    display: inline-block;
+    transform-origin: center center;
+    backface-visibility: hidden;
+}
+
+/* Anneau portail — métaphysique uniquement */
+.prompt-username-inverted.effect-metaphysical.is-inverting::before {
+    content: '';
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: 2.8em;
+    height: 2.8em;
+    margin: -1.4em 0 0 -1.4em;
+    border: 1px solid color-mix(in srgb, var(--accent-red) 55%, transparent);
+    border-radius: 50%;
+    pointer-events: none;
+    opacity: 0;
+    transform: scale(0.4);
+    animation: inversion-portal var(--inv-portal-dur) ease-out forwards;
+}
+
+/* Scanlines retro — effet E */
+.prompt-username-inverted.effect-retro.is-inverting::after {
+    content: '';
+    position: absolute;
+    inset: -2px -4px;
+    pointer-events: none;
+    opacity: 0.12;
+    background: repeating-linear-gradient(
+        0deg,
+        transparent 0,
+        transparent 2px,
+        color-mix(in srgb, var(--accent-red) 25%, transparent) 2px,
+        color-mix(in srgb, var(--accent-red) 25%, transparent) 3px
+    );
+    animation: retro-scan var(--inv-portal-dur) steps(6) forwards;
+}
+
+.prompt-username-inverted.is-complete .prompt-username-text {
+    text-shadow: 0 0 12px color-mix(in srgb, var(--accent-red) 35%, transparent);
+}
+
+/* ── Phases communes ── */
+.prompt-username-inverted.phase-collapse .prompt-letter {
+    animation-duration: var(--inv-collapse-dur);
+    animation-fill-mode: forwards;
+    animation-timing-function: cubic-bezier(0.55, 0, 0.85, 0.36);
+    animation-delay: calc(var(--i, 0) * 0.035s);
+}
+
+.prompt-username-inverted.phase-expand .prompt-letter {
+    animation-duration: var(--inv-expand-dur);
+    animation-fill-mode: forwards;
+    animation-timing-function: cubic-bezier(0.16, 0.84, 0.32, 1.1);
+    animation-delay: calc(var(--i, 0) * 0.04s);
+}
+
+.prompt-username-inverted.phase-collapse {
+    animation-duration: var(--inv-collapse-dur);
+    animation-fill-mode: forwards;
+    animation-timing-function: cubic-bezier(0.55, 0, 0.85, 0.36);
+}
+
+.prompt-username-inverted.phase-expand {
+    animation-duration: var(--inv-expand-dur);
+    animation-fill-mode: forwards;
+    animation-timing-function: cubic-bezier(0.16, 0.84, 0.32, 1.1);
+}
+
+/* ── D — Métaphysique ── */
+.prompt-username-inverted.effect-metaphysical.phase-collapse { animation-name: inversion-vortex-collapse; }
+.prompt-username-inverted.effect-metaphysical.phase-expand { animation-name: inversion-vortex-expand; }
+.prompt-username-inverted.effect-metaphysical.phase-collapse .prompt-letter { animation-name: inversion-letter-collapse; }
+.prompt-username-inverted.effect-metaphysical.phase-expand .prompt-letter { animation-name: inversion-letter-expand; }
+
+/* ── A — Quantum ── */
+.prompt-username-inverted.effect-quantum.phase-collapse { animation-name: quantum-container-collapse; }
+.prompt-username-inverted.effect-quantum.phase-expand { animation-name: quantum-container-expand; }
+.prompt-username-inverted.effect-quantum.phase-collapse .prompt-letter { animation-name: quantum-letter-collapse; }
+.prompt-username-inverted.effect-quantum.phase-expand .prompt-letter { animation-name: quantum-letter-expand; }
+
+/* ── B — Glitch ── */
+.prompt-username-inverted.effect-glitch.phase-collapse { animation-name: glitch-container-collapse; }
+.prompt-username-inverted.effect-glitch.phase-expand { animation-name: glitch-container-expand; }
+.prompt-username-inverted.effect-glitch.phase-collapse .prompt-letter { animation-name: glitch-letter-collapse; }
+.prompt-username-inverted.effect-glitch.phase-expand .prompt-letter { animation-name: glitch-letter-expand; }
+
+/* ── C — Morph ── */
+.prompt-username-inverted.effect-morph.phase-collapse { animation-name: morph-container-collapse; }
+.prompt-username-inverted.effect-morph.phase-expand { animation-name: morph-container-expand; }
+.prompt-username-inverted.effect-morph.phase-collapse .prompt-letter { animation-name: morph-letter-collapse; }
+.prompt-username-inverted.effect-morph.phase-expand .prompt-letter { animation-name: morph-letter-expand; }
+
+/* ── E — Retro ── */
+.prompt-username-inverted.effect-retro.phase-collapse { animation-name: retro-container-collapse; }
+.prompt-username-inverted.effect-retro.phase-expand { animation-name: retro-container-expand; }
+.prompt-username-inverted.effect-retro.phase-collapse .prompt-letter { animation-name: retro-letter-collapse; }
+.prompt-username-inverted.effect-retro.phase-expand .prompt-letter { animation-name: retro-letter-expand; }
+
+/* ── Keyframes D — Métaphysique ── */
+@keyframes inversion-portal {
+    0%, 100% { opacity: 0; transform: scale(0.4); }
+    35%, 65% { opacity: 0.4; transform: scale(1.6); }
+}
+
+@keyframes inversion-vortex-collapse {
+    0% { transform: translate3d(0, 0, 0) scale(1) rotate(0deg); opacity: 1; }
+    50% { transform: translate3d(0, -2px, 0) scale(1.04) rotate(4deg); opacity: 1; }
+    100% { transform: translate3d(0, 0, 0) scale(0.15) rotate(540deg); opacity: 0.15; }
+}
+
+@keyframes inversion-vortex-expand {
+    0% { transform: translate3d(0, 0, 0) scale(0.15) rotate(-540deg); opacity: 0.15; }
+    55% { transform: translate3d(0, 1px, 0) scale(1.08) rotate(-6deg); opacity: 1; }
+    100% { transform: translate3d(0, 0, 0) scale(1) rotate(0deg); opacity: 1; }
+}
+
+@keyframes inversion-letter-collapse {
+    0% { transform: translate3d(0, 0, 0) scale(1); opacity: 1; }
+    100% { transform: translate3d(0, -10px, 0) scale(0.2) rotate(calc(var(--i, 0) * 72deg)); opacity: 0; }
+}
+
+@keyframes inversion-letter-expand {
+    0% { transform: translate3d(0, 8px, 0) scale(0.1) rotate(calc(var(--i, 0) * -60deg)); opacity: 0; }
+    70% { transform: translate3d(0, -1px, 0) scale(1.12) rotate(3deg); opacity: 1; }
+    100% { transform: translate3d(0, 0, 0) scale(1) rotate(0deg); opacity: 1; }
+}
+
+/* ── Keyframes A — Quantum ── */
+@keyframes quantum-container-collapse {
+    0% { transform: scale(1); opacity: 1; }
+    100% { transform: scale(0.6); opacity: 0.2; }
+}
+
+@keyframes quantum-container-expand {
+    0% { transform: scale(0.6); opacity: 0.2; }
+    100% { transform: scale(1); opacity: 1; }
+}
+
+@keyframes quantum-letter-collapse {
+    0% { transform: translate3d(0, 0, 0) scale(1); opacity: 1; }
+    100% { transform: translate3d(calc(var(--i, 0) * 4px - 8px), -18px, 0) scale(0); opacity: 0; }
+}
+
+@keyframes quantum-letter-expand {
+    0% { transform: translate3d(calc(var(--i, 0) * -4px + 8px), 16px, 0) scale(0); opacity: 0; }
+    100% { transform: translate3d(0, 0, 0) scale(1); opacity: 1; }
+}
+
+/* ── Keyframes B — Glitch ── */
+@keyframes glitch-container-collapse {
+    0%, 100% { transform: translate3d(0, 0, 0); opacity: 1; }
+    25% { transform: translate3d(-3px, 0, 0); opacity: 0.7; }
+    50% { transform: translate3d(4px, 0, 0); opacity: 0.4; }
+    75% { transform: translate3d(-2px, 0, 0); opacity: 0.15; }
+}
+
+@keyframes glitch-container-expand {
+    0% { transform: translate3d(5px, 0, 0); opacity: 0.15; }
+    40% { transform: translate3d(-3px, 0, 0); opacity: 0.7; }
+    100% { transform: translate3d(0, 0, 0); opacity: 1; }
+}
+
+@keyframes glitch-letter-collapse {
+    0% { transform: translate3d(0, 0, 0); opacity: 1; }
+    33% { transform: translate3d(-4px, 0, 0); opacity: 0.6; }
+    66% { transform: translate3d(3px, 0, 0); opacity: 0.25; }
+    100% { transform: translate3d(-2px, 0, 0); opacity: 0; }
+}
+
+@keyframes glitch-letter-expand {
+    0% { transform: translate3d(4px, 0, 0); opacity: 0; }
+    50% { transform: translate3d(-3px, 0, 0); opacity: 0.8; }
+    100% { transform: translate3d(0, 0, 0); opacity: 1; }
+}
+
+/* ── Keyframes C — Morph ── */
+@keyframes morph-container-collapse {
+    0% { transform: scale(1, 1) skewX(0deg); opacity: 1; }
+    100% { transform: scale(0.3, 1.5) skewX(14deg); opacity: 0; }
+}
+
+@keyframes morph-container-expand {
+    0% { transform: scale(0.2, 1.6) skewX(-10deg); opacity: 0; }
+    100% { transform: scale(1, 1) skewX(0deg); opacity: 1; }
+}
+
+@keyframes morph-letter-collapse {
+    0% { transform: scale(1, 1) skewX(0deg); opacity: 1; }
+    100% { transform: scale(0.4, 1.3) skewX(calc(var(--i, 0) * 3deg)); opacity: 0; }
+}
+
+@keyframes morph-letter-expand {
+    0% { transform: scale(0.3, 1.4) skewX(calc(var(--i, 0) * -2deg)); opacity: 0; }
+    100% { transform: scale(1, 1) skewX(0deg); opacity: 1; }
+}
+
+/* ── Keyframes E — Retro ── */
+@keyframes retro-scan {
+    0%, 100% { opacity: 0; }
+    20%, 80% { opacity: 0.18; }
+}
+
+@keyframes retro-container-collapse {
+    0% { transform: scale(1); opacity: 1; }
+    40% { transform: scale(1.05); opacity: 0.85; }
+    100% { transform: scale(0.5); opacity: 0.1; }
+}
+
+@keyframes retro-container-expand {
+    0% { transform: scale(0.5); opacity: 0.1; }
+    60% { transform: scale(1.06); opacity: 0.9; }
+    100% { transform: scale(1); opacity: 1; }
+}
+
+@keyframes retro-letter-collapse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    20% { opacity: 0.6; transform: scale(0.95); }
+    40% { opacity: 0.9; transform: scale(1.02); }
+    60% { opacity: 0.4; transform: scale(0.8); }
+    80% { opacity: 0.15; transform: scale(0.6); }
+}
+
+@keyframes retro-letter-expand {
+    0% { opacity: 0; transform: scale(1.4); }
+    30% { opacity: 0.5; transform: scale(0.9); }
+    60% { opacity: 0.85; transform: scale(1.05); }
+    100% { opacity: 1; transform: scale(1); }
+}
+
+/* Curseur terminal : pause pendant l'inversion */
+.nav-prompt-animated.is-inverting .cursor {
+    animation-play-state: paused;
+    opacity: 0.35;
+}
+
+/* ── Accessibilité ── */
+@media (prefers-reduced-motion: reduce) {
+    .prompt-username-inverted.is-inverting::before,
+    .prompt-username-inverted.is-inverting::after,
+    .prompt-username-inverted.phase-collapse,
+    .prompt-username-inverted.phase-expand,
+    .prompt-username-inverted.phase-collapse .prompt-letter,
+    .prompt-username-inverted.phase-expand .prompt-letter {
+        animation: none !important;
+    }
+    .prompt-username-inverted.is-complete .prompt-username-text {
+        text-shadow: none;
+    }
+}

@@ -1,0 +1,35 @@
+/* ── 5. BUTTON POLISH — lift + glow on hover ── */
+.btn-sniperise,
+.btn-copy,
+.btn-again {
+    position: relative;
+    overflow: hidden;
+    transform: translateY(0);
+}
+.btn-sniperise:hover,
+.btn-copy:hover,
+.btn-again:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(255, 0, 64, 0.35);
+}
+.btn-sniperise:active,
+.btn-copy:active,
+.btn-again:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 8px rgba(255, 0, 64, 0.2);
+}
+
+/* Ripple effect */
+.ripple {
+    position: absolute;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.35);
+    transform: scale(0);
+    animation: rippleAnim 0.6s linear;
+    pointer-events: none;
+    z-index: 10;
+}
+@keyframes rippleAnim {
+    to { transform: scale(4); opacity: 0; }
+}
+

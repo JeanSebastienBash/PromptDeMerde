@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
-# Reconstitue encoder-model.int4.onnx à partir des parts archivées.
-# Aucun fichier n'est supprimé : les conflits sont renommés en *_sauv*.
+# PromptDeMerde.com — restore-encoder.sh
+# Synopsis : Script de reconstitution de l'encodeur Parakeet.
+# Objectif : Reassembler encoder-model.int4.onnx depuis les parts archivées après clone.
 set -euo pipefail
 
 cd "$(dirname "$0")"

@@ -1,5 +1,8 @@
 /**
- * PromptDeMerde.com — Registry des providers LLM (chargés selon env.php).
+ * PromptDeMerde.com — providers.js
+ *
+ * Synopsis : Registry des adaptateurs LLM (Ollama, futurs providers).
+ * Objectif : Enregistrer, activer et déléguer aux providers chargés selon env.php.
  */
 (function() {
 

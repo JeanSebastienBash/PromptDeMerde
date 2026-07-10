@@ -1,5 +1,8 @@
 /**
- * PromptDeMerde.com — Point d'entrée applicatif : routage, démarrage et navigation.
+ * PromptDeMerde.com — app.js
+ *
+ * Synopsis : Point d'entrée SPA : routage hash, initialisation et navigation globale.
+ * Objectif : Démarrer l'application, router les écrans et orchestrer le boot après bootstrap.js.
  */
 (function(){
 
@@ -9,6 +12,13 @@ window.PDM.App = A;
 
 var SNIPERISE_BTN_LABEL = 'NETTOYER CE TAS DE MERDE \u2192';
 A.SNIPERISE_BTN_LABEL = SNIPERISE_BTN_LABEL;
+
+function syncWorkspaceUiLabels() {
+    if (window.PDM.WorkspaceUi) {
+        A.SNIPERISE_BTN_LABEL = window.PDM.WorkspaceUi.submitLabel();
+    }
+}
+A.syncWorkspaceUiLabels = syncWorkspaceUiLabels;
 
 var SHIT_PROMPTS = [
     "\u00c9cris-moi un article sur les chiens",
@@ -75,33 +85,63 @@ A._boot = function() {
         window.PDM.Storage.set(window.PDM.Storage.KEYS.PROVIDER, activePid);
     }
     window.PDM.Storage.resetOldSystemPrompt();
-    window.PDM.Themes.init();
+    window.PDM.Storage.ensureConfigDefaults();
     window.PDM.Profiles.load();
 
     var start = function() {
-        A.router();
-        A.bindWorkspace();
-        A.bindHistory();
-        A.bindWorkspaceLlmConfig();
-        A.bindPrompts();
-        A.bindSettings();
-        A.bindNav();
-        A.bindThemeToggle();
-        if (A._homepageActive()) A.rotateDemo();
-        window.PDM.STT.init({
-            onSave: A.scheduleWorkspaceSave,
-            getLang: function() {
-                return window.PDM.Storage.get(window.PDM.Storage.KEYS.LANGUAGE) || 'fr';
+        var bootUi = Promise.resolve();
+        if (window.PDM.WorkspaceUi && typeof window.PDM.WorkspaceUi.boot === 'function') {
+            bootUi = window.PDM.WorkspaceUi.boot();
+        } else if (window.PDM.WorkspaceUi && typeof window.PDM.WorkspaceUi.apply === 'function') {
+            window.PDM.WorkspaceUi.apply();
+        }
+        bootUi.then(function() {
+            if (window.PDM.Themes && typeof window.PDM.Themes.init === 'function') {
+                window.PDM.Themes.init();
+            }
+            if (typeof A.syncSystemPromptTextarea === 'function') {
+                A.syncSystemPromptTextarea(true);
+            }
+            if (typeof A.rebuildProfileList === 'function') {
+                A.rebuildProfileList();
+            }
+            if (typeof A.updateSystemPromptUI === 'function') {
+                A.updateSystemPromptUI();
+            }
+            syncWorkspaceUiLabels();
+            A.router();
+            A.bindWorkspace();
+            A.bindHistory();
+            A.bindWorkspaceThinking();
+            A.bindWorkspaceLlmConfig();
+            if (A.bindWorkspaceAudio) A.bindWorkspaceAudio();
+            A.bindPrompts();
+            A.bindSettings();
+            A.bindNav();
+            A.bindThemeToggle();
+            if (A.restoreWorkspaceAudioMode) A.restoreWorkspaceAudioMode();
+            if (A._homepageActive()) A.rotateDemo();
+            window.addEventListener('hashchange', A.router);
+            if (window.PDM.ProfileSelector && typeof window.PDM.ProfileSelector.init === 'function') {
+                window.PDM.ProfileSelector.init();
+            }
+            window.PDM.STT.init({
+                onSave: A.scheduleWorkspaceSave,
+                getLang: function() {
+                    return window.PDM.Storage.get(window.PDM.Storage.KEYS.LANGUAGE) || 'fr';
+                }
+            });
+            var vEl = document.getElementById('footer-version');
+            if (vEl) vEl.textContent = 'v' + window.PDM.Storage.VERSION;
+            var envBadge = document.getElementById('footer-env-badge');
+            if (typeof A.bootstrapLlmFromProvider === 'function') {
+                A.bootstrapLlmFromProvider({ thinkingOffOnAuto: true });
+            }
+            if (envBadge && window.PDM.Env.isPreprod()) {
+                envBadge.hidden = false;
+                envBadge.textContent = 'PR\u00c9-PROD';
             }
         });
-        var vEl = document.getElementById('footer-version');
-        if (vEl) vEl.textContent = 'v' + window.PDM.Storage.VERSION;
-        var envBadge = document.getElementById('footer-env-badge');
-        if (envBadge && window.PDM.Env.isPreprod()) {
-            envBadge.hidden = false;
-            envBadge.textContent = 'PR\u00c9-PROD';
-        }
-        window.addEventListener('hashchange', A.router);
     };
 
     var loadHome = window.PDM.Homepage && typeof window.PDM.Homepage.load === 'function'
@@ -110,12 +150,21 @@ A._boot = function() {
     loadHome.then(start);
 };
 
+A.stopDemoRotation = function() {
+    if (_demoTimer) {
+        clearInterval(_demoTimer);
+        _demoTimer = null;
+    }
+};
+
 A.router = function() {
     var hash = A._resolveRoute(window.location.hash.replace('#', '') || '');
     if (hash === 'config') hash = 'settings';
     var valid = { landing:1, workspace:1, prompts:1, settings:1, mentions:1, cgu:1, privacy:1, support:1, documentation:1 };
     var section = valid[hash] ? hash : 'workspace';
     if (section === 'landing' && !A._homepageActive()) section = 'workspace';
+
+    if (section !== 'landing') A.stopDemoRotation();
 
     window.PDM.UI.show(section);
     if (section === 'workspace') A.refreshWorkspace();

@@ -1,5 +1,8 @@
 /**
- * AudioWorklet — capture micro pour dictée STT (remplace createScriptProcessor).
+ * PromptDeMerde.com — stt-audio-processor.js
+ *
+ * Synopsis : AudioWorklet de capture micro pour dictée STT.
+ * Objectif : Remplacer ScriptProcessor et poster les samples vers le thread principal.
  */
 class SttCaptureProcessor extends AudioWorkletProcessor {
     process(inputs) {

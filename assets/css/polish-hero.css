@@ -1,0 +1,43 @@
+/* ── 11. HERO DEMO BOX POLISH ── */
+#demo-before,
+#demo-after {
+    position: relative;
+    overflow: hidden;
+}
+#demo-before::after,
+#demo-after::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 40px;
+    background: linear-gradient(to top, var(--bg-black), transparent);
+    pointer-events: none;
+}
+#demo-after::after {
+    background: linear-gradient(to top, var(--surface), transparent);
+}
+
+/* ── 12. CHAR COUNTER VISUAL ── */
+.char-counter-wrap {
+    position: relative;
+    margin-top: 6px;
+}
+.char-counter-bar {
+    height: 3px;
+    background: var(--border);
+    border-radius: 2px;
+    overflow: hidden;
+    margin-bottom: 4px;
+}
+.char-counter-fill {
+    height: 100%;
+    background: var(--success, #00ff88);
+    transition: width 0.15s ease, background 0.3s ease;
+    border-radius: 2px;
+    width: 0%;
+}
+.char-counter-fill.warn    { background: #ffaa00; }
+.char-counter-fill.danger  { background: var(--error, #ff0040); }
+

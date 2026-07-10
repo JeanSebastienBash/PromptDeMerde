@@ -1,5 +1,8 @@
 /**
- * PromptDeMerde.com — Chargement dynamique des scripts selon env/env.php.
+ * PromptDeMerde.com — bootstrap.js
+ *
+ * Synopsis : Chargeur dynamique des scripts listés par lib/env/env.php.
+ * Objectif : Injecter les modules autorisés puis lancer PDM.App.init().
  */
 (function() {
 

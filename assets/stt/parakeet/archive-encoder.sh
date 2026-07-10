@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
-# Découpe encoder-model.int4.onnx en parts de 30 Mo pour GitHub.
-# Aucun fichier n'est supprimé : les anciennes parts sont renommées en *_sauv*.
+# PromptDeMerde.com — archive-encoder.sh
+# Synopsis : Script de découpage de l'encodeur Parakeet pour GitHub.
+# Objectif : Splitter encoder-model.int4.onnx en parts ≤30 Mo sans supprimer l'original.
 set -euo pipefail
 
 cd "$(dirname "$0")"

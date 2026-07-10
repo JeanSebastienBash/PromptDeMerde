@@ -1,5 +1,8 @@
 /**
- * PromptDeMerde.com — Gestion des prompts de contexte (création, édition, activation, tags).
+ * PromptDeMerde.com — profiles.js
+ *
+ * Synopsis : Gestion CRUD des prompts de contexte (#PascalCase).
+ * Objectif : Créer, modifier, activer et persister les profils de contexte utilisateur.
  */
 (function(){
 
@@ -29,12 +32,15 @@ window.PDM.Profiles = {
         }
         return window.PDM.Profiles.normalizeList(p);
     },
-    add: function(tag, prompt) {
+    add: function(tag, prompt, origin) {
         var list = window.PDM.Storage.getProfiles();
         var max = window.PDM.Storage.getMaxProfiles();
         if (list.length >= max) return null;
         var id = nextId();
         var obj = { id:id, tag:window.PDM.Profiles.normalizeTag(tag), prompt:prompt||'', active:false };
+        if (origin && typeof origin === 'object') {
+            obj.origin = origin;
+        }
         list.push(obj);
         window.PDM.Storage.setProfiles(list);
         return obj;
@@ -59,6 +65,40 @@ window.PDM.Profiles = {
             if (list[i].id !== id) out.push(list[i]);
         }
         window.PDM.Storage.setProfiles(out);
+    },
+    reorder: function(orderedIds) {
+        if (!orderedIds || !orderedIds.length) return window.PDM.Profiles.load();
+        var list = window.PDM.Storage.getProfiles();
+        var map = {};
+        for (var i = 0; i < list.length; i++) map[list[i].id] = list[i];
+        var out = [];
+        for (var j = 0; j < orderedIds.length; j++) {
+            var id = orderedIds[j];
+            if (map[id]) {
+                out.push(map[id]);
+                delete map[id];
+            }
+        }
+        for (var k in map) {
+            if (Object.prototype.hasOwnProperty.call(map, k)) out.push(map[k]);
+        }
+        window.PDM.Storage.setProfiles(out);
+        return out;
+    },
+    move: function(id, delta) {
+        var list = window.PDM.Profiles.load();
+        var idx = -1;
+        for (var i = 0; i < list.length; i++) {
+            if (list[i].id === id) { idx = i; break; }
+        }
+        if (idx < 0) return null;
+        var next = idx + delta;
+        if (next < 0 || next >= list.length) return list;
+        var ids = list.map(function(p) { return p.id; });
+        var tmp = ids[idx];
+        ids[idx] = ids[next];
+        ids[next] = tmp;
+        return window.PDM.Profiles.reorder(ids);
     },
     active: function() {
         return window.PDM.Storage.getProfiles().filter(function(p){ return p.active; });

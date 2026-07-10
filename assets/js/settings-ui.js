@@ -1,5 +1,8 @@
 /**
- * PromptDeMerde.com — Options, test connexion LLM et export/import.
+ * PromptDeMerde.com — settings-ui.js
+ *
+ * Synopsis : UI onglet Options (LLM, STT, thème, sauvegarde).
+ * Objectif : Configurer provider/modèle, dictée, export/import JSON et zone danger.
  */
 (function(){
 "use strict";
@@ -23,8 +26,8 @@ A.doTest = function(fromWorkspace, statusId) {
         model = window.PDM.Storage.get(window.PDM.Storage.KEYS.MODEL) || window.PDM.Providers.defaultModel(provider);
         baseUrl = adapter && adapter.storage ? adapter.storage.getUrl() : '';
     } else {
-        var sel = document.getElementById('config-model');
-        model = sel ? sel.value : '';
+        var outSel = document.getElementById('ws-output-model-select');
+        model = (outSel && outSel.value) || window.PDM.Storage.get(window.PDM.Storage.KEYS.MODEL) || '';
         var epInp = document.getElementById('llm-endpoint-url');
         baseUrl = epInp ? epInp.value.trim() : '';
     }
@@ -86,67 +89,64 @@ A.doTest = function(fromWorkspace, statusId) {
  */
 A.populateLlmModels = function(models) {
     var adapter = A.getActiveProvider();
-    function fillSelect(selId, isConfig) {
-        if (!selId) return;
-        var sel = document.getElementById(selId);
-        if (!sel) return;
+    var modelsArr = models || [];
+    var pid = A.getActiveProviderId();
+    if (pid) window.PDM.Providers.setModels(pid, modelsArr);
 
+    var sel = document.getElementById('ws-output-model-select');
+    if (sel) {
         sel.innerHTML = '';
-        var modelsArr = models || [];
-
         if (modelsArr.length === 0) {
+            var curr = window.PDM.Storage.get(window.PDM.Storage.KEYS.MODEL);
             var empty = document.createElement('option');
-            empty.value = '';
-            empty.textContent = '-- Aucun modèle installé --';
+            empty.value = curr || '';
+            empty.textContent = curr ? (curr + ' (sauvegard\u00e9)') : '-- Aucun mod\u00e8le install\u00e9 --';
+            empty.selected = true;
             sel.appendChild(empty);
-            sel.disabled = true;
-            if (isConfig) {
-                var info = document.getElementById('config-model-info');
-                if (info) info.textContent = adapter ? adapter.getEmptyModelsHint() : 'Aucun modèle détecté.';
+            sel.disabled = !curr;
+        } else {
+            sel.disabled = false;
+            var current = window.PDM.Storage.get(window.PDM.Storage.KEYS.MODEL);
+            var found = false;
+            for (var i = 0; i < modelsArr.length; i++) {
+                var o = document.createElement('option');
+                o.value = modelsArr[i].id;
+                o.textContent = modelsArr[i].label + ' ' + modelsArr[i].ctx;
+                if (modelsArr[i].id === current) { o.selected = true; found = true; }
+                sel.appendChild(o);
             }
-            return;
-        }
-
-        sel.disabled = false;
-        var curr = window.PDM.Storage.get(window.PDM.Storage.KEYS.MODEL);
-        var found = false;
-        for (var i = 0; i < modelsArr.length; i++) {
-            var o = document.createElement('option');
-            o.value = modelsArr[i].id;
-            o.textContent = modelsArr[i].label + ' ' + modelsArr[i].ctx;
-            if (modelsArr[i].id === curr) { o.selected = true; found = true; }
-            sel.appendChild(o);
-        }
-        if (!found && modelsArr.length > 0) {
-            sel.options[0].selected = true;
-            window.PDM.Storage.set(window.PDM.Storage.KEYS.MODEL, sel.options[0].value);
-        }
-
-        if (isConfig) {
-            var info = document.getElementById('config-model-info');
-            if (info) info.textContent = adapter ? adapter.getModelsCountHint(modelsArr.length) : (modelsArr.length + ' modèle(s)');
+            if (!found && current) {
+                var saved = document.createElement('option');
+                saved.value = current;
+                saved.textContent = current + ' (sauvegard\u00e9)';
+                saved.selected = true;
+                sel.appendChild(saved);
+                found = true;
+            }
+            if (!found && modelsArr.length > 0) {
+                sel.options[0].selected = true;
+                window.PDM.Storage.set(window.PDM.Storage.KEYS.MODEL, sel.options[0].value);
+            }
         }
     }
 
-    var pid = A.getActiveProviderId();
-    if (pid) window.PDM.Providers.setModels(pid, models || []);
-    fillSelect('config-model', true);
     A.updateWorkspaceConfigDisplay();
-    A.enrichLlmModelsCapabilities(models || []).then(function() {
+    A.enrichLlmModelsCapabilities(modelsArr).then(function() {
         A.updateThinkingAvailabilityUi();
     });
 };
 
 A.doSaveModel = function(opts) {
     opts = opts || {};
-    var sel = document.getElementById('config-model');
-    var model = sel ? sel.value : '';
+    var outSel = document.getElementById('ws-output-model-select');
+    var model = opts.model || (outSel && outSel.value) || window.PDM.Storage.get(window.PDM.Storage.KEYS.MODEL) || '';
 
     if (!model) return;
 
     var pid = A.getActiveProviderId();
     if (pid) window.PDM.Storage.set(window.PDM.Storage.KEYS.PROVIDER, pid);
     window.PDM.Storage.set(window.PDM.Storage.KEYS.MODEL, model);
+    if (outSel && outSel.value !== model) outSel.value = model;
     A.updateWorkspaceConfigDisplay();
     A.updateThinkingAvailabilityUi();
     if (!opts.silent) {
@@ -155,6 +155,9 @@ A.doSaveModel = function(opts) {
 };
 
 A.bindSettings = function() {
+    if (A._settingsBound) return;
+    A._settingsBound = true;
+
     var lang = document.getElementById('settings-lang');
     if (lang) {
         lang.addEventListener('change', function(e){
@@ -193,11 +196,16 @@ A.bindSettings = function() {
 };
 
 A.doExportConfig = function() {
+    if (window.PDM.ProfileSelector && typeof window.PDM.ProfileSelector.exportConfigFile === 'function') {
+        window.PDM.ProfileSelector.exportConfigFile();
+        return;
+    }
     if (A._wsSaveTimer) {
         clearTimeout(A._wsSaveTimer);
         A._wsSaveTimer = null;
     }
     A.saveWorkspaceFromDom();
+    if (typeof A.flushPromptsFromDom === 'function') A.flushPromptsFromDom();
     var token = window.PDM.Storage.getToken('ollama');
     if (token && String(token).trim()) {
         if (!confirm('L\u2019export inclut le token API Ollama en clair. Continuer ?')) {
@@ -223,6 +231,14 @@ A.doExportConfig = function() {
 };
 
 A.doImportConfig = function(file) {
+    if (window.PDM.ProfileSelector && window.PDM.ProfileSelector.isReservedImportName(file.name)) {
+        window.PDM.UI.notif(
+            'Import refus\u00e9 : ce nom de fichier est r\u00e9serv\u00e9 \u00e0 un profil JSON officiel (Profil JSON). Renomme ton export.',
+            'err'
+        );
+        return;
+    }
+
     var reader = new FileReader();
     reader.onload = function(e) {
         try {
@@ -241,7 +257,7 @@ A.doImportConfig = function(file) {
             var msg = 'Importer cette configuration remplacera toutes tes donn\u00e9es actuelles. Continuer ?';
             if (!confirm(msg)) return;
 
-            var result = window.PDM.Storage.importConfig(normalized);
+            var result = window.PDM.Storage.importConfig(normalized, { filename: file.name });
             if (!result.ok) {
                 var failMsg = result.errors && result.errors.length
                     ? (result.errors.length === 1 ? result.errors[0] : result.errors.join('\n'))
@@ -275,6 +291,27 @@ A.updateConfigIOButtons = function() {
 
 A.doExport = A.doExportConfig;
 A.doImport = A.doImportConfig;
+
+A.bootstrapLlmFromProvider = function(opts) {
+    opts = opts || {};
+    var pid = A.getActiveProviderId();
+    var adapter = A.getActiveProvider();
+    if (!adapter || !adapter.storage) return Promise.resolve(null);
+    return window.PDM.LLM.test(pid, null, null, adapter.storage.getUrl()).then(function(result) {
+        if (result && result.ok && result.models) {
+            A.populateLlmModels(result.models);
+        } else if (typeof A.refreshConfigModels === 'function') {
+            A.refreshConfigModels(pid);
+        }
+        if (opts.thinkingOffOnAuto && typeof A.updateThinkingAvailabilityUi === 'function') {
+            A.updateThinkingAvailabilityUi();
+        }
+        return result;
+    }).catch(function() {
+        if (typeof A.refreshConfigModels === 'function') A.refreshConfigModels(pid);
+        return null;
+    });
+};
 
 A.refreshSettings = function() {
     window.PDM.UI.renderThemePicker();

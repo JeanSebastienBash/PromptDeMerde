@@ -1,0 +1,152 @@
+/* PromptDeMerde.com — style-base.css
+ *
+ * Synopsis : Tokens globaux (couleurs, typo, layout) et reset de la SPA.
+ * Typographie : Fira Code (corps/code) + Inconsolata (chrome UI).
+ * Échelle stricte : caption / small / body / ui / title / display / hero.
+ */
+@font-face {
+    font-family: 'Fira Code';
+    src: url('../fonts/firacode/FiraCode-Regular.ttf') format('truetype');
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+}
+@font-face {
+    font-family: 'Fira Code';
+    src: url('../fonts/firacode/FiraCode-SemiBold.ttf') format('truetype');
+    font-weight: 600;
+    font-style: normal;
+    font-display: swap;
+}
+@font-face {
+    font-family: 'Fira Code';
+    src: url('../fonts/firacode/FiraCode-Bold.ttf') format('truetype');
+    font-weight: 700;
+    font-style: normal;
+    font-display: swap;
+}
+@font-face {
+    font-family: 'Inconsolata';
+    src: url('../fonts/inconsolata/Inconsolata-Regular.ttf') format('truetype');
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+}
+@font-face {
+    font-family: 'Inconsolata';
+    src: url('../fonts/inconsolata/Inconsolata-Bold.ttf') format('truetype');
+    font-weight: 700;
+    font-style: normal;
+    font-display: swap;
+}
+
+:root {
+    --bg-black: #181818;
+    --bg-dark: #242424;
+    --surface: #323232;
+    --text-white: #eeeeee;
+    --text-muted: #aaaaaa;
+    --accent-red: #ff0040;
+    --accent-hover: #ff1a5a;
+    --border: #404040;
+    --success: #00ff88;
+    --error: #ff0040;
+    --btn-text: #ffffff;
+    --input-bg: #181818;
+    --input-focus-bg: #242424;
+    --text-on-accent: #ffffff;
+    /* Zones workspace Output (réflexion + prompt livré) — héritent du thème actif */
+    --output-bg: var(--input-bg);
+    --output-text: var(--text-white);
+    --output-highlight: var(--success);
+    --thinking-bg: var(--input-bg);
+    --thinking-text: var(--text-white);
+    --thinking-accent: var(--accent-red);
+    --container-max-landing: 1320px;
+    --container-max-app: min(1800px, calc(100vw - 40px));
+    /* Typographie — familles */
+    --font-body: 'Fira Code', monospace;
+    --font-ui: 'Inconsolata', monospace;
+    /* Typographie — échelle stricte (base html 18px) */
+    --text-caption: 0.72rem;
+    --text-small: 0.85rem;
+    --text-body: 1rem;
+    --text-ui: 1.05rem;
+    --text-title: 1.25rem;
+    --text-display: clamp(1.5rem, 4vw, 2.5rem);
+    --text-hero: clamp(2rem, 6vw, 3.5rem);
+    /* Interlignage */
+    --leading-tight: 1.2;
+    --leading-normal: 1.4;
+    --leading-relaxed: 1.55;
+}
+
+@media (min-width: 1920px) {
+    :root {
+        --container-max-app: min(2100px, calc(100vw - 48px));
+    }
+}
+
+@media (min-width: 2560px) {
+    :root {
+        --container-max-app: min(2600px, calc(100vw - 64px));
+    }
+}
+
+@media (min-width: 3840px) {
+    :root {
+        --container-max-app: min(3400px, calc(100vw - 80px));
+    }
+}
+
+*, *::before, *::after {
+    margin:0; padding:0; box-sizing:border-box;
+    transition: background-color .25s, color .25s, border-color .25s;
+}
+html { font-size:18px; scroll-behavior:smooth; }
+body {
+    font-family: var(--font-body);
+    font-size: var(--text-body);
+    background:var(--bg-black);
+    color:var(--text-white);
+    line-height: var(--leading-normal);
+    overflow-x:hidden;
+    min-height:100vh;
+}
+a { color:var(--accent-red); text-decoration:none; transition:color .2s; }
+a:hover { color:var(--accent-hover); text-decoration:underline; }
+*:focus { outline:2px solid var(--accent-red); outline-offset:2px; }
+
+.container { max-width:1320px; margin:0 auto; padding:0 20px; }
+
+/* Icône décorative de section (Options, Prompts, Workspace) */
+.sec-icon {
+    flex-shrink: 0;
+    font-size: var(--text-title);
+    line-height: var(--leading-tight);
+}
+.sec-icon-sm {
+    font-size: var(--text-ui);
+}
+
+/* Utilitaires typographiques (nouveaux composants) */
+.text-caption { font-size: var(--text-caption); line-height: var(--leading-tight); }
+.text-small   { font-size: var(--text-small);   line-height: var(--leading-normal); }
+.text-body    { font-size: var(--text-body);    line-height: var(--leading-normal); }
+.text-ui      { font-size: var(--text-ui);      line-height: var(--leading-normal); }
+.text-title   { font-size: var(--text-title);   line-height: var(--leading-tight); }
+.text-display { font-size: var(--text-display); line-height: var(--leading-tight); }
+.text-hero    { font-size: var(--text-hero);    line-height: var(--leading-tight); }
+.font-body    { font-family: var(--font-body); }
+.font-ui      { font-family: var(--font-ui); }
+
+#main-nav .container,
+#main-footer .container,
+.section:not(#section-landing) > .container {
+    max-width: var(--container-max-app);
+}
+
+#section-landing .container {
+    max-width: var(--container-max-landing);
+}
+

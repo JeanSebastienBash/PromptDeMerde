@@ -1,5 +1,11 @@
+<!--
+PromptDeMerde.com — index.html
+
+Synopsis : Coque HTML unique de la SPA PromptDeMerde (hash routing).
+Objectif : Déclarer la structure des écrans, charger bootstrap et servir de shell à tous les modules JS.
+-->
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="fr" data-pdm-brand-nav-ext="0">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
@@ -17,9 +23,42 @@
 </script>
 <title>PromptDeMerde.com — Transforme ton prompt de merde en prompt de sniper</title>
 <meta name="description" content="Transforme n'importe quelle instruction IA foireuse en commande chirurgicale. Gratuit, open source, z&#233;ro bullshit.">
-<link rel="stylesheet" href="assets/css/style.css">
+<link rel="stylesheet" href="assets/css/style-base.css">
+<link rel="stylesheet" href="assets/css/style-layout.css">
+<link rel="stylesheet" href="assets/css/style-landing.css">
+<link rel="stylesheet" href="assets/css/style-workspace.css">
+<link rel="stylesheet" href="assets/css/style-config.css">
+<link rel="stylesheet" href="assets/css/style-prompts.css">
+<link rel="stylesheet" href="assets/css/style-settings.css">
+<link rel="stylesheet" href="assets/css/style-components.css">
+<link rel="stylesheet" href="assets/css/style-responsive.css">
+<link rel="stylesheet" href="assets/css/style-themes.css">
+<link rel="stylesheet" href="assets/css/style-pricing.css">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ctext y='28' font-size='28'%3E%F0%9F%92%A9%3C/text%3E%3C/svg%3E">
-<link rel="stylesheet" href="assets/css/polish.css">
+<link rel="stylesheet" href="assets/css/polish-scrollbar.css">
+<link rel="stylesheet" href="assets/css/polish-performance.css">
+<link rel="stylesheet" href="assets/css/polish-animation-inversion.css">
+<link rel="stylesheet" href="assets/css/polish-transitions.css">
+<link rel="stylesheet" href="assets/css/polish-reveal.css">
+<link rel="stylesheet" href="assets/css/polish-buttons.css">
+<link rel="stylesheet" href="assets/css/polish-cards.css">
+<link rel="stylesheet" href="assets/css/polish-skeleton.css">
+<link rel="stylesheet" href="assets/css/polish-notifications.css">
+<link rel="stylesheet" href="assets/css/polish-copy.css">
+<link rel="stylesheet" href="assets/css/polish-cursor.css">
+<link rel="stylesheet" href="assets/css/polish-hero.css">
+<link rel="stylesheet" href="assets/css/polish-loader.css">
+<link rel="stylesheet" href="assets/css/polish-tags.css">
+<link rel="stylesheet" href="assets/css/polish-theme-swatch.css">
+<link rel="stylesheet" href="assets/css/polish-pricing-badge.css">
+<link rel="stylesheet" href="assets/css/polish-footer.css">
+<link rel="stylesheet" href="assets/css/polish-responsive.css">
+<link rel="stylesheet" href="assets/css/polish-a11y.css">
+<link rel="stylesheet" href="assets/css/polish-legal.css">
+<link rel="stylesheet" href="assets/css/polish-history-audio.css">
+<link rel="stylesheet" href="assets/css/polish-footer-donation.css">
+<link rel="stylesheet" href="assets/css/polish-textarea-resize.css">
+<link rel="stylesheet" href="assets/css/polish-print.css">
 </head>
 <body>
 
@@ -53,7 +92,19 @@
                 <button id="theme-toggle" title="Changer de th&#232;me">&#127769;</button>
             </div>
         </div>
-        <div class="nav-prompt">$ chnek@promptdemerde:~# <span class="cursor">&#9608;</span></div>
+        <div class="nav-prompt-row">
+            <div class="nav-prompt nav-prompt-animated" id="nav-prompt">
+                <span class="prompt-prefix">$ </span>
+                <span class="prompt-username-inverted" data-from="chnek" data-to="sniper" aria-live="polite">
+                    <span class="prompt-username-text">chnek</span>
+                </span><span class="prompt-suffix">@promptdemerde:~# <span class="cursor">&#9608;</span></span>
+            </div>
+            <div id="profile-selector-wrap" class="nav-profile-wrap" hidden>
+                <span class="nav-profile-label">Profil JSON</span>
+                <select id="profile-selector" class="select-mini nav-profile-select" aria-label="Profil JSON"></select>
+                <button type="button" id="profile-create-btn" class="nav-profile-create" title="Cr&#233;er un profil personnel dans le s&#233;lecteur (config actuelle)" aria-label="Cr&#233;er un profil JSON" hidden>+ Profil</button>
+            </div>
+        </div>
     </div>
 </header>
 
@@ -66,72 +117,109 @@
 
 <div class="ws-grid">
     <div class="ws-panel ws-input">
-        <label class="form-label" for="ws-input" style="margin-bottom:12px">COLLE TON PROMPT DE MERDE ICI</label>
-        <textarea id="ws-input" class="ws-textarea" placeholder="Ex: &#233;cris un truc cool sur les chats" maxlength="50000"></textarea>
-        <div class="ws-input-toolbar">
-            <div id="char-count" class="char-count">0 / 50000</div>
-            <button id="ws-input-clear" type="button" class="btn-ghost btn-sm" title="Effacer le contenu de la zone de saisie">&#128465; EFFACER</button>
+        <div class="ws-panel-head">
+            <span class="sec-icon" aria-hidden="true">&#9999;&#65039;</span>
+            <h2 class="ws-panel-title">Input</h2>
         </div>
 
-        <div id="stt-block" class="stt-block stt-block-compact">
-            <div class="stt-row">
-                <button id="stt-btn" type="button" class="btn secondary btn-sm" aria-pressed="false">&#127908; DICT&#201;E VOCALE</button>
-            </div>
-            <div class="stt-status-grid" aria-live="polite">
-                <div class="stt-model-status-bar">
-                    <span class="stt-status-key">Moteur</span>
-                    <span class="stt-model-badge stt-model-badge-pending" data-stt-model-badge>&#8212;</span>
-                    <span class="stt-status-val" data-stt-model-text>En attente</span>
+        <div id="stt-block" class="stt-block stt-strip" aria-label="Dict&#233;e vocale">
+            <div class="stt-strip-row" aria-live="polite">
+                <button id="stt-btn" type="button" class="btn secondary stt-strip-dictate-btn" aria-pressed="false"
+                  title="D&#233;marrer ou arr&#234;ter la dict&#233;e vocale">&#127908; Dicter</button>
+                <div class="stt-strip-config">
+                    <select id="ws-stt-engine-select" class="ws-stt-engine-select select-mini" title="Moteur speech-to-text" aria-label="Moteur speech-to-text"></select>
+                    <span id="stt-compute-row" class="stt-strip-compute-wrap">
+                        <select id="stt-compute-select" class="select-mini stt-compute-select stt-strip-compute-select" title="CPU (WASM) ou GPU (WebGPU) pour Whisper et Parakeet ; Vosk reste en CPU" aria-label="Acc&#233;l&#233;ration STT">
+                            <option value="cpu">CPU</option>
+                            <option value="gpu">GPU</option>
+                        </select>
+                    </span>
+                    <select id="stt-device-select" class="select-mini stt-device-select stt-strip-device-select" disabled title="Microphone" aria-label="Microphone">
+                        <option value="">Micro par d&#233;faut</option>
+                    </select>
+                    <button id="stt-refresh-devices" type="button" class="btn-ghost btn-sm stt-strip-refresh-btn" title="Rafra&#238;chir la liste des micros" aria-label="Rafra&#238;chir les micros">&#128260;</button>
                 </div>
-                <div class="stt-mic-status-bar">
-                    <span class="stt-status-key">Micro</span>
-                    <span class="stt-mic-badge stt-mic-badge-unknown" data-stt-mic-badge>&#8212;</span>
-                    <span class="stt-status-val" data-stt-mic-text>V&#233;rification&#8230;</span>
+                <div class="stt-strip-status">
+                    <button id="stt-preload-btn" type="button" class="btn-ghost btn-sm stt-strip-preload-btn" title="Charger le mod&#232;le vocal avec le moteur et l&#8217;acc&#233;l&#233;ration choisis">&#128229;</button>
+                    <span class="stt-strip-chip stt-model-status-bar" title="Moteur speech-to-text">
+                        <span class="stt-model-badge stt-model-badge-pending" data-stt-model-badge aria-label="Statut moteur">&#8212;</span>
+                        <span class="stt-status-val stt-status-compact" data-stt-model-text hidden>En attente</span>
+                    </span>
+                    <span class="stt-strip-chip stt-mic-status-bar" title="&#201;tat du microphone">
+                        <span class="stt-mic-badge stt-mic-badge-unknown" data-stt-mic-badge aria-label="Statut micro">&#8212;</span>
+                        <span class="stt-status-val stt-status-compact stt-mic-line" data-stt-mic-text hidden>V&#233;rification&#8230;</span>
+                        <button id="stt-perm-btn" type="button" class="btn btn-sm stt-perm-btn stt-mic-perm-btn" hidden>&#128275;</button>
+                    </span>
                 </div>
-            </div>
-            <div id="stt-load-panel" class="stt-load-panel" hidden>
-                <p class="stt-load-label" data-stt-load-label>Chargement du mod&#232;le&#8230;</p>
-                <div class="stt-load-bar" data-stt-load-bar role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
-                    <div class="stt-load-fill" data-stt-load-fill></div>
-                </div>
-                <p class="stt-load-detail" data-stt-load-detail></p>
-            </div>
-            <div id="stt-ws-lan-hint" class="stt-ws-lan-hint" hidden>
-                <p class="stt-ws-lan-title"><strong>Micro bloqu&#233; en HTTP (Chromium)</strong></p>
-                <p class="stt-ws-lan-desc">Sur une adresse IP en HTTP, le navigateur refuse le micro. Le cadenas du site ne permet pas de le d&#233;bloquer.</p>
-                <p class="stt-ws-lan-actions">
-                    <a href="#settings" class="stt-ws-lan-settings-link">Ouvrir Options &#8594; Dict&#233;e vocale</a>
+                <p id="stt-strip-hint" class="stt-strip-hint" hidden aria-live="polite">
+                    <span class="stt-strip-hint-text"></span>
                     <span id="stt-ws-localhost-row" class="stt-ws-localhost-row" hidden>
-                        &#183; Sur cette machine&nbsp;: <a id="stt-ws-localhost-link" href="#"></a>
+                        &#8212; <a id="stt-ws-localhost-link" href="#"></a>
                     </span>
                 </p>
             </div>
+            <div id="stt-load-panel" class="stt-strip-load" hidden>
+                <p class="stt-load-label" data-stt-load-label hidden>Chargement du mod&#232;le&#8230;</p>
+                <div class="stt-load-bar" data-stt-load-bar role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+                    <div class="stt-load-fill" data-stt-load-fill></div>
+                </div>
+                <p class="stt-load-detail" data-stt-load-detail hidden></p>
+            </div>
+            <p id="stt-compute-hint" class="stt-help stt-ws-compute-hint" hidden aria-live="polite"></p>
+            <div id="stt-ws-lan-hint" class="stt-ws-lan-hint" hidden></div>
+            <p id="stt-help" class="stt-help cfg-desc" hidden></p>
         </div>
 
-        <button id="sniperise-btn" class="btn" style="width:100%;margin-top:8px">NETTOYER CE TAS DE MERDE &#8594;</button>
-        <div id="ws-prompt-guard" class="ws-prompt-guard" style="display:none" role="alert">
-            <strong>Nettoyage bloqu&#233;.</strong> Active le <a href="#prompts">prompt syst&#232;me</a> ou au moins un <a href="#prompts">prompt de contexte</a> (tag rouge) pour lancer le LLM.
+        <div class="ws-input-field">
+            <textarea id="ws-input" class="ws-textarea" placeholder="" maxlength="50000" aria-label=""></textarea>
+            <div class="ws-input-tools">
+                <span id="char-count" class="char-count">0 / 50000</span>
+                <input type="file" id="ws-audio-file-input" accept="audio/*" hidden>
+                <button id="ws-audio-file-btn" type="button" class="ws-icon-btn" title="Importer un fichier audio (Whisper Maxi, local)" aria-label="Importer un fichier audio">&#127925;</button>
+                <button id="ws-dictation-audio-btn" type="button" class="ws-icon-btn" hidden
+                  title="Télécharger l'enregistrement micro (.webm)" aria-label="Télécharger l'audio de la dictée">⬇</button>
+                <button id="ws-input-clear" type="button" class="ws-icon-btn" title="Effacer la saisie" aria-label="Effacer la saisie">&#128465;</button>
+            </div>
         </div>
-        <button id="cancel-btn" class="btn secondary" style="width:100%;display:none;margin-top:6px;background:#a00;color:#fff">⏹ ARRÊTER L'INFÉRENCE</button>
+        <p id="ws-audio-status" class="ws-audio-status" hidden aria-live="polite"></p>
 
-        <details id="context-panel" class="context-panel">
+        <details id="context-panel" class="context-panel" open>
             <summary class="context-summary">
-                <span class="context-title">Prompts de contexte</span>
+                <span class="context-summary-lead">
+                    <span class="sec-icon sec-icon-sm" aria-hidden="true">&#127991;&#65039;</span>
+                    <span class="context-title">Prompts de contexte</span>
+                </span>
                 <span id="context-active-count" class="context-badge">0 actif</span>
             </summary>
             <div class="context-body">
-                <div class="context-bulk-actions">
-                    <button id="context-select-all-btn" type="button" class="btn-ghost btn-sm">TOUT S&#201;LECTIONNER</button>
-                    <button id="context-clear-all-btn" type="button" class="btn-ghost btn-sm">TOUT D&#201;S&#201;LECTIONNER</button>
+                <div class="context-toolbar">
+                    <button id="context-select-all-btn" type="button" class="context-toolbar-btn" title="Tout s&#233;lectionner">Tout</button>
+                    <button id="context-clear-all-btn" type="button" class="context-toolbar-btn" title="Tout d&#233;s&#233;lectionner">Aucun</button>
+                    <a href="#prompts" class="context-toolbar-btn context-toolbar-link" title="Cr&#233;er ou modifier ces options">G&#233;rer &#8594;</a>
                 </div>
                 <div id="profiles-tags" class="profiles-tags"></div>
-                <a href="#prompts" class="tag-link context-manage-link">Cr&#233;er ou modifier ces options &#8594;</a>
             </div>
         </details>
     </div>
 
     <div class="ws-panel ws-output">
-        <label class="form-label" style="margin-bottom:12px">PROMPT DE SNIPER</label>
+        <div class="ws-panel-head">
+            <span class="sec-icon" aria-hidden="true">&#10024;</span>
+            <h2 class="ws-panel-title">Output</h2>
+        </div>
+        <div class="ws-output-header">
+            <div class="ws-output-model-row">
+                <label class="ws-output-model-label" for="ws-output-model-select">Mod&#232;le LLM</label>
+                <select id="ws-output-model-select" class="ws-output-model-select select-mini" title="Changer de mod&#232;le LLM"></select>
+            </div>
+            <button id="ws-thinking-toggle" type="button" class="ws-thinking-toggle" title="Activer ou d&#233;sactiver la r&#233;flexion du mod&#232;le" aria-pressed="false">&#129504; R&#233;flexion</button>
+        </div>
+        <div id="ws-thinking-settings" class="ws-thinking-settings" hidden>
+            <label class="ws-thinking-settings-label" for="ws-thinking-max-chars">Caract&#232;res max de r&#233;flexion</label>
+            <input type="number" id="ws-thinking-max-chars" class="ws-thinking-max-input" min="0" max="100000" step="100" value="5000" title="Caract&#232;res max de r&#233;flexion (0 = illimit&#233;)">
+            <span id="ws-thinking-max-hint" class="ws-thinking-settings-hint">5000 car. autoris&#233;s &#183; 0 = illimit&#233;</span>
+        </div>
+        <p id="ws-thinking-ws-hint" class="ws-thinking-ws-hint" hidden></p>
         <div id="output-box" class="output-box">
             <details id="thinking-panel" class="thinking-panel">
                 <summary class="thinking-summary">
@@ -140,39 +228,43 @@
                 </summary>
                 <div class="thinking-body">
                     <p id="thinking-unavailable-msg" class="thinking-unavailable cfg-desc" hidden></p>
-                    <textarea id="thinking-text" class="thinking-text" readonly placeholder="La r&#233;flexion appara&#238;tra ici en direct&#8230;"></textarea>
-                    <button id="copy-thinking-btn" type="button" class="btn-ghost btn-sm">COPIER LA R&#201;FLEXION</button>
+                    <div class="output-field-wrap">
+                        <textarea id="thinking-text" class="thinking-text" readonly placeholder=""></textarea>
+                        <button id="copy-thinking-btn" type="button" class="ws-icon-btn ws-output-icon-btn" title="Copier la r&#233;flexion" aria-label="Copier la r&#233;flexion">&#128203;</button>
+                    </div>
                 </div>
             </details>
-            <textarea id="output-text" class="output-text" readonly placeholder="Le prompt nettoy&#233; appara&#238;tra ici&#8230;"></textarea>
+            <div class="output-field-wrap">
+                <textarea id="output-text" class="output-text" readonly placeholder=""></textarea>
+                <button id="copy-btn" type="button" class="ws-icon-btn ws-output-icon-btn" title="Copier le prompt nettoy&#233;" aria-label="Copier le prompt nettoy&#233;">&#128203;</button>
+            </div>
             <div id="output-meta" class="output-meta"></div>
-            <div class="output-actions">
-                <button id="copy-btn" class="btn-ghost btn-sm">COPIER CE PUTAIN DE PROMPT</button>
-                <button id="again-btn" class="btn-ghost btn-sm">EN FAIRE UN AUTRE</button>
+        </div>
+        <div class="ws-output-actions">
+            <div class="ws-output-actions-primary">
+                <button id="ws-reset-btn" type="button" class="btn-ghost btn-sm ws-reset-btn" title="R&#233;initialiser saisie et r&#233;sultat">Reset</button>
+                <button id="sniperise-btn" class="btn ws-sniperise-btn">NETTOYER CE TAS DE MERDE &#8594;</button>
+                <button id="cancel-btn" class="btn secondary ws-cancel-btn" style="display:none">&#9209; Arr&#234;ter</button>
+            </div>
+            <div id="ws-prompt-guard" class="ws-prompt-guard ws-prompt-guard-compact" style="display:none" role="alert">
+                Active le <a href="#prompts">prompt syst&#232;me</a> ou un <a href="#prompts">contexte</a> pour lancer le LLM.
             </div>
         </div>
     </div>
 </div>
 
-
-<div class="ws-bar">
-    <div class="ws-bar-label">Mod&#232;le actif</div>
-    <div class="ws-bar-fields">
-        <span id="ws-model-name" class="ws-model-name">—</span>
-    </div>
-</div>
-
-<div class="ws-history-section" id="ws-history-section">
-    <div class="ws-history-head">
-        <h2 class="ws-history-title" id="ws-history-title">Historique LLM texte</h2>
-        <button id="ws-history-clear" type="button" class="btn-ghost btn-sm" title="Supprimer tous les historiques locaux">VIDER TOUS LES HISTORIQUES</button>
-    </div>
-    <div class="history-subsection">
-        <h3 class="history-subtitle">Prompts LLM texte</h3>
+<details id="ws-history-panel" class="ws-history-panel">
+    <summary class="ws-history-summary">
+        <span class="sec-icon sec-icon-sm" aria-hidden="true">&#128220;</span>
+        <span class="ws-history-summary-title">Historique LLM</span>
+        <span id="ws-history-count" class="ws-history-count"></span>
+        <button id="ws-history-clear" type="button" class="ws-history-purge-btn" title="Purger tout l'historique local">Purger</button>
+    </summary>
+    <div class="ws-history-body">
         <p id="ws-history-empty" class="ws-history-empty">Aucune entr&#233;e.</p>
         <div id="ws-history-list" class="ws-history-list" aria-live="polite"></div>
     </div>
-</div>
+</details>
 
 </div>
 </section>
@@ -182,188 +274,116 @@
 <div class="container">
 <div class="stg-wrap">
 
+<header class="stg-header">
+    <h1 class="stg-page-title">Options</h1>
+    <p class="stg-page-desc">Connexion LLM, th&#232;me, langue et sauvegarde &#8212; tout reste dans le stockage local de ton navigateur.</p>
+</header>
+
+<div class="stg-layout">
+
+<div class="stg-col">
 <div class="stg-card" id="llm-settings-card">
-    <div class="stg-title">INTELLIGENCE ARTIFICIELLE</div>
-
-    <label class="form-label" for="llm-provider-select">S&#233;lectionner un fournisseur</label>
-    <select id="llm-provider-select" class="stg-select"></select>
-
-    <div id="llm-endpoint-wrap" class="cfg-custom-model">
-        <label class="form-label" for="llm-endpoint-url">URL du moteur LLM</label>
-        <input id="llm-endpoint-url" class="cfg-input" type="text" placeholder="">
-    </div>
-    <div class="cfg-test-row">
-        <button id="btn-test-llm" type="button" class="btn secondary btn-sm">&#128268; Tester la connexion LLM</button>
-    </div>
-    <p id="llm-test-status" class="conn-status"></p>
-
-    <label class="form-label" for="config-model">S&#233;lectionner un mod&#232;le</label>
-    <select id="config-model" class="cfg-select"></select>
-    <div id="config-model-info" class="cfg-desc"></div>
-
-    <label class="form-label">R&#233;flexion du mod&#232;le</label>
-    <div class="llm-thinking-options context-inject-options">
-        <label class="context-inject-option">
-            <input type="radio" name="llm-thinking-mode" id="llm-thinking-off" value="off" checked>
-            D&#233;sactiv&#233;e
-        </label>
-        <label class="context-inject-option">
-            <input type="radio" name="llm-thinking-mode" id="llm-thinking-on" value="on">
-            Activ&#233;e
-        </label>
-    </div>
-    <p id="llm-thinking-hint" class="cfg-desc llm-thinking-hint" hidden></p>
-</div>
-
-<div class="stg-card">
-    <div class="stg-title">TH&#200;ME DE COULEUR</div>
-    <div id="theme-picker" class="theme-picker"></div>
-</div>
-
-<div class="stg-card">
-    <div class="stg-title">LANGUE</div>
-    <select id="settings-lang" class="stg-select">
-        <option value="fr">Fran&#231;ais</option>
-        <option value="en">English</option>
-    </select>
-</div>
-
-<div class="stg-card" id="stt-settings-card">
-    <div class="stg-title">DICT&#201;E VOCALE</div>
-    <div id="stt-settings" class="stt-settings">
-        <div class="stt-row stt-settings-actions">
-            <button id="stt-perm-btn" type="button" class="btn btn-sm stt-perm-btn" style="display:none">&#128275; AUTORISER LE MICRO</button>
+    <div class="stg-card-head">
+        <span class="stg-card-icon" aria-hidden="true">&#129302;</span>
+        <div class="stg-card-head-text">
+            <h2 class="stg-title">Intelligence artificielle</h2>
+            <p class="stg-card-desc">Connexion au moteur LLM (fournisseur et URL).</p>
         </div>
-        <div class="stt-status-grid stt-status-grid-settings" aria-live="polite">
-            <div class="stt-model-status-bar">
-                <span class="stt-status-key">Moteur</span>
-                <span class="stt-model-badge stt-model-badge-pending" data-stt-model-badge>&#8212;</span>
-                <span class="stt-status-val" data-stt-model-text>En attente</span>
+    </div>
+    <div class="stg-card-body stg-llm-body">
+        <div class="stg-llm-row">
+            <div class="stg-llm-field stg-llm-field-provider">
+                <label class="stg-label" for="llm-provider-select">Fournisseur</label>
+                <select id="llm-provider-select" class="stg-select"></select>
             </div>
-            <div class="stt-mic-status-bar">
-                <span class="stt-status-key">Micro</span>
-                <span class="stt-mic-badge stt-mic-badge-unknown" data-stt-mic-badge>&#8212;</span>
-                <span class="stt-status-val" data-stt-mic-text>V&#233;rification&#8230;</span>
+            <div id="llm-endpoint-wrap" class="stg-llm-field stg-llm-field-url cfg-custom-model">
+                <label class="stg-label" for="llm-endpoint-url">URL du moteur LLM</label>
+                <input id="llm-endpoint-url" class="cfg-input stg-input stg-llm-url-input" type="text" placeholder="">
+            </div>
+            <div class="stg-llm-field stg-llm-field-test">
+                <span class="stg-label stg-label-action" aria-hidden="true">&nbsp;</span>
+                <button id="btn-test-llm" type="button" class="btn secondary btn-sm stg-test-btn">&#128268; Tester</button>
             </div>
         </div>
-        <div id="stt-settings-load-panel" class="stt-load-panel" hidden>
-            <p class="stt-load-label" data-stt-load-label>Chargement du mod&#232;le&#8230;</p>
-            <div class="stt-load-bar" data-stt-load-bar role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
-                <div class="stt-load-fill" data-stt-load-fill></div>
-            </div>
-            <p class="stt-load-detail" data-stt-load-detail></p>
-        </div>
-        <div id="stt-denied-panel" class="stt-denied-panel" style="display:none" role="region" aria-label="Permission micro bloquée">
-            <p class="stt-denied-title"><strong>Permission micro bloquée pour ce site</strong></p>
-            <p class="stt-denied-desc">Le navigateur ne peut plus afficher la popup : tu dois réinitialiser l'autorisation dans les réglages du site, puis revenir ici.</p>
-            <details class="stt-denied-details" open>
-                <summary>Chrome / Edge</summary>
-                <ol class="stt-denied-steps">
-                    <li>Clique le <strong>cadenas</strong> (ou l'icône à gauche de l'URL).</li>
-                    <li>Ouvre <strong>Paramètres du site</strong> (ou Autorisations du site).</li>
-                    <li>Passe <strong>Microphone</strong> sur <strong>Autoriser</strong>, ou clique <strong>Réinitialiser les autorisations</strong>.</li>
-                    <li>Reviens sur cet onglet et clique le bouton ci-dessous.</li>
-                </ol>
-            </details>
-            <details class="stt-denied-details">
-                <summary>Firefox</summary>
-                <ol class="stt-denied-steps">
-                    <li>Clique le <strong>cadenas</strong> dans la barre d'adresse.</li>
-                    <li>Dans <strong>Autorisations</strong>, mets <strong>Utiliser le microphone</strong> sur <strong>Autoriser</strong>.</li>
-                    <li>Ou clique <strong>Effacer les permissions</strong> puis recharge la page.</li>
-                    <li>Reviens ici et clique le bouton ci-dessous.</li>
-                </ol>
-            </details>
-            <details class="stt-denied-details">
-                <summary>Safari</summary>
-                <ol class="stt-denied-steps">
-                    <li>Menu <strong>Safari</strong> &#8594; <strong>Réglages</strong> &#8594; <strong>Sites web</strong> &#8594; <strong>Microphone</strong>.</li>
-                    <li>Trouve ce site et passe-le sur <strong>Autoriser</strong>.</li>
-                    <li>Reviens sur cet onglet et clique le bouton ci-dessous.</li>
-                </ol>
-            </details>
-            <button id="stt-denied-retry" type="button" class="btn secondary btn-sm stt-denied-retry">&#128260; J'AI MODIFIÉ LES RÉGLAGES — RÉESSAYER</button>
-        </div>
-        <div class="stt-device-row" id="stt-compute-row">
-            <label class="form-label stt-device-label" for="stt-compute-select">Acc&#233;l&#233;ration</label>
-            <select id="stt-compute-select" class="select-mini stt-compute-select stg-select" title="CPU (WASM) ou GPU (WebGPU) pour Whisper et Parakeet ; Vosk reste en CPU">
-                <option value="cpu">CPU (WASM)</option>
-                <option value="gpu">GPU (WebGPU)</option>
-            </select>
-        </div>
-        <p id="stt-compute-hint" class="stt-help cfg-desc" aria-live="polite"></p>
-        <div class="stt-device-row">
-            <label class="form-label stt-device-label" for="stt-engine-select">Moteur vocal</label>
-            <select id="stt-engine-select" class="select-mini stt-engine-select stg-select" title="Vosk Mini, Vosk Maxi, Whisper Mini, Whisper Maxi, Parakeet">
-                <option value="vosk-mini">Vosk Mini</option>
-                <option value="vosk-maxi">Vosk Maxi</option>
-                <option value="whisper-mini">Whisper Mini</option>
-                <option value="whisper-maxi">Whisper Maxi</option>
-                <option value="parakeet">Parakeet</option>
-            </select>
-        </div>
-        <div class="stt-device-row">
-            <label class="form-label stt-device-label" for="stt-device-select">Microphone</label>
-            <select id="stt-device-select" class="select-mini stt-device-select stg-select" disabled title="Autorise le micro pour lister les p&#233;riph&#233;riques">
-                <option value="">Micro par d&#233;faut</option>
-            </select>
-            <button id="stt-refresh-devices" type="button" class="btn-ghost btn-sm" title="Rafra&#238;chir la liste des micros">&#128260;</button>
-        </div>
-        <p id="stt-help" class="stt-help cfg-desc" hidden></p>
-        <div id="stt-lan-panel" class="stt-lan-panel" style="display:none" role="region" aria-label="Dictée en HTTP sur le réseau local">
-            <p class="stt-lan-title"><strong>Micro bloqué en HTTP (réseau local)</strong></p>
-            <p class="stt-lan-desc">Les navigateurs refusent le micro hors HTTPS — sauf <strong>localhost</strong>, un contournement navigateur, ou un passage en HTTPS.</p>
-            <p id="stt-lan-chromium-note" class="stt-lan-note" style="display:none">
-                <strong>Chromium (Chrome, Edge, Brave…) :</strong> dans les paramètres du site, le micro est <strong>grisé et bloqué</strong> («&nbsp;Bloquée pour protéger la confidentialité&nbsp;»). Le cadenas ne permet pas de l'autoriser : il faut <strong>localhost</strong>, <strong>HTTPS</strong>, ou le <strong>flag de lancement</strong> ci-dessous.
-            </p>
-            <details id="stt-lan-chrome-details" class="stt-lan-details">
-                <summary>Chrome / Edge / Chromium — autoriser ton URL en HTTP</summary>
-                <ol class="stt-lan-steps">
-                    <li><strong>Le cadenas ne fonctionne pas</strong> sur une IP en HTTP : le micro reste sur «&nbsp;Bloquer&nbsp;» et grisé.</li>
-                    <li>Sur <strong>cette machine</strong>, ouvre plutôt le lien <strong>localhost</strong> ci-dessous (recommandé).</li>
-                    <li>Ou ferme Chromium et relance-le avec le flag&nbsp;:<br><code id="stt-lan-chrome-flag">--unsafely-treat-insecure-origin-as-secure=http://ton-ip/</code></li>
-                    <li>Ou sers le site en <strong>HTTPS</strong> (certificat auto-signé sur ton serveur web).</li>
-                    <li><strong>Recharge cette page</strong>, puis lance la dict&#233;e depuis le Workspace.</li>
-                </ol>
-            </details>
-            <details id="stt-lan-firefox-details" class="stt-lan-details" open>
-                <summary>Firefox — autoriser le micro en HTTP (LAN)</summary>
-                <ol class="stt-lan-steps">
-                    <li>Ouvre <code>about:config</code> dans la barre d'adresse, accepte l'avertissement.</li>
-                    <li>Passe <code>media.devices.insecure.enabled</code> à <strong>true</strong> (détection du micro).</li>
-                    <li>Passe <strong>aussi</strong> <code>media.getusermedia.insecure.enabled</code> à <strong>true</strong> (accès au micro — indispensable).</li>
-                    <li><strong>Recharge cette page</strong>, puis lance la dict&#233;e depuis le Workspace.</li>
-                </ol>
-                <p class="stt-lan-note">Les <strong>deux</strong> réglages sont nécessaires : le premier détecte le micro, le second autorise son utilisation.</p>
-            </details>
-            <p id="stt-lan-localhost-row" class="stt-lan-localhost" style="display:none">
-                Sur <strong>cette machine</strong>, solution la plus simple — ouvre&nbsp;:
-                <a id="stt-lan-localhost-link" href="#">localhost</a>
-                <span class="stt-lan-localhost-hint"> (Chromium autorise le micro sur localhost en HTTP)</span>
-            </p>
-            <button id="stt-lan-retry" type="button" class="btn secondary btn-sm stt-lan-retry">&#128260; VÉRIFIER / RECHARGER</button>
-        </div>
+        <p id="llm-test-status" class="conn-status stg-conn-status stg-llm-status"></p>
     </div>
 </div>
 
-<div class="stg-card" id="api-elite-card" style="display:none" aria-hidden="true"></div>
-
-<div class="stg-card">
-    <div class="stg-title">SAUVEGARDE &amp; RESTAURATION</div>
-    <div class="danger-actions">
-        <button id="config-export-btn" class="btn-ghost btn-sm">EXPORTER MA CONFIGURATION</button>
-        <button id="config-import-btn" class="btn-ghost btn-sm">IMPORTER UNE CONFIGURATION</button>
-        <input type="file" id="config-import-file" accept=".json,application/json" style="display:none">
+<div class="stg-card stg-card-pref">
+    <div class="stg-card-head stg-card-head-compact">
+        <span class="stg-card-icon" aria-hidden="true">&#127760;</span>
+        <h2 class="stg-title">Langue</h2>
+    </div>
+    <div class="stg-card-body">
+        <label class="stg-label sr-only" for="settings-lang">Langue de l&#8217;interface</label>
+        <select id="settings-lang" class="stg-select">
+            <option value="fr">Fran&#231;ais</option>
+            <option value="en">English</option>
+        </select>
     </div>
 </div>
 
 <div class="stg-card stg-danger">
-    <div class="stg-title">ZONE DANGER</div>
-    <div style="margin-top:12px">
-        <button id="clear-btn" class="btn-danger btn-sm">TOUT EFFACER</button>
+    <div class="stg-card-head stg-card-head-danger">
+        <span class="stg-card-icon" aria-hidden="true">&#9888;&#65039;</span>
+        <div class="stg-card-head-text">
+            <h2 class="stg-title">Zone danger</h2>
+            <p class="stg-card-desc danger-desc">Effacer d&#233;finitivement session en cours, profils, historiques LLM et profils locaux (stock&#233;s dans votre navigateur).</p>
+        </div>
+    </div>
+    <div class="stg-card-body">
+        <button id="clear-btn" type="button" class="btn-danger btn-sm stg-danger-btn">Tout effacer</button>
     </div>
 </div>
 
+</div>
+
+<div class="stg-col">
+
+<div class="stg-card stg-card-pref stg-card-theme">
+    <div class="stg-card-head">
+        <span class="stg-card-icon" aria-hidden="true">&#127912;</span>
+        <div class="stg-card-head-text">
+            <h2 class="stg-title">Th&#232;me</h2>
+            <p class="stg-card-desc">Palette visuelle de l&#8217;interface &#8212; enregistr&#233;e localement dans ton navigateur.</p>
+        </div>
+    </div>
+    <div class="stg-card-body stg-theme-body">
+        <p id="stg-theme-current" class="stg-theme-current" aria-live="polite"></p>
+        <div id="theme-picker" class="theme-picker stg-theme-picker" role="listbox" aria-label="Choisir un th&#232;me"></div>
+    </div>
+</div>
+
+<div class="stg-card stg-card-backup">
+    <div class="stg-card-head stg-card-head-compact">
+        <span class="stg-card-icon" aria-hidden="true">&#128190;</span>
+        <div class="stg-card-head-text">
+            <h2 class="stg-title">Sauvegarde &amp; restauration</h2>
+            <p class="stg-card-desc">Exporte ou importe un fichier <code class="stg-inline-code">pdm-config</code> complet.</p>
+        </div>
+    </div>
+    <div class="stg-card-body">
+        <div class="stg-action-grid danger-actions">
+            <button id="config-import-btn" type="button" class="stg-action-tile">
+                <span class="stg-action-icon" aria-hidden="true">&#128229;</span>
+                <span class="stg-action-label">Importer</span>
+                <span class="stg-action-hint">Remplace toutes les donn&#233;es locales</span>
+            </button>
+            <button id="config-export-btn" type="button" class="stg-action-tile">
+                <span class="stg-action-icon" aria-hidden="true">&#128228;</span>
+                <span class="stg-action-label">Exporter</span>
+                <span class="stg-action-hint">T&#233;l&#233;charger ta config JSON (nom de profil dans le fichier)</span>
+            </button>
+            <input type="file" id="config-import-file" accept=".json,application/json" style="display:none">
+        </div>
+    </div>
+</div>
+
+</div>
+
+<div class="stg-card" id="api-elite-card" style="display:none" aria-hidden="true"></div>
+
+</div>
 </div>
 </div>
 </section>
@@ -372,17 +392,22 @@
 <section id="section-prompts" class="section">
 <div class="container">
 <div class="prm-wrap">
+<div class="prm-grid">
 
-<div class="prm-card">
+<div class="prm-col prm-col-system">
+<div class="prm-card prm-card-system">
     <div class="system-prompt-head">
-        <div class="prm-title">PROMPT SYST&#200;ME (OPTIONNEL)</div>
+        <h2 class="prm-title prm-title-with-icon">
+            <span class="sec-icon" aria-hidden="true">&#129504;</span>
+            <span>Prompt syst&#232;me (optionnel)</span>
+        </h2>
         <label class="toggle-wrap" id="system-prompt-toggle-wrap" title="Active ou d&#233;sactive le prompt syst&#232;me lors du nettoyage">
             <input type="checkbox" id="system-prompt-enabled" checked>
             <span id="system-prompt-toggle-label"> Actif</span>
         </label>
     </div>
     <div id="prompts-system-lock" class="cfg-lock" style="display:none"></div>
-    <textarea id="prompts-system" class="cfg-ta" style="min-height:280px" placeholder="Tu es un Nettoyeur / Reformulateur de prompts.
+    <textarea id="prompts-system" class="cfg-ta prm-system-ta" placeholder="Tu es un Nettoyeur / Reformulateur de prompts.
 
 R&#212;LE UNIQUE : reprendre le prompt de l'utilisateur et le restituer en fran&#231;ais correct, clair et fluide. Tu ne fais RIEN d'autre.
 
@@ -407,9 +432,20 @@ EXEMPLES :
 
 RAPPEL : tu es un nettoyeur de texte, pas un assistant conversationnel."></textarea>
 </div>
+</div>
 
-<div class="prm-card">
-    <div class="prm-title">PROMPTS DE CONTEXTE</div>
+<div class="prm-col prm-col-context">
+<div class="prm-card prm-card-context">
+    <h2 class="prm-title prm-title-with-icon">
+        <span class="sec-icon" aria-hidden="true">&#127991;&#65039;</span>
+        <span>Prompts de contexte</span>
+    </h2>
+
+    <section class="prm-context-options" aria-label="Configuration et ajout de prompts de contexte">
+        <h3 class="prm-context-section-title prm-title-with-icon">
+            <span class="sec-icon sec-icon-sm" aria-hidden="true">&#9881;&#65039;</span>
+            <span>Configuration et ajout</span>
+        </h3>
 
     <div class="context-inject-box">
         <div class="context-inject-title">Ordre d&#8217;injection par rapport au prompt syst&#232;me</div>
@@ -426,8 +462,51 @@ RAPPEL : tu es un nettoyeur de texte, pas un assistant conversationnel."></texta
         <div id="context-inject-diagram" class="context-inject-diagram" style="margin-top:12px"></div>
     </div>
 
+    <div class="prm-context-add-stack">
+
+    <details class="context-gen-config-box">
+        <summary class="context-gen-config-summary">Prompts LLM pour g&#233;n&#233;rer des contextes</summary>
+        <div class="context-gen-config-body">
+            <p class="context-gen-config-desc">Instructions LLM stock&#233;es en session et export&#233;es dans le JSON (<code>pdm_context_gen_*</code>, <code>pdm_context_inject_header</code>).</p>
+            <label class="form-label" for="context-gen-system">Prompt syst&#232;me (g&#233;n&#233;ration JSON) — <code>pdm_context_gen_system</code></label>
+            <textarea id="context-gen-system" class="cfg-ta context-gen-ta" style="min-height:120px"></textarea>
+            <label class="form-label" for="context-gen-user-intent" style="margin-top:12px">Pr&#233;fixe message utilisateur (intention) — <code>pdm_context_gen_user_intent</code></label>
+            <textarea id="context-gen-user-intent" class="cfg-ta context-gen-ta" style="min-height:70px"></textarea>
+            <label class="form-label" for="context-gen-user-title" style="margin-top:12px">Mod&#232;le message utilisateur (titre, <code>{{title}}</code>) — <code>pdm_context_gen_user_title</code></label>
+            <textarea id="context-gen-user-title" class="cfg-ta context-gen-ta" style="min-height:90px"></textarea>
+            <label class="form-label" for="context-inject-header" style="margin-top:12px">En-t&#234;te injection contextes actifs — <code>pdm_context_inject_header</code></label>
+            <textarea id="context-inject-header" class="cfg-ta context-gen-ta" style="min-height:50px"></textarea>
+            <label class="form-label" for="context-profile-line-template" style="margin-top:12px">Mod&#232;le ligne contexte actif (<code>{{tag}}</code>, <code>{{prompt}}</code>) — <code>pdm_context_profile_line_template</code></label>
+            <textarea id="context-profile-line-template" class="cfg-ta context-gen-ta" style="min-height:50px"></textarea>
+            <div class="context-gen-params-grid" style="margin-top:12px;display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px">
+                <label class="form-label" for="context-gen-max-tokens">Max tokens — <code>pdm_context_gen_max_tokens</code>
+                    <input id="context-gen-max-tokens" type="number" min="1" max="8192" step="1" class="cfg-input" style="width:100%;margin-top:4px">
+                </label>
+                <label class="form-label" for="context-gen-temperature">Temp&#233;rature (1&#7497; essai) — <code>pdm_context_gen_temperature</code>
+                    <input id="context-gen-temperature" type="number" min="0" max="2" step="0.05" class="cfg-input" style="width:100%;margin-top:4px">
+                </label>
+                <label class="form-label" for="context-gen-retry-temperature">Temp&#233;rature (retry) — <code>pdm_context_gen_retry_temperature</code>
+                    <input id="context-gen-retry-temperature" type="number" min="0" max="2" step="0.05" class="cfg-input" style="width:100%;margin-top:4px">
+                </label>
+                <label class="form-label" for="context-gen-max-retries">Retries max — <code>pdm_context_gen_max_retries</code>
+                    <input id="context-gen-max-retries" type="number" min="0" max="10" step="1" class="cfg-input" style="width:100%;margin-top:4px">
+                </label>
+            </div>
+            <label class="form-label" for="context-gen-json-schema" style="margin-top:12px">Sch&#233;ma JSON Ollama (1&#7497; essai) — <code>pdm_context_gen_json_schema</code></label>
+            <textarea id="context-gen-json-schema" class="cfg-ta context-gen-ta" style="min-height:120px"></textarea>
+            <label class="form-label" for="context-gen-tag-intent-suffix" style="margin-top:12px">Suffixe tag forc&#233; (intention, <code>{{tag}}</code>) — <code>pdm_context_gen_tag_intent_suffix</code></label>
+            <textarea id="context-gen-tag-intent-suffix" class="cfg-ta context-gen-ta" style="min-height:50px"></textarea>
+            <label class="form-label" for="context-gen-forced-tag-system-suffix" style="margin-top:12px">Suffixe tag forc&#233; (syst&#232;me) — <code>pdm_context_gen_forced_tag_system_suffix</code></label>
+            <textarea id="context-gen-forced-tag-system-suffix" class="cfg-ta context-gen-ta" style="min-height:50px"></textarea>
+            <label class="form-label" for="context-gen-retry-system-suffix" style="margin-top:12px">Suffixe retry (syst&#232;me) — <code>pdm_context_gen_retry_system_suffix</code></label>
+            <textarea id="context-gen-retry-system-suffix" class="cfg-ta context-gen-ta" style="min-height:50px"></textarea>
+            <label class="form-label" for="context-gen-retry-user-suffix" style="margin-top:12px">Suffixe retry (utilisateur) — <code>pdm_context_gen_retry_user_suffix</code></label>
+            <textarea id="context-gen-retry-user-suffix" class="cfg-ta context-gen-ta" style="min-height:50px"></textarea>
+        </div>
+    </details>
+
     <details class="context-quick-add">
-        <summary class="context-quick-add-summary">Ajouter un prompt de contexte</summary>
+        <summary class="context-quick-add-summary">Ajouter un prompt de contexte (manuellement)</summary>
         <div class="context-quick-add-body">
             <label class="form-label" for="context-new-tag">Tag (ex. TonFormel)</label>
             <input id="context-new-tag" class="cfg-input" type="text" placeholder="Ex: TonFormel">
@@ -438,7 +517,7 @@ RAPPEL : tu es un nettoyeur de texte, pas un assistant conversationnel."></texta
     </details>
 
     <details class="context-generate-box">
-        <summary class="context-generate-summary">G&#233;n&#233;ration de prompt de contexte (par titre)</summary>
+        <summary class="context-generate-summary">Ajouter un prompt de contexte avec l&#8217;IA (avec un titre)</summary>
         <div class="context-generate-body">
             <label class="form-label" for="context-title-input">Titre du contexte</label>
             <input id="context-title-input" class="cfg-input" type="text" placeholder="Ex: TonFormel">
@@ -456,25 +535,23 @@ RAPPEL : tu es un nettoyeur de texte, pas un assistant conversationnel."></texta
         </div>
     </details>
 
+    </div>
+    </section>
+
+    <section class="prm-context-list" aria-label="Prompts de contexte enregistr&#233;s">
+        <h3 class="prm-context-section-title prm-title-with-icon">
+            <span class="sec-icon sec-icon-sm" aria-hidden="true">&#128194;</span>
+            <span>Prompts enregistr&#233;s</span>
+        </h3>
     <div id="prompts-context-lock" class="cfg-lock" style="display:none"></div>
     <div id="profile-count" class="profile-counter"><span class="num">0/&#8734;</span> prompts utilis&#233;s</div>
-    <div id="profiles-list"></div>
-    <button id="add-profile-btn" class="btn-add">AJOUTER UN PROMPT VIDE +</button>
+    <p class="profile-order-hint">Ordre d&#8217;affichage et d&#8217;injection : glisse <span class="profile-order-hint-icon" aria-hidden="true">&#8942;&#8942;</span> ou utilise &#8593;&#8595;.</p>
+    <div id="profiles-list" class="profiles-sortable"></div>
+    </section>
+</div>
 </div>
 
-<div class="prm-card" id="prompts-history-card">
-    <div class="prm-title">HISTORIQUES LLM</div>
-    <div class="history-subsection">
-        <h3 class="history-subtitle">Prompts LLM texte</h3>
-    <p id="prompts-history-empty" class="ws-history-empty">Aucune entr&#233;e.</p>
-    <div id="prompts-history-list" class="ws-history-list prompts-history-list" aria-live="polite"></div>
-    </div>
-    <div class="prompts-history-actions">
-        <button id="prompts-history-clear" type="button" class="btn-ghost btn-sm">VIDER TOUS LES HISTORIQUES</button>
-        <a href="#workspace" class="tag-link">Aller au Workspace &#8594;</a>
-    </div>
 </div>
-
 </div>
 </div>
 </section>
@@ -487,56 +564,124 @@ RAPPEL : tu es un nettoyeur de texte, pas un assistant conversationnel."></texta
 <h1 class="legal-title">Documentation</h1>
 <p class="legal-update">Derni&#232;re mise &#224; jour : juillet 2026</p>
 
+<h2>Profil JSON</h2>
+<p>Si le fichier <code>assets/profiles/manifest.json</code> est pr&#233;sent sur le serveur (local maintainer, pr&#233;-prod ou prod), un s&#233;lecteur <strong>Profil JSON</strong> appara&#238;t dans le header. Chaque profil charge un <strong>pack complet</strong> : prompt syst&#232;me, prompts de contexte, moteur STT, th&#232;me, exemple workspace.</p>
+<table class="legal-table">
+<thead><tr><th>id (technique)</th><th>Label</th><th>Usage</th></tr></thead>
+<tbody>
+<tr><td><code>ads-generator</code></td><td>AdsGenerator</td><td>Petites annonces entre particuliers</td></tr>
+<tr><td><code>speech2texte</code></td><td>Speech2Texte</td><td>Correction post-dict&#233;e (d&#233;faut)</td></tr>
+<tr><td><code>video-meta-descriptor</code></td><td>VideoMetaDescriptor</td><td>M&#233;tadonn&#233;es vid&#233;o YouTube</td></tr>
+</tbody>
+</table>
+<p>Changer de profil <strong>efface toutes les donn&#233;es locales</strong> puis recharge la config assembl&#233;e c&#233;t&#233; serveur (une seule confirmation). Le profil s&#233;lectionn&#233; est m&#233;moris&#233; dans <code>pdm_active_profile</code> &#8212; cl&#233; <strong>non incluse</strong> dans l&#8217;export JSON. Un import manuel via Options l&#8217;efface : le s&#233;lecteur retombe sur Speech2Texte au rechargement.</p>
+<p>Sur un clone GitHub sans bundle profils, ce s&#233;lecteur n&#8217;appara&#238;t pas.</p>
+<p>R&#233;glages communs &#224; tous les profils : <strong>Vosk Maxi</strong>, <strong>CPU</strong>, contextes inject&#233;s <strong>apr&#232;s</strong> le prompt syst&#232;me.</p>
+
+<h3>Speech2Texte (<code>speech2texte</code>) — profil par d&#233;faut</h3>
+<p><strong>Correcteur post-dict&#233;e</strong> &#8212; ponctuation STT, r&#233;p&#233;titions orales, mots parasites. Th&#232;me <code>light</code> (Cass&#233;). Exemple workspace : transcription avec h&#233;sitations et doublons (rendez-vous).</p>
+<table class="legal-table">
+<thead><tr><th>Contexte</th><th>Actif</th><th>R&#244;le</th></tr></thead>
+<tbody>
+<tr><td><code>#SansPonctuationDAbord</code></td><td>oui</td><td>Retire la ponctuation STT mal plac&#233;e</td></tr>
+<tr><td><code>#DerniereFormulation</code></td><td>oui</td><td>Garde la derni&#232;re version apr&#232;s reprises</td></tr>
+<tr><td><code>#MotsParasites</code></td><td>oui</td><td>Corrige les intrus phon&#233;tiques</td></tr>
+<tr><td><code>#HesitationsOral</code></td><td>oui</td><td>Retire euh, hum, bah&#8230;</td></tr>
+<tr><td><code>#FrancaisNaturel</code></td><td>oui</td><td>Fluidit&#233; et accords apr&#232;s nettoyage</td></tr>
+<tr><td><code>#Conservateur</code></td><td>non</td><td>Mode strict sans interpr&#233;tation</td></tr>
+</tbody>
+</table>
+
+<h3>VideoMetaDescriptor (<code>video-meta-descriptor</code>)</h3>
+<p><strong>M&#233;tadonn&#233;es YouTube</strong> &#8212; titre, description, tags, cat&#233;gorie officielle, conseil visibilit&#233;. Th&#232;me <code>light</code> (Cass&#233;). Exemple workspace : brief tuto Ollama Linux.</p>
+<p>Sortie structur&#233;e : <code>--- TITRE ---</code>, <code>--- DESCRIPTION ---</code>, <code>--- TAGS ---</code>, <code>--- CAT&#201;GORIE YOUTUBE ---</code>, <code>--- CONSEIL VISIBILIT&#201; ---</code>.</p>
+<table class="legal-table">
+<thead><tr><th>Contexte</th><th>Actif</th><th>R&#244;le</th></tr></thead>
+<tbody>
+<tr><td><code>#TitreAccrocheur</code></td><td>oui</td><td>Mot-cl&#233; t&#244;t, &#8804; 100 car.</td></tr>
+<tr><td><code>#DescriptionSEO</code></td><td>oui</td><td>Phrase-cl&#233; dans les 150 premiers caract&#232;res</td></tr>
+<tr><td><code>#TagsLongueTraine</code></td><td>oui</td><td>Tags niche + volume</td></tr>
+<tr><td><code>#CategorieOfficielle</code></td><td>oui</td><td>Une des 15 cat&#233;gories YouTube</td></tr>
+<tr><td><code>#ConseilVisibilite</code></td><td>oui</td><td>Niche, cha&#238;ne, conseil concret</td></tr>
+<tr><td><code>#TonCreatif</code></td><td>non</td><td>Humour / ton d&#233;cal&#233; si brief le demande</td></tr>
+<tr><td><code>#TutoPasAPas</code></td><td>non</td><td>Timestamps si tutoriel</td></tr>
+</tbody>
+</table>
+
+<h3>AdsGenerator (<code>ads-generator</code>)</h3>
+<p><strong>Petites annonces entre particuliers</strong> &#8212; titre + description, ton particulier, anti-style IA. Th&#232;me <code>light</code> (Cass&#233;). Exemple workspace : notes brutes v&#233;lo &#224; vendre.</p>
+<p>Sortie structur&#233;e : <code>--- TITRE ---</code>, <code>--- DESCRIPTION ---</code>.</p>
+<table class="legal-table">
+<thead><tr><th>Contexte</th><th>Actif</th><th>R&#244;le</th></tr></thead>
+<tbody>
+<tr><td><code>#TonParticulier</code></td><td>oui</td><td>Ton particulier sobre</td></tr>
+<tr><td><code>#AntiIA</code></td><td>oui</td><td>Pas de tournures type ChatGPT</td></tr>
+<tr><td><code>#PropreSansVulgarite</code></td><td>oui</td><td>Fran&#231;ais correct, prix en euros</td></tr>
+<tr><td><code>#TitreCourt</code></td><td>oui</td><td>Titre factuel objet + &#233;tat + prix</td></tr>
+<tr><td><code>#InfosPratiques</code></td><td>oui</td><td>Retrait, livraison, dispo</td></tr>
+<tr><td><code>#RelacheLeger</code></td><td>non</td><td>Ton oral l&#233;ger autoris&#233;</td></tr>
+<tr><td><code>#UrgenceVente</code></td><td>non</td><td>Urgence sobre si d&#233;m&#233;nagement</td></tr>
+</tbody>
+</table>
+<p>Les contextes actifs/inactifs sont d&#233;finis dans le bundle ; tout reste modifiable dans l&#8217;onglet <a href="#prompts">Prompts</a> apr&#232;s chargement.</p>
+
+<h2>Accueil marketing</h2>
+<p>Si le bundle <code>assets/homepage/</code> est d&#233;ploy&#233; sur le serveur, la page <strong>Accueil</strong> (<code>#landing</code>) est accessible depuis le logo. Absent du clone GitHub public : ouverture directe sur le Workspace.</p>
+
 <h2>Workspace</h2>
 <p>Colle ou dicte ton prompt dans la zone de saisie, active les <strong>prompts de contexte</strong> souhait&#233;s (tags rouges), puis lance le nettoyage. Le r&#233;sultat appara&#238;t &#224; droite ; tu peux copier le prompt nettoy&#233; ou relancer une passe.</p>
 <ul>
-<li><strong>Dict&#233;e vocale</strong> : option secondaire, 100&#8239;% locale. Le texte dict&#233; reste modifiable avant nettoyage. Micro et moteur vocal se r&#232;glent dans <a href="#settings">Options &#8594; Dict&#233;e vocale</a>.</li>
+<li><strong>Dict&#233;e vocale</strong> : option secondaire, 100&#8239;% locale. Le texte dict&#233; reste modifiable avant nettoyage. Moteur vocal, micro et acc&#233;l&#233;ration CPU/GPU se r&#232;glent dans le bloc dict&#233;e du <a href="#workspace">Workspace</a>.</li>
 <li><strong>Prompts de contexte</strong> : clique sur un tag pour l&#8217;activer (rouge = actif). L&#8217;ordre d&#8217;injection par rapport au prompt syst&#232;me se configure dans <a href="#prompts">Prompts</a>.</li>
-<li><strong>Historique</strong> : chaque nettoyage texte est enregistr&#233; localement. Les entr&#233;es peuvent &#234;tre supprim&#233;es une par une ou vid&#233;es en bloc.</li>
+<li><strong>Historique</strong> : chaque nettoyage texte est enregistr&#233; localement dans le panneau <strong>Historique LLM</strong> du Workspace. Les entr&#233;es peuvent &#234;tre supprim&#233;es une par une ou vid&#233;es en bloc.</li>
 <li><strong>Nettoyage bloqu&#233;</strong> : active le prompt syst&#232;me ou au moins un prompt de contexte dans l&#8217;onglet Prompts.</li>
 </ul>
 
 <h2>Prompts</h2>
 <h3>Prompt syst&#232;me (optionnel)</h3>
 <p>Quand il est <strong>actif</strong>, ses r&#232;gles s&#8217;appliquent &#224; chaque nettoyage. Quand il est <strong>inactif</strong>, seuls les prompts de contexte actifs sont envoy&#233;s au mod&#232;le.</p>
-<p>Laiss&#233; vide, le prompt par d&#233;faut de PromptDeMerde est utilis&#233;.</p>
+<p>Le textarea affiche le contenu de <code>pdm_system_prompt</code> s&#8217;il est renseign&#233;, sinon le prompt Nettoyeur int&#233;gr&#233;. Apr&#232;s changement de profil JSON, le prompt import&#233; remplit ce champ. L&#8217;onglet Prompts se resynchronise &#224; chaque ouverture.</p>
 
 <h3>Prompts de contexte</h3>
 <p>Cr&#233;e autant de contextes que n&#233;cessaire (un tag avec <code>#</code>, ex. <code>#TonFormel</code>, plus des instructions). Choisis si les contextes passent <strong>avant</strong> ou <strong>apr&#232;s</strong> le prompt syst&#232;me ; le sch&#233;ma se met &#224; jour selon ton choix.</p>
-<p>La g&#233;n&#233;ration assist&#233;e (par titre ou par intention) utilise le fournisseur et le mod&#232;le configur&#233;s dans le Workspace.</p>
-
-<h3>Historiques LLM</h3>
-<p>Journal local des nettoyages texte (<code>pdm_clean_history</code>). Chaque entr&#233;e peut &#234;tre supprim&#233;e individuellement via le bouton d&#233;di&#233;.</p>
+<p>R&#233;organise l&#8217;ordre des contextes par <strong>glisser-d&#233;poser</strong> (poign&#233;e &#8942;&#8942;) ou boutons &#8593;&#8595; : cet ordre s&#8217;applique aux tags du Workspace et &#224; l&#8217;injection LLM (contextes actifs uniquement).</p>
+<p>La g&#233;n&#233;ration assist&#233;e (par titre ou par intention) utilise le fournisseur configur&#233; dans <a href="#settings">Options</a> et le mod&#232;le choisi dans le <a href="#workspace">Workspace</a>.</p>
+<p>Sur grand &#233;cran, l&#8217;onglet s&#8217;affiche en <strong>deux colonnes</strong> : prompt syst&#232;me &#224; gauche, prompts de contexte &#224; droite.</p>
 
 <h2>Options</h2>
 <h3>Intelligence artificielle</h3>
-<p>Choisis le fournisseur, l&#8217;URL du moteur LLM et le mod&#232;le. Teste la connexion avant usage. La <strong>r&#233;flexion du mod&#232;le</strong> n&#8217;est disponible que sur les mod&#232;les qui la supportent.</p>
+<p>Choisis le fournisseur et l&#8217;URL du moteur LLM, puis teste la connexion. Le <strong>mod&#232;le</strong> et la <strong>r&#233;flexion</strong> se configurent dans le Workspace (en-t&#234;te du panneau r&#233;sultat). Si aucun mod&#232;le n&#8217;est d&#233;fini (premier lancement ou profil sans mod&#232;le), le <strong>premier mod&#232;le Ollama disponible</strong> est s&#233;lectionn&#233; automatiquement &#8212; la r&#233;flexion est alors d&#233;sactiv&#233;e.</p>
+<p>La <strong>r&#233;flexion du mod&#232;le</strong> n&#8217;est disponible que sur les mod&#232;les qui la supportent. Un plafond de caract&#232;res limite la longueur affich&#233;e (<code>pdm_llm_thinking_max_chars</code>, 0 = illimit&#233;).</p>
 
 <h3>Th&#232;me</h3>
-<p>Le s&#233;lecteur de th&#232;me choisit l&#8217;apparence ; le bouton &#127769; dans le header bascule clair/sombre.</p>
+<p>23 th&#232;mes disponibles (12 clairs : Cass&#233;, Jour, Orange clair&#8230; &#8212; 11 sombres : Sombre, Orange, Oc&#233;an&#8230;). Le bouton &#127769; dans le header fait d&#233;filer tous les th&#232;mes ; la grille compl&#232;te est dans Options.</p>
 
 <h3>Dict&#233;e vocale</h3>
-<p>Moteurs 100&#8239;% locaux dans le navigateur :</p>
+<p>Moteurs 100&#8239;% locaux dans le navigateur (r&#233;glages dans le bloc dict&#233;e du Workspace) :</p>
 <ul>
 <li><strong>Vosk Mini</strong> (~39&#8239;Mo) : l&#233;ger, articulation nette, pas d&#8217;autocorrection.</li>
-<li><strong>Vosk Maxi</strong> (~41&#8239;Mo) : meilleur Vosk compatible navigateur.</li>
-<li><strong>Whisper</strong> (4 bits / q8) : autocorrection, GPU conseill&#233;.</li>
+<li><strong>Vosk Maxi</strong> (~41&#8239;Mo) : meilleur Vosk ; valeur par d&#233;faut si aucun moteur n&#8217;est encore enregistr&#233;.</li>
+<li><strong>Whisper Mini / Whisper Maxi</strong> : autocorrection, GPU conseill&#233;.</li>
 <li><strong>Parakeet</strong> (~409&#8239;Mo) : pr&#233;cis, GPU conseill&#233;. Si le mod&#232;le manque : <code>bash assets/stt/parakeet/restore-encoder.sh</code>.</li>
 </ul>
-<p>En HTTP sur une IP (hors localhost), Chromium bloque le micro : utilise localhost, HTTPS ou les contournements d&#233;crits dans Options quand le panneau s&#8217;affiche.</p>
+<p>Le choix <strong>CPU / GPU</strong> (Whisper, Parakeet) n&#8217;appara&#238;t que si le navigateur d&#233;tecte un GPU WebGPU avec <strong>&ge; 1 Go VRAM</strong>.</p>
+<p>En HTTP sur une IP (hors localhost), Chromium bloque le micro : utilise localhost ou HTTPS.</p>
 
 <h3>Sauvegarde &amp; restauration</h3>
 <p>L&#8217;application ne stocke <strong>rien sur le serveur</strong>. Options, param&#232;tres, historique et brouillon Workspace r&#233;sident dans le navigateur (<code>localStorage</code>).</p>
-<p>L&#8217;<strong>export JSON</strong> produit un fichier <code>promptdemerde-config-v1.4.0.json</code> de type <code>pdm-config</code> : sauvegarde <strong>compl&#232;te</strong> (prompts, LLM, dict&#233;e, historique, th&#232;me, token API Ollama). L&#8217;<strong>import</strong> <strong>remplace int&#233;gralement</strong> les donn&#233;es locales apr&#232;s confirmation.</p>
+<p>L&#8217;<strong>export JSON</strong> produit un fichier <code>promptdemerde-config-v1.11.0.json</code> de type <code>pdm-config</code> : sauvegarde <strong>compl&#232;te</strong> (prompts, LLM, dict&#233;e, historique, th&#232;me, token API Ollama, personnalisation Workspace <code>pdm_workspace_ui</code>, blobs dict&#233;e optionnels <code>pdm_audio_blobs</code>). Si un token Ollama est configur&#233;, une <strong>confirmation</strong> est demand&#233;e avant export (token en clair dans le fichier).</p>
+<p>L&#8217;<strong>import</strong> valide d&#8217;abord le fichier, demande confirmation, puis <strong>remplace int&#233;gralement</strong> les donn&#233;es locales. Il efface aussi <code>pdm_active_profile</code> (s&#233;lecteur Profil JSON &#8594; Speech2Texte au reload).</p>
 
 <h4>Format <code>pdm-config</code> — r&#232;gles strictes</h4>
 <p>Le JSON est la base de donn&#233;es portable de l&#8217;application. Tu peux l&#8217;&#233;diter &#224; la main, mais l&#8217;import exige un fichier <strong>complet et valide</strong> :</p>
 <ul>
-<li><strong>Toutes les cl&#233;s obligatoires</strong> doivent &#234;tre pr&#233;sentes (17 cl&#233;s <code>pdm_*</code> + <code>version</code> + <code>type</code>).</li>
+<li><strong>Toutes les cl&#233;s obligatoires</strong> doivent &#234;tre pr&#233;sentes (18 cl&#233;s <code>pdm_*</code> + <code>version</code> + <code>type</code>).</li>
 <li><strong>Aucune cl&#233; invent&#233;e</strong> &#224; la racine (ex. <code>pdm_foo</code> &#8594; rejet).</li>
 <li><strong>Types et valeurs contr&#244;l&#233;s</strong> : bool&#233;ens natifs (<code>true</code>/<code>false</code>), enums (langue, th&#232;me, moteur STT&#8230;), URL Ollama valide, tags profils conformes.</li>
 <li><strong>Pas d&#8217;import partiel</strong> : les anciens formats <code>system-prompt</code> et <code>prompts</code> ne sont plus accept&#233;s.</li>
 <li><strong>Rejet sans perte</strong> : si le fichier est invalide, ta session actuelle n&#8217;est pas effac&#233;e ; un message d&#8217;erreur d&#233;taill&#233; s&#8217;affiche.</li>
+<li><strong>Noms de fichier r&#233;serv&#233;s</strong> (bundle profils actif) : l&#8217;import manuel est refus&#233; si le nom du fichier (sans extension) correspond &#224; un profil officiel. La comparaison ignore la casse et tout caract&#232;re non alphanum&#233;rique. Exemples refus&#233;s : <code>Speech2Texte.json</code>, <code>AdsGenerator.json</code>. Le s&#233;lecteur <strong>Profil JSON</strong> du header n&#8217;est pas concern&#233;.</li>
+<li><strong>Ordre import</strong> : validation du JSON &#8594; confirmation &#8594; effacement &#8594; application &#8594; rechargement. Fichier invalide : session intacte.</li>
 </ul>
 
 <h4>Cl&#233;s du fichier export&#233;</h4>
@@ -547,22 +692,28 @@ RAPPEL : tu es un nettoyeur de texte, pas un assistant conversationnel."></texta
 <tr><td><code>pdm_provider</code>, <code>pdm_model</code>, <code>pdm_ollama_url</code></td><td>Configuration LLM</td></tr>
 <tr><td><code>pdm_token_ollama</code></td><td>Token API Ollama (cha&#238;ne, vide si absent)</td></tr>
 <tr><td><code>pdm_llm_thinking_enabled</code></td><td>R&#233;flexion du mod&#232;le</td></tr>
+<tr><td><code>pdm_llm_thinking_max_chars</code></td><td>Plafond caract&#232;res de r&#233;flexion (0 = illimit&#233;, d&#233;faut 5000)</td></tr>
 <tr><td><code>pdm_system_prompt</code>, <code>pdm_system_prompt_enabled</code></td><td>Prompt syst&#232;me</td></tr>
-<tr><td><code>pdm_profiles</code>, <code>pdm_context_position</code></td><td>Prompts de contexte et ordre d&#8217;injection</td></tr>
-<tr><td><code>pdm_workspace</code></td><td>Brouillon (input, output, r&#233;flexion, savedAt)</td></tr>
+<tr><td><code>pdm_profiles</code>, <code>pdm_context_position</code>, <code>pdm_context_profile_line_template</code></td><td>Prompts de contexte, ordre et format d&#8217;injection</td></tr>
+<tr><td><code>pdm_context_gen_*</code>, <code>pdm_context_inject_header</code>, <code>pdm_context_profile_line_template</code></td><td>Templates LLM g&#233;n&#233;ration / injection contextes</td></tr>
+<tr><td><code>pdm_active_profile</code></td><td>Profil JSON applicatif s&#233;lectionn&#233;</td></tr>
+<tr><td><code>pdm_workspace</code></td><td>Brouillon (input, output, r&#233;flexion, savedAt, contextPanelOpen)</td></tr>
 <tr><td><code>pdm_language</code>, <code>pdm_theme</code></td><td>Langue UI et th&#232;me visuel</td></tr>
 <tr><td><code>pdm_stt_engine</code>, <code>pdm_stt_compute</code>, <code>pdm_stt_device_id</code></td><td>Dict&#233;e vocale</td></tr>
 <tr><td><code>pdm_history_count</code>, <code>pdm_clean_history</code></td><td>Historique des nettoyages (max 100)</td></tr>
 </tbody>
 </table>
 <p>Sch&#233;ma technique : <code>assets/config/pdm-config.schema.json</code> (d&#233;p&#244;t). Norme mainteneurs : Bible PromptDeMerde <code>RFC.md</code> &#167;08.</p>
-<p class="legal-update">Sauvegarde JSON — mise &#224; jour : juillet 2026 (validation stricte <code>pdm-config</code>)</p>
+<p class="legal-update">Sauvegarde JSON — mise &#224; jour : juillet 2026 (v1.11.0, 35 cl&#233;s <code>pdm_*</code>, <code>pdm_workspace_ui</code>, <code>pdm_audio_blobs</code>, trace audio historique, validation stricte <code>pdm-config</code>)</p>
 
 <h3>Zone danger</h3>
 <p>Le bouton <strong>Tout effacer</strong> supprime toutes les donn&#233;es locales (profils, configuration, historique). Exporte d&#8217;abord ta configuration si tu veux la conserver.</p>
 
+<h2>Environnement</h2>
+<p>Le badge <strong>PR&#201;-PROD</strong> dans le pied de page indique un d&#233;ploiement autre que production (<code>PDM_ENV</code> &#8800; <code>prod</code>). Il n&#8217;active ni n&#8217;active pas les bundles homepage ou profils &#8212; seule la pr&#233;sence des fichiers sur disque compte.</p>
+
 <h2>Donn&#233;es &amp; confidentialit&#233;</h2>
-<p>Aucune base de donn&#233;es c&#244;t&#233; serveur. D&#233;tails complets : <a href="#privacy">Politique de confidentialit&#233;</a>.</p>
+<p>Aucune base de donn&#233;es c&#244;t&#233; serveur ; aucune conservation des prompts apr&#232;s vos requ&#234;tes. D&#233;tails : <a href="#privacy">Politique de confidentialit&#233;</a>.</p>
 
 <h2>Support</h2>
 <p>Bug ou question : <a href="#support">page Support</a> ou <a href="https://github.com/JeanSebastienBash/promptdemerde" target="_blank" rel="noopener">GitHub</a>.</p>
@@ -628,7 +779,7 @@ RAPPEL : tu es un nettoyeur de texte, pas un assistant conversationnel."></texta
 <h2>3. Acc&#232;s au service</h2>
 <p>Le service est <strong>gratuit et open source</strong>. Aucune inscription, aucun compte, aucun abonnement ni quota commercial n&#8217;est requis.</p>
 <ul>
-<li data-pdm-copy="legal.features">Acc&#232;s libre &#224; toutes les fonctionnalit&#233;s : moteur LLM local, prompts de contexte illimit&#233;s, prompt syst&#232;me personnalisable, dict&#233;e vocale (Vosk Mini par d&#233;faut, Vosk Maxi, Whisper et Parakeet en option), export/import de configuration.</li>
+<li data-pdm-copy="legal.features">Acc&#232;s libre &#224; toutes les fonctionnalit&#233;s : moteur LLM local, prompts de contexte illimit&#233;s, prompt syst&#232;me personnalisable, dict&#233;e vocale (Vosk Maxi par d&#233;faut, Vosk Mini, Whisper Mini/Maxi et Parakeet en option), export/import de configuration.</li>
 <li>Les pr&#233;f&#233;rences et l&#8217;historique sont conserv&#233;s dans le navigateur ; la <strong>sauvegarde durable</strong> s&#8217;effectue via export/import JSON (Options).</li>
 <li>Le projet se t&#233;l&#233;charge depuis <a href="https://github.com/JeanSebastienBash/promptdemerde" target="_blank" rel="noopener">GitHub</a> et s&#8217;installe en local sur votre serveur PHP. Aucun compte, aucun abonnement.</li>
 </ul>
@@ -672,10 +823,10 @@ RAPPEL : tu es un nettoyeur de texte, pas un assistant conversationnel."></texta
 <div class="legal-content">
 <a href="#landing" class="btn-back">&#8592; Retour</a>
 <h1 class="legal-title">Politique de Confidentialit&#233;</h1>
-<p class="legal-update">Derni&#232;re mise &#224; jour : 14 juin 2026</p>
+<p class="legal-update">Derni&#232;re mise &#224; jour : 9 juillet 2026</p>
 
 <h2>1. R&#233;sum&#233; ex&#233;cutif</h2>
-<p><strong>PromptDeMerde.com ne conserve aucune donn&#233;e sur le serveur.</strong> Aucune base de donn&#233;es, aucun compte utilisateur. Vos options, param&#232;tres, historique des nettoyages et brouillons sont enregistr&#233;s <strong>uniquement dans le stockage local</strong> de votre navigateur.</p>
+<p><strong>PromptDeMerde.com ne conserve aucune donn&#233;e sur le serveur web apr&#232;s vos requ&#234;tes.</strong> Aucune base de donn&#233;es, aucun compte utilisateur, aucune session PHP. Vos options, param&#232;tres, historique des nettoyages et brouillons sont enregistr&#233;s <strong>uniquement dans le stockage local</strong> de votre navigateur.</p>
 <p data-pdm-copy="privacy.llm">Le traitement des prompts s&#8217;effectue via un moteur LLM local, &#224; configurer sur votre machine ou votre r&#233;seau. Un relais technique assure la connexion, <strong>sans persistance</strong> des contenus transit&#233;s.</p>
 <p>Pour <strong>sauvegarder, transf&#233;rer ou restaurer</strong> l&#8217;ensemble de vos donn&#233;es d&#8217;usage (<span data-pdm-copy="privacy.backup">r&#233;glages, prompts, historique, configuration LLM, dict&#233;e vocale, token API</span>), utilisez la fonction <strong>Export / Import</strong> dans <em>Options &#8594; Sauvegarde &amp; restauration</em>. Seul un fichier JSON <code>pdm-config</code> complet et valide est accept&#233; &#224; l&#8217;import.</p>
 
@@ -687,44 +838,52 @@ RAPPEL : tu es un nettoyeur de texte, pas un assistant conversationnel."></texta
 <tr><td><code>pdm_provider</code></td><td>Identifiant du moteur LLM actif</td><td>Oui</td></tr>
 <tr><td><code>pdm_model</code></td><td>Mod&#232;le LLM s&#233;lectionn&#233;</td><td>Oui</td></tr>
 <tr><td><code>pdm_llm_thinking_enabled</code></td><td>Activation de la r&#233;flexion du mod&#232;le</td><td>Oui</td></tr>
+<tr><td><code>pdm_llm_thinking_max_chars</code></td><td>Plafond caract&#232;res de r&#233;flexion (0 = illimit&#233;)</td><td>Oui</td></tr>
 <tr><td><code>pdm_ollama_url</code></td><td data-pdm-copy="storage.url.desc">URL du moteur LLM local</td><td>Oui</td></tr>
 <tr><td><code>pdm_token_ollama</code></td><td>Token API Ollama (si configur&#233;)</td><td>Oui</td></tr>
 <tr><td><code>pdm_system_prompt</code></td><td>Prompt syst&#232;me personnalis&#233;</td><td>Oui</td></tr>
 <tr><td><code>pdm_system_prompt_enabled</code></td><td>Activation du prompt syst&#232;me</td><td>Oui</td></tr>
 <tr><td><code>pdm_profiles</code></td><td>Vos prompts de contexte</td><td>Oui</td></tr>
-<tr><td><code>pdm_context_position</code></td><td>Ordre d&#8217;injection du contexte</td><td>Oui</td></tr>
-<tr><td><code>pdm_workspace</code></td><td>Brouillon workspace (input, output, r&#233;flexion)</td><td>Oui</td></tr>
+<tr><td><code>pdm_context_position</code></td><td>Ordre d&#8217;injection du contexte (<code>after_system</code> / <code>before_system</code>)</td><td>Oui</td></tr>
+<tr><td><code>pdm_context_gen_*</code>, <code>pdm_context_inject_header</code>, <code>pdm_context_profile_line_template</code></td><td>Templates LLM (g&#233;n&#233;ration et injection de contextes)</td><td>Oui</td></tr>
+<tr><td><code>pdm_active_profile</code></td><td>Profil JSON applicatif s&#233;lectionn&#233; (id technique)</td><td>Oui</td></tr>
+<tr><td><code>pdm_workspace</code></td><td>Brouillon workspace (input, output, r&#233;flexion, contextPanelOpen, inputSource, audioFileName)</td><td>Oui</td></tr>
 <tr><td><code>pdm_stt_device_id</code></td><td>Micro pr&#233;f&#233;r&#233; pour la dict&#233;e vocale</td><td>Oui</td></tr>
-<tr><td><code>pdm_stt_engine</code></td><td>Moteur vocal (<code>vosk-maxi</code> par d&#233;faut, <code>vosk-mini</code>, <code>whisper-mini</code>, <code>whisper-maxi</code> ou <code>parakeet</code>)</td><td>Oui</td></tr>
-<tr><td><code>pdm_stt_compute</code></td><td>Acc&#233;l&#233;ration dict&#233;e : <code>cpu</code> ou <code>gpu</code> (si GPU &ge; 1 Go VRAM — seuil test)</td><td>Oui</td></tr>
+<tr><td><code>pdm_stt_engine</code></td><td>Moteur vocal (<code>vosk-maxi</code> par d&#233;faut, etc.)</td><td>Oui</td></tr>
+<tr><td><code>pdm_stt_compute</code></td><td>Acc&#233;l&#233;ration dict&#233;e : <code>cpu</code> ou <code>gpu</code></td><td>Oui</td></tr>
 <tr><td><code>pdm_language</code></td><td>Langue de l&#8217;interface</td><td>Oui</td></tr>
 <tr><td><code>pdm_theme</code></td><td>Th&#232;me visuel</td><td>Oui</td></tr>
 <tr><td><code>pdm_history_count</code></td><td>Compteur de nettoyages</td><td>Oui</td></tr>
 <tr><td><code>pdm_clean_history</code></td><td>Journal texte LLM (input, r&#233;flexion, output, contextes actifs)</td><td>Oui</td></tr>
 </tbody>
 </table>
-<p>Aucune de ces donn&#233;es n&#8217;est transmise &#224; un serveur distant ni utilis&#233;e &#224; des fins de t&#233;l&#233;m&#233;trie.</p>
+<p data-pdm-copy="privacy.atRest">Les cl&#233;s ci-dessus restent dans votre navigateur. Seul le <strong>nettoyage LLM</strong> envoie le texte en cours (et les instructions actives) au proxy vers Ollama &#8212; sans les conserver sur le serveur. Aucune t&#233;l&#233;m&#233;trie.</p>
 
 <h2>3. Flux de donn&#233;es</h2>
 <p>Lorsque vous utilisez le service :</p>
 <ul>
 <li data-pdm-copy="privacy.transit">Vos prompts et contextes sont transmis &#224; votre moteur LLM local &#8212; <strong>aucune conservation c&#244;t&#233; serveur</strong></li>
-<li>La r&#233;ponse du mod&#232;le revient dans votre navigateur</li>
-<li>Options, historique et brouillons sont enregistr&#233;s <strong>localement dans le navigateur</strong></li>
-<li>La dict&#233;e vocale est trait&#233;e dans le navigateur ; aucun envoi audio vers un service tiers</li>
+<li>La r&#233;ponse du mod&#232;le revient dans votre navigateur et peut &#234;tre enregistr&#233;e localement (historique)</li>
+<li>Options, historique et brouillons sont enregistr&#233;s <strong>localement dans le navigateur</strong> &#8212; non stock&#233;s sur le serveur web</li>
+<li>La dict&#233;e vocale et l&#8217;import fichier audio sont trait&#233;s dans le navigateur ; aucun envoi audio vers le serveur</li>
 <li>La <strong>sauvegarde durable</strong> de l&#8217;ensemble de ces donn&#233;es passe par l&#8217;<strong>export JSON</strong> (Options &#8594; Sauvegarde &amp; restauration)</li>
 </ul>
 
-<h2>4. Cookies</h2>
+<h2>4. Garanties et limites</h2>
+<p data-pdm-copy="privacy.guarantee">Garantie produit : aucune base de donn&#233;es, aucune session PHP, aucune t&#233;l&#233;m&#233;trie, aucune &#233;criture applicative des prompts sur disque. Code open source auditable. L&#8217;auto-h&#233;bergement permet de contr&#244;ler enti&#232;rement l&#8217;infrastructure.</p>
+<p><strong>Transit LLM :</strong> lors d&#8217;un nettoyage, votre texte, le prompt syst&#232;me et les contextes actifs traversent le proxy en m&#233;moire (POST <code>api/chat</code>) pour joindre Ollama &#8212; puis la requ&#234;te se termine. Rien n&#8217;est archiv&#233; c&#244;t&#233; serveur par l&#8217;application.</p>
+<p><strong>Limite infrastructure :</strong> un op&#233;rateur d&#8217;h&#233;bergement pourrait journaliser le trafic HTTP s&#8217;il le configurait &#8212; ce n&#8217;est pas une fonctionnalit&#233; du produit.</p>
+
+<h2>5. Cookies</h2>
 <p>PromptDeMerde.com <strong>n&#8217;utilise aucun cookie</strong>, ni cookie de session, ni cookie de tracking, ni cookie tiers.</p>
 
-<h2>5. Tracking et analytique</h2>
+<h2>6. Tracking et analytique</h2>
 <p>PromptDeMerde.com <strong>ne collecte aucune donn&#233;e analytique</strong>. Pas de Google Analytics, pas de Matomo, pas de pixel de tracking, pas de fingerprinting. Votre navigation est enti&#232;rement priv&#233;e.</p>
 
-<h2>6. Services tiers</h2>
+<h2>7. Services tiers</h2>
 <p data-pdm-copy="privacy.stt">Le nettoyage des prompts utilise un moteur LLM sur votre machine ou votre r&#233;seau. La dict&#233;e vocale embarque des mod&#232;les locaux (Vosk, Whisper, Parakeet) sans appel &#224; un service cloud pour l&#8217;audio.</p>
 
-<h2>7. Vos droits (RGPD)</h2>
+<h2>8. Vos droits (RGPD)</h2>
 <p>Conform&#233;ment au R&#232;glement G&#233;n&#233;ral sur la Protection des Donn&#233;es (RGPD), vous disposez des droits suivants :</p>
 <ul>
 <li><strong>Droit d&#8217;acc&#232;s :</strong> vos donn&#233;es &#233;tant stock&#233;es localement, vous y avez un acc&#232;s direct via les outils de d&#233;veloppement de votre navigateur (F12 &#8594; Application &#8594; Local Storage)</li>
@@ -733,10 +892,10 @@ RAPPEL : tu es un nettoyeur de texte, pas un assistant conversationnel."></texta
 <li><strong>Droit &#224; la portabilit&#233; :</strong> utilisez <em>Exporter ma configuration</em> dans Options pour obtenir un fichier JSON de l&#8217;ensemble de vos donn&#233;es d&#8217;usage</li>
 </ul>
 
-<h2>8. Dur&#233;e de conservation</h2>
-<p>Les donn&#233;es sont conserv&#233;es dans votre navigateur jusqu&#8217;&#224; ce que vous les supprimiez manuellement (bouton &#171; Tout Effacer &#187;) ou via les param&#232;tres de votre navigateur.</p>
+<h2>9. Dur&#233;e de conservation</h2>
+<p>Les donn&#233;es sont conserv&#233;es dans votre navigateur jusqu&#8217;&#224; ce que vous les supprimiez manuellement (bouton &#171; Tout Effacer &#187;) ou via les param&#232;tres de votre navigateur. Rien n&#8217;est conserv&#233; sur le serveur web apr&#232;s vos requ&#234;tes.</p>
 
-<h2>9. Contact</h2>
+<h2>10. Contact</h2>
 <p>Pour toute question relative &#224; la protection de vos donn&#233;es :</p>
 <ul>
 <li>Email : <a href="mailto:privacy@dreamproject.online">privacy@dreamproject.online</a></li>
@@ -777,57 +936,116 @@ RAPPEL : tu es un nettoyeur de texte, pas un assistant conversationnel."></texta
 <footer id="main-footer">
     <div class="container">
 
-        <div class="footer-menus">
-            <nav class="footer-nav" aria-label="Documentation et aide">
-                <div class="footer-nav-heading">Aide</div>
-                <a href="#documentation">Documentation</a>
-                <a href="#support">Support</a>
-                <a href="https://github.com/JeanSebastienBash/promptdemerde" target="_blank" rel="noopener">Code source</a>
-            </nav>
-            <nav class="footer-nav footer-nav-legal" aria-label="Informations l&#233;gales">
-                <div class="footer-nav-heading">L&#233;gal</div>
-                <a href="#mentions">Mentions l&#233;gales</a>
-                <a href="#cgu">CGU</a>
-                <a href="#privacy">Confidentialit&#233;</a>
-            </nav>
-            <nav class="footer-nav" aria-label="Projet">
-                <div class="footer-nav-heading">Projet</div>
-                <a href="https://dreamproject.online" target="_blank" rel="noopener">DreamProject</a>
-                <a href="https://commercify.online" target="_blank" rel="noopener">Commercify</a>
-            </nav>
-        </div>
+        <div class="footer-row">
+            <div class="footer-main">
+                <div class="footer-brand-panel">
+                    <figure class="footer-brand-art" aria-hidden="true">
+                        <svg class="footer-reticle-svg" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" focusable="false">
+                            <defs>
+                                <radialGradient id="footer-reticle-glow" cx="50%" cy="50%" r="50%">
+                                    <stop offset="0%" stop-color="#ff0040" stop-opacity="0.35"/>
+                                    <stop offset="100%" stop-color="#ff0040" stop-opacity="0"/>
+                                </radialGradient>
+                            </defs>
+                            <circle cx="100" cy="100" r="88" fill="url(#footer-reticle-glow)" class="footer-reticle-glow"/>
+                            <circle cx="100" cy="100" r="78" fill="none" stroke="currentColor" stroke-width="1" stroke-opacity="0.18" class="footer-reticle-ring footer-reticle-ring-outer"/>
+                            <circle cx="100" cy="100" r="52" fill="none" stroke="currentColor" stroke-width="1" stroke-opacity="0.28" stroke-dasharray="4 6" class="footer-reticle-ring"/>
+                            <circle cx="100" cy="100" r="28" fill="none" stroke="#ff0040" stroke-width="1.5" stroke-opacity="0.55" class="footer-reticle-ring footer-reticle-ring-inner"/>
+                            <line x1="100" y1="18" x2="100" y2="68" stroke="currentColor" stroke-width="1" stroke-opacity="0.35"/>
+                            <line x1="100" y1="132" x2="100" y2="182" stroke="currentColor" stroke-width="1" stroke-opacity="0.35"/>
+                            <line x1="18" y1="100" x2="68" y2="100" stroke="currentColor" stroke-width="1" stroke-opacity="0.35"/>
+                            <line x1="132" y1="100" x2="182" y2="100" stroke="currentColor" stroke-width="1" stroke-opacity="0.35"/>
+                            <path d="M34 34 L34 52 L52 52" fill="none" stroke="#ff0040" stroke-width="2" stroke-opacity="0.7"/>
+                            <path d="M166 34 L166 52 L148 52" fill="none" stroke="#ff0040" stroke-width="2" stroke-opacity="0.7"/>
+                            <path d="M34 166 L34 148 L52 148" fill="none" stroke="#ff0040" stroke-width="2" stroke-opacity="0.7"/>
+                            <path d="M166 166 L166 148 L148 148" fill="none" stroke="#ff0040" stroke-width="2" stroke-opacity="0.7"/>
+                            <circle cx="100" cy="100" r="5" fill="#ff0040" class="footer-reticle-dot"/>
+                        </svg>
+                        <span class="footer-brand-scan"></span>
+                    </figure>
 
-        <!-- ===== SECTION DONATION / COMMERCIFY ===== -->
-        <div class="footer-commercify">
-            <div class="commercify-divider"></div>
-            <div class="commercify-card">
-                <div class="commercify-ad-label">&#128196; PUBLICIT&#201;</div>
-                <div class="commercify-badge">&#128666; PROJET DREAMPROJECTAI</div>
-                <h3 class="commercify-title">Commercify</h3>
-                <p class="commercify-tagline">La 1&#232;re plateforme globale de petites annonces sur Internet</p>
+                    <div class="footer-menus">
+                        <nav class="footer-nav" aria-label="PromptDeMerde.com">
+                            <div class="footer-nav-heading">PromptDeMerde.com</div>
+                            <a href="#workspace" data-nav="workspace">Workspace</a>
+                            <a href="#prompts" data-nav="prompts">Prompts</a>
+                            <a href="#settings" data-nav="settings">Options</a>
+                        </nav>
+                        <nav class="footer-nav" aria-label="Documentation et aide">
+                            <div class="footer-nav-heading">Aide</div>
+                            <a href="#documentation" data-nav="documentation">Documentation</a>
+                            <a href="#support" data-nav="support">Support</a>
+                            <a href="https://github.com/JeanSebastienBash/promptdemerde" target="_blank" rel="noopener">Code source</a>
+                        </nav>
+                        <nav class="footer-nav footer-nav-legal" aria-label="Informations l&#233;gales">
+                            <div class="footer-nav-heading">L&#233;gal</div>
+                            <a href="#mentions" data-nav="mentions">Mentions l&#233;gales</a>
+                            <a href="#cgu" data-nav="cgu">CGU</a>
+                            <a href="#privacy" data-nav="privacy">Confidentialit&#233;</a>
+                        </nav>
+                    </div>
+                </div>
 
-                <div class="commercify-actions">
-                    <a href="https://commercify.online" target="_blank" rel="noopener" class="commercify-link">
-                        D&#233;couvrir Commercify &#8594;
-                    </a>
+                <div class="footer-meta">
+                    <p class="footer-copyright">
+                        &#169; 2026 <a href="#landing" id="footer-home-link" hidden>PromptDeMerde</a><a href="#workspace" id="footer-app-link">PromptDeMerde</a> &#10084;&#65039; par <a href="https://dreamproject.online" target="_blank" rel="noopener">DreamProjectAI</a>
+                    </p>
+                    <p class="footer-bottom">
+                        <a id="footer-version" href="https://github.com/JeanSebastienBash/promptdemerde" target="_blank" rel="noopener">v1.11.0</a><span id="footer-env-badge" class="footer-env-badge" hidden></span>
+                    </p>
+                </div>
+            </div>
+
+            <!-- ===== PROJETS DREAMPROJECTAI ===== -->
+            <div class="footer-commercify">
+                <div class="dp-projects-card" id="footer-projects">
+                    <div class="dp-projects-label">Les projets de DreamProjectAI</div>
+
+                    <div class="dp-projects-carousel">
+                        <button type="button" class="dp-projects-arrow dp-projects-arrow-prev" id="footer-projects-prev" aria-label="Projet pr&#233;c&#233;dent">
+                            <span class="dp-projects-arrow-glyph" aria-hidden="true"></span>
+                        </button>
+
+                        <div class="dp-projects-viewport" id="footer-projects-viewport" aria-live="polite" aria-atomic="true">
+                            <div class="dp-projects-badge" id="footer-projects-badge"></div>
+                            <h3 class="dp-projects-title" id="footer-projects-title"></h3>
+                            <p class="dp-projects-tagline" id="footer-projects-tagline"></p>
+                            <div class="dp-projects-actions">
+                                <a href="#" class="dp-projects-cta" id="footer-projects-cta" target="_blank" rel="noopener"></a>
+                            </div>
+                        </div>
+
+                        <button type="button" class="dp-projects-arrow dp-projects-arrow-next" id="footer-projects-next" aria-label="Projet suivant">
+                            <span class="dp-projects-arrow-glyph" aria-hidden="true"></span>
+                        </button>
+                    </div>
+
+                    <div class="dp-projects-dots" id="footer-projects-dots" role="tablist" aria-label="Projets DreamProjectAI"></div>
                 </div>
             </div>
         </div>
 
-        <!-- COPYRIGHT -->
-        <p class="footer-copyright">
-            &#169; 2026 <a href="#landing" id="footer-home-link" hidden>PromptDeMerde</a><a href="#workspace" id="footer-app-link">PromptDeMerde</a> &#10084;&#65039; par <a href="https://dreamproject.online" target="_blank" rel="noopener">DreamProjectAI</a>
-        </p>
-        <p class="footer-bottom">
-            <a id="footer-version" href="https://github.com/JeanSebastienBash/promptdemerde" target="_blank" rel="noopener">v1.4.0</a><span id="footer-env-badge" class="footer-env-badge" hidden></span>
-        </p>
     </div>
 </footer>
 
 <!-- SCRIPTS -->
-<script src="assets/js/config-schema.js"></script>
-<script src="assets/js/storage.js"></script>
+<script src="assets/js/config-schema-core.js"></script>
+<script src="assets/js/config-schema-helpers.js"></script>
+<script src="assets/js/config-schema-build.js"></script>
+<script src="assets/js/config-schema-validate.js"></script>
+<script src="assets/js/config-schema-validate-fields.js"></script>
+<script src="assets/js/config-schema-validate-collections.js"></script>
+<script src="assets/js/storage-core.js"></script>
+<script src="assets/js/storage-settings.js"></script>
+<script src="assets/js/storage-workspace-stt.js"></script>
+<script src="assets/js/storage-audio-blobs.js"></script>
+<script src="assets/js/storage-workspace-audio.js"></script>
+<script src="assets/js/storage-history.js"></script>
+<script src="assets/js/storage-config-io.js"></script>
+<script src="assets/js/storage-config-audio.js"></script>
+<script src="assets/js/storage-config-import.js"></script>
 <script src="assets/js/env.js"></script>
+<script src="assets/js/animation-inversion.js"></script>
 <script src="assets/js/bootstrap.js"></script>
 </body>
 </html>

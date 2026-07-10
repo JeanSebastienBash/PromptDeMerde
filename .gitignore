@@ -1,3 +1,6 @@
+# PromptDeMerde.com — .gitignore
+# Synopsis : Exclusions Git du dépôt public GitHub.
+# Objectif : Ignorer bundles privés (homepage, profils), secrets et artefacts temporaires.
 .DS_Store
 Thumbs.db
 *.bak
@@ -6,8 +9,19 @@ Thumbs.db
 .idea/
 .vscode/
 *_sauv*
+# Outils IDE Cursor — ignorer l'état local, conserver les règles projet partagées (guardrails, DEC-042).
+/.cursor/*
+!/.cursor/rules/
+# Démo audio maintainer (DEC-027) — hors dépôt public, comme homepage/profils.
+/assets/mp3/
 # Homepage marketing — présence contrôlée par le script de déploiement preprod2prod.
 /assets/homepage/
 # Anciens modèles Vosk (hors arborescence assets/stt/)
 assets/stt/vosk-mini/model.tar.gz_sauv*
 assets/stt/vosk-maxi/model.tar.gz_sauv*
+
+# Bundles profils (prompts Markdown) — déployés pré-prod/prod uniquement.
+/assets/profiles/
+# Encodeur Parakeet reconstruit localement (>100 Mo — limite GitHub)
+/assets/stt/parakeet/encoder-model.int4.onnx
+/assets/stt/parakeet/encoder-model.int4.onnx.tmp

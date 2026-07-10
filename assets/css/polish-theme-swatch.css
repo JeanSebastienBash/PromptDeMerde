@@ -1,0 +1,42 @@
+/* ── 15. THEME SWATCH POLISH (legacy compact swatches) ── */
+.theme-swatch:not(.theme-swatch-card) {
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.theme-swatch:not(.theme-swatch-card):hover {
+    transform: scale(1.08);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
+}
+.theme-swatch:not(.theme-swatch-card).active {
+    transform: scale(1.05);
+    box-shadow: 0 0 0 3px var(--accent-red), 0 4px 16px rgba(0, 0, 0, 0.4);
+}
+
+/* ── 16. NAV LOGO POLISH ── */
+.nav-logo {
+    transition: transform 0.2s ease;
+}
+.nav-logo:hover {
+    transform: scale(1.02);
+}
+
+/* ── 17. INPUT FOCUS POLISH ── */
+.form-textarea:focus,
+.form-input:focus {
+    border-color: var(--accent-red);
+    box-shadow: 0 0 0 3px rgba(255, 0, 64, 0.15);
+    outline: none;
+}
+
+/* ── 17b. HERO EXCLAMATION ── */
+.hero-exclamation {
+    color: var(--accent-red);
+    font-weight: 900;
+    display: inline;
+    text-shadow: 0 0 12px rgba(255, 0, 64, 0.5);
+    animation: exclamationPulse 2s ease-in-out infinite;
+}
+@keyframes exclamationPulse {
+    0%, 100% { text-shadow: 0 0 12px rgba(255, 0, 64, 0.5); }
+    50% { text-shadow: 0 0 24px rgba(255, 0, 64, 0.9); }
+}

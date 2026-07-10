@@ -1,0 +1,42 @@
+---
+description: Échelle typographique et familles de police — SPA PromptDeMerde
+globs: assets/css/**/*.css
+alwaysApply: false
+---
+
+# Typographie PromptDeMerde
+
+Tokens définis dans `assets/css/style-base.css` (`:root`). Ne pas introduire de tailles ou polices hors charte.
+
+## Familles
+
+| Token | Police | Usage |
+|-------|--------|-------|
+| `--font-body` | Fira Code | Corps, code, textareas, output LLM |
+| `--font-ui` | Inconsolata | Nav, labels, titres UI, boutons, footer brand |
+
+Interdit : `Courier New`, `monospace` nu, toute police non tokenisée hors `@font-face`.
+
+## Échelle (base `html { font-size: 18px }`)
+
+| Token | Rôle |
+|-------|------|
+| `--text-caption` | Labels uppercase, badges, meta, compteurs |
+| `--text-small` | Texte secondaire, hints, liens footer, copyright |
+| `--text-body` | Corps par défaut |
+| `--text-ui` | Inputs, textareas, tags workspace |
+| `--text-title` | Titres de section, boutons |
+| `--text-display` | Sous-titres landing, logo footer |
+| `--text-hero` | Hero marketing, pricing display |
+
+## Interlignage
+
+Utiliser `--leading-tight`, `--leading-normal` ou `--leading-relaxed` uniquement.
+
+## Règles
+
+- `font-size` : toujours `var(--text-*)` (sauf `font-size: inherit` ou `calc()` dérivé d'un token)
+- Pas de `!important` sur `font-size`, `font-family` ni `line-height`
+- Pas de valeurs brutes en `rem`/`em`/`px` pour la typo
+- Boutons : `--font-ui` ; champs code : `--font-body`
+- Classes utilitaires disponibles : `.text-caption`, `.text-small`, `.text-body`, `.text-ui`, `.text-title`, `.text-display`, `.text-hero`

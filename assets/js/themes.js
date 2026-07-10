@@ -1,5 +1,8 @@
 /**
- * PromptDeMerde.com — Sélection et application des thèmes visuels de l'interface.
+ * PromptDeMerde.com — themes.js
+ *
+ * Synopsis : Gestion des 23 thèmes visuels, ordonnés par familles (clair/sombre adjacents).
+ * Objectif : Appliquer le thème choisi (localStorage pdm_theme) sur document.documentElement.
  */
 (function(){
 
@@ -13,6 +16,116 @@ var THEMES = [
         '--accent-red':'#c0392b','--accent-hover':'#d44637',
         '--border':'#c8c0b4','--success':'#389e0d','--error':'#c0392b',
         '--btn-text':'#ffffff','--input-bg':'#ede7e0','--input-focus-bg':'#f5f0eb',
+        '--text-on-accent':'#ffffff'
+      }
+    },
+    { id:'day', name:'Jour', icon:'🌤️', preview:'#f4f5f7',
+      vars:{
+        '--bg-black':'#f4f5f7','--bg-dark':'#e8eaef','--surface':'#d8dce4',
+        '--text-white':'#1c1e24','--text-muted':'#5a6170',
+        '--accent-red':'#e84057','--accent-hover':'#f05a6e',
+        '--border':'#c4cad4','--success':'#1a9d55','--error':'#e84057',
+        '--btn-text':'#ffffff','--input-bg':'#eef0f4','--input-focus-bg':'#f8f9fb',
+        '--text-on-accent':'#ffffff'
+      }
+    },
+    { id:'orange-day', name:'Orange clair', icon:'🍊', preview:'#faf3e8',
+      vars:{
+        '--bg-black':'#faf3e8','--bg-dark':'#f0e4d0','--surface':'#e6d6bc',
+        '--text-white':'#2a2218','--text-muted':'#7a6a52',
+        '--accent-red':'#e07800','--accent-hover':'#f09020',
+        '--border':'#d4c4a8','--success':'#5a9a18','--error':'#d85030',
+        '--btn-text':'#ffffff','--input-bg':'#f5ead8','--input-focus-bg':'#faf3e8',
+        '--text-on-accent':'#ffffff'
+      }
+    },
+    { id:'red-day', name:'Rouge clair', icon:'🌹', preview:'#faf0f0',
+      vars:{
+        '--bg-black':'#faf0f0','--bg-dark':'#f0e0e0','--surface':'#e6d0d0',
+        '--text-white':'#2a1818','--text-muted':'#8a6060',
+        '--accent-red':'#d83838','--accent-hover':'#e85050',
+        '--border':'#d4b8b8','--success':'#2a9a50','--error':'#d83838',
+        '--btn-text':'#ffffff','--input-bg':'#f5e6e6','--input-focus-bg':'#faf0f0',
+        '--text-on-accent':'#ffffff'
+      }
+    },
+    { id:'gray-day', name:'Gris clair', icon:'🩶', preview:'#f2f4f8',
+      vars:{
+        '--bg-black':'#f2f4f8','--bg-dark':'#e6eaf2','--surface':'#d8deea',
+        '--text-white':'#1e2228','--text-muted':'#5a6478',
+        '--accent-red':'#3a7bd8','--accent-hover':'#5090e8',
+        '--border':'#c0c8d8','--success':'#2a9a68','--error':'#d84848',
+        '--btn-text':'#ffffff','--input-bg':'#e8ecf4','--input-focus-bg':'#f2f4f8',
+        '--text-on-accent':'#ffffff'
+      }
+    },
+    { id:'yellow-day', name:'Jaune clair', icon:'🌻', preview:'#faf8e8',
+      vars:{
+        '--bg-black':'#faf8e8','--bg-dark':'#f0ecd0','--surface':'#e8e2b8',
+        '--text-white':'#2a2810','--text-muted':'#7a7448',
+        '--accent-red':'#c8a800','--accent-hover':'#e0c020',
+        '--border':'#d8d0a0','--success':'#4a9a20','--error':'#d84838',
+        '--btn-text':'#2a2810','--input-bg':'#f5f0d8','--input-focus-bg':'#faf8e8',
+        '--text-on-accent':'#2a2810'
+      }
+    },
+    { id:'fuchsia-day', name:'Fuchsia clair', icon:'🪻', preview:'#f8f0fa',
+      vars:{
+        '--bg-black':'#f8f0fa','--bg-dark':'#ece0f0','--surface':'#e0cce8',
+        '--text-white':'#281830','--text-muted':'#785a88',
+        '--accent-red':'#c02898','--accent-hover':'#d840b0',
+        '--border':'#d0b8d8','--success':'#2a9a58','--error':'#c02898',
+        '--btn-text':'#ffffff','--input-bg':'#f0e4f4','--input-focus-bg':'#f8f0fa',
+        '--text-on-accent':'#ffffff'
+      }
+    },
+    { id:'ocean-day', name:'Océan clair', icon:'🏖️', preview:'#eef6fa',
+      vars:{
+        '--bg-black':'#eef6fa','--bg-dark':'#dceaf2','--surface':'#c8dce8',
+        '--text-white':'#102028','--text-muted':'#4a6878',
+        '--accent-red':'#0898b8','--accent-hover':'#20b0d0',
+        '--border':'#b8d0dc','--success':'#1a9a50','--error':'#d84848',
+        '--btn-text':'#ffffff','--input-bg':'#e4f0f6','--input-focus-bg':'#eef6fa',
+        '--text-on-accent':'#ffffff'
+      }
+    },
+    { id:'forest-day', name:'Forêt claire', icon:'🌿', preview:'#eef6ee',
+      vars:{
+        '--bg-black':'#eef6ee','--bg-dark':'#dceadc','--surface':'#c8dcc8',
+        '--text-white':'#102010','--text-muted':'#4a6848',
+        '--accent-red':'#2a9a30','--accent-hover':'#40b048',
+        '--border':'#b8d4b8','--success':'#2a9a30','--error':'#d84848',
+        '--btn-text':'#ffffff','--input-bg':'#e4f2e4','--input-focus-bg':'#eef6ee',
+        '--text-on-accent':'#ffffff'
+      }
+    },
+    { id:'cyber-day', name:'Cyber clair', icon:'💠', preview:'#f0f0f8',
+      vars:{
+        '--bg-black':'#f0f0f8','--bg-dark':'#e0e0f0','--surface':'#d0d0e8',
+        '--text-white':'#181828','--text-muted':'#585878',
+        '--accent-red':'#0088a8','--accent-hover':'#00a8c8',
+        '--border':'#c0c0d8','--success':'#1a9a68','--error':'#d84868',
+        '--btn-text':'#ffffff','--input-bg':'#e8e8f4','--input-focus-bg':'#f0f0f8',
+        '--text-on-accent':'#ffffff'
+      }
+    },
+    { id:'rose-day', name:'Rose clair', icon:'🌷', preview:'#faf0f4',
+      vars:{
+        '--bg-black':'#faf0f4','--bg-dark':'#f0e0e8','--surface':'#e8ccd8',
+        '--text-white':'#281820','--text-muted':'#886070',
+        '--accent-red':'#d84868','--accent-hover':'#f06080',
+        '--border':'#d8b8c4','--success':'#2a9a58','--error':'#d84868',
+        '--btn-text':'#ffffff','--input-bg':'#f5e6ec','--input-focus-bg':'#faf0f4',
+        '--text-on-accent':'#ffffff'
+      }
+    },
+    { id:'terminal-day', name:'Terminal clair', icon:'📄', preview:'#f4f8f4',
+      vars:{
+        '--bg-black':'#f4f8f4','--bg-dark':'#e8f0e8','--surface':'#dce8dc',
+        '--text-white':'#0a2810','--text-muted':'#3a6840',
+        '--accent-red':'#109028','--accent-hover':'#28a840',
+        '--border':'#b8d0b8','--success':'#109028','--error':'#d03030',
+        '--btn-text':'#ffffff','--input-bg':'#ecf4ec','--input-focus-bg':'#f4f8f4',
         '--text-on-accent':'#ffffff'
       }
     },
@@ -128,13 +241,40 @@ var THEMES = [
     }
 ];
 
+/** Ordre affichage / bouton header : neutres puis chaque famille clair → sombre. */
+(function resortThemesByFamily() {
+    var order = [
+        'light', 'day', 'dark',
+        'orange-day', 'orange',
+        'red-day', 'red',
+        'gray-day', 'gray',
+        'yellow-day', 'yellow',
+        'fuchsia-day', 'fuchsia',
+        'ocean-day', 'ocean',
+        'forest-day', 'forest',
+        'cyber-day', 'cyber',
+        'rose-day', 'rose',
+        'terminal-day', 'terminal'
+    ];
+    var byId = {};
+    for (var i = 0; i < THEMES.length; i++) byId[THEMES[i].id] = THEMES[i];
+    var sorted = [];
+    for (var j = 0; j < order.length; j++) {
+        if (byId[order[j]]) sorted.push(byId[order[j]]);
+    }
+    THEMES = sorted;
+})();
+
 T.list = function() { return THEMES; };
 
 T.get = function(id) {
     for (var i = 0; i < THEMES.length; i++) {
         if (THEMES[i].id === id) return THEMES[i];
     }
-    return THEMES[1];
+    for (var j = 0; j < THEMES.length; j++) {
+        if (THEMES[j].id === 'dark') return THEMES[j];
+    }
+    return THEMES[0];
 };
 
 T.current = function() {
@@ -197,7 +337,12 @@ T.updateToggleIcon = function(id) {
 T.updatePicker = function(activeId) {
     var items = document.querySelectorAll('.theme-swatch');
     for (var i = 0; i < items.length; i++) {
-        items[i].classList.toggle('active', items[i].dataset.theme === activeId);
+        var isActive = items[i].dataset.theme === activeId;
+        items[i].classList.toggle('active', isActive);
+        items[i].setAttribute('aria-selected', isActive ? 'true' : 'false');
+    }
+    if (window.PDM.UI && window.PDM.UI.updateThemeCurrentLabel) {
+        window.PDM.UI.updateThemeCurrentLabel(activeId);
     }
 };
 

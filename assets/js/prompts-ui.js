@@ -1,5 +1,8 @@
 /**
- * PromptDeMerde.com — Prompts de contexte et génération assistée.
+ * PromptDeMerde.com — prompts-ui.js
+ *
+ * Synopsis : UI onglet Prompts — cœur (prompt système, contextes, bindings).
+ * Objectif : Synchroniser textareas/toggles et brancher les événements ; génération dans prompts-ui-generate.js, liste/DnD dans prompts-ui-list.js.
  */
 (function(){
 "use strict";
@@ -39,6 +42,66 @@ A.updateContextInjectUI = function() {
     if (before) before.checked = isBefore;
 };
 
+A.getSystemPromptDisplayValue = function() {
+    return window.PDM.Storage.getSystemPromptEffective();
+};
+
+A._promptTemplateBindings = [
+    { id: 'context-gen-system', get: 'getContextGenSystemEffective', set: 'setContextGenSystem' },
+    { id: 'context-gen-user-intent', get: 'getContextGenUserIntentEffective', set: 'setContextGenUserIntent' },
+    { id: 'context-gen-user-title', get: 'getContextGenUserTitleEffective', set: 'setContextGenUserTitle' },
+    { id: 'context-inject-header', get: 'getContextInjectHeaderEffective', set: 'setContextInjectHeader' },
+    { id: 'context-gen-tag-intent-suffix', get: 'getContextGenTagIntentSuffixEffective', set: 'setContextGenTagIntentSuffix' },
+    { id: 'context-gen-forced-tag-system-suffix', get: 'getContextGenForcedTagSystemSuffixEffective', set: 'setContextGenForcedTagSystemSuffix' },
+    { id: 'context-gen-retry-system-suffix', get: 'getContextGenRetrySystemSuffixEffective', set: 'setContextGenRetrySystemSuffix' },
+    { id: 'context-gen-retry-user-suffix', get: 'getContextGenRetryUserSuffixEffective', set: 'setContextGenRetryUserSuffix' },
+    { id: 'context-profile-line-template', get: 'getContextProfileLineTemplateEffective', set: 'setContextProfileLineTemplate' }
+];
+
+A.syncContextGenParams = function(forceValue) {
+    var S = window.PDM.Storage;
+    var bindings = [
+        { id: 'context-gen-max-tokens', get: 'getContextGenMaxTokens', set: 'setContextGenMaxTokens', parse: parseInt },
+        { id: 'context-gen-temperature', get: 'getContextGenTemperature', set: 'setContextGenTemperature', parse: parseFloat },
+        { id: 'context-gen-retry-temperature', get: 'getContextGenRetryTemperature', set: 'setContextGenRetryTemperature', parse: parseFloat },
+        { id: 'context-gen-max-retries', get: 'getContextGenMaxRetries', set: 'setContextGenMaxRetries', parse: parseInt }
+    ];
+    for (var i = 0; i < bindings.length; i++) {
+        var b = bindings[i];
+        var el = document.getElementById(b.id);
+        if (!el || typeof S[b.get] !== 'function') continue;
+        if (forceValue || document.activeElement !== el) el.value = String(S[b.get]());
+    }
+    var schemaEl = document.getElementById('context-gen-json-schema');
+    if (schemaEl && typeof S.getContextGenJsonSchemaEffective === 'function') {
+        if (forceValue || document.activeElement !== schemaEl) {
+            schemaEl.value = JSON.stringify(S.getContextGenJsonSchemaEffective(), null, 2);
+        }
+    }
+};
+
+A.syncContextGenTextareas = function(forceValue) {
+    var S = window.PDM.Storage;
+    for (var i = 0; i < A._promptTemplateBindings.length; i++) {
+        var b = A._promptTemplateBindings[i];
+        var el = document.getElementById(b.id);
+        if (!el || typeof S[b.get] !== 'function') continue;
+        var val = S[b.get]();
+        if (forceValue || document.activeElement !== el) el.value = val;
+    }
+    A.syncContextGenParams(forceValue);
+};
+
+A.syncSystemPromptTextarea = function(forceValue) {
+    var sys = document.getElementById('prompts-system');
+    if (!sys) return;
+    var effective = A.getSystemPromptDisplayValue();
+    sys.placeholder = effective || 'Prompt système du profil actif...';
+    if (forceValue || document.activeElement !== sys) {
+        sys.value = effective;
+    }
+};
+
 A.updateSystemPromptUI = function() {
     var enabled = window.PDM.Storage.isSystemPromptEnabled();
     var cb = document.getElementById('system-prompt-enabled');
@@ -46,6 +109,7 @@ A.updateSystemPromptUI = function() {
     var sys = document.getElementById('prompts-system');
     if (cb) cb.checked = enabled;
     if (label) label.textContent = enabled ? ' Actif' : ' Inactif';
+    A.syncSystemPromptTextarea(false);
     if (sys) {
         sys.style.opacity = enabled ? '1' : '0.55';
     }
@@ -53,169 +117,48 @@ A.updateSystemPromptUI = function() {
     A.updateWorkspacePromptGuard();
 };
 
-A.doQuickAddContext = function() {
-    if (window.PDM.Profiles.maxReached()) {
-        window.PDM.UI.notif('Limite de prompts atteinte (' + window.PDM.Storage.getMaxProfiles() + ' max).', 'err');
-        return;
-    }
-    var tagInp = document.getElementById('context-new-tag');
-    var promptTa = document.getElementById('context-new-prompt');
-    var tag = tagInp ? tagInp.value.trim() : '';
-    var prompt = promptTa ? promptTa.value.trim() : '';
-    var err = window.PDM.Profiles.validateTag(tag);
-    if (err) {
-        window.PDM.UI.notif(err, 'err');
-        return;
-    }
-    if (!prompt) {
-        window.PDM.UI.notif('Saisis les instructions du contexte.', 'err');
-        return;
-    }
-    var obj = window.PDM.Profiles.add(tag, prompt);
-    if (!obj) {
-        window.PDM.UI.notif('Impossible d\u2019ajouter le prompt.', 'err');
-        return;
-    }
-    if (tagInp) tagInp.value = '';
-    if (promptTa) promptTa.value = '';
+A.refreshPrompts = function() {
+    A.syncSystemPromptTextarea(true);
+    A.syncContextGenTextareas(true);
+    A.updateSystemPromptUI();
     A.rebuildProfileList();
     A.reloadTags();
-    window.PDM.UI.notif('Prompt #' + obj.tag + ' ajout\u00e9.', 'ok');
 };
 
-A.doGenerateContext = function() {
-    var intentTa = document.getElementById('context-generate-intent');
-    var statusEl = document.getElementById('context-generate-status');
-    var btn = document.getElementById('context-generate-btn');
-    var intent = intentTa ? intentTa.value.trim() : '';
-    if (!intent) {
-        window.PDM.UI.notif('D\u00e9cris d\u2019abord le comportement souhait\u00e9.', 'err');
-        return;
-    }
-    var suggestedTag = window.PDM.Profiles.extractSuggestedTag(intent);
-    if (suggestedTag) {
-        var tagErr = window.PDM.Profiles.validateTag(suggestedTag);
-        if (tagErr) {
-            if (statusEl) statusEl.textContent = '\u274c ' + tagErr;
-            window.PDM.UI.notif(tagErr, 'err');
-            return;
+A.flushPromptsFromDom = function() {
+    var sys = document.getElementById('prompts-system');
+    if (sys) {
+        var domVal = sys.value;
+        var stored = window.PDM.Storage.getSystemPrompt();
+        /* Textarea vide au boot tant que l’onglet Prompts n’a pas été ouvert : ne pas écraser le bundle profil. */
+        if (domVal.trim() || !String(stored || '').trim()) {
+            window.PDM.Storage.set(window.PDM.Storage.KEYS.SYSTEM_PROMPT, domVal);
         }
     }
-    var user = 'G\u00e9n\u00e8re le meilleur prompt de contexte pour ce besoin :\n' + intent;
-    if (suggestedTag) {
-        user += '\n\nLe tag DOIT \u00eatre exactement "' + suggestedTag + '" (majuscule au d\u00e9but, sans di\u00e8se).';
+    var box = document.getElementById('profiles-list');
+    if (!box) return;
+    var items = box.querySelectorAll('.profile-item[data-profile-id]');
+    for (var i = 0; i < items.length; i++) {
+        var item = items[i];
+        var id = item.getAttribute('data-profile-id');
+        if (!id) continue;
+        var tagInp = item.querySelector('.profile-tag');
+        var ta = item.querySelector('.profile-prompt');
+        var patch = {};
+        if (tagInp) patch.tag = tagInp.value;
+        if (ta) patch.prompt = ta.value;
+        if (Object.keys(patch).length) {
+            window.PDM.Profiles.edit(id, patch);
+        }
     }
-    A._runContextGeneration(user, statusEl, btn, 'G\u00e9n\u00e9rer le meilleur contexte', null, suggestedTag);
-};
-
-A.doGenerateContextFromTitle = function() {
-    var titleInp = document.getElementById('context-title-input');
-    var statusEl = document.getElementById('context-title-gen-status');
-    var btn = document.getElementById('context-title-gen-btn');
-    var title = titleInp ? window.PDM.Profiles.normalizeTag(titleInp.value.trim()) : '';
-    if (!title) {
-        window.PDM.UI.notif('Saisis d\u2019abord un titre (ex. TonFormel).', 'err');
-        return;
-    }
-    var tagErr = window.PDM.Profiles.validateTag(title);
-    if (tagErr) {
-        window.PDM.UI.notif(tagErr, 'err');
-        return;
-    }
-    var user = 'G\u00e9n\u00e8re le meilleur prompt de contexte pour un profil nomm\u00e9 #' + title + '.\n' +
-        'Le tag doit \u00eatre exactement "' + title + '" (majuscule au d\u00e9but, sans espace).\n' +
-        'Les instructions doivent d\u00e9crire pr\u00e9cis\u00e9ment le comportement attendu lors de la reformulation de prompts utilisateur, en coh\u00e9rence avec ce titre.';
-    A._runContextGeneration(user, statusEl, btn, 'G\u00e9n\u00e9rer le prompt', function(obj) {
-        if (titleInp) titleInp.value = '';
-    }, title);
-};
-
-A._runContextGeneration = function(userPrompt, statusEl, btn, btnDefaultText, onSuccess, forcedTag) {
-    if (window.PDM.Profiles.maxReached()) {
-        window.PDM.UI.notif('Limite de prompts atteinte.', 'err');
-        return;
-    }
-    var provider = A.getActiveProviderId();
-    var model = window.PDM.Storage.get(window.PDM.Storage.KEYS.MODEL) || window.PDM.Providers.defaultModel(provider);
-    if (btn) { btn.disabled = true; btn.textContent = '\u23F3 G\u00e9n\u00e9ration...'; }
-    if (statusEl) {
-        var adapter = A.getActiveProvider();
-        statusEl.textContent = adapter ? adapter.formatStatusInProgress(model) : 'G\u00e9n\u00e9ration en cours...';
-    }
-
-    var sys = 'Tu es un expert en ing\u00e9nierie de prompts pour un outil de reformulation de prompts utilisateur.\n' +
-        'R\u00e9ponds UNIQUEMENT avec un objet JSON valide, sans markdown, sans commentaire.\n' +
-        'Exemple de format (invente ton propre tag adapt\u00e9 au besoin, ne recopie pas cet exemple) :\n' +
-        '{"tag":"UpperCase","prompt":"Reformule toujours le texte en majuscules."}\n' +
-        'R\u00e8gles pour "tag" : un mot court commen\u00e7ant par une majuscule (ex. TonFormel, AntiBullshit), lettres et chiffres uniquement, sans di\u00e8se.';
-    if (forcedTag) {
-        sys += '\nLe champ "tag" DOIT \u00eatre exactement "' + forcedTag + '".';
-    }
-
-    var llmOptions = {
-        streaming: true,
-        maxTokens: 512,
-        format: 'json',
-        temperature: 0.3,
-        onToken: function(fullText) {
-            if (statusEl && fullText) {
-                statusEl.textContent = 'R\u00e9ception en cours\u2026 (' + fullText.length + ' car.)';
-            }
-        }
-    };
-
-    window.PDM.LLM.complete(provider, model, null, sys, userPrompt, llmOptions).then(function(data){
-        var raw = (data && data.result) ? data.result : '';
-        var parsed = null;
-        try {
-            parsed = JSON.parse(raw.trim());
-        } catch (e1) {
-            var m = raw.match(/\{[\s\S]*\}/);
-            if (m) {
-                try { parsed = JSON.parse(m[0]); } catch (e2) { parsed = null; }
-            }
-        }
-        if (!parsed || !parsed.prompt) {
-            throw new Error('R\u00e9ponse IA illisible. R\u00e9essaie avec une description plus pr\u00e9cise.');
-        }
-        var tag = forcedTag || window.PDM.Profiles.normalizeTag(parsed.tag);
-        var placeholderTags = /^(PascalCaseSansDi[eè]se|PascalCase|NomDuTag|TagName|ExampleTag|MonTag)$/i;
-        if (!forcedTag && (!tag || placeholderTags.test(tag) || window.PDM.Profiles.validateTag(tag))) {
-            var fromIntent = window.PDM.Profiles.extractSuggestedTag(userPrompt);
-            if (fromIntent && !window.PDM.Profiles.validateTag(fromIntent)) {
-                tag = fromIntent;
-            }
-        }
-        if (!tag) {
-            throw new Error('L\u2019IA n\u2019a pas propos\u00e9 de tag valide. Ajoute un tag dans ta description (ex. #UpperCase).');
-        }
-        var err = window.PDM.Profiles.validateTag(tag);
-        if (err) {
-            throw new Error(err + (parsed.tag ? ' (re\u00e7u : "' + parsed.tag + '")' : ''));
-        }
-        var obj = window.PDM.Profiles.add(tag, String(parsed.prompt).trim());
-        if (!obj) throw new Error('Limite de prompts atteinte.');
-        A.rebuildProfileList();
-        A.reloadTags();
-        if (statusEl) statusEl.textContent = 'Prompt #' + obj.tag + ' g\u00e9n\u00e9r\u00e9 et ajout\u00e9.';
-        window.PDM.UI.notif('Contexte g\u00e9n\u00e9r\u00e9 : #' + obj.tag, 'ok');
-        if (onSuccess) onSuccess(obj);
-    }).catch(function(err){
-        var msg = err.message || String(err);
-        if (adapter && adapter.getErrorHints) {
-            msg = adapter.getErrorHints(err, model);
-        }
-        if (statusEl) statusEl.textContent = '\u274c ' + msg;
-        window.PDM.UI.notif('Erreur : ' + msg, 'err');
-    }).finally(function(){
-        if (btn) { btn.disabled = false; btn.textContent = btnDefaultText; }
-    });
 };
 
 /* ===== PROMPTS ===== */
 A.bindPrompts = function() {
-    var add = document.getElementById('add-profile-btn');
-    if (add) add.addEventListener('click', function(){ A.doAddProfile(); });
+    if (A._promptsBound) return;
+    A._promptsBound = true;
+
+    var debounceInput = window.PDM.UI.debounce;
 
     var ctxAfter = document.getElementById('context-inject-after');
     var ctxBefore = document.getElementById('context-inject-before');
@@ -247,9 +190,9 @@ A.bindPrompts = function() {
 
     var sysTextarea = document.getElementById('prompts-system');
     if (sysTextarea) {
-        sysTextarea.addEventListener('input', function(){
+        sysTextarea.addEventListener('input', debounceInput(function(){
             window.PDM.Storage.set(window.PDM.Storage.KEYS.SYSTEM_PROMPT, sysTextarea.value);
-        });
+        }, 300));
     }
 
     var sysToggle = document.getElementById('system-prompt-enabled');
@@ -260,92 +203,70 @@ A.bindPrompts = function() {
             window.PDM.UI.notif(sysToggle.checked ? 'Prompt syst\u00e8me activ\u00e9.' : 'Prompt syst\u00e8me d\u00e9sactiv\u00e9.', 'ok');
         });
     }
-};
 
-A.rebuildProfileList = function() {
-    var box = document.getElementById('profiles-list');
-    if (!box) return;
-    var list = window.PDM.Profiles.load();
-    var cnt = document.getElementById('profile-count');
-    var maxP = window.PDM.Storage.getMaxProfiles();
-    if (cnt) cnt.innerHTML = '<span class="num">' + list.length + '/' + (maxP >= 999 ? '\u221e' : maxP) + '</span> prompts utilis\u00e9s';
-
-    box.innerHTML = '';
-    for (var i = 0; i < list.length; i++) {
-        (function(p){
-            var div = document.createElement('div');
-            div.className = 'profile-item';
-
-            var head = document.createElement('div');
-            head.className = 'profile-head';
-
-            var tag = document.createElement('input');
-            tag.type = 'text';
-            tag.className = 'profile-tag';
-            tag.value = p.tag;
-            tag.placeholder = '#TonFormel';
-            tag.addEventListener('change', function(){
-                var err = window.PDM.Profiles.validateTag(tag.value);
-                if (err) { window.PDM.UI.notif(err, 'err'); return; }
-                window.PDM.Profiles.edit(p.id, {tag: tag.value});
-            });
-
-            var tw = document.createElement('label');
-            tw.className = 'toggle-wrap';
-            var cb = document.createElement('input');
-            cb.type = 'checkbox';
-            cb.checked = p.active;
-            var label = document.createTextNode(p.active ? ' Actif' : ' Inactif');
-            cb.addEventListener('change', function(){
-                window.PDM.Profiles.edit(p.id, {active: cb.checked});
-                label.textContent = cb.checked ? ' Actif' : ' Inactif';
-                A.reloadTags();
-            });
-            tw.appendChild(cb);
-            tw.appendChild(label);
-
-            var del = document.createElement('button');
-            del.className = 'profile-del';
-            del.textContent = '\u00D7';
-            del.title = 'Supprimer';
-            del.addEventListener('click', function(){
-                window.PDM.Profiles.del(p.id);
-                A.rebuildProfileList();
-                A.reloadTags();
-            });
-
-            head.appendChild(tag);
-            head.appendChild(tw);
-            head.appendChild(del);
-
-            var ta = document.createElement('textarea');
-            ta.className = 'profile-prompt';
-            ta.value = p.prompt;
-            ta.placeholder = 'Instructions pour ce profil...';
-            ta.addEventListener('change', function(){
-                window.PDM.Profiles.edit(p.id, {prompt: ta.value});
-            });
-
-            div.appendChild(head);
-            div.appendChild(ta);
-            box.appendChild(div);
-        })(list[i]);
+    var ctxGenSys = document.getElementById('context-gen-system');
+    if (ctxGenSys) {
+        ctxGenSys.addEventListener('input', debounceInput(function(){
+            window.PDM.Storage.setContextGenSystem(ctxGenSys.value);
+        }, 300));
+    }
+    var ctxGenIntent = document.getElementById('context-gen-user-intent');
+    if (ctxGenIntent) {
+        ctxGenIntent.addEventListener('input', debounceInput(function(){
+            window.PDM.Storage.setContextGenUserIntent(ctxGenIntent.value);
+        }, 300));
+    }
+    var ctxGenTitle = document.getElementById('context-gen-user-title');
+    if (ctxGenTitle) {
+        ctxGenTitle.addEventListener('input', debounceInput(function(){
+            window.PDM.Storage.setContextGenUserTitle(ctxGenTitle.value);
+        }, 300));
+    }
+    for (var ti = 3; ti < A._promptTemplateBindings.length; ti++) {
+        (function(binding) {
+            var el = document.getElementById(binding.id);
+            if (!el) return;
+            el.addEventListener('input', debounceInput(function() {
+                if (typeof window.PDM.Storage[binding.set] === 'function') {
+                    window.PDM.Storage[binding.set](el.value);
+                }
+            }, 300));
+        })(A._promptTemplateBindings[ti]);
     }
 
-    var add = document.getElementById('add-profile-btn');
-    if (add) add.disabled = window.PDM.Profiles.maxReached();
-};
-
-A.doAddProfile = function() {
-    if (window.PDM.Profiles.maxReached()) {
-        var max = window.PDM.Storage.getMaxProfiles();
-        window.PDM.UI.notif('Limite de prompts atteinte (' + window.PDM.Storage.getMaxProfiles() + ' max).', 'err');
-        return;
+    var genParamBindings = [
+        { id: 'context-gen-max-tokens', set: 'setContextGenMaxTokens', parse: parseInt },
+        { id: 'context-gen-temperature', set: 'setContextGenTemperature', parse: parseFloat },
+        { id: 'context-gen-retry-temperature', set: 'setContextGenRetryTemperature', parse: parseFloat },
+        { id: 'context-gen-max-retries', set: 'setContextGenMaxRetries', parse: parseInt }
+    ];
+    for (var gi = 0; gi < genParamBindings.length; gi++) {
+        (function(binding) {
+            var el = document.getElementById(binding.id);
+            if (!el) return;
+            el.addEventListener('change', function() {
+                if (typeof window.PDM.Storage[binding.set] === 'function') {
+                    window.PDM.Storage[binding.set](binding.parse(el.value, 10));
+                }
+            });
+        })(genParamBindings[gi]);
     }
-    window.PDM.Profiles.add('NouveauPrompt', 'Description...');
-    A.rebuildProfileList();
-    A.reloadTags();
-    window.PDM.UI.notif('Prompt ajout\u00e9.', 'ok');
+    var schemaEl = document.getElementById('context-gen-json-schema');
+    if (schemaEl) {
+        schemaEl.addEventListener('change', function() {
+            try {
+                var parsed = JSON.parse(schemaEl.value);
+                window.PDM.Storage.setContextGenJsonSchema(parsed);
+            } catch (e) {
+                window.PDM.UI.notif('Schéma JSON invalide — modification ignorée.', 'err');
+            }
+        });
+    }
+
+    A.bindProfileListDnD();
+    if (window.PDM.PolishTextareaResize && window.PDM.PolishTextareaResize.scan) {
+        window.PDM.PolishTextareaResize.scan(document.getElementById('section-prompts'));
+    }
 };
 
 })();

@@ -1,3 +1,9 @@
+/**
+ * PromptDeMerde.com — parakeet-lib.js (vendor)
+ *
+ * Synopsis : Bibliothèque ONNX Parakeet embarquée pour reconnaissance vocale navigateur.
+ * Objectif : Fournir fromUrls() utilisé par stt-parakeet.js — ne pas modifier le corps bundlé.
+ */
 var __defProp = Object.defineProperty;
 var __getOwnPropNames = Object.getOwnPropertyNames;
 var __require = /* @__PURE__ */ ((x) => typeof require !== "undefined" ? require : typeof Proxy !== "undefined" ? new Proxy(x, {

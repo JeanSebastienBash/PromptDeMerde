@@ -1,0 +1,21 @@
+/* ── 2. PERFORMANCE FIX — kill expensive transitions on static elements ── */
+.no-transition,
+.no-transition * {
+    transition: none !important;
+    animation-play-state: paused !important;
+}
+.is-transitioning,
+.is-transitioning * {
+    transition: all 0.2s ease !important;
+    animation-play-state: running !important;
+}
+
+/* Re-apply transitions explicitly on interactive elements */
+a, button, .btn, .card, .tag, .nav-links a, .footer-nav a,
+input, select, textarea, .theme-swatch, .swatch-color,
+.video-play-btn, .snip-btn, .nav-logo,
+.select-mini, .pricing-card, .sol-card, .btn-sniperise,
+.btn-copy, .btn-again, .nav-burger {
+    transition: all 0.2s ease;
+}
+

@@ -1,6 +1,8 @@
 /**
- * PromptDeMerde.com — Homepage marketing conditionnelle (assets/homepage/, présence contrôlée au déploiement).
- * Fallback absolu : toute erreur ou état incertain → #workspace.
+ * PromptDeMerde.com — homepage.js
+ *
+ * Synopsis : Chargeur conditionnel du fragment landing marketing.
+ * Objectif : Fetcher section-landing.html, activer #landing ou fallback #workspace.
  */
 (function() {
 

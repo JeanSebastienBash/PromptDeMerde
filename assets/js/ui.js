@@ -1,5 +1,8 @@
 /**
- * PromptDeMerde.com — Navigation par sections, notifications, sélecteurs provider/modèle et tags de contexte.
+ * PromptDeMerde.com — ui.js
+ *
+ * Synopsis : Helpers DOM, notifications, modales et widgets communs.
+ * Objectif : Centraliser show/hide sections, toasts, escape HTML et composants réutilisables.
  */
 (function(){
 
@@ -13,6 +16,19 @@ U.escapeHtml = function(s) {
         .replace(/>/g, '&gt;')
         .replace(/"/g, '&quot;')
         .replace(/'/g, '&#39;');
+};
+
+U.debounce = function(fn, ms) {
+    var timer = null;
+    return function() {
+        var self = this;
+        var args = arguments;
+        clearTimeout(timer);
+        timer = setTimeout(function() {
+            timer = null;
+            fn.apply(self, args);
+        }, ms);
+    };
 };
 
 U.show = function(id) {
@@ -96,7 +112,10 @@ U.fallbackCopy = function(text) {
 U.renderTags = function(profiles, container, onChange) {
     container.innerHTML = '';
     if (!profiles.length) {
-        container.innerHTML = '<span class="context-action-hint">Aucune option pour l\u2019instant. Cr\u00e9e-en dans l\u2019onglet Prompts.</span>';
+        var hint = (window.PDM && window.PDM.WorkspaceUi)
+            ? window.PDM.WorkspaceUi.text('contextNoProfilesHint')
+            : 'Aucune option pour l\u2019instant. Cr\u00e9e-en dans l\u2019onglet Prompts.';
+        container.innerHTML = '<span class="context-action-hint">' + U.escapeHtml(hint) + '</span>';
         return;
     }
     for (var i = 0; i < profiles.length; i++) {
@@ -155,7 +174,7 @@ U.popModelSelect = function(providerId) {
         window.PDM.Storage.set(window.PDM.Storage.KEYS.MODEL, selected);
     }
 
-    U.popSelect('config-model', opts, selected);
+    U.popSelect('ws-output-model-select', opts, selected);
 
     if (document.getElementById('model-select')) {
         U.popSelect('model-select', opts, selected);
@@ -164,8 +183,8 @@ U.popModelSelect = function(providerId) {
     var wsSel = document.getElementById('model-select');
     if (wsSel) wsSel.disabled = false;
 
-    var cfgSel = document.getElementById('config-model');
-    if (cfgSel) cfgSel.disabled = false;
+    var outSel = document.getElementById('ws-output-model-select');
+    if (outSel) outSel.disabled = false;
 
     var ep = document.getElementById('llm-endpoint-url');
     if (ep) ep.disabled = false;
@@ -196,28 +215,76 @@ U.hideOutput = function() {
     if (box) box.classList.remove('show');
 };
 
+U.updateThemeCurrentLabel = function(themeId) {
+    var el = document.getElementById('stg-theme-current');
+    if (!el || !window.PDM.Themes) return;
+    var t = window.PDM.Themes.get(themeId || window.PDM.Themes.current());
+    el.innerHTML =
+        '<span class="stg-theme-current-label">Th\u00e8me actif</span> ' +
+        '<strong class="stg-theme-current-value">' + U.escapeHtml(t.icon + ' ' + t.name) + '</strong>';
+};
+
 U.renderThemePicker = function() {
     var box = document.getElementById('theme-picker');
     if (!box) return;
     box.innerHTML = '';
     var themes = window.PDM.Themes.list();
     var current = window.PDM.Themes.current();
+    U.updateThemeCurrentLabel(current);
     for (var i = 0; i < themes.length; i++) {
         (function(t){
-            var el = document.createElement('div');
-            el.className = 'theme-swatch' + (t.id === current ? ' active' : '');
+            var isActive = t.id === current;
+            var el = document.createElement('button');
+            el.type = 'button';
+            el.className = 'theme-swatch theme-swatch-card' + (isActive ? ' active' : '');
             el.dataset.theme = t.id;
+            el.setAttribute('role', 'option');
+            el.setAttribute('aria-selected', isActive ? 'true' : 'false');
+            el.title = t.name;
 
-            var color = document.createElement('div');
-            color.className = 'swatch-color';
-            color.style.background = t.preview;
+            var preview = document.createElement('div');
+            preview.className = 'theme-swatch-preview';
+            preview.setAttribute('aria-hidden', 'true');
+
+            var stripeBg = document.createElement('span');
+            stripeBg.className = 'theme-swatch-stripe theme-swatch-stripe-bg';
+            stripeBg.style.background = t.vars['--bg-black'];
+
+            var stripeSurface = document.createElement('span');
+            stripeSurface.className = 'theme-swatch-stripe theme-swatch-stripe-surface';
+            stripeSurface.style.background = t.vars['--surface'];
+
+            var stripeAccent = document.createElement('span');
+            stripeAccent.className = 'theme-swatch-stripe theme-swatch-stripe-accent';
+            stripeAccent.style.background = t.vars['--accent-red'];
+
+            preview.appendChild(stripeBg);
+            preview.appendChild(stripeSurface);
+            preview.appendChild(stripeAccent);
+
+            var meta = document.createElement('div');
+            meta.className = 'theme-swatch-meta';
+
+            var icon = document.createElement('span');
+            icon.className = 'theme-swatch-icon';
+            icon.textContent = t.icon;
+            icon.setAttribute('aria-hidden', 'true');
 
             var name = document.createElement('span');
-            name.className = 'swatch-name';
+            name.className = 'theme-swatch-name';
             name.textContent = t.name;
 
-            el.appendChild(color);
-            el.appendChild(name);
+            meta.appendChild(icon);
+            meta.appendChild(name);
+
+            var check = document.createElement('span');
+            check.className = 'theme-swatch-check';
+            check.setAttribute('aria-hidden', 'true');
+            check.textContent = '\u2713';
+
+            el.appendChild(preview);
+            el.appendChild(meta);
+            el.appendChild(check);
 
             el.addEventListener('click', function(){
                 window.PDM.Themes.apply(t.id);
