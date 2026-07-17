@@ -25,7 +25,7 @@ Free · open source (<a href="LICENSE">MIT</a>) · no account.
 
 <p align="center">
   <a href="https://promptdemerde.com/">Official site</a> ·
-  <a href="docs/DOCUMENTATION-TECHNIQUE.en.md">Advanced documentation</a> ·
+  <a href="docs/Documentation.en.md">Advanced documentation</a> ·
   <a href="SECURITY.md">Security</a> ·
   <a href="CONTRIBUTING.md">Contributing</a> ·
   <a href="README.fr.md">Français</a>
@@ -61,7 +61,7 @@ Free · open source (<a href="LICENSE">MIT</a>) · no account.
 * Profile contract: **51** `pdm_*` keys; shipped `speech2texte` profile aligned to v1.23.0.
 * Public GitHub: **git tags only** — no GitHub Releases; no declared stable line yet.
 
-[Advanced docs — image import](docs/DOCUMENTATION-TECHNIQUE.en.md#6bis-import-image--description) · [Tag notes](.github/RELEASE_v1.23.0.md)
+[Advanced docs — image import](docs/Documentation.en.md#6bis-import-image--description) · [Tag notes](.github/RELEASE_v1.23.0.md)
 
 ### Version 1.22.x
 
@@ -107,7 +107,7 @@ PromptDeMerde reformulates a **draft** (typed, dictated, transcribed from audio/
 
 Session data (draft, history, settings, profiles) is stored in the **browser** (`localStorage`; IndexedDB for dictation audio). No signup required. User drafts stay outside any server-side application database.
 
-[Advanced documentation — presentation](docs/DOCUMENTATION-TECHNIQUE.en.md#1-présentation) · [Privacy model](docs/DOCUMENTATION-TECHNIQUE.en.md#2-modèle-de-confidentialité)
+[Advanced documentation — presentation](docs/Documentation.en.md#1-présentation) · [Privacy model](docs/Documentation.en.md#2-modèle-de-confidentialité)
 
 ---
 
@@ -143,7 +143,7 @@ In both cases, Workspace content and profiles stay in the browser.
 Web-server access logs may record **IP address** and **page URL** (standard HTTP logging). Those logs do not contain Workspace text, uploaded files, or transcription results.
 
 Same client-side model on the official site and on a self-hosted copy.  
-[`SECURITY.md`](SECURITY.md) · [Advanced docs — privacy](docs/DOCUMENTATION-TECHNIQUE.en.md#2-modèle-de-confidentialité)
+[`SECURITY.md`](SECURITY.md) · [Advanced docs — privacy](docs/Documentation.en.md#2-modèle-de-confidentialité)
 
 ---
 
@@ -161,7 +161,7 @@ Each subsection describes a delivered capability and links to the matching secti
 
 The model is the one configured in the app (pulled with `ollama pull`). Connection errors surface in the UI with a path back to Options → LLM.
 
-[Advanced docs — Workspace](docs/DOCUMENTATION-TECHNIQUE.en.md#32-workspace) · [Ollama flows](docs/DOCUMENTATION-TECHNIQUE.en.md#4-ollama--flux-a-et-flux-b)
+[Advanced docs — Workspace](docs/Documentation.en.md#32-workspace) · [Ollama flows](docs/Documentation.en.md#4-ollama--flux-a-et-flux-b)
 
 ---
 
@@ -181,7 +181,7 @@ Workspace layout:
 </p>
 
 
-[Advanced docs — Workspace](docs/DOCUMENTATION-TECHNIQUE.en.md#32-workspace)
+[Advanced docs — Workspace](docs/Documentation.en.md#32-workspace)
 
 ---
 
@@ -191,7 +191,7 @@ The **system prompt** sets the cleaning personality. It can be enabled or disabl
 
 **Context prompts (`#Tag`)** are stackable blocks. Enable or disable them for each Clean. Injection order — **before** or **after** the system prompt — is configurable.
 
-[Advanced docs — prompts, system, context prompts](docs/DOCUMENTATION-TECHNIQUE.en.md#5-prompts--système-prompts-de-contexte-générateurs)
+[Advanced docs — prompts, system, context prompts](docs/Documentation.en.md#5-prompts--système-prompts-de-contexte-générateurs)
 
 ---
 
@@ -199,7 +199,7 @@ The **system prompt** sets the cleaning personality. It can be enabled or disabl
 
 On the **Prompts** screen, the context prompt generators create a new `#Tag` from an **intention** or a **title** via the local Ollama model. Streaming, Stop, model selection and basic options are available on that screen.
 
-[Advanced docs — assisted `#Tag` generation](docs/DOCUMENTATION-TECHNIQUE.en.md#52-génération-assistée-de-tag)
+[Advanced docs — assisted `#Tag` generation](docs/Documentation.en.md#52-génération-assistée-de-tag)
 
 <p align="center">
   <img src="assets/images/screenshots/prm-context-list-short.gif" alt="Prompts screen: AI context-prompt generator by intention, with model picker, Options, and Generate the best context" width="50%" style="border:1px solid #d0d7de;border-radius:8px;box-shadow:0 1px 2px rgba(0,0,0,.08);">
@@ -223,7 +223,7 @@ Dictation continues when you open Options or documentation. Stopping uses an exp
   <em>Dictation engine panel with Vosk Maxi, French, default mic, insert at end, and delete-last-word shortcut.</em>
 </p>
 
-[Advanced docs — dictation and audio](docs/DOCUMENTATION-TECHNIQUE.en.md#6-dictée-vocale-et-audio)
+[Advanced docs — dictation and audio](docs/Documentation.en.md#6-dictée-vocale-et-audio)
 
 ---
 
@@ -233,7 +233,7 @@ The 🎵 import accepts audio files and, when the browser can decode them, video
 
 Media is processed on the machine that opened the page.
 
-[Advanced docs — dictation and audio](docs/DOCUMENTATION-TECHNIQUE.en.md#6-dictée-vocale-et-audio)
+[Advanced docs — dictation and audio](docs/Documentation.en.md#6-dictée-vocale-et-audio)
 
 ---
 
@@ -241,7 +241,7 @@ Media is processed on the machine that opened the page.
 
 Download a single audio file that merges the dictation takes of the current session. Merge and download run in the browser.
 
-[Advanced docs — WebM recording](docs/DOCUMENTATION-TECHNIQUE.en.md#64-enregistrement-webm)
+[Advanced docs — WebM recording](docs/Documentation.en.md#64-enregistrement-webm)
 
 ---
 
@@ -249,7 +249,7 @@ Download a single audio file that merges the dictation takes of the current sess
 
 Workspace file picker → vision-capable Ollama model → description text in Input. Model and instruction are set under Prompts. Missing model: toast with `ollama pull <model>` and a pointer to Prompts → image.
 
-[Advanced docs — image → description](docs/DOCUMENTATION-TECHNIQUE.en.md#6bis-import-image--description)
+[Advanced docs — image → description](docs/Documentation.en.md#6bis-import-image--description)
 
 ---
 
@@ -264,7 +264,7 @@ Capped local history of Clean runs. Cards expose Input, the system prompt, conte
   <em>Historique LLM open: stacked cards with IN/OUT previews, timestamps, model (ollama · llama3.2), and zone blocks for prior Clean runs.</em>
 </p>
 
-[Advanced docs — Workspace](docs/DOCUMENTATION-TECHNIQUE.en.md#32-workspace)
+[Advanced docs — Workspace](docs/Documentation.en.md#32-workspace)
 
 ---
 
@@ -272,7 +272,7 @@ Capped local history of Clean runs. Cards expose Input, the system prompt, conte
 
 Checkboxes cover the system prompt, context prompts, Input, and Output. Applied when **Clean** runs. Default: all off.
 
-[Advanced docs — compress tokens](docs/DOCUMENTATION-TECHNIQUE.en.md#323-compresser-les-tokens)
+[Advanced docs — compress tokens](docs/Documentation.en.md#323-compresser-les-tokens)
 
 ---
 
@@ -280,7 +280,7 @@ Checkboxes cover the system prompt, context prompts, Input, and Output. Applied 
 
 Long Input is split into successive Ollama passes; results are concatenated. Limits and behaviour: advanced docs.
 
-[Advanced docs — long INPUT multipass](docs/DOCUMENTATION-TECHNIQUE.en.md#321-input-long-multi-pass-inférence)
+[Advanced docs — long INPUT multipass](docs/Documentation.en.md#321-input-long-multi-pass-inférence)
 
 ---
 
@@ -288,7 +288,7 @@ Long Input is split into successive Ollama passes; results are concatenated. Lim
 
 Workspace panel: model, temperature, max tokens, timeout, thinking when supported. URL and connection test: Options → LLM. Public path: leave **“I don’t have a token”** checked and use local Ollama.
 
-[Advanced docs — LLM parameters](docs/DOCUMENTATION-TECHNIQUE.en.md#43-paramètres-llm-workspace-panel)
+[Advanced docs — LLM parameters](docs/Documentation.en.md#43-paramètres-llm-workspace-panel)
 
 ---
 
@@ -296,7 +296,7 @@ Workspace panel: model, temperature, max tokens, timeout, thinking when supporte
 
 Output can be shown as plain text, JSON, or HTML.
 
-[Advanced docs — OUTPUT display format](docs/DOCUMENTATION-TECHNIQUE.en.md#322-format-daffichage-output)
+[Advanced docs — OUTPUT display format](docs/Documentation.en.md#322-format-daffichage-output)
 
 ---
 
@@ -311,7 +311,7 @@ Portable unit: **ZIP** archive with the JSON profile (and related assets when in
   <em>Options → JSON profile: switch profiles, import a ZIP, or export the portable archive.</em>
 </p>
 
-[Advanced docs — ZIP export / import](docs/DOCUMENTATION-TECHNIQUE.en.md#7-export--import--archive-zip-profil)
+[Advanced docs — ZIP export / import](docs/Documentation.en.md#7-export--import--archive-zip-profil)
 
 ---
 
@@ -319,7 +319,7 @@ Portable unit: **ZIP** archive with the JSON profile (and related assets when in
 
 Profile can include logo colours, screen titles, button labels, theme, header animation / synopsis. Documented under ZIP customization keys.
 
-[Advanced docs — UI keys and brand](docs/DOCUMENTATION-TECHNIQUE.en.md#75-personnalisation-par-édition-zip)
+[Advanced docs — UI keys and brand](docs/Documentation.en.md#75-personnalisation-par-édition-zip)
 
 ---
 
@@ -327,7 +327,7 @@ Profile can include logo colours, screen titles, button labels, theme, header an
 
 Twelve UI locales. Themes: light/dark families. First-visit default: **Marron clair** (`marron-day`). Language and theme can be included in a profile export.
 
-[Advanced docs — i18n](docs/DOCUMENTATION-TECHNIQUE.en.md#35-i18n)
+[Advanced docs — i18n](docs/Documentation.en.md#35-i18n)
 
 ---
 
@@ -335,7 +335,7 @@ Twelve UI locales. Themes: light/dark families. First-visit default: **Marron cl
 
 Official site and self-hosted install share the application codebase. Operator proxy token: official production relay only. Visitors using local Ollama keep **“I don’t have a token”** checked.
 
-[Advanced docs — installation](docs/DOCUMENTATION-TECHNIQUE.en.md#10-installation-auto-hébergée) · [`SECURITY.md`](SECURITY.md)
+[Advanced docs — installation](docs/Documentation.en.md#10-installation-auto-hébergée) · [`SECURITY.md`](SECURITY.md)
 
 ---
 
@@ -494,7 +494,7 @@ The JSON profile (exported as ZIP) can hold the system prompt, context prompts (
 
 **Before clearing site data or changing machine:** export the profile (*Options → JSON profile → Export*). Import: *Options → JSON profile → Import* (`.zip` only).
 
-[Advanced docs — ZIP](docs/DOCUMENTATION-TECHNIQUE.en.md#7-export--import--archive-zip-profil)
+[Advanced docs — ZIP](docs/Documentation.en.md#7-export--import--archive-zip-profil)
 
 ---
 
@@ -524,7 +524,7 @@ For **https://promptdemerde.com**:
 OLLAMA_ORIGINS=https://promptdemerde.com ollama serve
 ```
 
-[Advanced docs — Ollama](docs/DOCUMENTATION-TECHNIQUE.en.md#4-ollama--flux-a-et-flux-b)
+[Advanced docs — Ollama](docs/Documentation.en.md#4-ollama--flux-a-et-flux-b)
 
 ### Self-host
 
@@ -542,7 +542,7 @@ bash restore-large-assets.sh
 
 Clean quality depends on the chosen Ollama model. STT uses ONNX / WASM in the browser; a dedicated GPU is optional.
 
-[Advanced docs — self-hosted install](docs/DOCUMENTATION-TECHNIQUE.en.md#10-installation-auto-hébergée)
+[Advanced docs — self-hosted install](docs/Documentation.en.md#10-installation-auto-hébergée)
 
 ---
 
@@ -581,7 +581,7 @@ Serve the folder with Apache or Nginx + PHP; install Ollama; open your URL. `res
 
 Visitors and self-hosters: keep **“I don’t have a token”** checked. Proxy token: official production operator relay only. Optional `PDM_ENV`: footer badge PROD / PRE-PROD / SELF-HOSTED.
 
-[`SECURITY.md`](SECURITY.md) · [Deployment notes](docs/DOCUMENTATION-TECHNIQUE.en.md#deploy-pdm-env-badges)
+[`SECURITY.md`](SECURITY.md) · [Deployment notes](docs/Documentation.en.md#deploy-pdm-env-badges)
 
 </details>
 
@@ -608,10 +608,14 @@ Security reports: see [`SECURITY.md`](SECURITY.md).
 
 | Topic | Document |
 |-------|----------|
-| Screens, keys, ZIP, STT, architecture | [**Advanced user documentation**](docs/DOCUMENTATION-TECHNIQUE.en.md) |
+| Screens, keys, ZIP, STT, architecture | [**Advanced user documentation**](docs/Documentation.en.md) |
 | Contribute | [`CONTRIBUTING.md`](CONTRIBUTING.md) |
 | Security and deployment | [`SECURITY.md`](SECURITY.md) |
 | Third-party notices | [`THIRD_PARTY_NOTICES.md`](THIRD_PARTY_NOTICES.md) |
+| STT models (zone) | [`docs/Stt.en.md`](docs/Stt.en.md) |
+| Vosk catalogue | [`docs/Stt-vosk.en.md`](docs/Stt-vosk.en.md) |
+| Profiles (zone) | [`docs/Profiles.en.md`](docs/Profiles.en.md) |
+| Vendor JS (zone) | [`docs/Vendor.en.md`](docs/Vendor.en.md) |
 | Français | [`README.fr.md`](README.fr.md) |
 
 ---

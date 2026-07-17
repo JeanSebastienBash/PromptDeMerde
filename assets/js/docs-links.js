@@ -1,8 +1,8 @@
 /**
  * PromptDeMerde.com — docs-links.js
  *
- * Synopsis : Lien documentation technique GitHub selon la langue IHM.
- * Objectif : FR → DOCUMENTATION-TECHNIQUE.md ; autres locales → .en.md.
+ * Synopsis : Lien documentation GitHub selon la langue IHM.
+ * Objectif : FR → Documentation.md ; autres locales → Documentation.en.md.
  */
 (function () {
 
@@ -26,8 +26,8 @@ function currentLang(lang) {
 
 Docs.techDocUrl = function (lang) {
     return BASE + (currentLang(lang) === 'fr'
-        ? 'DOCUMENTATION-TECHNIQUE.md'
-        : 'DOCUMENTATION-TECHNIQUE.en.md');
+        ? 'Documentation.md'
+        : 'Documentation.en.md');
 };
 
 Docs.openTechDoc = function (lang) {

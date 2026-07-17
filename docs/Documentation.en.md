@@ -1,9 +1,16 @@
 # Technical documentation
 
 <p align="center">
-  <a href="DOCUMENTATION-TECHNIQUE.en.md"><img src="../assets/images/flags/en.svg" alt="English" width="28" height="20"></a>
+  <a href="Documentation.en.md"><img src="../assets/images/flags/en.svg" alt="English" width="28" height="20"></a>
   &nbsp;
-  <a href="DOCUMENTATION-TECHNIQUE.md"><img src="../assets/images/flags/fr.svg" alt="Français" width="28" height="20"></a>
+  <a href="Documentation.md"><img src="../assets/images/flags/fr.svg" alt="Français" width="28" height="20"></a>
+</p>
+
+
+<p align="center">
+  <a href="Documentation.en.md"><img src="../assets/images/flags/en.svg" alt="English" width="28" height="20"></a>
+  &nbsp;
+  <a href="Documentation.md"><img src="../assets/images/flags/fr.svg" alt="Français" width="28" height="20"></a>
 </p>
 
 <p align="center">
@@ -13,7 +20,7 @@
 
 > **Application version** : 1.23.0 (`CS.VERSION`)  
 > **Audience** : developers, code auditors, self-hosting operators  
-> **Language** : English · [Français](DOCUMENTATION-TECHNIQUE.md)  
+> **Language** : English · [Français](Documentation.md)  
 > **Related** : [`README.md`](../README.md) (EN) · [`README.fr.md`](../README.fr.md) (FR) · [`CONTRIBUTING.md`](../CONTRIBUTING.md) · [`SECURITY.md`](../SECURITY.md)
 
 This document describes behaviour that is **verifiable in the repository**: files, contracts, flows, and inventories. It is not a marketing guide.
@@ -1233,15 +1240,15 @@ Mitigations include sanitization, size limits, token stripping, and a confirmati
 |---------|--------|
 | Catalogue | [`assets/profiles/index.json`](../assets/profiles/index.json) |
 | Bundled profile | [`assets/profiles/speech2texte/`](../assets/profiles/speech2texte/) |
-| Docs | [`assets/profiles/README.md`](../assets/profiles/README.md) |
+| Docs | [`Profiles.en.md`](Profiles.en.md) |
 
 ### 20.2 STT
 
-STT models live under `assets/stt/vosk/`, `vosk-mini/`, `vosk-maxi/`, `whisper-mini/`, `whisper-maxi/`, and `parakeet/`. Zone documentation is [`assets/stt/README.md`](../assets/stt/README.md). Heavy binaries are restored with `install/restore-large-assets.sh`.
+STT models live under `assets/stt/vosk/`, `vosk-mini/`, `vosk-maxi/`, `whisper-mini/`, `whisper-maxi/`, and `parakeet/`. Zone documentation is [`Stt.en.md`](Stt.en.md) · catalogue [`Stt-vosk.en.md`](Stt-vosk.en.md). Heavy binaries are restored with `install/restore-large-assets.sh`.
 
 ### 20.3 Vendor and notices
 
-Embedded dependencies are described in [`assets/js/vendor/README.md`](../assets/js/vendor/README.md) and [`THIRD_PARTY_NOTICES.md`](../THIRD_PARTY_NOTICES.md).
+Embedded dependencies are described in [`Vendor.en.md`](Vendor.en.md) and [`THIRD_PARTY_NOTICES.md`](../THIRD_PARTY_NOTICES.md).
 
 ### 20.4 Fonts
 
@@ -1265,11 +1272,15 @@ Local fonts (Fira Code, Inconsolata, Space Grotesk, Archivo Black, Anton, OFL li
 
 | Document | Role |
 |----------|------|
-| [`README.md`](../README.md) / [`README.fr.md`](../README.fr.md) | Product pitch |
+| [`README.md`](../README.md) | Product pitch (EN) |
 | [`SECURITY.md`](../SECURITY.md) | Proxy, CSP, import |
 | [`CONTRIBUTING.md`](../CONTRIBUTING.md) | Contributing |
 | [`THIRD_PARTY_NOTICES.md`](../THIRD_PARTY_NOTICES.md) | Vendor licenses |
-| [`DOCUMENTATION-TECHNIQUE.md`](DOCUMENTATION-TECHNIQUE.md) | French version |
+| [`Stt.en.md`](Stt.en.md) | STT zone (EN) |
+| [`Stt-vosk.en.md`](Stt-vosk.en.md) | Vosk catalogue (EN) |
+| [`Profiles.en.md`](Profiles.en.md) | Profiles zone (EN) |
+| [`Vendor.en.md`](Vendor.en.md) | Vendor zone (EN) |
+| [`Documentation.md`](Documentation.md) | French version |
 
 ---
 

@@ -11,7 +11,7 @@
 - Édition dans **Prompts** (modèle + prompt).
 - Contrat : **51** clés `pdm_*` ; profil livré `speech2texte` aligné v1.23.0.
 - Miroir public : [`README.md`](../README.md) (EN) · [`README.fr.md`](../README.fr.md) (FR) — Features 1–40.
-- Doc technique bilingue : [`docs/DOCUMENTATION-TECHNIQUE.md`](../docs/DOCUMENTATION-TECHNIQUE.md) (FR) · [`docs/DOCUMENTATION-TECHNIQUE.en.md`](../docs/DOCUMENTATION-TECHNIQUE.en.md) (EN).
+- Doc technique bilingue : [`docs/Documentation.md`](../docs/Documentation.md) (FR) · [`docs/Documentation.en.md`](../docs/Documentation.en.md) (EN).
 
 ## Smoke
 

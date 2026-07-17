@@ -1,12 +1,25 @@
 # Profils applicatifs (`assets/profiles/`)
 
-Chaque profil **bundlé au boot** vit dans son propre dossier. L’**UI traduite** (12 langues) est **partagée** : [`assets/i18n/ui/`](../i18n/ui/).
+<p align="center">
+  <a href="Profiles.en.md"><img src="../assets/images/flags/en.svg" alt="English" width="28" height="20"></a>
+  &nbsp;
+  <a href="Profiles.md"><img src="../assets/images/flags/fr.svg" alt="Français" width="28" height="20"></a>
+</p>
+
+
+<p align="center">
+  <a href="README.md"><img src="../images/flags/en.svg" alt="English" width="28" height="20"></a>
+  &nbsp;
+  <a href="README.fr.md"><img src="../images/flags/fr.svg" alt="Français" width="28" height="20"></a>
+</p>
+
+Chaque profil **bundlé au boot** vit dans son propre dossier. L’**UI traduite** (12 langues) est **partagée** : [`assets/i18n/ui/`](../assets/i18n/ui/).
 
 ## Politique dépôt GitHub (canon)
 
 | Couche | Chemin | Sur GitHub public |
 |--------|--------|-------------------|
-| **Profil par défaut** | `speech2texte/` + [`index.json`](index.json) | **Oui** — seul profil servi au boot |
+| **Profil par défaut** | `speech2texte/` + [`index.json`](../assets/profiles/index.json) | **Oui** — seul profil servi au boot |
 | **Autres profils** | import ZIP utilisateur | **Non** — jamais de second dossier sous `assets/profiles/` |
 
 > **Règle** : `assets/profiles/index.json` ne liste **que** `speech2texte`. Les extensions s’obtiennent par **import ZIP** (localStorage `pdm_custom_profiles`) — pas comme dossier versionné ici.
@@ -58,3 +71,17 @@ Locales dans `parts/locales.json` (`ar`, `de`, `en`, `eo`, `es`, `fr`, `it`, `ja
 - **Session** : prompts édités mémorisés par locale (`pdm_prompts_bundle`).
 - **Export ZIP** : archive profil complète.
 - **Import ZIP** : restaure un profil dans `pdm_custom_profiles` — **pas** dans `assets/profiles/`.
+
+## Documents liés
+
+| Document | Rôle |
+|----------|------|
+| [`../README.fr.md`](../README.fr.md) | Accroche produit (FR) |
+| [`Documentation.md`](Documentation.md) | Documentation technique (FR) |
+| [`../CONTRIBUTING.fr.md`](../CONTRIBUTING.fr.md) | Contribuer (FR) |
+| [`../SECURITY.fr.md`](../SECURITY.fr.md) | Sécurité (FR) |
+| [`../THIRD_PARTY_NOTICES.fr.md`](../THIRD_PARTY_NOTICES.fr.md) | Mentions tierces (FR) |
+| [`Stt.md`](Stt.md) | Zone STT (FR) |
+| [`Stt-vosk.md`](Stt-vosk.md) | Catalogue Vosk (FR) |
+| [`Profiles.md`](Profiles.md) | Zone profils (FR) |
+| [`Vendor.md`](Vendor.md) | Zone vendor (FR) |

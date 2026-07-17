@@ -1,9 +1,16 @@
 # Documentation technique
 
 <p align="center">
-  <a href="DOCUMENTATION-TECHNIQUE.en.md"><img src="../assets/images/flags/en.svg" alt="English" width="28" height="20"></a>
+  <a href="Documentation.en.md"><img src="../assets/images/flags/en.svg" alt="English" width="28" height="20"></a>
   &nbsp;
-  <a href="DOCUMENTATION-TECHNIQUE.md"><img src="../assets/images/flags/fr.svg" alt="Français" width="28" height="20"></a>
+  <a href="Documentation.md"><img src="../assets/images/flags/fr.svg" alt="Français" width="28" height="20"></a>
+</p>
+
+
+<p align="center">
+  <a href="Documentation.en.md"><img src="../assets/images/flags/en.svg" alt="English" width="28" height="20"></a>
+  &nbsp;
+  <a href="Documentation.md"><img src="../assets/images/flags/fr.svg" alt="Français" width="28" height="20"></a>
 </p>
 
 <p align="center">
@@ -13,7 +20,7 @@
 
 > **Version applicative** : 1.23.0 (`CS.VERSION`)  
 > **Public** : développeurs, auditeurs du code, opérateurs d’auto-hébergement  
-> **Langue** : français · [English](DOCUMENTATION-TECHNIQUE.en.md)  
+> **Langue** : français · [English](Documentation.en.md)  
 > **Compléments** : [`README.md`](../README.md) (EN) · [`README.fr.md`](../README.fr.md) (FR) · [`CONTRIBUTING.md`](../CONTRIBUTING.md) · [`SECURITY.md`](../SECURITY.md)
 
 Ce document décrit le fonctionnement **vérifiable dans le dépôt** : fichiers, contrats, flux, inventaires. Il ne constitue pas un guide marketing.
@@ -1233,15 +1240,15 @@ Les mitigations comprennent la sanitize, les limites de taille, le strip des tok
 |---------|--------|
 | Catalogue | [`assets/profiles/index.json`](../assets/profiles/index.json) |
 | Profil bundlé | [`assets/profiles/speech2texte/`](../assets/profiles/speech2texte/) |
-| Doc | [`assets/profiles/README.md`](../assets/profiles/README.md) |
+| Doc | [`Profiles.md`](Profiles.md) |
 
 ### 20.2 STT
 
-Les modèles STT sont rangés sous `assets/stt/vosk/`, `vosk-mini/`, `vosk-maxi/`, `whisper-mini/`, `whisper-maxi/` et `parakeet/`. La documentation de zone est [`assets/stt/README.md`](../assets/stt/README.md). Les binaires lourds se restaurent avec `install/restore-large-assets.sh`.
+Les modèles STT sont rangés sous `assets/stt/vosk/`, `vosk-mini/`, `vosk-maxi/`, `whisper-mini/`, `whisper-maxi/` et `parakeet/`. La documentation de zone est [`Stt.md`](Stt.md) · catalogue [`Stt-vosk.md`](Stt-vosk.md). Les binaires lourds se restaurent avec `install/restore-large-assets.sh`.
 
 ### 20.3 Vendor et notices
 
-Les dépendances embarquées sont décrites dans [`assets/js/vendor/README.md`](../assets/js/vendor/README.md) et [`THIRD_PARTY_NOTICES.md`](../THIRD_PARTY_NOTICES.md).
+Les dépendances embarquées sont décrites dans [`Vendor.md`](Vendor.md) et [`THIRD_PARTY_NOTICES.fr.md`](../THIRD_PARTY_NOTICES.fr.md).
 
 ### 20.4 Polices
 
@@ -1265,11 +1272,15 @@ Les polices locales (Fira Code, Inconsolata, Space Grotesk, Archivo Black, Anton
 
 | Document | Rôle |
 |----------|------|
-| [`README.md`](../README.md) / [`README.fr.md`](../README.fr.md) | Accroche produit |
-| [`SECURITY.md`](../SECURITY.md) | Proxy, CSP, import |
-| [`CONTRIBUTING.md`](../CONTRIBUTING.md) | Contribution |
-| [`THIRD_PARTY_NOTICES.md`](../THIRD_PARTY_NOTICES.md) | Licences vendor |
-| [`DOCUMENTATION-TECHNIQUE.en.md`](DOCUMENTATION-TECHNIQUE.en.md) | Version anglaise |
+| [`README.fr.md`](../README.fr.md) | Accroche produit (FR) |
+| [`SECURITY.fr.md`](../SECURITY.fr.md) | Proxy, CSP, import |
+| [`CONTRIBUTING.fr.md`](../CONTRIBUTING.fr.md) | Contribution |
+| [`THIRD_PARTY_NOTICES.fr.md`](../THIRD_PARTY_NOTICES.fr.md) | Licences vendor |
+| [`Stt.md`](Stt.md) | Zone STT (FR) |
+| [`Stt-vosk.md`](Stt-vosk.md) | Catalogue Vosk (FR) |
+| [`Profiles.md`](Profiles.md) | Zone profils (FR) |
+| [`Vendor.md`](Vendor.md) | Zone vendor (FR) |
+| [`Documentation.en.md`](Documentation.en.md) | Version anglaise |
 
 ---
 
