@@ -1,0 +1,60 @@
+/* ── 8. NOTIFICATION SLIDE-IN — enhanced from style.css base ── */
+#notif-box {
+    position: fixed;
+    top: 80px;
+    right: 20px;
+    z-index: 9999;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    pointer-events: none;
+}
+.notif {
+    pointer-events: auto;
+    padding: 16px 24px;
+    border-radius: 6px;
+    font-size: var(--text-ui);
+    line-height: var(--leading-normal);
+    font-weight: 600;
+    color: var(--text-white);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    animation: notifSlideIn 0.4s cubic-bezier(0.22, 0.61, 0.36, 1) forwards;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+    max-width: 420px;
+    display: block;
+    opacity: 1;
+}
+.notif.ok {
+    background: color-mix(in srgb, var(--success, #00ff88) 18%, var(--bg-dark, #111));
+    border-color: var(--success, #00ff88);
+    color: var(--text-white, #fff);
+}
+.notif.err,
+.notif.error {
+    background: color-mix(in srgb, var(--error, #ff0040) 28%, var(--bg-dark, #111));
+    border-color: var(--role-error-text, var(--error, #ff0040));
+    color: var(--text-white, #fff);
+}
+.notif.info {
+    background: rgba(255, 255, 255, 0.08);
+    border-color: var(--border);
+    color: var(--text-white, #fff);
+}
+.notif.warn {
+    background: color-mix(in srgb, var(--warning, #e6a817) 22%, var(--bg-dark, #111));
+    border-color: var(--warning, #e6a817);
+    color: var(--text-white, #fff);
+}
+.notif.fade-out {
+    animation: notifSlideOut 0.3s ease forwards;
+}
+@keyframes notifSlideIn {
+    from { opacity: 0; transform: translateX(40px) scale(0.95); }
+    to   { opacity: 1; transform: translateX(0)    scale(1); }
+}
+@keyframes notifSlideOut {
+    from { opacity: 1; transform: translateX(0)    scale(1); }
+    to   { opacity: 0; transform: translateX(40px) scale(0.95); }
+}
+

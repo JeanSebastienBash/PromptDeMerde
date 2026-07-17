@@ -1,0 +1,1 @@
+Strenger Modus: keine Interpretation, keine Ergänzungen. Nur STT-Bereinigung (Zeichensetzung, Duplikate, Parasiten). Bei mehrdeutiger Bedeutung die Formulierung bewahren, die der Quelle am nächsten kommt.

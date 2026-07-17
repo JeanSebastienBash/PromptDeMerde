@@ -1,0 +1,36 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://promptdemerde.com/schemas/profile-prompts.json",
+  "title": "PromptDeMerde profile prompts index",
+  "type": "object",
+  "required": ["version", "type", "system", "contexts"],
+  "additionalProperties": false,
+  "properties": {
+    "version": { "type": "string", "minLength": 1 },
+    "type": { "const": "pdm-profile-prompts" },
+    "system": {
+      "type": "object",
+      "required": ["enabled", "pathTemplate"],
+      "additionalProperties": false,
+      "properties": {
+        "enabled": { "type": "boolean" },
+        "pathTemplate": { "type": "string", "minLength": 1 }
+      }
+    },
+    "contexts": {
+      "type": "array",
+      "maxItems": 999,
+      "items": {
+        "type": "object",
+        "required": ["id", "tag", "active", "pathTemplate"],
+        "additionalProperties": false,
+        "properties": {
+          "id": { "type": "string", "minLength": 1, "maxLength": 128 },
+          "tag": { "type": "string", "minLength": 1, "maxLength": 32 },
+          "active": { "type": "boolean" },
+          "pathTemplate": { "type": "string", "minLength": 1 }
+        }
+      }
+    }
+  }
+}

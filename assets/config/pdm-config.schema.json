@@ -1,0 +1,615 @@
+{
+  "$comment": "PromptDeMerde.com — pdm-config.schema.json | Objet logique dans l'archive ZIP profil 1.23.0 (sécurité v2).",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://promptdemerde.com/schemas/pdm-config.schema.json",
+  "title": "PromptDeMerde pdm-config",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "version",
+    "type",
+    "pdm_provider",
+    "pdm_model",
+    "pdm_image_model",
+    "pdm_image_prompt",
+    "pdm_system_prompt",
+    "pdm_system_prompt_enabled",
+    "pdm_profiles",
+    "pdm_language",
+    "pdm_theme",
+    "pdm_history_count",
+    "pdm_clean_history",
+    "pdm_workspace",
+    "pdm_stt_device_id",
+    "pdm_stt_engine",
+    "pdm_stt_compute",
+    "pdm_stt_insert_at_cursor",
+    "pdm_stt_delete_word_enabled",
+    "pdm_stt_delete_word_shortcut",
+    "pdm_stt_delete_word_target",
+    "pdm_stt_vosk_lang",
+    "pdm_context_position",
+    "pdm_ollama_url",
+    "pdm_llm_thinking_enabled",
+    "pdm_llm_thinking_max_chars",
+    "pdm_llm_temperature",
+    "pdm_llm_max_tokens",
+    "pdm_llm_timeout_sec",
+    "pdm_token_ollama",
+    "pdm_context_gen_system",
+    "pdm_context_gen_user_intent",
+    "pdm_context_gen_user_title",
+    "pdm_context_inject_header",
+    "pdm_context_gen_tag_intent_suffix",
+    "pdm_context_gen_forced_tag_system_suffix",
+    "pdm_context_gen_retry_system_suffix",
+    "pdm_context_gen_retry_user_suffix",
+    "pdm_active_profile",
+    "pdm_project",
+    "pdm_context_profile_line_template",
+    "pdm_context_gen_max_tokens",
+    "pdm_context_gen_temperature",
+    "pdm_context_gen_retry_temperature",
+    "pdm_context_gen_max_retries",
+    "pdm_context_gen_json_schema",
+    "pdm_output_json_enabled",
+    "pdm_output_json_schema",
+    "pdm_output_json_key_pattern",
+    "pdm_output_json_value_schema",
+    "pdm_output_display_format",
+    "pdm_audio_blobs",
+    "pdm_workspace_ui"
+  ],
+  "properties": {
+    "version": {
+      "type": "string",
+      "pattern": "^\\d+\\.\\d+\\.\\d+$"
+    },
+    "type": {
+      "const": "pdm-config"
+    },
+    "exportedAt": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "pdm_provider": {
+      "type": "string"
+    },
+    "pdm_model": {
+      "type": "string",
+      "maxLength": 256
+    },
+    "pdm_image_model": {
+      "type": "string",
+      "enum": [
+        "moondream",
+        "llava-phi3",
+        "bakllava",
+        "minicpm-v",
+        "qwen2.5-vl:3b",
+        "llava:7b",
+        "llama3.2-vision:11b",
+        "granite3.2-vision"
+      ]
+    },
+    "pdm_image_prompt": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 100000
+    },
+    "pdm_system_prompt": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 100000
+    },
+    "pdm_system_prompt_enabled": {
+      "type": "boolean"
+    },
+    "pdm_llm_thinking_enabled": {
+      "type": "boolean"
+    },
+    "pdm_llm_thinking_max_chars": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 100000
+    },
+    "pdm_llm_temperature": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 2
+    },
+    "pdm_llm_max_tokens": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 32768
+    },
+    "pdm_llm_timeout_sec": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 86400,
+      "description": "0 = illimité ; sinon secondes (max 24 h)"
+    },
+    "pdm_language": {
+      "enum": [
+        "fr",
+        "en",
+        "ar",
+        "zh",
+        "eo",
+        "es",
+        "de",
+        "pt",
+        "it",
+        "ru",
+        "ja",
+        "ko"
+      ]
+    },
+    "pdm_theme": {
+      "description": "Thème visuel (50 valeurs). Défaut applicatif et profil speech2texte : marron-day (Marron clair).",
+      "enum": [
+        "light",
+        "dark",
+        "noir-day",
+        "noir",
+        "gris-day",
+        "gris",
+        "bleu-day",
+        "bleu",
+        "marine-day",
+        "marine",
+        "indigo-day",
+        "indigo",
+        "cyan-day",
+        "cyan",
+        "turquoise-day",
+        "turquoise",
+        "vert-day",
+        "vert",
+        "lime-day",
+        "lime",
+        "menthe-day",
+        "menthe",
+        "olive-day",
+        "olive",
+        "jaune-day",
+        "jaune",
+        "or-day",
+        "or",
+        "ambre-day",
+        "ambre",
+        "orange-day",
+        "orange",
+        "rouge-day",
+        "rouge",
+        "corail-day",
+        "corail",
+        "rose-day",
+        "rose",
+        "magenta-day",
+        "magenta",
+        "violet-day",
+        "violet",
+        "lavande-day",
+        "lavande",
+        "fuchsia-day",
+        "fuchsia",
+        "prune-day",
+        "prune",
+        "marron-day",
+        "marron"
+      ]
+    },
+    "pdm_context_position": {
+      "enum": [
+        "after_system",
+        "before_system"
+      ]
+    },
+    "pdm_stt_engine": {
+      "enum": [
+        "vosk-mini",
+        "vosk-maxi",
+        "whisper-mini",
+        "whisper-maxi",
+        "parakeet"
+      ]
+    },
+    "pdm_stt_compute": {
+      "enum": [
+        "cpu",
+        "gpu"
+      ]
+    },
+    "pdm_stt_insert_at_cursor": {
+      "type": "boolean"
+    },
+    "pdm_stt_delete_word_enabled": {
+      "type": "boolean"
+    },
+    "pdm_stt_delete_word_shortcut": {
+      "enum": [
+        "ctrl+backspace",
+        "ctrl+delete",
+        "alt+backspace",
+        "ctrl+shift+backspace"
+      ]
+    },
+    "pdm_stt_delete_word_target": {
+      "enum": [
+        "end",
+        "cursor"
+      ]
+    },
+    "pdm_stt_vosk_lang": {
+      "type": "string",
+      "enum": [
+        "fr", "en-us", "ar", "cn", "eo", "es", "de", "pt", "it", "ru", "ja", "ko",
+        "en-in", "tr", "vn", "nl", "ca", "fa", "hi", "pl", "cs", "uz", "kz", "uk", "sv", "br", "gu", "tg", "te", "ky", "ka"
+      ]
+    },
+    "pdm_stt_device_id": {
+      "type": "string"
+    },
+    "pdm_ollama_url": {
+      "type": "string",
+      "format": "uri"
+    },
+    "pdm_token_ollama": {
+      "type": "string",
+      "maxLength": 512
+    },
+    "pdm_context_gen_system": {
+      "type": "string",
+      "minLength": 1
+    },
+    "pdm_context_gen_user_intent": {
+      "type": "string",
+      "minLength": 1
+    },
+    "pdm_context_gen_user_title": {
+      "type": "string",
+      "minLength": 1
+    },
+    "pdm_context_inject_header": {
+      "type": "string",
+      "minLength": 1
+    },
+    "pdm_context_gen_tag_intent_suffix": {
+      "type": "string",
+      "minLength": 1
+    },
+    "pdm_context_gen_forced_tag_system_suffix": {
+      "type": "string",
+      "minLength": 1
+    },
+    "pdm_context_gen_retry_system_suffix": {
+      "type": "string",
+      "minLength": 1
+    },
+    "pdm_context_gen_retry_user_suffix": {
+      "type": "string",
+      "minLength": 1
+    },
+    "pdm_active_profile": {
+      "type": "string",
+      "minLength": 1
+    },
+    "pdm_project": {
+      "type": "object",
+      "required": ["platform_url", "name", "url", "vitrine_url"],
+      "properties": {
+        "platform_url": { "type": "string", "minLength": 1 },
+        "name": { "type": "string", "minLength": 1 },
+        "url": { "type": "string", "minLength": 1 },
+        "vitrine_url": { "type": "string", "minLength": 1 }
+      },
+      "additionalProperties": false
+    },
+    "pdm_context_profile_line_template": {
+      "type": "string",
+      "minLength": 1
+    },
+    "pdm_context_gen_max_tokens": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 8192
+    },
+    "pdm_context_gen_temperature": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 2
+    },
+    "pdm_context_gen_retry_temperature": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 2
+    },
+    "pdm_context_gen_max_retries": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 10
+    },
+    "pdm_context_gen_json_schema": {
+      "type": "object"
+    },
+    "pdm_output_json_enabled": {
+      "type": "boolean"
+    },
+    "pdm_output_json_schema": {
+      "type": ["object", "null"]
+    },
+    "pdm_output_json_key_pattern": {
+      "type": ["string", "null"]
+    },
+    "pdm_output_json_value_schema": {
+      "type": ["object", "null"]
+    },
+    "pdm_output_display_format": {
+      "enum": ["text", "json", "html"]
+    },
+    "pdm_history_count": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 100
+    },
+    "pdm_profiles": {
+      "type": "array",
+      "maxItems": 999,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "id",
+          "tag",
+          "prompt",
+          "active"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "tag": {
+            "type": "string",
+            "pattern": "^[A-Z][a-zA-Z0-9]*$"
+          },
+          "prompt": {
+            "type": "string"
+          },
+          "active": {
+            "type": "boolean"
+          },
+          "origin": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["method"],
+            "properties": {
+              "method": {
+                "enum": ["ai_intent", "ai_title", "manual", "profile_bundle"]
+              },
+              "generatedAt": {
+                "type": "string",
+                "format": "date-time"
+              },
+              "createdAt": {
+                "type": "string",
+                "format": "date-time"
+              },
+              "provider": {
+                "type": "string"
+              },
+              "model": {
+                "type": "string"
+              },
+              "systemPrompt": {
+                "type": "string"
+              },
+              "userPrompt": {
+                "type": "string"
+              },
+              "sourceFile": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      }
+    },
+    "pdm_workspace": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "input",
+        "output",
+        "thinking",
+        "savedAt",
+        "contextPanelOpen",
+        "inputSource",
+        "audioFileName",
+        "audioFileSize",
+        "audioMimeType",
+        "audioLastModified",
+        "audioRef",
+        "audioSegmentCount"
+      ],
+      "properties": {
+        "input": {
+          "type": "string"
+        },
+        "output": {
+          "type": "string"
+        },
+        "thinking": {
+          "type": "string"
+        },
+        "savedAt": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "format": "date-time"
+        },
+        "contextPanelOpen": {
+          "type": "boolean"
+        },
+        "inputSource": {
+          "enum": ["manual", "audio-file", "audio-dictation", "image-file"]
+        },
+        "audioFileName": {
+          "type": ["string", "null"]
+        },
+        "audioFileSize": {
+          "type": ["number", "null"]
+        },
+        "audioMimeType": {
+          "type": ["string", "null"]
+        },
+        "audioLastModified": {
+          "type": ["number", "null"]
+        },
+        "audioRef": {
+          "type": ["string", "null"]
+        },
+        "audioSegmentCount": {
+          "type": ["integer", "null"],
+          "minimum": 1
+        }
+      }
+    },
+    "pdm_clean_history": {
+      "type": "array",
+      "maxItems": 100,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "type", "at", "input"],
+        "properties": {
+          "id": { "type": "string" },
+          "type": { "type": "string" },
+          "at": { "type": "string", "format": "date-time" },
+          "input": { "type": "string" },
+          "output": { "type": "string" },
+          "thinking": { "type": "string" },
+          "systemPrompt": { "type": "string" },
+          "systemPromptEffective": { "type": "string" },
+          "contextPosition": { "enum": ["after_system", "before_system"] },
+          "activeContexts": { "type": "array" },
+          "usage": { "type": ["object", "null"] },
+          "duration_ms": { "type": "number" },
+          "provider": { "type": "string" },
+          "model": { "type": "string" },
+          "inputSource": { "enum": ["manual", "audio-file", "audio-dictation", "image-file"] },
+          "audioFileName": { "type": ["string", "null"] },
+          "audioFileSize": { "type": ["number", "null"] },
+          "audioMimeType": { "type": ["string", "null"] },
+          "audioLastModified": { "type": ["number", "null"] },
+          "audioRef": { "type": ["string", "null"] },
+          "audioSegmentCount": { "type": ["integer", "null"], "minimum": 1 },
+          "trace": {
+            "type": "object",
+            "description": "Matrice avant/après compression (input, system, contextes, output).",
+            "additionalProperties": true
+          }
+        }
+      }
+    },
+    "pdm_audio_blobs": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "object",
+        "required": ["segments"],
+        "properties": {
+          "segments": {
+            "type": "array",
+            "maxItems": 500,
+            "items": {
+              "type": "object",
+              "required": ["base64"],
+              "properties": {
+                "index": { "type": "integer" },
+                "base64": { "type": "string", "minLength": 1 },
+                "size": { "type": "number" },
+                "mimeType": { "type": "string" },
+                "createdAt": { "type": "string" }
+              }
+            }
+          },
+          "totalSegments": { "type": "integer" },
+          "createdAt": { "type": "string" },
+          "updatedAt": { "type": "string" }
+        }
+      }
+    },
+    "pdm_workspace_ui": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["identity", "brand", "texts"],
+      "properties": {
+        "identity": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["username", "hostname", "usernameAlt"],
+          "properties": {
+            "username": { "type": "string", "minLength": 1 },
+            "hostname": { "type": "string", "minLength": 1 },
+            "usernameAlt": { "type": "string" }
+          }
+        },
+        "brand": {
+          "description": "Logo nav (deux mots). Personnalisable via profil JSON ; couleurs hex optionnelles (vide = thème). showExtension true affiche .com (défaut plateforme).",
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "firstWord",
+            "secondWord",
+            "extension",
+            "showExtension",
+            "firstWordClass",
+            "secondWordClass",
+            "extensionClass",
+            "firstWordColor",
+            "secondWordColor"
+          ],
+          "properties": {
+            "firstWord": { "type": "string", "minLength": 1, "maxLength": 32 },
+            "secondWord": { "type": "string", "minLength": 1, "maxLength": 32 },
+            "extension": { "type": "string", "maxLength": 32 },
+            "showExtension": { "type": "boolean" },
+            "firstWordClass": { "type": "string" },
+            "secondWordClass": { "type": "string" },
+            "extensionClass": { "type": "string" },
+            "firstWordColor": {
+              "type": "string",
+              "description": "Hex #RGB/#RRGGBB ou chaîne vide (fallback thème --text-white)."
+            },
+            "secondWordColor": {
+              "type": "string",
+              "description": "Hex #RGB/#RRGGBB ou chaîne vide (fallback thème --role-brand-text)."
+            }
+          }
+        },
+        "texts": {
+          "type": "object",
+          "additionalProperties": { "type": "string" }
+        }
+      }
+    },
+    "langs": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 12,
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "i18n": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "object",
+        "additionalProperties": { "type": "string" }
+      }
+    }
+  }
+}

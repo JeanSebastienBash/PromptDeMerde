@@ -1,0 +1,72 @@
+/* ── Animation header — synopsis profil (typing simulé) ──
+ * DOM + textContent uniquement ; curseur CSS step-end ; pas de filter animé.
+ */
+
+.nav-prompt-row .nav-prompt {
+    flex: 1 1 auto;
+    min-width: 0;
+}
+
+.nav-prompt {
+    display: inline-flex;
+    flex-wrap: nowrap;
+    align-items: baseline;
+    min-width: 0;
+    max-width: 100%;
+}
+
+.nav-synopsis {
+    display: inline-flex;
+    align-items: baseline;
+    min-width: 0;
+    flex: 1 1 auto;
+    margin-left: 0.35em;
+    color: var(--text-muted);
+    font-weight: 400;
+    overflow: hidden;
+}
+
+.nav-synopsis[hidden] {
+    display: none !important;
+}
+
+.nav-synopsis-sep {
+    flex-shrink: 0;
+    opacity: 0.65;
+}
+
+.nav-synopsis-viewport {
+    display: inline-block;
+    min-width: 0;
+    max-width: 100%;
+    overflow: hidden;
+    white-space: nowrap;
+    vertical-align: baseline;
+}
+
+.nav-synopsis-text {
+    unicode-bidi: plaintext;
+}
+
+.nav-synopsis-cursor {
+    flex-shrink: 0;
+    color: var(--role-brand-text, var(--accent-red));
+    opacity: 0.85;
+    animation: syn-cursor-blink 1.05s step-end infinite;
+}
+
+.nav-prompt.is-synopsis-typing .prompt-line-cursor .cursor {
+    animation-play-state: paused;
+}
+
+@keyframes syn-cursor-blink {
+    0%, 49% { opacity: 0.85; }
+    50%, 100% { opacity: 0.15; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .nav-synopsis-cursor {
+        animation: none;
+        opacity: 0.5;
+    }
+}

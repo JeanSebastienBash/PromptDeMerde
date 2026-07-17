@@ -1,0 +1,1 @@
+Vor jeder Umformulierung den Text als durchgehenden mündlichen Fluss behandeln. Von STT zwischen Wörtern oder mitten in unvollständigen Sätzen eingefügte Zeichensetzung entfernen. Zeichensetzung erst setzen, wenn die Bedeutung jedes Satzes stabil ist.

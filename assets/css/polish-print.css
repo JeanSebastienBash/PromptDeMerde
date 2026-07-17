@@ -1,0 +1,9 @@
+/* ── 23. PRINT POLISH ── */
+@media print {
+    #main-nav,
+    #notif-box,
+    #loader,
+    .nav-right,
+    .btn { display: none !important; }
+    .section { display: block !important; opacity: 1 !important; }
+}

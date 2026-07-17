@@ -1,0 +1,1285 @@
+<!--
+PromptDeMerde.com — index.html
+
+Synopsis : Coque HTML unique de la SPA PromptDeMerde (hash routing).
+Objectif : Déclarer la structure des écrans, charger bootstrap et servir de shell à tous les modules JS.
+-->
+<!DOCTYPE html>
+<html lang="fr" data-pdm-brand-nav-ext="0" data-theme="marron-day" data-theme-mode="day" data-theme-family="marron" style="color-scheme:light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<script>
+(function(){
+    var p = location.pathname;
+    if (!p.endsWith('/')) {
+        var i = p.lastIndexOf('/');
+        p = i >= 0 ? p.slice(0, i + 1) : '/';
+    }
+    var base = document.createElement('base');
+    base.href = location.origin + p;
+    document.head.appendChild(base);
+})();
+</script>
+<title>PromptDeMerde.com — Reformulateur prompt IA local Ollama</title>
+<meta name="description" content="Reformulateur prompts v1.22.0 : brouillon→prompt sniper via Ollama local. Open source, STT navigateur, export ZIP profil (49 cl&#233;s), z&#233;ro t&#233;l&#233;m&#233;trie.">
+<meta name="keywords" content="g&#233;n&#233;rateur prompt ia, ollama prompt local, reformuler prompt, optimiser prompt, open source, z&#233;ro t&#233;l&#233;m&#233;trie, export zip profil">
+<meta name="robots" content="index, follow">
+<meta name="author" content="DreamProject AI">
+<link rel="canonical" href="https://promptdemerde.com/">
+<link rel="alternate" type="text/plain" href="/llms.txt" title="LLMs.txt">
+<meta property="og:type" content="website">
+<meta property="og:title" content="PromptDeMerde — G&#233;n&#233;rateur prompt IA local Ollama">
+<meta property="og:description" content="Reformulateur prompts v1.22.0 via Ollama local. Open source, STT navigateur, export ZIP profil (49 cl&#233;s), z&#233;ro t&#233;l&#233;m&#233;trie.">
+<meta property="og:url" content="https://promptdemerde.com/">
+<meta property="og:image" content="https://promptdemerde.com/assets/homepage/demo-poster.jpg">
+<meta property="og:site_name" content="PromptDeMerde.com">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="PromptDeMerde — prompt local Ollama">
+<meta name="twitter:description" content="Reformule ton prompt en local. Open source, privacy-first.">
+<meta name="twitter:image" content="https://promptdemerde.com/assets/homepage/demo-poster.jpg">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"PromptDeMerde.com","url":"https://promptdemerde.com","applicationCategory":"UtilitiesApplication","operatingSystem":"Web","offers":{"@type":"Offer","price":"0","priceCurrency":"EUR"},"description":"Reformulateur de prompts IA local via Ollama, open source, z&#233;ro t&#233;l&#233;m&#233;trie."}</script>
+<link rel="preload" href="assets/fonts/archivoblack/ArchivoBlack-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="assets/fonts/spacegrotesk/SpaceGrotesk-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="assets/fonts/inconsolata/Inconsolata-Regular.ttf" as="font" type="font/ttf" crossorigin>
+<link rel="stylesheet" href="assets/css/style-base.css">
+<link rel="stylesheet" href="assets/css/style-layout.css">
+<link rel="stylesheet" href="assets/css/style-landing.css">
+<link rel="stylesheet" href="assets/css/style-workspace.css">
+<link rel="stylesheet" href="assets/css/style-config.css">
+<link rel="stylesheet" href="assets/css/style-prompts.css">
+<link rel="stylesheet" href="assets/css/style-settings.css">
+<link rel="stylesheet" href="assets/css/style-components.css">
+<link rel="stylesheet" href="assets/css/style-responsive.css">
+<link rel="stylesheet" href="assets/css/style-themes.css">
+<link rel="stylesheet" href="assets/css/style-pricing.css">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ctext y='28' font-size='28'%3E%F0%9F%92%A9%3C/text%3E%3C/svg%3E">
+<link rel="stylesheet" href="assets/css/polish-scrollbar.css" media="print" onload="this.media='all'">
+<link rel="stylesheet" href="assets/css/polish-performance.css" media="print" onload="this.media='all'">
+<link rel="stylesheet" href="assets/css/polish-animation-inversion.css" media="print" onload="this.media='all'">
+<link rel="stylesheet" href="assets/css/polish-animation-synopsis.css" media="print" onload="this.media='all'">
+<link rel="stylesheet" href="assets/css/polish-transitions.css" media="print" onload="this.media='all'">
+<link rel="stylesheet" href="assets/css/polish-reveal.css" media="print" onload="this.media='all'">
+<link rel="stylesheet" href="assets/css/polish-buttons.css" media="print" onload="this.media='all'">
+<link rel="stylesheet" href="assets/css/polish-cards.css" media="print" onload="this.media='all'">
+<link rel="stylesheet" href="assets/css/polish-skeleton.css" media="print" onload="this.media='all'">
+<link rel="stylesheet" href="assets/css/polish-notifications.css" media="print" onload="this.media='all'">
+<link rel="stylesheet" href="assets/css/polish-copy.css" media="print" onload="this.media='all'">
+<link rel="stylesheet" href="assets/css/polish-cursor.css" media="print" onload="this.media='all'">
+<link rel="stylesheet" href="assets/css/polish-hero.css" media="print" onload="this.media='all'">
+<link rel="stylesheet" href="assets/css/polish-loader.css" media="print" onload="this.media='all'">
+<link rel="stylesheet" href="assets/css/polish-tags.css" media="print" onload="this.media='all'">
+<link rel="stylesheet" href="assets/css/polish-theme-swatch.css" media="print" onload="this.media='all'">
+<link rel="stylesheet" href="assets/css/polish-pricing-badge.css" media="print" onload="this.media='all'">
+<link rel="stylesheet" href="assets/css/polish-footer.css" media="print" onload="this.media='all'">
+<link rel="stylesheet" href="assets/css/polish-footer-meta.css" media="print" onload="this.media='all'">
+<link rel="stylesheet" href="assets/css/polish-responsive.css" media="print" onload="this.media='all'">
+<link rel="stylesheet" href="assets/css/polish-a11y.css" media="print" onload="this.media='all'">
+<link rel="stylesheet" href="assets/css/polish-legal.css" media="print" onload="this.media='all'">
+<link rel="stylesheet" href="assets/css/polish-history-audio.css" media="print" onload="this.media='all'">
+<link rel="stylesheet" href="assets/css/polish-footer-donation.css" media="print" onload="this.media='all'">
+<link rel="stylesheet" href="assets/css/polish-textarea-resize.css" media="print" onload="this.media='all'">
+<link rel="stylesheet" href="assets/css/polish-print.css" media="print" onload="this.media='all'">
+<noscript>
+<link rel="stylesheet" href="assets/css/polish-scrollbar.css">
+<link rel="stylesheet" href="assets/css/polish-performance.css">
+<link rel="stylesheet" href="assets/css/polish-animation-inversion.css">
+<link rel="stylesheet" href="assets/css/polish-animation-synopsis.css">
+<link rel="stylesheet" href="assets/css/polish-transitions.css">
+<link rel="stylesheet" href="assets/css/polish-reveal.css">
+<link rel="stylesheet" href="assets/css/polish-buttons.css">
+<link rel="stylesheet" href="assets/css/polish-cards.css">
+<link rel="stylesheet" href="assets/css/polish-skeleton.css">
+<link rel="stylesheet" href="assets/css/polish-notifications.css">
+<link rel="stylesheet" href="assets/css/polish-copy.css">
+<link rel="stylesheet" href="assets/css/polish-cursor.css">
+<link rel="stylesheet" href="assets/css/polish-hero.css">
+<link rel="stylesheet" href="assets/css/polish-loader.css">
+<link rel="stylesheet" href="assets/css/polish-tags.css">
+<link rel="stylesheet" href="assets/css/polish-theme-swatch.css">
+<link rel="stylesheet" href="assets/css/polish-pricing-badge.css">
+<link rel="stylesheet" href="assets/css/polish-footer.css">
+<link rel="stylesheet" href="assets/css/polish-footer-meta.css">
+<link rel="stylesheet" href="assets/css/polish-responsive.css">
+<link rel="stylesheet" href="assets/css/polish-a11y.css">
+<link rel="stylesheet" href="assets/css/polish-legal.css">
+<link rel="stylesheet" href="assets/css/polish-history-audio.css">
+<link rel="stylesheet" href="assets/css/polish-footer-donation.css">
+<link rel="stylesheet" href="assets/css/polish-textarea-resize.css">
+<link rel="stylesheet" href="assets/css/polish-print.css">
+</noscript>
+</head>
+<body>
+
+<div id="notif-box"></div>
+
+<div id="loader">
+    <div style="text-align:center">
+        <div class="spin"></div>
+        <div class="loader-msg" data-i18n="loader.message">SNIPERISATION EN COURS...</div>
+    </div>
+</div>
+
+<section id="section-maintenance" class="section legal-section" hidden>
+    <div class="container legal-content" style="max-width:42rem;margin:0 auto;padding:6rem 1rem 3rem">
+        <h2 class="legal-title">Maintenance</h2>
+        <p class="legal-update">PromptDeMerde.com</p>
+        <p lang="fr">L&#8217;application ne peut pas d&#233;marrer&nbsp;: aucun profil JSON valide n&#8217;est disponible (<code>assets/profiles/&lt;id&gt;/parts/config.json</code> et <code>assets/i18n/ui/</code>). V&#233;rifiez le d&#233;ploiement (<code>index.json</code>, identifiants de profil, fichiers <code>parts/</code>) ou r&#233;importez une configuration export&#233;e une fois le service r&#233;tabli.</p>
+        <p lang="en">The application cannot start: no valid profile JSON is available (<code>assets/profiles/&lt;id&gt;/parts/config.json</code> and <code>assets/i18n/ui/</code>). Check the deployment (<code>index.json</code>, profile ids, <code>parts/</code> files) or re-import an exported configuration once service is restored.</p>
+    </div>
+</section>
+
+<header id="main-nav">
+    <div class="container">
+        <div class="nav-row">
+            <a class="nav-logo" href="#workspace" id="nav-logo-link"><span class="logo-gt">&gt;_</span> <span class="logo-word1">Prompt</span><span class="red">DeMerde</span><span class="logo-dotcom">.com</span></a>
+            <button id="nav-burger" type="button" class="nav-burger" aria-label="Menu" aria-expanded="false" data-i18n-attr="aria-label:nav.menu">&#9776;</button>
+            <nav class="nav-links" id="nav-links">
+                <a href="#landing" data-nav="landing" id="nav-link-landing" hidden data-i18n="nav.home">Accueil</a>
+                <a href="#workspace" data-nav="workspace" data-i18n="nav.workspace">Workspace</a>
+                <a href="#prompts" data-nav="prompts" data-i18n="nav.prompts">Prompts</a>
+                <a href="#market" data-nav="market" id="nav-link-market" hidden data-i18n="nav.market">Marketplace</a>
+                <a href="#settings" data-nav="settings" data-i18n="nav.settings">Options</a>
+                <div class="nav-links-info">
+                    <button id="theme-toggle-mobile" class="nav-theme-btn" title="Changer de th&#232;me" data-i18n-attr="title:nav.themeTitle">&#127769; <span data-i18n="nav.theme">Th&#232;me</span></button>
+                </div>
+            </nav>
+            <div class="nav-right">
+                <button id="theme-toggle" title="Changer de th&#232;me" data-i18n-attr="title:nav.themeTitle">&#127769;</button>
+            </div>
+        </div>
+        <div class="nav-prompt-row">
+            <div class="nav-prompt nav-prompt-animated" id="nav-prompt">
+                <span class="prompt-prefix">$ </span>
+                <span class="prompt-username-inverted" data-from="chnek" data-to="sniper" aria-live="polite">
+                    <span class="prompt-username-text">chnek</span>
+                </span><span class="prompt-suffix">@promptdemerde:~# </span><span class="nav-synopsis" id="nav-synopsis" hidden aria-hidden="true"><span class="nav-synopsis-sep" aria-hidden="true">— </span><span class="nav-synopsis-viewport" id="nav-synopsis-viewport"><span class="nav-synopsis-text" id="nav-synopsis-text"></span></span><span class="nav-synopsis-cursor" id="nav-synopsis-cursor" aria-hidden="true">&#9612;</span></span><span class="prompt-line-cursor"><span class="cursor">&#9608;</span></span>
+            </div>
+        </div>
+    </div>
+</header>
+
+<section id="section-landing" class="section">
+    <div class="hero">
+        <div class="container">
+            <h1 class="hero-title">Transforme ton prompt <span class="red">de merde</span> en prompt de sniper</h1>
+            <p class="hero-subtitle">G&#233;n&#233;rateur prompt IA local Ollama &#8212; open source, z&#233;ro t&#233;l&#233;m&#233;trie.</p>
+        </div>
+    </div>
+</section>
+
+<section id="section-workspace" class="section active">
+<div class="container">
+
+<div class="ws-grid">
+    <div class="ws-panel ws-input">
+        <div class="ws-panel-head">
+            <span class="sec-icon" aria-hidden="true">&#9999;&#65039;</span>
+            <h2 class="ws-panel-title" data-i18n="workspace.input">Input</h2>
+            <button id="ws-reset-btn-input" type="button" class="btn-ghost btn-sm ws-reset-btn ws-panel-reset-btn" title="R&#233;initialiser saisie et r&#233;sultat" data-i18n="workspace.reset" data-i18n-attr="title:workspaceUi.resetTitle">Reset</button>
+        </div>
+
+        <div id="stt-block" class="stt-block stt-strip" aria-label="Dict&#233;e vocale">
+            <div class="stt-strip-row" aria-live="polite">
+                <button id="stt-btn" type="button" class="btn secondary stt-strip-dictate-btn" aria-pressed="false"
+                  title="D&#233;marrer ou arr&#234;ter la dict&#233;e vocale">&#127908; D&#233;marrer dict&#233;e vocale</button>
+                <div class="stt-strip-status">
+                    <p id="stt-engage-msg" class="stt-engage-msg" hidden aria-live="polite"></p>
+                </div>
+                <button id="stt-options-btn" type="button" class="stt-strip-options-btn" title="Options dict&#233;e vocale" aria-expanded="false" aria-controls="stt-options-panel">&#9881; Options</button>
+            </div>
+            <p id="stt-strip-hint" class="stt-strip-hint" hidden aria-live="polite">
+                <span class="stt-strip-hint-text"></span>
+                <span id="stt-ws-localhost-row" class="stt-ws-localhost-row" hidden>
+                    &#8212; <a id="stt-ws-localhost-link" href="#"></a>
+                </span>
+            </p>
+            <div id="stt-options-panel" class="stt-strip-options" hidden>
+                <div class="stt-opt-row">
+                    <label for="ws-stt-engine-select" class="stt-opt-label">Moteur</label>
+                    <select id="ws-stt-engine-select" class="ws-stt-engine-select select-mini stt-opt-select" title="Moteur speech-to-text" aria-label="Moteur speech-to-text"></select>
+                    <button id="stt-preload-btn" type="button" class="btn-ghost btn-sm stt-opt-action-btn stt-preload-btn" title="Charger le moteur vocal avec les options choisies"><span class="stt-preload-btn-label" data-stt-preload-label>Charger le moteur</span></button>
+                </div>
+                <div class="stt-opt-row" id="stt-vosk-lang-row" hidden>
+                    <label for="stt-vosk-lang-select" class="stt-opt-label">Langue du moteur</label>
+                    <select id="stt-vosk-lang-select" class="select-mini stt-opt-select" title="Langue de dictée vocale" aria-label="Langue du moteur de dictée vocale"></select>
+                </div>
+                <p id="stt-vosk-maxi-hint" class="stt-help stt-vosk-maxi-hint" hidden></p>
+                <p id="stt-vosk-mini-hint" class="stt-help stt-vosk-mini-hint" hidden></p>
+                <div class="stt-opt-row" id="stt-compute-row">
+                    <label for="stt-compute-select" class="stt-opt-label">Acc&#233;l&#233;ration</label>
+                    <select id="stt-compute-select" class="select-mini stt-compute-select stt-opt-select" title="CPU (WASM) ou GPU (WebGPU) pour Whisper et Parakeet ; Vosk reste en CPU" aria-label="Acc&#233;l&#233;ration STT">
+                        <option value="cpu">CPU</option>
+                        <option value="gpu">GPU</option>
+                    </select>
+                </div>
+                <div class="stt-opt-row stt-opt-row--mic">
+                    <label for="stt-device-select" class="stt-opt-label">Micro</label>
+                    <select id="stt-device-select" class="select-mini stt-device-select stt-opt-select" disabled title="Microphone" aria-label="Microphone">
+                        <option value="">Micro par d&#233;faut</option>
+                    </select>
+                    <button id="stt-refresh-devices" type="button" class="btn-ghost btn-sm stt-strip-refresh-btn stt-strip-icon-btn" title="Rafra&#238;chir la liste des micros" aria-label="Rafra&#238;chir les micros">&#128260;</button>
+                </div>
+                <div class="stt-opt-row stt-opt-row--toggle">
+                    <span class="stt-opt-label">Insertion dictée vocale</span>
+                    <label class="toggle-wrap ws-stt-insert-toggle" id="stt-insert-mode-toggle-wrap"
+                      title="Ins&#233;rer la dict&#233;e vocale &#224; la position du curseur au lieu de toujours en fin de texte">
+                        <input type="checkbox" id="stt-insert-at-cursor">
+                        <span id="stt-insert-mode-label">Toujours &#224; la fin</span>
+                    </label>
+                </div>
+                <div class="stt-opt-row stt-opt-row--toggle">
+                    <span class="stt-opt-label">Suppression du dernier mot</span>
+                    <label class="toggle-wrap ws-stt-insert-toggle" id="stt-delete-word-enabled-wrap"
+                      title="Activer le raccourci clavier pour effacer un mot dans la zone Input">
+                        <input type="checkbox" id="stt-delete-word-enabled" checked>
+                        <span id="stt-delete-word-enabled-label">Activ&#233;</span>
+                    </label>
+                </div>
+                <div class="stt-opt-row" id="stt-delete-word-shortcut-row">
+                    <label for="stt-delete-word-shortcut" class="stt-opt-label">Touches</label>
+                    <select id="stt-delete-word-shortcut" class="select-mini stt-opt-select" title="Combinaison de touches" aria-label="Raccourci effacer un mot">
+                        <option value="ctrl+backspace">Ctrl + Retour arri&#232;re</option>
+                        <option value="ctrl+delete">Ctrl + Suppr</option>
+                        <option value="alt+backspace">Alt + Retour arri&#232;re</option>
+                        <option value="ctrl+shift+backspace">Ctrl + Maj + Retour arri&#232;re</option>
+                    </select>
+                </div>
+                <div class="stt-opt-row" id="stt-delete-word-target-row">
+                    <label for="stt-delete-word-target" class="stt-opt-label">Cible</label>
+                    <select id="stt-delete-word-target" class="select-mini stt-opt-select" title="Quel mot effacer" aria-label="Cible du raccourci effacer un mot">
+                        <option value="end">Dernier mot (fin du texte)</option>
+                        <option value="cursor">Mot avant le curseur</option>
+                    </select>
+                </div>
+            </div>
+            <div id="stt-load-panel" class="stt-strip-load" hidden>
+                <p class="stt-load-label" data-stt-load-label hidden>Chargement du mod&#232;le&#8230;</p>
+                <div class="stt-load-bar" data-stt-load-bar role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+                    <div class="stt-load-fill" data-stt-load-fill></div>
+                </div>
+                <p class="stt-load-detail" data-stt-load-detail hidden></p>
+            </div>
+            <p id="stt-compute-hint" class="stt-help stt-ws-compute-hint" hidden aria-live="polite"></p>
+            <div id="stt-ws-lan-hint" class="stt-ws-lan-hint" hidden></div>
+            <p id="stt-help" class="stt-help cfg-desc" hidden></p>
+        </div>
+
+        <div class="ws-input-field">
+            <textarea id="ws-input" class="ws-textarea" placeholder="" maxlength="50000" aria-label=""></textarea>
+            <div class="ws-input-tools">
+                <span id="char-count" class="char-count">0 / 50000</span>
+                <input type="file" id="ws-audio-file-input" accept="audio/*,video/*" hidden>
+                <button id="ws-audio-file-btn" type="button" class="ws-icon-btn" title="Importer un fichier audio ou vidéo (Whisper Maxi, local)" aria-label="Importer un fichier audio ou vidéo">&#127925;</button>
+                <input type="file" id="ws-image-file-input" accept=".png,.jpg,.jpeg,.webp,.gif,image/png,image/jpeg,image/webp,image/gif" hidden>
+                <button id="ws-image-file-btn" type="button" class="ws-icon-btn" title="Importer une image (description Ollama vision)" aria-label="Importer une image">&#128444;</button>
+                <button id="ws-dictation-audio-btn" type="button" class="ws-icon-btn ws-dictation-dl-btn" hidden disabled
+                  title="Télécharger le MP3 global contenant l'ensemble des morceaux de dictée vocale de cette session." aria-label="Télécharger le MP3 global de dictée" aria-disabled="true">&#11015;</button>
+                <button id="ws-tts-download-btn" type="button" class="ws-icon-btn ws-tts-dl-btn" disabled
+                  title="Télécharger une version audio TTS du texte — source au choix : zone Entrée seule, zone Sortie seule, ou Entrée + Sortie ensemble. Pas encore disponible (v2, GenericVoice)." aria-label="Télécharger une version audio TTS du texte" aria-disabled="true">&#128264;</button>
+                <button id="ws-input-clear" type="button" class="ws-icon-btn" title="Effacer la saisie" aria-label="Effacer la saisie">&#128465;</button>
+            </div>
+        </div>
+        <p id="ws-audio-status" class="ws-audio-status" hidden aria-live="polite"></p>
+        <p id="ws-image-status" class="ws-image-status" hidden aria-live="polite"></p>
+
+        <details id="ws-prompt-compress" class="context-panel ws-compress-panel">
+            <summary class="context-summary">
+                <span class="context-summary-lead">
+                    <span class="sec-icon sec-icon-sm" aria-hidden="true">&#128290;</span>
+                    <span class="context-title ws-compress-title" data-i18n="workspace.compressPanelTitle">Compression des tokens</span>
+                </span>
+                <span id="ws-compress-badge" class="context-badge" hidden></span>
+            </summary>
+            <div class="context-body ws-compress-body">
+                <div class="ws-compress-chips" role="group" aria-label="Cibles de compression" data-i18n-attr="aria-label:workspace.compressTargetsAria">
+                    <label class="ws-compress-chip" data-compress-kind="system" for="ws-compress-include-system">
+                        <input type="checkbox" id="ws-compress-include-system">
+                        <span data-i18n="workspace.compressIncludeSystem">Prompt système</span>
+                    </label>
+                    <label class="ws-compress-chip" data-compress-kind="contexts" for="ws-compress-include-contexts">
+                        <input type="checkbox" id="ws-compress-include-contexts">
+                        <span data-i18n="workspace.compressIncludeContexts">Prompts de contexte (actifs)</span>
+                    </label>
+                    <label class="ws-compress-chip" data-compress-kind="input" for="ws-compress-include-input">
+                        <input type="checkbox" id="ws-compress-include-input">
+                        <span data-i18n="workspace.compressIncludeInput">Zone Input</span>
+                    </label>
+                    <label class="ws-compress-chip" data-compress-kind="output" for="ws-compress-include-output">
+                        <input type="checkbox" id="ws-compress-include-output">
+                        <span data-i18n="workspace.compressIncludeOutput">Zone Output</span>
+                    </label>
+                </div>
+            </div>
+        </details>
+
+        <details id="context-panel" class="context-panel">
+            <summary class="context-summary">
+                <span class="context-summary-lead">
+                    <span class="sec-icon sec-icon-sm" aria-hidden="true">&#127991;&#65039;</span>
+                    <span class="context-title" data-i18n="workspace.contextTitle">Prompts de contexte</span>
+                </span>
+                <span id="context-active-count" class="context-badge">0 actif</span>
+            </summary>
+            <div class="context-body">
+                <div class="context-toolbar">
+                    <button id="context-select-all-btn" type="button" class="context-toolbar-btn" title="Tout s&#233;lectionner">Tout</button>
+                    <button id="context-clear-all-btn" type="button" class="context-toolbar-btn" title="Tout d&#233;s&#233;lectionner">Aucun</button>
+                    <a href="#prompts" class="context-toolbar-btn context-toolbar-link" title="Cr&#233;er ou modifier ces options">G&#233;rer &#8594;</a>
+                </div>
+                <div id="profiles-tags" class="profiles-tags"></div>
+            </div>
+        </details>
+    </div>
+
+    <div class="ws-panel ws-output">
+        <div id="ws-output-compress-lock" class="ws-output-compress-lock" hidden aria-hidden="true">
+            <div class="ws-output-compress-lock-inner">
+                <div class="ws-output-compress-lock-pulse" aria-hidden="true"></div>
+                <p id="ws-compress-status" class="ws-compress-status" aria-live="polite" hidden></p>
+                <span class="ws-output-compress-lock-label" data-i18n="workspace.compressLockOutput">Compression en cours — Output verrouillé</span>
+                <button id="ws-compress-cancel-btn-lock" type="button" class="ws-compress-cancel-btn ws-compress-cancel-btn--lock"
+                    data-i18n="workspace.compressCancel"
+                    data-i18n-attr="title:workspace.compressCancelTitle"
+                    title="Arrêter la compression">Arrêter</button>
+            </div>
+        </div>
+        <div class="ws-panel-head">
+            <span class="sec-icon" aria-hidden="true">&#10024;</span>
+            <h2 class="ws-panel-title" data-i18n="workspace.output">Output</h2>
+            <button id="ws-reset-btn-output" type="button" class="btn-ghost btn-sm ws-reset-btn ws-panel-reset-btn" title="R&#233;initialiser saisie et r&#233;sultat" data-i18n="workspace.reset" data-i18n-attr="title:workspaceUi.resetTitle">Reset</button>
+        </div>
+        <div id="llm-block" class="llm-block llm-strip" aria-label="Mod&#232;le LLM et options" data-i18n-attr="aria-label:workspace.llmBlockAria">
+            <div class="llm-strip-row" aria-live="polite">
+                <div class="llm-strip-config">
+                    <label for="ws-output-model-select" class="llm-strip-field-label" data-i18n="workspace.modelLabel">Mod&#232;le</label>
+                    <select id="ws-output-model-select" class="llm-strip-model-select select-mini" title="Changer de mod&#232;le LLM" aria-label="Mod&#232;le LLM" data-i18n-attr="title:workspace.modelTitle,aria-label:workspace.modelAria"></select>
+                </div>
+                <button id="ws-llm-options-btn" type="button" class="llm-strip-options-btn" title="Options LLM" aria-expanded="false" aria-controls="ws-llm-options-panel" data-i18n="workspace.llmOptions" data-i18n-attr="title:workspace.llmOptionsTitle">&#9881; Options</button>
+            </div>
+            <div id="ws-llm-options-panel" class="llm-strip-options" hidden>
+                <div class="llm-opt-row llm-opt-row--toggle" data-llm-opt="thinking">
+                    <span class="llm-opt-label" data-i18n="workspace.thinkingLabel">&#129504; R&#233;flexion</span>
+                    <button id="ws-thinking-toggle" type="button" class="llm-opt-toggle-btn" title="Activer ou d&#233;sactiver la r&#233;flexion" aria-pressed="false" data-i18n-attr="title:workspace.thinkingToggleTitle">OFF</button>
+                </div>
+                <p id="ws-thinking-opt-hint" class="llm-opt-inline-hint" hidden></p>
+                <div id="ws-thinking-max-row" class="llm-opt-row llm-opt-row--number" data-llm-opt="thinkingMaxChars" hidden>
+                    <label class="llm-opt-label" for="ws-thinking-max-chars" data-i18n="workspace.thinkingMaxLabel">Caract&#232;res max de r&#233;flexion</label>
+                    <input type="number" id="ws-thinking-max-chars" class="llm-opt-number-input" min="0" max="100000" step="100" value="5000" title="Caract&#232;res max de r&#233;flexion (0 = illimit&#233;)" data-i18n-attr="title:workspace.thinkingMaxTitle">
+                    <span id="ws-thinking-max-hint" class="llm-opt-hint">5000 car. autoris&#233;s &#183; 0 = illimit&#233;</span>
+                </div>
+                <div class="llm-opt-row llm-opt-row--range" data-llm-opt="temperature">
+                    <span class="llm-opt-label" data-i18n="workspace.temperature">Temp&#233;rature</span>
+                    <div class="llm-opt-range-wrap">
+                        <span class="llm-opt-range-cap" aria-hidden="true">0</span>
+                        <input type="range" id="ws-llm-temperature-slider" class="llm-opt-slider" min="0" max="2" step="0.05" value="0" aria-label="Temp&#233;rature LLM" aria-valuemin="0" aria-valuemax="2" aria-valuenow="0" data-i18n-attr="aria-label:workspace.temperatureAria">
+                        <span class="llm-opt-range-cap" aria-hidden="true">2</span>
+                        <output class="llm-opt-value" id="ws-llm-temperature-value" for="ws-llm-temperature-slider">0</output>
+                    </div>
+                </div>
+                <div class="llm-opt-row llm-opt-row--range" data-llm-opt="maxTokens">
+                    <span class="llm-opt-label" data-i18n="workspace.maxTokens">Tokens de sortie</span>
+                    <div class="llm-opt-range-wrap">
+                        <span class="llm-opt-range-cap" aria-hidden="true">0</span>
+                        <input type="range" id="ws-llm-max-tokens-slider" class="llm-opt-slider" min="0" max="8192" step="64" value="0" aria-label="Tokens de sortie max" aria-valuemin="0" aria-valuemax="8192" aria-valuenow="0" data-i18n-attr="aria-label:workspace.maxTokensAria">
+                        <span class="llm-opt-range-cap llm-opt-range-cap--max" aria-hidden="true">8192</span>
+                        <output class="llm-opt-value" id="ws-llm-max-tokens-value" for="ws-llm-max-tokens-slider">0</output>
+                    </div>
+                </div>
+                <div class="llm-opt-row llm-opt-row--range" data-llm-opt="timeout">
+                    <span class="llm-opt-label" data-i18n="workspace.timeout">Timeout inf&#233;rence</span>
+                    <div class="llm-opt-range-wrap">
+                        <span class="llm-opt-range-cap" aria-hidden="true">0</span>
+                        <input type="range" id="ws-llm-timeout-slider" class="llm-opt-slider" min="0" max="86400" step="60" value="1000" aria-label="Timeout inf&#233;rence en secondes (0 = illimit&#233;)" aria-valuemin="0" aria-valuemax="86400" aria-valuenow="1000" data-i18n-attr="aria-label:workspace.timeoutAria">
+                        <span class="llm-opt-range-cap llm-opt-range-cap--max" aria-hidden="true">86400</span>
+                        <output class="llm-opt-value" id="ws-llm-timeout-value" for="ws-llm-timeout-slider">1000</output>
+                    </div>
+                </div>
+                <div class="llm-opt-row llm-opt-row--format" data-llm-opt="outputFormat">
+                    <span class="llm-opt-label" data-i18n="workspace.outputDisplayFormat">Format de sortie</span>
+                    <div class="llm-opt-format-chips" role="radiogroup" aria-labelledby="ws-output-format-label" data-i18n-attr="aria-label:workspace.outputDisplayFormatAria">
+                        <span id="ws-output-format-label" class="sr-only" data-i18n="workspace.outputDisplayFormat">Format de sortie</span>
+                        <label class="llm-opt-format-chip">
+                            <input type="radio" name="ws-output-display-format" value="text" data-format-enabled="1" checked>
+                            <span data-i18n="workspace.outputFormatText">Texte brut</span>
+                        </label>
+                        <label class="llm-opt-format-chip">
+                            <input type="radio" name="ws-output-display-format" value="json" data-format-enabled="1">
+                            <span data-i18n="workspace.outputFormatJson">JSON</span>
+                        </label>
+                        <label class="llm-opt-format-chip">
+                            <input type="radio" name="ws-output-display-format" value="html" data-format-enabled="1">
+                            <span data-i18n="workspace.outputFormatHtml">HTML</span>
+                        </label>
+                        <label class="llm-opt-format-chip is-disabled" data-i18n-attr="title:workspace.outputFormatSoon" title="Bient&#244;t disponible">
+                            <input type="radio" name="ws-output-display-format" value="markdown" data-format-enabled="0" disabled>
+                            <span data-i18n="workspace.outputFormatMarkdown">Markdown</span>
+                        </label>
+                        <label class="llm-opt-format-chip is-disabled" data-i18n-attr="title:workspace.outputFormatSoon" title="Bient&#244;t disponible">
+                            <input type="radio" name="ws-output-display-format" value="xml" data-format-enabled="0" disabled>
+                            <span data-i18n="workspace.outputFormatXml">XML</span>
+                        </label>
+                        <label class="llm-opt-format-chip is-disabled" data-i18n-attr="title:workspace.outputFormatSoon" title="Bient&#244;t disponible">
+                            <input type="radio" name="ws-output-display-format" value="yaml" data-format-enabled="0" disabled>
+                            <span data-i18n="workspace.outputFormatYaml">YAML</span>
+                        </label>
+                        <label class="llm-opt-format-chip is-disabled" data-i18n-attr="title:workspace.outputFormatSoon" title="Bient&#244;t disponible">
+                            <input type="radio" name="ws-output-display-format" value="csv" data-format-enabled="0" disabled>
+                            <span data-i18n="workspace.outputFormatCsv">CSV</span>
+                        </label>
+                    </div>
+                    <p class="llm-opt-hint" data-i18n="workspace.outputDisplayFormatHint">Affichage pour copie : texte brut par d&#233;faut. JSON / HTML enrobent le m&#234;me contenu.</p>
+                </div>
+            </div>
+        </div>
+        <div id="output-box" class="output-box output-box--empty">
+            <details id="thinking-panel" class="thinking-panel">
+                <summary class="thinking-summary">
+                    <span class="thinking-title" data-i18n="workspace.thinkingTitle">&#129504; R&#233;flexion du mod&#232;le</span>
+                    <span id="thinking-badge" class="thinking-badge"></span>
+                </summary>
+                <div class="thinking-body">
+                    <p id="thinking-unavailable-msg" class="thinking-unavailable cfg-desc" hidden></p>
+                    <div class="output-field-wrap">
+                        <textarea id="thinking-text" class="thinking-text" readonly placeholder=""></textarea>
+                        <button id="copy-thinking-btn" type="button" class="ws-icon-btn ws-output-icon-btn" title="Copier la r&#233;flexion" aria-label="Copier la r&#233;flexion">&#128203;</button>
+                    </div>
+                </div>
+            </details>
+            <div class="output-field-wrap">
+                <textarea id="output-text" class="output-text" readonly placeholder=""></textarea>
+                <button id="copy-btn" type="button" class="ws-icon-btn ws-output-icon-btn" title="Copier le prompt nettoy&#233;" aria-label="Copier le prompt nettoy&#233;">&#128203;</button>
+            </div>
+            <div id="output-meta" class="output-meta"></div>
+        </div>
+        <div class="ws-output-actions">
+            <div class="ws-output-actions-primary">
+                <button id="sniperise-btn" class="btn ws-sniperise-btn" data-i18n="workspace.sniperise">NETTOYER CE TAS DE MERDE &#8594;</button>
+                <button id="cancel-btn" class="btn secondary ws-cancel-btn" style="display:none" data-i18n="workspace.cancel">&#9209; Arr&#234;ter</button>
+            </div>
+            <div id="ws-prompt-guard" class="ws-prompt-guard ws-prompt-guard-compact" style="display:none" role="alert">
+                Active le <a href="#prompts">prompt syst&#232;me</a> ou un <a href="#prompts">contexte</a> pour lancer le LLM.
+            </div>
+        </div>
+    </div>
+</div>
+
+<details id="ws-history-panel" class="ws-history-panel">
+    <summary class="ws-history-summary">
+        <span class="sec-icon sec-icon-sm" aria-hidden="true">&#128220;</span>
+        <span class="ws-history-summary-title" data-i18n="workspace.historyTitle">Historique LLM</span>
+        <span id="ws-history-count" class="ws-history-count"></span>
+        <button id="ws-history-clear" type="button" class="ws-history-purge-btn" title="Purger tout l'historique local" data-i18n="workspace.historyPurge" data-i18n-attr="title:workspaceUi.historyPurgeTitle">Purger</button>
+    </summary>
+    <div class="ws-history-body">
+        <p id="ws-history-empty" class="ws-history-empty" data-i18n="workspace.historyEmpty">Aucune entr&#233;e.</p>
+        <div id="ws-history-list" class="ws-history-list" aria-live="polite"></div>
+    </div>
+</details>
+
+</div>
+</section>
+
+<section id="section-settings" class="section">
+<div class="container">
+<div class="stg-wrap">
+
+<header class="stg-header">
+    <h2 class="stg-page-title" data-i18n="settings.pageTitle">Options</h2>
+    <p class="stg-page-desc" data-i18n="settings.pageDesc">Connexion LLM, th&#232;me, langue et profil JSON &#8212; tout reste dans le stockage local de ton navigateur.</p>
+</header>
+
+<div class="stg-layout">
+
+<div class="stg-col">
+<div class="stg-card" id="llm-settings-card">
+    <div class="stg-card-head">
+        <span class="stg-card-icon" aria-hidden="true">&#129302;</span>
+        <div class="stg-card-head-text">
+            <h2 class="stg-title" data-i18n="settings.llmTitle">LLM</h2>
+            <p class="stg-card-desc" data-i18n="settings.llmDesc">Connexion au moteur LLM (fournisseur et URL).</p>
+        </div>
+    </div>
+    <div class="stg-card-body stg-llm-body">
+        <div class="stg-llm-row">
+            <div class="stg-llm-field stg-llm-field-provider">
+                <label class="stg-label" for="llm-provider-select" data-i18n="settings.provider">Fournisseur</label>
+                <select id="llm-provider-select" class="stg-select"></select>
+            </div>
+            <div id="llm-endpoint-wrap" class="stg-llm-field stg-llm-field-url cfg-custom-model">
+                <label class="stg-label" for="llm-endpoint-url" data-i18n="settings.endpointLabel">URL du moteur LLM</label>
+                <input id="llm-endpoint-url" class="cfg-input stg-input stg-llm-url-input" type="text" placeholder="">
+            </div>
+            <div class="stg-llm-field stg-llm-field-test">
+                <span class="stg-label stg-label-action" aria-hidden="true">&nbsp;</span>
+                <button id="btn-test-llm" type="button" class="btn secondary btn-sm stg-test-btn" data-i18n="settings.test">&#128268; Tester</button>
+            </div>
+        </div>
+        <div id="llm-proxy-token-wrap" class="stg-llm-row stg-llm-proxy-token-row" hidden>
+            <p id="llm-proxy-token-info-text" class="stg-field-hint stg-proxy-token-info-msg stg-llm-proxy-token-info" hidden data-i18n="settings.proxyTokenNotRequiredPreprod"></p>
+            <div id="llm-proxy-token-form" class="stg-llm-proxy-token-inline" hidden>
+                <label class="stg-proxy-token-check" for="llm-proxy-token-none">
+                    <input id="llm-proxy-token-none" class="stg-proxy-token-checkbox" type="checkbox" checked>
+                    <span data-i18n="settings.proxyTokenNoToken">Je n'ai pas de token</span>
+                </label>
+                <div class="stg-llm-field stg-llm-field-token">
+                    <label class="stg-label" for="llm-proxy-token" data-i18n="settings.proxyTokenLabel">Token proxy Apache</label>
+                    <input id="llm-proxy-token" class="cfg-input stg-input stg-llm-url-input" type="password" autocomplete="off" spellcheck="false" data-i18n-attr="placeholder:settings.proxyTokenPlaceholder">
+                </div>
+            </div>
+        </div>
+        <p id="llm-test-status" class="conn-status stg-conn-status stg-llm-status"></p>
+    </div>
+</div>
+
+<div class="stg-card stg-card-pref">
+    <div class="stg-card-head stg-card-head-compact">
+        <span class="stg-card-icon" aria-hidden="true">&#127760;</span>
+        <h2 class="stg-title" data-i18n="settings.langTitle">Langue</h2>
+    </div>
+    <div class="stg-card-body stg-lang-body">
+        <label class="stg-label sr-only" for="settings-lang">Langue de l&#8217;interface</label>
+        <div class="stg-lang-panel">
+            <div id="settings-lang-flags" class="stg-lang-flags" role="group" aria-label="Langue"></div>
+            <div class="stg-lang-select-wrap">
+                <select id="settings-lang" class="stg-select stg-lang-select" aria-label="Choisir une langue" data-i18n-attr="aria-label:settings.langSelectAria">
+                    <option value="fr">Fran&#231;ais (French)</option>
+                    <option value="en">English</option>
+                    <option value="ar">&#1575;&#1604;&#1593;&#1585;&#1576;&#1610;&#1577; (Arabic)</option>
+                    <option value="zh">&#20013;&#25991; (Chinese)</option>
+                    <option value="eo">Esperanto</option>
+                    <option value="es">Espa&#241;ol (Spanish)</option>
+                    <option value="de">Deutsch (German)</option>
+                    <option value="pt">Portugu&#234;s (Portuguese)</option>
+                    <option value="it">Italiano (Italian)</option>
+                    <option value="ru">&#1056;&#1091;&#1089;&#1089;&#1082;&#1080;&#1081; (Russian)</option>
+                    <option value="ja">&#26085;&#26412;&#35486; (Japanese)</option>
+                    <option value="ko">&#54620;&#44397;&#50612; (Korean)</option>
+                </select>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="stg-card stg-card-profile" id="profile-json-card">
+    <div class="stg-card-head stg-card-head-compact">
+        <span class="stg-card-icon" aria-hidden="true">&#128203;</span>
+        <h2 class="stg-title" data-i18n="settings.profileTitle">Profil JSON</h2>
+    </div>
+    <div class="stg-card-body" id="profile-selector-wrap">
+        <div class="stg-profile-toolbar">
+            <select id="profile-selector" class="stg-select stg-profile-select" aria-label="Profil JSON" hidden data-i18n-attr="aria-label:settings.profileAria"></select>
+            <button type="button" id="profile-create-btn" class="btn secondary btn-sm stg-profile-btn" title="Cr&#233;er un profil personnel &#224; partir de la configuration actuelle" aria-label="Cr&#233;er un profil JSON" hidden data-i18n="settings.profileCreate" data-i18n-attr="title:settings.profileCreateTitle,aria-label:settings.profileCreateAria">+ Cr&#233;er un profil</button>
+            <button id="config-import-btn" type="button" class="btn secondary btn-sm stg-profile-btn" data-i18n="settings.import">Importer</button>
+            <button id="config-export-btn" type="button" class="btn secondary btn-sm stg-profile-btn" data-i18n="settings.export">Exporter</button>
+            <input type="file" id="config-import-file" accept=".zip,application/zip,application/x-zip-compressed" style="display:none">
+        </div>
+    </div>
+</div>
+
+<div class="stg-card stg-danger">
+    <div class="stg-card-head stg-card-head-danger">
+        <span class="stg-card-icon" aria-hidden="true">&#9888;&#65039;</span>
+        <div class="stg-card-head-text">
+            <h2 class="stg-title" data-i18n="settings.dangerTitle">Zone danger</h2>
+            <p class="stg-card-desc danger-desc" data-i18n="settings.dangerDesc">Effacer d&#233;finitivement les donn&#233;es PromptDeMerde (session, profils, historiques, tokens, audio local) et les caches STT locaux, puis recharger l'application. Ne remplace pas une purge globale des donn&#233;es de navigation du navigateur.</p>
+        </div>
+    </div>
+    <div class="stg-card-body">
+        <button id="clear-btn" type="button" class="btn-danger btn-sm stg-danger-btn" data-i18n="settings.clearAll">Tout effacer</button>
+    </div>
+</div>
+
+</div>
+
+<div class="stg-col">
+
+<div class="stg-card stg-card-pref stg-card-theme">
+    <div class="stg-card-head stg-card-head-compact">
+        <span class="stg-card-icon" aria-hidden="true">&#127912;</span>
+        <h2 class="stg-title" data-i18n="settings.themeTitle">Th&#232;me</h2>
+    </div>
+    <div class="stg-card-body stg-theme-body">
+        <p id="stg-theme-current" class="stg-theme-current" aria-live="polite"></p>
+        <div id="theme-picker" class="theme-picker stg-theme-picker" role="listbox" aria-label="Choisir un th&#232;me" data-i18n-attr="aria-label:settings.themePickerAria"></div>
+    </div>
+</div>
+
+</div>
+
+<div class="stg-card" id="api-elite-card" style="display:none" aria-hidden="true"></div>
+
+</div>
+</div>
+</div>
+</section>
+
+<section id="section-prompts" class="section">
+<div class="container">
+<div class="prm-wrap">
+<div class="prm-grid">
+
+<div class="prm-col prm-col-system">
+<div class="prm-card prm-card-system">
+    <div class="system-prompt-head">
+        <h2 class="prm-title prm-title-with-icon">
+            <span class="sec-icon" aria-hidden="true">&#129504;</span>
+            <span data-i18n="prompts.systemTitle">Prompt syst&#232;me (optionnel)</span>
+        </h2>
+        <label class="toggle-wrap" id="system-prompt-toggle-wrap" title="Active ou d&#233;sactive le prompt syst&#232;me lors du nettoyage" data-i18n-attr="title:prompts.systemToggleTitle">
+            <input type="checkbox" id="system-prompt-enabled" checked>
+            <span id="system-prompt-toggle-label"> Actif</span>
+        </label>
+        <p id="prompts-locale-hint" class="prompts-locale-hint" hidden></p>
+    </div>
+    <div id="prompts-system-lock" class="cfg-lock" style="display:none"></div>
+    <textarea id="prompts-system" class="cfg-ta prm-system-ta" data-i18n-placeholder="prompts.systemPromptPlaceholder" placeholder="Tu es un Nettoyeur / Reformulateur de prompts.
+
+R&#212;LE UNIQUE : reprendre le prompt de l'utilisateur et le restituer en fran&#231;ais correct, clair et fluide. Tu ne fais RIEN d'autre.
+
+R&#200;GLES :
+1. REFORMULER mot pour mot l'intention originale, en fran&#231;ais correct (orthographe, grammaire, syntaxe, ponctuation).
+2. NE JAMAIS interpr&#233;ter, ex&#233;cuter, analyser ou r&#233;pondre &#224; la demande.
+3. NE JAMAIS poser de questions &#224; l'utilisateur.
+4. NE JAMAIS demander de pr&#233;cisions, de contexte ou d'exemples.
+5. NE JAMAIS ajouter de sections, de structure ou de formatage qui ne sont pas dans le texte source.
+6. NE JAMAIS inventer de contraintes, de comp&#233;tences, de r&#244;les ou de contexte qui ne sont pas d&#233;j&#224; implicites dans le texte source.
+7. Si une information essentielle est absolument indispensable et strictement ind&#233;ductible du texte source, remplacer par [&#224; pr&#233;ciser] UNE SEULE FOIS, entre crochets, sans commentaire.
+8. Garder le m&#234;me registre (tutoiement/vouvoiement) et le m&#234;me ton que le texte source.
+9. Supprimer les fautes de frappe, les r&#233;p&#233;titions, les anglicismes mal employ&#233;s et les expressions famili&#232;res inutiles, sauf si elles font partie du style voulu.
+10. Pr&#233;server l'ordre logique des id&#233;es ; on peut r&#233;organiser l'ordre des mots ou des phrases pour un fran&#231;ais plus naturel.
+11. La sortie doit &#234;tre UNIQUEMENT le texte reformul&#233;, sans pr&#233;ambule, sans conclusion, sans explication, sans markdown superflu.
+
+EXEMPLES :
+- Input : &#171; il faut remonter le slogan vers le haut (l&#224; il est vers le bas de la vignette) putain ! &#187;
+  Output : &#171; Il faut remonter le slogan vers le haut (actuellement, il est positionn&#233; vers le bas de la vignette). &#187;
+- Input : &#171; fait moi un mail pour dire au client quon a recaler son offre car trop cherre &#187;
+  Output : &#171; R&#233;dige un mail au client pour l'informer que son offre a &#233;t&#233; refus&#233;e en raison d'un prix trop &#233;lev&#233;. &#187;
+
+RAPPEL : tu es un nettoyeur de texte, pas un assistant conversationnel."></textarea>
+</div>
+</div>
+
+<div class="prm-col prm-col-context">
+<div class="prm-card prm-card-context">
+    <h2 class="prm-title prm-title-with-icon">
+        <span class="sec-icon" aria-hidden="true">&#127991;&#65039;</span>
+        <span data-i18n="prompts.contextTitle">Prompts de contexte</span>
+    </h2>
+
+    <section class="prm-context-options" aria-label="Configuration et ajout de prompts de contexte" data-i18n-attr="aria-label:prompts.configSectionAria">
+        <h3 class="prm-context-section-title prm-title-with-icon">
+            <span class="sec-icon sec-icon-sm" aria-hidden="true">&#9881;&#65039;</span>
+            <span data-i18n="prompts.configSection">Configuration et ajout</span>
+        </h3>
+
+    <div class="context-inject-box">
+        <div class="context-inject-title" data-i18n="prompts.injectTitle">Ordre d&#8217;injection par rapport au prompt syst&#232;me</div>
+        <div class="context-inject-options">
+            <label class="context-inject-option">
+                <input type="radio" name="context-position" id="context-inject-after" value="after_system" checked>
+                <span data-i18n-html="prompts.injectAfter">Contexte <strong>apr&#232;s</strong> le prompt syst&#232;me <span class="context-inject-rec">(recommand&#233;)</span></span>
+            </label>
+            <label class="context-inject-option">
+                <input type="radio" name="context-position" id="context-inject-before" value="before_system">
+                <span data-i18n-html="prompts.injectBefore">Contexte <strong>avant</strong> le prompt syst&#232;me</span>
+            </label>
+        </div>
+        <div id="context-inject-diagram" class="context-inject-diagram" style="margin-top:12px"></div>
+    </div>
+
+    <div class="prm-context-add-stack">
+
+    <details class="image-prompt-config-box">
+        <summary class="image-prompt-config-summary" data-i18n="prompts.imageConfigSummary">Prompts image (description Ollama vision)</summary>
+        <div class="image-prompt-config-body">
+            <p class="image-prompt-config-desc" data-i18n-html="prompts.imageConfigDesc">Consigne et mod&#232;le vision pour l&#8217;import d&#8217;image Workspace (<code>pdm_image_prompt</code>, <code>pdm_image_model</code>). Installer le mod&#232;le avec <code>ollama pull</code> avant usage.</p>
+            <label class="form-label" for="image-prompt" data-i18n-html="prompts.imageConfigLabelPrompt">Prompt image &#8212; <code>pdm_image_prompt</code></label>
+            <textarea id="image-prompt" class="cfg-ta context-gen-ta" style="min-height:140px"></textarea>
+            <div class="llm-strip-row" style="margin-top:12px">
+                <div class="llm-strip-config">
+                    <label for="image-model-select" class="llm-strip-field-label" data-i18n="prompts.imageConfigModelLabel">Mod&#232;le vision</label>
+                    <select id="image-model-select" class="llm-strip-model-select select-mini" data-i18n-attr="aria-label:prompts.imageConfigModelAria" aria-label="Mod&#232;le Ollama vision"></select>
+                </div>
+            </div>
+            <p class="form-hint" id="image-prompt-pull-hint" data-i18n-html="prompts.imageConfigPullHint">Vous devez installer ce mod&#232;le : (<code>ollama pull moondream</code>)</p>
+        </div>
+    </details>
+
+    <details class="context-gen-config-box">
+        <summary class="context-gen-config-summary" data-i18n="prompts.genConfigSummary">Prompts LLM pour g&#233;n&#233;rer des contextes</summary>
+        <div class="context-gen-config-body">
+            <p class="context-gen-config-desc" data-i18n-html="prompts.genConfigDesc">Instructions LLM stock&#233;es en session et export&#233;es dans le JSON (<code>pdm_context_gen_*</code>, <code>pdm_context_inject_header</code>).</p>
+            <label class="form-label" for="context-gen-system" data-i18n-html="prompts.genConfigLabelSystem">Prompt syst&#232;me (g&#233;n&#233;ration JSON) — <code>pdm_context_gen_system</code></label>
+            <textarea id="context-gen-system" class="cfg-ta context-gen-ta" style="min-height:120px"></textarea>
+            <label class="form-label" for="context-gen-user-intent" style="margin-top:12px" data-i18n-html="prompts.genConfigLabelUserIntent">Pr&#233;fixe message utilisateur (intention) — <code>pdm_context_gen_user_intent</code></label>
+            <textarea id="context-gen-user-intent" class="cfg-ta context-gen-ta" style="min-height:70px"></textarea>
+            <label class="form-label" for="context-gen-user-title" style="margin-top:12px" data-i18n-html="prompts.genConfigLabelUserTitle">Mod&#232;le message utilisateur (titre, <code>{{title}}</code>) — <code>pdm_context_gen_user_title</code></label>
+            <textarea id="context-gen-user-title" class="cfg-ta context-gen-ta" style="min-height:90px"></textarea>
+            <label class="form-label" for="context-inject-header" style="margin-top:12px" data-i18n-html="prompts.genConfigLabelInjectHeader">En-t&#234;te injection contextes actifs — <code>pdm_context_inject_header</code></label>
+            <textarea id="context-inject-header" class="cfg-ta context-gen-ta" style="min-height:50px"></textarea>
+            <label class="form-label" for="context-profile-line-template" style="margin-top:12px" data-i18n-html="prompts.genConfigLabelProfileLine">Mod&#232;le ligne contexte actif (<code>{{tag}}</code>, <code>{{prompt}}</code>) — <code>pdm_context_profile_line_template</code></label>
+            <textarea id="context-profile-line-template" class="cfg-ta context-gen-ta" style="min-height:50px"></textarea>
+            <div class="context-gen-params-grid" style="margin-top:12px;display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px">
+                <label class="form-label" for="context-gen-max-tokens" data-i18n-html="prompts.genConfigLabelMaxTokens">Max tokens — <code>pdm_context_gen_max_tokens</code>
+                    <input id="context-gen-max-tokens" type="number" min="1" max="8192" step="1" class="cfg-input" style="width:100%;margin-top:4px">
+                </label>
+                <label class="form-label" for="context-gen-temperature" data-i18n-html="prompts.genConfigLabelTemperature">Temp&#233;rature (1&#7497; essai) — <code>pdm_context_gen_temperature</code>
+                    <input id="context-gen-temperature" type="number" min="0" max="2" step="0.05" class="cfg-input" style="width:100%;margin-top:4px">
+                </label>
+                <label class="form-label" for="context-gen-retry-temperature" data-i18n-html="prompts.genConfigLabelRetryTemperature">Temp&#233;rature (retry) — <code>pdm_context_gen_retry_temperature</code>
+                    <input id="context-gen-retry-temperature" type="number" min="0" max="2" step="0.05" class="cfg-input" style="width:100%;margin-top:4px">
+                </label>
+                <label class="form-label" for="context-gen-max-retries" data-i18n-html="prompts.genConfigLabelMaxRetries">Retries max — <code>pdm_context_gen_max_retries</code>
+                    <input id="context-gen-max-retries" type="number" min="0" max="10" step="1" class="cfg-input" style="width:100%;margin-top:4px">
+                </label>
+            </div>
+            <label class="form-label" for="context-gen-json-schema" style="margin-top:12px" data-i18n-html="prompts.genConfigLabelJsonSchema">Sch&#233;ma JSON Ollama (1&#7497; essai) — <code>pdm_context_gen_json_schema</code></label>
+            <textarea id="context-gen-json-schema" class="cfg-ta context-gen-ta" style="min-height:120px"></textarea>
+            <label class="form-label" for="context-gen-tag-intent-suffix" style="margin-top:12px" data-i18n-html="prompts.genConfigLabelTagIntentSuffix">Suffixe tag forc&#233; (intention, <code>{{tag}}</code>) — <code>pdm_context_gen_tag_intent_suffix</code></label>
+            <textarea id="context-gen-tag-intent-suffix" class="cfg-ta context-gen-ta" style="min-height:50px"></textarea>
+            <label class="form-label" for="context-gen-forced-tag-system-suffix" style="margin-top:12px" data-i18n-html="prompts.genConfigLabelForcedTagSystemSuffix">Suffixe tag forc&#233; (syst&#232;me) — <code>pdm_context_gen_forced_tag_system_suffix</code></label>
+            <textarea id="context-gen-forced-tag-system-suffix" class="cfg-ta context-gen-ta" style="min-height:50px"></textarea>
+            <label class="form-label" for="context-gen-retry-system-suffix" style="margin-top:12px" data-i18n-html="prompts.genConfigLabelRetrySystemSuffix">Suffixe retry (syst&#232;me) — <code>pdm_context_gen_retry_system_suffix</code></label>
+            <textarea id="context-gen-retry-system-suffix" class="cfg-ta context-gen-ta" style="min-height:50px"></textarea>
+            <label class="form-label" for="context-gen-retry-user-suffix" style="margin-top:12px" data-i18n-html="prompts.genConfigLabelRetryUserSuffix">Suffixe retry (utilisateur) — <code>pdm_context_gen_retry_user_suffix</code></label>
+            <textarea id="context-gen-retry-user-suffix" class="cfg-ta context-gen-ta" style="min-height:50px"></textarea>
+        </div>
+    </details>
+
+    <details class="context-quick-add">
+        <summary class="context-quick-add-summary" data-i18n="prompts.quickAddSummary">Ajouter un prompt de contexte (manuellement)</summary>
+        <div class="context-quick-add-body">
+            <label class="form-label" for="context-new-tag" data-i18n="prompts.quickAddTag">Tag (ex. TonFormel)</label>
+            <input id="context-new-tag" class="cfg-input" type="text" data-i18n-placeholder="prompts.quickAddTagPlaceholder" placeholder="Ex: TonFormel">
+            <label class="form-label" for="context-new-prompt" style="margin-top:10px" data-i18n="prompts.quickAddPrompt">Instructions du contexte</label>
+            <textarea id="context-new-prompt" class="cfg-ta" style="min-height:100px" data-i18n-placeholder="prompts.quickAddPromptPlaceholder" placeholder="Ex: Adopte un ton formel et professionnel dans le prompt reformul&#233;."></textarea>
+            <button id="context-add-btn" type="button" class="btn secondary btn-sm" style="margin-top:10px" data-i18n="prompts.quickAddBtn">Ajouter ce prompt</button>
+        </div>
+    </details>
+
+    <details class="context-generate-box">
+        <summary class="context-generate-summary" data-i18n="prompts.genTitleSummary">Ajouter un prompt de contexte avec l&#8217;IA (avec un titre)</summary>
+        <div class="context-generate-body">
+            <label class="form-label" for="context-title-input" data-i18n="prompts.genTitleLabel">Titre du contexte</label>
+            <input id="context-title-input" class="cfg-input" type="text" data-i18n-placeholder="prompts.genTitlePlaceholder" placeholder="Ex: TonFormel">
+            <button id="context-title-gen-btn" type="button" class="btn btn-sm" style="margin-top:10px" data-i18n="prompts.genTitleBtn">G&#233;n&#233;rer le prompt</button>
+            <p id="context-title-gen-status" class="conn-status" style="margin-top:8px"></p>
+        </div>
+    </details>
+
+    <details class="context-generate-box context-generate-box--intent">
+        <summary class="context-generate-summary" data-i18n="prompts.genIntentSummary">G&#233;n&#233;rer un prompt de contexte avec l&#8217;IA (par intention)</summary>
+        <div class="context-generate-body">
+            <textarea id="context-generate-intent" class="cfg-ta context-generate-intent-ta" data-i18n-placeholder="prompts.genIntentPlaceholder" placeholder="Ex: Je veux que la r&#233;ponse soit toujours en majuscules."></textarea>
+            <div class="context-gen-strip llm-strip" aria-label="Mod&#232;le et g&#233;n&#233;ration" data-i18n-attr="aria-label:prompts.genIntentStripAria">
+                <div class="llm-strip-row context-gen-strip-row">
+                    <div class="llm-strip-config">
+                        <label for="context-gen-model-select" class="llm-strip-field-label" data-i18n="prompts.genIntentModelLabel">Mod&#232;le</label>
+                        <select id="context-gen-model-select" class="llm-strip-model-select select-mini" data-i18n-attr="aria-label:prompts.genIntentModelAria" aria-label="Mod&#232;le LLM pour la g&#233;n&#233;ration"></select>
+                    </div>
+                    <button id="context-intent-options-btn" type="button" class="llm-strip-options-btn" title="Options de g&#233;n&#233;ration" aria-expanded="false" aria-controls="context-intent-options-panel" data-i18n="prompts.genIntentOptions" data-i18n-attr="title:prompts.genIntentOptionsTitle">&#9881; Options</button>
+                    <div class="context-gen-strip-actions">
+                        <button id="context-generate-btn" type="button" class="btn btn-sm" data-i18n="prompts.genIntentBtn">G&#233;n&#233;rer le meilleur contexte</button>
+                        <button id="context-generate-cancel-btn" type="button" class="btn secondary btn-sm context-gen-cancel-btn" style="display:none" data-i18n="prompts.genIntentCancel">&#9209; Arr&#234;ter</button>
+                    </div>
+                </div>
+                <div id="context-intent-options-panel" class="llm-strip-options context-intent-options" hidden>
+                    <div class="context-intent-params-grid">
+                        <div class="context-intent-param">
+                            <label class="llm-opt-label" for="context-intent-max-tokens" data-i18n="prompts.genIntentMaxTokens">Max tokens</label>
+                            <input id="context-intent-max-tokens" type="number" min="1" max="8192" step="1" class="llm-opt-number-input context-intent-param-input" inputmode="numeric" value="512">
+                        </div>
+                        <div class="context-intent-param">
+                            <label class="llm-opt-label" for="context-intent-temperature" data-i18n="prompts.genIntentTemperature">Temp&#233;rature</label>
+                            <input id="context-intent-temperature" type="number" min="0" max="2" step="0.05" class="llm-opt-number-input context-intent-param-input" inputmode="decimal" value="0.2">
+                        </div>
+                        <div class="context-intent-param">
+                            <label class="llm-opt-label" for="context-intent-retry-temperature" data-i18n="prompts.genIntentRetryTemperature">Temp&#233;rature (retry)</label>
+                            <input id="context-intent-retry-temperature" type="number" min="0" max="2" step="0.05" class="llm-opt-number-input context-intent-param-input" inputmode="decimal" value="0.1">
+                        </div>
+                        <div class="context-intent-param">
+                            <label class="llm-opt-label" for="context-intent-max-retries" data-i18n="prompts.genIntentMaxRetries">Retries max</label>
+                            <input id="context-intent-max-retries" type="number" min="0" max="10" step="1" class="llm-opt-number-input context-intent-param-input" inputmode="numeric" value="2">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <p id="context-generate-status" class="conn-status context-generate-status"></p>
+        </div>
+    </details>
+
+    </div>
+    </section>
+
+    <section class="prm-context-list" aria-label="Prompts de contexte enregistr&#233;s" data-i18n-attr="aria-label:prompts.savedSectionAria">
+        <h3 class="prm-context-section-title prm-title-with-icon">
+            <span class="sec-icon sec-icon-sm" aria-hidden="true">&#128194;</span>
+            <span data-i18n="prompts.savedSection">Prompts enregistr&#233;s</span>
+        </h3>
+    <div id="prompts-context-lock" class="cfg-lock" style="display:none"></div>
+    <div id="profile-count" class="profile-counter"><span class="num">0/&#8734;</span> prompts utilis&#233;s</div>
+    <p class="profile-order-hint" data-i18n-html="prompts.orderHint">Ordre d&#8217;affichage et d&#8217;injection : glisse <span class="profile-order-hint-icon" aria-hidden="true">&#8942;&#8942;</span> ou utilise &#8593;&#8595;.</p>
+    <div id="profiles-list" class="profiles-sortable"></div>
+    </section>
+</div>
+</div>
+
+</div>
+</div>
+</div>
+</section>
+
+<section id="section-market" class="section">
+<div class="container mkt-wrap">
+    <header class="mkt-head" id="mkt-head">
+        <div class="mkt-head-row mkt-head-row--brand">
+            <div class="mkt-head-brand">
+                <h1 class="mkt-head-title" data-i18n-attr="aria-label:market.title">
+                    <span class="mkt-head-title-neutral" data-i18n="market.titleAccent">Zone de</span>
+                    <span class="mkt-head-title-sep" aria-hidden="true">·</span>
+                    <span class="mkt-head-title-accent red" data-i18n="market.titleMain">T&#233;l&#233;chargements</span>
+                </h1>
+            </div>
+            <div class="mkt-head-intro">
+                <p class="mkt-head-tagline" data-i18n="market.tagline">Parcourez, d&#233;couvrez des profils JSON &#224; t&#233;l&#233;charger, &#224; importer et &#224; utiliser directement sur le site, ou dans votre version locale de promptdemerde.</p>
+                <p class="mkt-head-badge" id="mkt-construction-badge" role="status" data-i18n="market.constructionBadge" hidden>Bient&#244;t disponible</p>
+            </div>
+        </div>
+
+        <div class="mkt-head-row mkt-head-row--bar">
+            <div class="mkt-search-wrap" id="mkt-search-wrap">
+                <input type="search" id="mkt-search" class="mkt-search" autocomplete="off" data-i18n-attr="placeholder:market.searchPlaceholder" placeholder="Rechercher un profil ou un éditeur…">
+            </div>
+            <div class="mkt-chip-group mkt-chip-group--price" role="group" data-i18n-attr="aria-label:market.filterPrice">
+                <button type="button" class="mkt-chip on" data-mkt-filter="price" data-mkt-value="all" aria-pressed="true" data-i18n="market.filterAll">Tous</button>
+                <button type="button" class="mkt-chip" data-mkt-filter="price" data-mkt-value="free" aria-pressed="false" data-i18n="market.filterLibre">Libre</button>
+                <button type="button" class="mkt-chip" data-mkt-filter="price" data-mkt-value="premium" aria-pressed="false" data-i18n="market.filterPremium">Premium</button>
+            </div>
+            <select id="mkt-sort" class="mkt-sort" data-i18n-attr="aria-label:market.sortAria">
+                <option value="featured" data-i18n="market.sortFeatured">Mis en avant</option>
+                <option value="published" data-i18n="market.sortRecent">Plus r&#233;cents</option>
+                <option value="published_asc" data-i18n="market.sortOldest">Plus anciens</option>
+                <option value="label" data-i18n="market.sortAlpha">A &#8594; Z</option>
+                <option value="label_desc" data-i18n="market.sortAlphaDesc">Z &#8594; A</option>
+                <option value="price_asc" data-i18n="market.sortPriceAsc">Prix croissant</option>
+                <option value="price_desc" data-i18n="market.sortPriceDesc">Prix d&#233;croissant</option>
+            </select>
+            <button type="button" class="mkt-more-btn" id="mkt-filters-toggle" aria-expanded="false" aria-controls="mkt-filters-panel">
+                <span data-i18n="market.moreFilters">Filtres</span>
+                <span class="mkt-more-chevron" aria-hidden="true">▾</span>
+            </button>
+            <button type="button" class="mkt-reset" id="mkt-reset-filters" hidden data-i18n="market.resetFilters">R&#233;initialiser</button>
+        </div>
+
+        <div class="mkt-head-filters" id="mkt-filters-panel" hidden>
+            <div class="mkt-filters-grid">
+                <div class="mkt-filter-block mkt-filter-block--type">
+                    <span class="mkt-filter-label" data-i18n="market.filterPublisherType">Type</span>
+                    <div class="mkt-filter-body">
+                        <div class="mkt-chip-group" role="group">
+                            <button type="button" class="mkt-chip on" data-mkt-filter="publisher" data-mkt-value="all" aria-pressed="true" data-i18n="market.filterAll">Tous</button>
+                            <button type="button" class="mkt-chip" data-mkt-filter="publisher" data-mkt-value="official" aria-pressed="false" data-i18n="market.filterOfficial">Officiel</button>
+                            <button type="button" class="mkt-chip" data-mkt-filter="publisher" data-mkt-value="third_party" aria-pressed="false" data-i18n="market.filterThirdParty">Éditeurs tiers</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="mkt-filter-block mkt-filter-block--domain">
+                    <span class="mkt-filter-label" data-i18n="market.filterDomain">Domaine</span>
+                    <div class="mkt-filter-body">
+                        <div class="mkt-chip-group" id="mkt-domain-filters" role="group"></div>
+                    </div>
+                </div>
+                <div class="mkt-filter-block mkt-filter-block--locales">
+                    <span class="mkt-filter-label" data-i18n="market.filterLocales">Langues</span>
+                    <div class="mkt-filter-body mkt-filter-body--locales">
+                        <div class="mkt-locale-filters" id="mkt-locale-filters" role="group" data-i18n-attr="aria-label:market.filterLocalesAria"></div>
+                        <p class="mkt-locale-filters-hint" data-i18n="market.filterLocalesHint">Sélectionnez un ou plusieurs drapeaux — le profil doit inclure toutes les langues choisies.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div id="mkt-publisher-focus" class="mkt-publisher-focus" hidden></div>
+
+    <div class="mkt-results-bar" id="mkt-results-bar">
+        <span id="mkt-count" class="mkt-count" aria-live="polite"></span>
+        <div class="mkt-view-toggle" role="group" data-i18n-attr="aria-label:market.viewAria">
+            <button type="button" class="mkt-view-btn on" data-mkt-view="grid" data-i18n="market.viewGrid" title="Grille" data-i18n-attr="title:market.viewGrid">▦</button>
+            <button type="button" class="mkt-view-btn" data-mkt-view="list" data-i18n="market.viewList" title="Liste" data-i18n-attr="title:market.viewList">☰</button>
+        </div>
+    </div>
+
+    <div id="mkt-results" class="mkt-results mkt-results--grid" aria-live="polite"></div>
+</div>
+</section>
+
+<section id="section-mentions" class="section legal-section">
+<div class="container">
+<div class="legal-content" data-i18n-html="pages.mentions"><p class="legal-stub"><a href="https://promptdemerde.com/#mentions">Mentions légales (site)</a> · <a href="https://github.com/JeanSebastienBash/promptdemerde" target="_blank" rel="noopener">Code source</a> · <a href="https://www.dreamproject.online/prj/promptdemerde/" target="_blank" rel="noopener">Page projet</a></p></div>
+</div>
+</section>
+<section id="section-cgu" class="section legal-section">
+<div class="container">
+<div class="legal-content" data-i18n-html="pages.cgu"><p class="legal-stub"><a href="https://promptdemerde.com/#cgu">CGU (site)</a> · <a href="https://github.com/JeanSebastienBash/promptdemerde" target="_blank" rel="noopener">Code source</a> · <a href="https://www.dreamproject.online/prj/promptdemerde/" target="_blank" rel="noopener">Page projet</a></p></div>
+</div>
+</section>
+<section id="section-privacy" class="section legal-section">
+<div class="container">
+<div class="legal-content" data-i18n-html="pages.privacy"><p class="legal-stub"><a href="https://promptdemerde.com/#privacy">Confidentialité (site)</a> · <a href="https://github.com/JeanSebastienBash/promptdemerde" target="_blank" rel="noopener">Code source</a> · <a href="https://www.dreamproject.online/prj/promptdemerde/" target="_blank" rel="noopener">Page projet</a></p></div>
+</div>
+</section>
+<section id="section-support" class="section legal-section">
+<div class="container">
+<div class="legal-content" data-i18n-html="pages.support"><p class="legal-stub"><a href="https://promptdemerde.com/#support">Support (site)</a> · <a href="https://github.com/JeanSebastienBash/promptdemerde" target="_blank" rel="noopener">Code source</a> · <a href="https://www.dreamproject.online/prj/promptdemerde/" target="_blank" rel="noopener">Page projet</a></p></div>
+</div>
+</section>
+
+<footer id="main-footer">
+    <div class="container">
+
+        <div class="footer-row">
+            <div class="footer-main">
+                <div class="footer-brand-panel">
+                    <figure class="footer-brand-art" aria-hidden="true">
+                        <img
+                            class="footer-brand-photo"
+                            src="assets/images/founder/jean-sebastien-bash.jpg"
+                            alt=""
+                            width="144"
+                            height="144"
+                            decoding="async"
+                            loading="lazy"
+                            data-i18n-attr="alt:footer.brandPhotoAlt"
+                        >
+                        <svg class="footer-reticle-svg" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" focusable="false">
+                            <defs>
+                                <radialGradient id="footer-reticle-glow" cx="50%" cy="50%" r="50%">
+                                    <stop offset="0%" stop-color="#ff0040" stop-opacity="0.35"/>
+                                    <stop offset="100%" stop-color="#ff0040" stop-opacity="0"/>
+                                </radialGradient>
+                            </defs>
+                            <circle cx="100" cy="100" r="88" fill="url(#footer-reticle-glow)" class="footer-reticle-glow"/>
+                            <circle cx="100" cy="100" r="78" fill="none" stroke="currentColor" stroke-width="1" stroke-opacity="0.18" class="footer-reticle-ring footer-reticle-ring-outer"/>
+                            <circle cx="100" cy="100" r="52" fill="none" stroke="currentColor" stroke-width="1" stroke-opacity="0.28" stroke-dasharray="4 6" class="footer-reticle-ring"/>
+                            <circle cx="100" cy="100" r="28" fill="none" stroke="#ff0040" stroke-width="1.5" stroke-opacity="0.55" class="footer-reticle-ring footer-reticle-ring-inner"/>
+                            <line x1="100" y1="18" x2="100" y2="68" stroke="currentColor" stroke-width="1" stroke-opacity="0.35"/>
+                            <line x1="100" y1="132" x2="100" y2="182" stroke="currentColor" stroke-width="1" stroke-opacity="0.35"/>
+                            <line x1="18" y1="100" x2="68" y2="100" stroke="currentColor" stroke-width="1" stroke-opacity="0.35"/>
+                            <line x1="132" y1="100" x2="182" y2="100" stroke="currentColor" stroke-width="1" stroke-opacity="0.35"/>
+                            <path d="M34 34 L34 52 L52 52" fill="none" stroke="#ff0040" stroke-width="2" stroke-opacity="0.7"/>
+                            <path d="M166 34 L166 52 L148 52" fill="none" stroke="#ff0040" stroke-width="2" stroke-opacity="0.7"/>
+                            <path d="M34 166 L34 148 L52 148" fill="none" stroke="#ff0040" stroke-width="2" stroke-opacity="0.7"/>
+                            <path d="M166 166 L166 148 L148 148" fill="none" stroke="#ff0040" stroke-width="2" stroke-opacity="0.7"/>
+                            <circle cx="100" cy="100" r="5" fill="#ff0040" class="footer-reticle-dot"/>
+                        </svg>
+                        <span class="footer-brand-scan"></span>
+                    </figure>
+
+                    <div class="footer-menus">
+                        <div class="footer-menus-primary">
+                            <nav class="footer-nav" aria-label="PromptDeMerde" data-i18n-attr="aria-label:footer.brandHeading">
+                                <div class="footer-nav-heading footer-nav-heading-brand" data-i18n="footer.brandHeading">PromptDeMerde</div>
+                                <a href="#workspace" data-nav="workspace" data-i18n="nav.workspace">Workspace</a>
+                                <a href="#prompts" data-nav="prompts" data-i18n="nav.prompts">Prompts</a>
+                                <a href="#market" data-nav="market" id="footer-link-market" hidden data-i18n="nav.market">Marketplace</a>
+                                <a href="#settings" data-nav="settings" data-i18n="nav.settings">Options</a>
+                            </nav>
+                            <nav class="footer-nav footer-nav-resources" aria-label="Ressources" data-i18n-attr="aria-label:footer.resourcesHeading">
+                                <div class="footer-nav-heading" data-i18n="footer.resourcesHeading">Ressources</div>
+                                <div class="footer-nav-group footer-nav-group-info">
+                                    <div class="footer-nav-subheading" data-i18n="footer.resourcesInfoHeading">Informations</div>
+                                    <a href="https://www.youtube.com/@DreamprojectAI" target="_blank" rel="noopener" class="footer-nav-link-has-icon">
+                                        <svg class="footer-nav-icon footer-nav-icon-yt" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="currentColor" d="M23.5 6.2a3 3 0 0 0-2.1-2.1C19.5 3.5 12 3.5 12 3.5s-7.5 0-9.4.6A3 3 0 0 0 .5 6.2 31 31 0 0 0 0 12a31 31 0 0 0 .5 5.8 3 3 0 0 0 2.1 2.1c1.9.6 9.4.6 9.4.6s7.5 0 9.4-.6a3 3 0 0 0 2.1-2.1A31 31 0 0 0 24 12a31 31 0 0 0-.5-5.8zM9.75 15.02V8.98L15.5 12l-5.75 3.02z"/></svg>
+                                        <span data-i18n="footer.youtubeChannel">Cha&#238;ne YouTube</span>
+                                    </a>
+                                    <a id="footer-link-documentation" href="https://github.com/JeanSebastienBash/promptdemerde/blob/main/docs/DOCUMENTATION-TECHNIQUE.md" target="_blank" rel="noopener" class="footer-nav-link-has-icon">
+                                        <svg class="footer-nav-icon footer-nav-icon-doc" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="currentColor" d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6zm-1 2l5 5h-5V4zM8 12h8v2H8v-2zm0 4h6v2H8v-2z"/></svg>
+                                        <span data-i18n="footer.documentation">Documentation</span>
+                                    </a>
+                                    <a href="#support" data-nav="support" class="footer-nav-link-has-icon">
+                                        <svg class="footer-nav-icon footer-nav-icon-support" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="currentColor" d="M12 2a8 8 0 0 0-8 8c0 1.85.63 3.55 1.69 4.9L5 20l5.12-1.64A7.95 7.95 0 0 0 12 18a8 8 0 0 0 0-16zm0 2a6 6 0 0 1 0 12 6.95 6.95 0 0 1-2.79-.57l-.31-.13-2.98.96.97-2.9-.13-.32A6 6 0 0 1 12 4zm-1 3h2v2h-2V7zm0 4h2v5h-2v-5z"/></svg>
+                                        <span data-i18n="footer.support">Support</span>
+                                    </a>
+                                </div>
+                                <div class="footer-nav-group footer-nav-group-web">
+                                    <div class="footer-nav-subheading" data-i18n="footer.resourcesWebHeading">Web</div>
+                                    <div class="footer-nav-web-cols">
+                                        <div class="footer-nav-web-col">
+                                            <a href="https://ollama.com" target="_blank" rel="noopener" class="footer-nav-link-has-icon">
+                                                <svg class="footer-nav-icon footer-nav-icon-ollama" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="currentColor" d="M12 3c-3.2 0-5.8 2.4-6 5.5-.1 1.2.2 2.3.8 3.2L5 14.5V18h3.5l1.2-1.2c.9.5 1.9.8 3 1 3.2.4 6.2-1.4 7.2-4.3.5-1.5.4-3.1-.2-4.5C17.8 5.5 15.1 3 12 3zm0 2c2.2 0 4.1 1.5 4.7 3.6.4 1.1.5 2.3.1 3.4-.7 2.1-3 3.4-5.3 3-1-.1-1.9-.5-2.6-1.1l-.4-.4H7v-2.3l1.1-1.9c-.4-.7-.6-1.5-.6-2.3C7.5 7.1 9.5 5 12 5z"/></svg>
+                                                <span data-i18n="footer.ollama">Ollama</span>
+                                            </a>
+                                            <a href="https://huggingface.co/nvidia/parakeet-tdt-0.6b-v2" target="_blank" rel="noopener" class="footer-nav-link-has-icon">
+                                                <svg class="footer-nav-icon footer-nav-icon-web" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="currentColor" d="M12 3c-4.2 0-7.6 3-8 6.9-.2 2.2.5 4.3 1.9 5.9L4 19.5V21h4.1l1.4-1.4c1 .6 2.2.9 3.5 1.1 3.5.4 6.8-1.5 7.9-4.6.6-1.6.5-3.4-.2-4.9C18.3 6.4 15.4 3 12 3zm0 2.2c2.4 0 4.5 1.6 5.1 3.9.5 1.2.6 2.5.1 3.7-.8 2.3-3.3 3.7-5.8 3.3-1.1-.1-2-.5-2.8-1.2l-.4-.4H8.2v-2.5l1.2-2c-.4-.8-.7-1.6-.7-2.5 0-2.4 2.1-4.4 4.3-4.4z"/></svg>
+                                                <span data-i18n="footer.parakeet">Parakeet</span>
+                                            </a>
+                                            <a href="https://alphacephei.com/vosk/" target="_blank" rel="noopener" class="footer-nav-link-has-icon">
+                                                <svg class="footer-nav-icon footer-nav-icon-web" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="currentColor" d="M12 14a3 3 0 0 0 3-3V5a3 3 0 1 0-6 0v6a3 3 0 0 0 3 3zm-7-3h2a5 5 0 0 0 10 0h2a7 7 0 0 1-6 6.71V21h-2v-3.29A7 7 0 0 1 5 11z"/></svg>
+                                                <span data-i18n="footer.vosk">Vosk</span>
+                                            </a>
+                                        </div>
+                                        <div class="footer-nav-web-col">
+                                            <a href="https://ollama.com/library" target="_blank" rel="noopener" class="footer-nav-link-has-icon">
+                                                <svg class="footer-nav-icon footer-nav-icon-llm" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="currentColor" d="M9.5 4A2.5 2.5 0 0 0 7 6.5V9H5.5A2.5 2.5 0 0 0 3 11.5v5A2.5 2.5 0 0 0 5.5 19H9v1.5a2.5 2.5 0 0 0 5 0V19h3.5a2.5 2.5 0 0 0 2.5-2.5v-5A2.5 2.5 0 0 0 17.5 9H16V6.5A2.5 2.5 0 0 0 13.5 4h-4zm0 2h4a.5.5 0 0 1 .5.5V11h5a.5.5 0 0 1 .5.5v5a.5.5 0 0 1-.5.5H14v-1.5a2.5 2.5 0 0 0-5 0V17H5.5a.5.5 0 0 1-.5-.5v-5a.5.5 0 0 1 .5-.5H9V6.5a.5.5 0 0 1 .5-.5z"/></svg>
+                                                <span data-i18n="footer.llm">LLM</span>
+                                            </a>
+                                            <a href="https://github.com/openai/whisper" target="_blank" rel="noopener" class="footer-nav-link-has-icon">
+                                                <svg class="footer-nav-icon footer-nav-icon-web" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="currentColor" d="M9 18V5l12-2v13M9 18c0 1.1-.9 2-2 2s-2-.9-2-2 .9-2 2-2 2 .9 2 2zm12-2c0 1.1-.9 2-2 2s-2-.9-2-2 .9-2 2-2 2 .9 2 2zM9 10l12-2"/></svg>
+                                                <span data-i18n="footer.whisper">Whisper</span>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </nav>
+                            <nav class="footer-nav footer-nav-legal" aria-label="Informations l&#233;gales" data-i18n-attr="aria-label:footer.legalNavAria">
+                                <div class="footer-nav-heading" data-i18n="footer.legalHeading">L&#233;gal</div>
+                                <a href="#mentions" data-nav="mentions" data-i18n="footer.mentions">Mentions l&#233;gales</a>
+                                <a href="#cgu" data-nav="cgu" data-i18n="footer.cgu">CGU</a>
+                                <a href="#privacy" data-nav="privacy" data-i18n="footer.privacy">Confidentialit&#233;</a>
+                            </nav>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="footer-meta">
+                    <div class="footer-meta-copy">
+                        <p class="footer-copyright">
+                            &#169; 2026 <a href="#landing" id="footer-home-link" hidden>#PromptDeMerde</a><a href="#workspace" id="footer-app-link">#PromptDeMerde</a> &#10084;&#65039; <a href="https://www.dreamproject.online" target="_blank" rel="noopener">#DreamprojectAI</a>
+                        </p>
+                        <p class="footer-bottom">
+                            <a id="footer-version" href="https://github.com/JeanSebastienBash/promptdemerde" target="_blank" rel="noopener">v1.23.0</a><span id="footer-env-badge" class="footer-env-badge" hidden></span>
+                        </p>
+                    </div>
+                    <ul class="footer-meta-badges" role="list" aria-label="Engagements produit PromptDeMerde" data-i18n-attr="aria-label:footer.badgesAria">
+                        <li>
+                            <span class="footer-meta-badge" title="Prompt engineering — reformulation locale" data-i18n-attr="title:footer.badgePrompt">
+                                <svg class="footer-meta-badge-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="currentColor" d="M4 4h11a2 2 0 0 1 2 2v3h-2V6H4v12h6v2H4a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2zm11.6 7.2 1.4-1.4 2.8 2.8-1.4 1.4-2.8-2.8zm1.1 3.1 4.5 4.5-1.4 1.4-4.5-4.5 1.4-1.4zM13 14.5 18.5 9l2.1 2.1L15.1 16.6 13 14.5z"/></svg>
+                                <span class="footer-meta-badge-text" aria-hidden="true">PROMPT</span>
+                            </span>
+                        </li>
+                        <li>
+                            <a class="footer-meta-badge footer-meta-badge--link" href="https://ollama.com/library" target="_blank" rel="noopener" title="LLM local via Ollama" data-i18n-attr="title:footer.badgeLlm">
+                                <svg class="footer-meta-badge-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="currentColor" d="M9.5 4A2.5 2.5 0 0 0 7 6.5V9H5.5A2.5 2.5 0 0 0 3 11.5v5A2.5 2.5 0 0 0 5.5 19H9v1.5a2.5 2.5 0 0 0 5 0V19h3.5a2.5 2.5 0 0 0 2.5-2.5v-5A2.5 2.5 0 0 0 17.5 9H16V6.5A2.5 2.5 0 0 0 13.5 4h-4zm0 2h4a.5.5 0 0 1 .5.5V11h5a.5.5 0 0 1 .5.5v5a.5.5 0 0 1-.5.5H14v-1.5a2.5 2.5 0 0 0-5 0V17H5.5a.5.5 0 0 1-.5-.5v-5a.5.5 0 0 1 .5-.5H9V6.5a.5.5 0 0 1 .5-.5z"/></svg>
+                                <span class="footer-meta-badge-text" aria-hidden="true">LLM</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a class="footer-meta-badge footer-meta-badge--link" href="https://ollama.com" target="_blank" rel="noopener" title="Ollama — moteur LLM local" data-i18n-attr="title:footer.badgeOllama">
+                                <svg class="footer-meta-badge-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="currentColor" d="M12 3c-3.2 0-5.8 2.4-6 5.5-.1 1.2.2 2.3.8 3.2L5 14.5V18h3.5l1.2-1.2c.9.5 1.9.8 3 1 3.2.4 6.2-1.4 7.2-4.3.5-1.5.4-3.1-.2-4.5C17.8 5.5 15.1 3 12 3zm0 2c2.2 0 4.1 1.5 4.7 3.6.4 1.1.5 2.3.1 3.4-.7 2.1-3 3.4-5.3 3-1-.1-1.9-.5-2.6-1.1l-.4-.4H7v-2.3l1.1-1.9c-.4-.7-.6-1.5-.6-2.3C7.5 7.1 9.5 5 12 5z"/></svg>
+                                <span class="footer-meta-badge-text" aria-hidden="true">OLLAMA</span>
+                            </a>
+                        </li>
+                        <li>
+                            <span class="footer-meta-badge" title="Analyse d&#8217;image — description via Ollama vision" data-i18n-attr="title:footer.badgeVision">
+                                <svg class="footer-meta-badge-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="currentColor" d="M5 5h14a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2zm0 2v6.6l3.2-3.2 2.8 2.8 4.2-4.2L19 12.8V7H5zm8.5 1.5a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3z"/></svg>
+                                <span class="footer-meta-badge-text" aria-hidden="true">VISION</span>
+                            </span>
+                        </li>
+                        <li>
+                            <span class="footer-meta-badge" title="Speech-to-text illimit&#233; — dict&#233;e vocale locale" data-i18n-attr="title:footer.badgeStt">
+                                <svg class="footer-meta-badge-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="currentColor" d="M12 14a3 3 0 0 0 3-3V5a3 3 0 1 0-6 0v6a3 3 0 0 0 3 3zm-7-3h2a5 5 0 0 0 10 0h2a7 7 0 0 1-6 6.71V21h-2v-3.29A7 7 0 0 1 5 11z"/></svg>
+                                <span class="footer-meta-badge-text" aria-hidden="true">STT</span>
+                            </span>
+                        </li>
+                        <li>
+                            <span class="footer-meta-badge" title="Retranscription audio illimit&#233;e — fichiers locaux" data-i18n-attr="title:footer.badgeAudio">
+                                <svg class="footer-meta-badge-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="currentColor" d="M4 10h2v4H4v-4zm4-3h2v10H8V7zm4-3h2v16h-2V4zm4 5h2v6h-2v-6zm4-2h2v10h-2V7z"/></svg>
+                                <span class="footer-meta-badge-text" aria-hidden="true">AUDIO</span>
+                            </span>
+                        </li>
+                        <li>
+                            <a class="footer-meta-badge footer-meta-badge--link" href="https://alphacephei.com/vosk/" target="_blank" rel="noopener" title="Vosk — dict&#233;e locale l&#233;g&#232;re" data-i18n-attr="title:footer.badgeVosk">
+                                <svg class="footer-meta-badge-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="currentColor" d="M12 14a3 3 0 0 0 3-3V5a3 3 0 1 0-6 0v6a3 3 0 0 0 3 3zm-7-3h2a5 5 0 0 0 10 0h2a7 7 0 0 1-6 6.71V21h-2v-3.29A7 7 0 0 1 5 11z"/></svg>
+                                <span class="footer-meta-badge-text" aria-hidden="true">VOSK</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a class="footer-meta-badge footer-meta-badge--link" href="https://github.com/openai/whisper" target="_blank" rel="noopener" title="Whisper — transcription locale avanc&#233;e" data-i18n-attr="title:footer.badgeWhisper">
+                                <svg class="footer-meta-badge-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="currentColor" d="M9 18V5l12-2v13M9 18c0 1.1-.9 2-2 2s-2-.9-2-2 .9-2 2-2 2 .9 2 2zm12-2c0 1.1-.9 2-2 2s-2-.9-2-2 .9-2 2-2 2 .9 2 2zM9 10l12-2"/></svg>
+                                <span class="footer-meta-badge-text" aria-hidden="true">WHISPER</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a class="footer-meta-badge footer-meta-badge--link" href="https://huggingface.co/nvidia/parakeet-tdt-0.6b-v2" target="_blank" rel="noopener" title="Parakeet — moteur STT local optionnel" data-i18n-attr="title:footer.badgeParakeet">
+                                <svg class="footer-meta-badge-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="currentColor" d="M12 3c-4.2 0-7.6 3-8 6.9-.2 2.2.5 4.3 1.9 5.9L4 19.5V21h4.1l1.4-1.4c1 .6 2.2.9 3.5 1.1 3.5.4 6.8-1.5 7.9-4.6.6-1.6.5-3.4-.2-4.9C18.3 6.4 15.4 3 12 3zm0 2.2c2.4 0 4.5 1.6 5.1 3.9.5 1.2.6 2.5.1 3.7-.8 2.3-3.3 3.7-5.8 3.3-1.1-.1-2-.5-2.8-1.2l-.4-.4H8.2v-2.5l1.2-2c-.4-.8-.7-1.6-.7-2.5 0-2.4 2.1-4.4 4.3-4.4z"/></svg>
+                                <span class="footer-meta-badge-text" aria-hidden="true">PARAKEET</span>
+                            </a>
+                        </li>
+                        <li>
+                            <span class="footer-meta-badge" title="Profils et configuration au format JSON" data-i18n-attr="title:footer.badgeJson">
+                                <svg class="footer-meta-badge-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="currentColor" d="M8.5 4C6.6 4 5 5.6 5 7.5V10c0 .8-.4 1.5-1 2 .6.5 1 1.2 1 2v2.5C5 18.4 6.6 20 8.5 20H10v-2H8.5c-.8 0-1.5-.7-1.5-1.5V14c0-1.3-.8-2.4-1.9-2.8.1-.1.1-.2.1-.3s0-.2-.1-.3C6.2 10.4 7 9.3 7 8V7.5C7 6.7 7.7 6 8.5 6H10V4H8.5zm7 0H14v2h1.5c.8 0 1.5.7 1.5 1.5V8c0 1.3.8 2.4 1.9 2.8-.1.1-.1.2-.1.3s0 .2.1.3c-1.1.4-1.9 1.5-1.9 2.8v2.5c0 .8-.7 1.5-1.5 1.5H14v2h1.5c1.9 0 3.5-1.6 3.5-3.5V14c0-.8.4-1.5 1-2-.6-.5-1-1.2-1-2V7.5C19 5.6 17.4 4 15.5 4z"/></svg>
+                                <span class="footer-meta-badge-text" aria-hidden="true">JSON</span>
+                            </span>
+                        </li>
+                        <li>
+                            <span class="footer-meta-badge" title="100 % local — z&#233;ro t&#233;l&#233;m&#233;trie" data-i18n-attr="title:footer.badgeLocal">
+                                <svg class="footer-meta-badge-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="currentColor" d="M12 2 4 5v6.09c0 5.05 3.41 9.76 8 10.91 4.59-1.15 8-5.86 8-10.91V5l-8-3zm0 2.18 6 2.25v4.66c0 3.91-2.59 7.52-6 8.66-3.41-1.14-6-4.75-6-8.66V6.43l6-2.25zM11 8v5h2V8h-2zm0 6v2h2v-2h-2z"/></svg>
+                                <span class="footer-meta-badge-text" aria-hidden="true">LOCAL</span>
+                            </span>
+                        </li>
+                        <li>
+                            <a class="footer-meta-badge footer-meta-badge--link" href="https://github.com/JeanSebastienBash/promptdemerde" target="_blank" rel="noopener" title="Open source sur GitHub — code auditable" data-i18n-attr="title:footer.badgeOpensource">
+                                <svg class="footer-meta-badge-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="currentColor" d="M12 2C6.48 2 2 6.58 2 12.26c0 4.52 2.87 8.35 6.84 9.7.5.1.68-.22.68-.48 0-.24-.01-.87-.01-1.7-2.78.62-3.37-1.37-3.37-1.37-.45-1.18-1.11-1.5-1.11-1.5-.91-.64.07-.63.07-.63 1 .07 1.53 1.06 1.53 1.06.89 1.56 2.34 1.11 2.91.85.09-.66.35-1.11.63-1.37-2.22-.26-4.56-1.14-4.56-5.07 0-1.12.39-2.03 1.03-2.75-.1-.26-.45-1.3.1-2.7 0 0 .84-.28 2.75 1.05A9.2 9.2 0 0 1 12 6.8c.85 0 1.7.12 2.5.34 1.9-1.33 2.74-1.05 2.74-1.05.55 1.4.2 2.44.1 2.7.64.72 1.03 1.63 1.03 2.75 0 3.94-2.34 4.8-4.57 5.06.36.32.68.94.68 1.9 0 1.37-.01 2.47-.01 2.81 0 .26.18.58.69.48A10.03 10.03 0 0 0 22 12.26C22 6.58 17.52 2 12 2z"/></svg>
+                                <span class="footer-meta-badge-text" aria-hidden="true">OSS</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="footer-commercify">
+                <div class="dp-projects-card" id="footer-projects">
+                    <div class="dp-projects-label" data-i18n="footer.projectsLabel">Les projets de DreamProjectAI</div>
+
+                    <div class="dp-projects-carousel">
+                        <button type="button" class="dp-projects-arrow dp-projects-arrow-prev" id="footer-projects-prev" aria-label="Projet pr&#233;c&#233;dent" data-i18n-attr="aria-label:footer.projectPrev">
+                            <span class="dp-projects-arrow-glyph" aria-hidden="true"></span>
+                        </button>
+
+                        <div class="dp-projects-viewport" id="footer-projects-viewport" aria-live="polite" aria-atomic="true">
+                            <div class="dp-projects-badge" id="footer-projects-badge"></div>
+                            <h3 class="dp-projects-title" id="footer-projects-title"></h3>
+                            <p class="dp-projects-tagline" id="footer-projects-tagline"></p>
+                            <div class="dp-projects-actions">
+                                <a href="#" class="dp-projects-cta" id="footer-projects-cta" target="_blank" rel="noopener"></a>
+                            </div>
+                        </div>
+
+                        <button type="button" class="dp-projects-arrow dp-projects-arrow-next" id="footer-projects-next" aria-label="Projet suivant" data-i18n-attr="aria-label:footer.projectNext">
+                            <span class="dp-projects-arrow-glyph" aria-hidden="true"></span>
+                        </button>
+                    </div>
+
+                    <div class="dp-projects-dots" id="footer-projects-dots" role="tablist" aria-label="Projets DreamProjectAI" data-i18n-attr="aria-label:footer.projectsDotsAria"></div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</footer>
+
+<div id="export-config-modal" class="export-config-modal" hidden aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="export-config-modal-title">
+    <div class="export-config-backdrop" data-export-modal-close="1"></div>
+    <div class="export-config-shell" role="document">
+        <h2 id="export-config-modal-title" class="export-config-title" data-i18n="settings.exportModalTitle">Exporter la configuration</h2>
+        <div class="export-config-body">
+            <div class="export-config-field">
+                <label for="export-config-label" class="export-config-field-label" data-i18n="settings.exportFilenameLabel">Nom du fichier export&#233;</label>
+                <input type="text" id="export-config-label" class="stg-input export-config-label-input" autocomplete="off" maxlength="80">
+            </div>
+            <fieldset class="export-config-field">
+                <legend data-i18n="settings.exportPresetLegend">Traductions UI dans le fichier</legend>
+                <label class="export-config-radio">
+                    <input type="radio" name="export-preset" value="minimal" checked>
+                    <span class="export-config-radio-text">
+                        <strong data-i18n="settings.exportPresetMinimal">Session seule — sans traductions UI</strong>
+                        <span class="export-config-radio-hint" data-i18n="settings.exportPresetMinimalHint">Pas de champs i18n ni langs. Apr&#232;s import : traductions du projet (12 langues).</span>
+                    </span>
+                </label>
+                <label class="export-config-radio">
+                    <input type="radio" name="export-preset" value="maximal">
+                    <span class="export-config-radio-text">
+                        <strong data-i18n="settings.exportPresetMaximal">Session + traductions UI embarqu&#233;es</strong>
+                        <span class="export-config-radio-hint" data-i18n="settings.exportPresetMaximalHint">Le JSON inclura i18n et langs pour les langues coch&#233;es ci-dessous.</span>
+                    </span>
+                </label>
+            </fieldset>
+            <div class="export-config-field">
+                <span class="export-config-field-label" data-i18n="settings.exportLanguageLabel">Langue au d&#233;marrage (pdm_language)</span>
+                <p class="export-config-field-hint" data-i18n="settings.exportLanguageHint">Langue affich&#233;e &#224; l&#8217;ouverture apr&#232;s import. Toujours enregistr&#233;e dans le JSON.</p>
+                <div id="export-config-lang-flags" class="stg-lang-flags export-config-lang-flags" role="group" aria-label="Langue au démarrage"></div>
+            </div>
+            <div id="export-config-i18n-wrap" class="export-config-field" hidden>
+                <span class="export-config-field-label" data-i18n="settings.exportI18nLangs">Langues &#224; embarquer (i18n / langs)</span>
+                <p class="export-config-field-hint" data-i18n="settings.exportI18nLangsHint">Drapeaux disponibles dans Options apr&#232;s import. La langue de d&#233;marrage ci-dessus est toujours incluse.</p>
+                <div id="export-config-i18n-flags" class="stg-lang-flags export-config-i18n-flags" role="group" aria-label="Traductions à embarquer"></div>
+            </div>
+            <div id="export-config-summary" class="export-config-summary" aria-live="polite"></div>
+        </div>
+        <div class="export-config-actions">
+            <button type="button" class="btn secondary btn-sm" data-export-modal-close="1" data-i18n="settings.exportCancel">Annuler</button>
+            <button type="button" id="export-config-confirm-btn" class="btn btn-sm" data-i18n="settings.exportConfirm">T&#233;l&#233;charger</button>
+        </div>
+    </div>
+</div>
+
+<div id="market-modal" class="market-modal" hidden aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="market-modal-title">
+    <div class="mkt-modal-backdrop" data-market-modal-close="1"></div>
+    <div class="mkt-modal-shell" role="document">
+        <header class="mkt-modal-head">
+            <span class="mkt-modal-head-label" data-i18n="market.modalLabel">Fiche profil</span>
+            <button type="button" class="mkt-modal-close" data-market-modal-close="1" aria-label="Fermer" data-i18n-attr="aria-label:history.modalClose">&times;</button>
+        </header>
+        <div class="mkt-modal-body"></div>
+        <footer class="mkt-modal-footer"></footer>
+    </div>
+</div>
+
+<script src="assets/js/config-schema-core.js"></script>
+<script src="assets/js/config-schema-helpers.js"></script>
+<script src="assets/js/config-schema-security.js"></script>
+<script src="assets/js/config-schema-sanitize.js"></script>
+<script src="assets/js/config-schema-build.js"></script>
+<script src="assets/js/config-schema-validate.js"></script>
+<script src="assets/js/config-schema-validate-fields.js"></script>
+<script src="assets/js/config-schema-validate-collections.js"></script>
+<script src="assets/js/config-schema-validate-locales.js"></script>
+<script src="assets/js/config-schema-validate-prompts.js"></script>
+<script src="assets/js/config-schema-validate-gen-prompts.js"></script>
+<script src="assets/js/vendor/jszip.min.js"></script>
+<script src="assets/js/gen-prompt-specs.js"></script>
+<script src="assets/js/profile-bundle-integrity.js"></script>
+<script src="assets/js/profile-bundle-paths.js"></script>
+<script src="assets/js/profile-bundle-assemble.js"></script>
+<script src="assets/js/profile-bundle-io.js"></script>
+<script src="assets/js/profile-bundle-loader.js"></script>
+<script src="assets/js/storage-core.js"></script>
+<script src="assets/js/storage-wipe.js"></script>
+<script src="assets/js/storage-prompt-fields.js"></script>
+<script src="assets/js/storage-profile-meta.js"></script>
+<script src="assets/js/storage-llm-settings.js"></script>
+<script src="assets/js/storage-settings.js"></script>
+<script src="assets/js/storage-workspace-stt.js"></script>
+<script src="assets/js/storage-audio-blobs.js"></script>
+<script src="assets/js/storage-workspace-audio.js"></script>
+<script src="assets/js/storage-history.js"></script>
+<script src="assets/js/storage-config-io.js"></script>
+<script src="assets/js/storage-config-audio.js"></script>
+<script src="assets/js/storage-prompts-bundle.js"></script>
+<script src="assets/js/storage-config-import.js"></script>
+<script src="assets/js/i18n-locales.js"></script>
+<script src="assets/js/seo-meta.js"></script>
+<script src="assets/js/i18n.js"></script>
+<script src="assets/js/i18n-apply-dom.js"></script>
+<script src="assets/js/env.js"></script>
+<script src="assets/js/animation-inversion.js"></script>
+<script src="assets/js/synopsis-resolve.js"></script>
+<script src="assets/js/animation-synopsis.js"></script>
+<script>
+(function(){
+    var VALID = { landing:1, workspace:1, prompts:1, market:1, settings:1, mentions:1, cgu:1, privacy:1, support:1 };
+    function shellRoute() {
+        var raw = (location.hash || '').replace(/^#/, '').trim().toLowerCase();
+        if (!raw || raw === 'config') raw = 'workspace';
+        if (raw === 'documentation' || /^doc-[a-z0-9-]+$/.test(raw)) raw = 'workspace';
+        var section = VALID[raw] ? raw : 'workspace';
+        if (section === 'landing') {
+            var landingLink = document.getElementById('nav-link-landing');
+            if (landingLink && landingLink.hidden) section = 'workspace';
+        }
+        var all = document.querySelectorAll('.section');
+        for (var i = 0; i < all.length; i++) all[i].classList.remove('active');
+        var sec = document.getElementById('section-' + section);
+        if (sec) sec.classList.add('active');
+    }
+    window.PDM_earlyRoute = shellRoute;
+    window.addEventListener('hashchange', shellRoute);
+    if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', shellRoute);
+    else shellRoute();
+})();
+</script>
+<script src="assets/js/bootstrap.js"></script>
+</body>
+</html>

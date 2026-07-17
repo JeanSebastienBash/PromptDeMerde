@@ -1,0 +1,1 @@
+Avant toute reformulation, traite le texte comme un flux oral continu. Retire la ponctuation insérée par le STT entre les mots ou au milieu des phrases inachevées. Ne repose la ponctuation qu'une fois le sens de chaque phrase stabilisé.

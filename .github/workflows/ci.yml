@@ -1,0 +1,94 @@
+name: CI
+
+on:
+  push:
+    branches: [master, main]
+  pull_request:
+    branches: [master, main]
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install tools
+        run: sudo apt-get update -qq && sudo apt-get install -y -qq php-cli ripgrep
+
+      - name: Install scripts (shell syntax)
+        run: bash -n install/restore-large-assets.sh && bash -n install/split-large-assets.sh
+
+      - name: PHP syntax
+        run: find lib -name '*.php' -print0 | xargs -0 -n1 php -l
+
+      - name: JSON validity
+        run: |
+          node <<'NODE'
+          const fs = require('fs');
+          const paths = [
+            'assets/config/pdm-config.schema.json',
+            'assets/i18n/manifest.json',
+            ...fs.readdirSync('assets/i18n/ui').filter(f => f.endsWith('.json')).map(f => 'assets/i18n/ui/' + f),
+          ];
+          for (const p of paths) JSON.parse(fs.readFileSync(p, 'utf8'));
+          console.log('JSON OK —', paths.length, 'files');
+          NODE
+
+      - name: i18n key parity (reference fr.json)
+        run: |
+          node <<'NODE'
+          const fs = require('fs');
+          function keys(obj, prefix) {
+            prefix = prefix || '';
+            const out = [];
+            if (obj && typeof obj === 'object' && !Array.isArray(obj)) {
+              for (const k of Object.keys(obj).sort()) {
+                const p = prefix ? prefix + '.' + k : k;
+                out.push(p);
+                out.push(...keys(obj[k], p));
+              }
+            }
+            return out;
+          }
+          const ref = JSON.parse(fs.readFileSync('assets/i18n/ui/fr.json', 'utf8'));
+          const refKeys = new Set(keys(ref));
+          let failed = false;
+          for (const f of fs.readdirSync('assets/i18n/ui').filter(x => x.endsWith('.json') && x !== 'fr.json')) {
+            const loc = JSON.parse(fs.readFileSync('assets/i18n/ui/' + f, 'utf8'));
+            const locKeys = new Set(keys(loc));
+            for (const k of refKeys) {
+              if (!locKeys.has(k)) { console.error(f, 'missing', k); failed = true; }
+            }
+            for (const k of locKeys) {
+              if (!refKeys.has(k)) { console.error(f, 'extra', k); failed = true; }
+            }
+          }
+          if (failed) process.exit(1);
+          console.log('i18n keys OK');
+          NODE
+
+      - name: Version aligned with README
+        run: |
+          V=$(node -e "const s=require('fs').readFileSync('assets/js/config-schema-core.js','utf8'); console.log(s.match(/CS\\.VERSION = '([^']+)'/)[1])")
+          grep -q "$V" README.md
+          grep -q "$V" CONTRIBUTING.md
+          echo "Version $V OK"
+
+      - name: Required governance files
+        run: |
+          V=$(node -e "const s=require('fs').readFileSync('assets/js/config-schema-core.js','utf8'); console.log(s.match(/CS\\.VERSION = '([^']+)'/)[1])")
+          test -f LICENSE
+          test -f SECURITY.md
+          test -f CONTRIBUTING.md
+          test -f THIRD_PARTY_NOTICES.md
+          test -f docs/DOCUMENTATION-TECHNIQUE.md
+          test -f docs/DOCUMENTATION-TECHNIQUE.en.md
+          test -f install/restore-large-assets.sh
+          grep -q "$V" docs/DOCUMENTATION-TECHNIQUE.md
+          grep -q "$V" docs/DOCUMENTATION-TECHNIQUE.en.md
+
+      - name: Secret patterns (basic)
+        run: |
+          ! rg -n 'PDM_PROXY_TOKEN\s*=\s*['\''"][^'\''"]{8,}' \
+            --glob '!*.md' --glob '!.github/**' || exit 1
+          echo "No hardcoded proxy token pattern"

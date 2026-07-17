@@ -1,0 +1,15 @@
+/* ── 10. TYPING CURSOR ── */
+.typing-cursor {
+    display: inline-block;
+    width: 2px;
+    height: 1em;
+    background: var(--accent-red);
+    margin-left: 2px;
+    animation: cursorBlink 0.8s infinite;
+    vertical-align: text-bottom;
+}
+@keyframes cursorBlink {
+    0%, 40% { opacity: 1; }
+    50%, 100% { opacity: 0; }
+}
+

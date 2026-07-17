@@ -1,0 +1,12 @@
+{
+    "id": "speech2texte",
+    "label": "Speech2Texte",
+    "default": true,
+    "synopsis": "Corrige et structure tes transcriptions vocales brutes en texte propre et lisible.",
+    "project": {
+        "platform_url": "https://promptdemerde.com",
+        "name": "Speech2Texte",
+        "url": "https://promptdemerde.com",
+        "vitrine_url": "https://dreamproject.online"
+    }
+}

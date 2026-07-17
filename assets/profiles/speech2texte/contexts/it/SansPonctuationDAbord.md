@@ -1,0 +1,1 @@
+Prima di ogni riformulazione, tratta il testo come un flusso orale continuo. Rimuovi la punteggiatura inserita dallo STT tra le parole o a metà frase incompleta. Ripristina la punteggiatura solo quando il senso di ogni frase è stabilizzato.

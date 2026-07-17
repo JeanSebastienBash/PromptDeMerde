@@ -1,0 +1,1 @@
+Antaŭ iu reformulo, traktu la tekston kiel kontinuan parolan fluon. Forigu punktadon enmetitan de STT inter vortoj aŭ meze de nekompletaj frazoj. Restarigu punktadon nur kiam la signifo de ĉiu frazo estas stabila.

@@ -1,0 +1,44 @@
+name: Bug
+description: Comportement incorrect ou régression
+title: "[bug] "
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Merci de préciser l'environnement (navigateur, OS, auto-hébergé ou promptdemerde.com).
+        Pour la dictée STT après clone : avez-vous exécuté `cd install && bash restore-large-assets.sh` ?
+
+  - type: textarea
+    id: steps
+    attributes:
+      label: Étapes pour reproduire
+      placeholder: "1. Ouvrir… 2. Cliquer…"
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected
+    attributes:
+      label: Comportement attendu
+    validations:
+      required: true
+
+  - type: textarea
+    id: actual
+    attributes:
+      label: Comportement observé
+    validations:
+      required: true
+
+  - type: input
+    id: version
+    attributes:
+      label: Version (footer ou README)
+      placeholder: "1.18.0"
+
+  - type: textarea
+    id: console
+    attributes:
+      label: Console navigateur / logs (optionnel)
+      render: shell

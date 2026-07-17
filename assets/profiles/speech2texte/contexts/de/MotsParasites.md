@@ -1,0 +1,1 @@
+Phonetisch ähnliche, im Kontext aber unsinnige Wörter erkennen (STT-Eindringlinge). Korrigieren, wenn die Absicht klar ist, sonst entfernen. Bedeutung nicht über das hinaus anreichern, was der Autor gesagt hat.

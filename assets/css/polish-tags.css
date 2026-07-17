@@ -1,0 +1,21 @@
+/* ── 14. TAG POLISH — contraste garanti sur tous les thèmes ── */
+.tag {
+    position: relative;
+    cursor: pointer;
+    user-select: none;
+    color: var(--text-muted);
+    transition: transform 0.15s ease, box-shadow 0.15s ease, background 0.15s ease, color 0.15s ease, border-color 0.15s ease;
+}
+.tag:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 3px 12px rgba(0, 0, 0, 0.3);
+    border-color: var(--role-brand, var(--accent-red));
+    color: var(--text-white);
+}
+.tag.on {
+    background: var(--role-context, var(--accent-red));
+    border-color: var(--role-context, var(--accent-red));
+    color: var(--role-context-text, var(--role-on-accent, var(--text-on-accent)));
+    box-shadow: 0 0 12px color-mix(in srgb, var(--role-context, var(--accent-red)) 40%, transparent);
+}
+

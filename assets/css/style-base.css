@@ -1,0 +1,289 @@
+/* PromptDeMerde.com — style-base.css
+ *
+ * Synopsis : Tokens globaux (couleurs, typo, layout) et reset de la SPA.
+ * Typographie : Fira Code, Inconsolata, Space Grotesk, Archivo Black, Anton.
+ * Échelle stricte : caption / small / body / ui / title / display / hero.
+ */
+@font-face {
+    font-family: 'Fira Code';
+    src: url('../fonts/firacode/FiraCode-Regular.ttf') format('truetype');
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+}
+@font-face {
+    font-family: 'Fira Code';
+    src: url('../fonts/firacode/FiraCode-SemiBold.ttf') format('truetype');
+    font-weight: 600;
+    font-style: normal;
+    font-display: swap;
+}
+@font-face {
+    font-family: 'Fira Code';
+    src: url('../fonts/firacode/FiraCode-Bold.ttf') format('truetype');
+    font-weight: 700;
+    font-style: normal;
+    font-display: swap;
+}
+@font-face {
+    font-family: 'Inconsolata';
+    src: url('../fonts/inconsolata/Inconsolata-Regular.ttf') format('truetype');
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+}
+@font-face {
+    font-family: 'Inconsolata';
+    src: url('../fonts/inconsolata/Inconsolata-Bold.ttf') format('truetype');
+    font-weight: 700;
+    font-style: normal;
+    font-display: swap;
+}
+/* Space Grotesk — police d'affichage des titres marketing (variable, poids 300–700). */
+@font-face {
+    font-family: 'Space Grotesk';
+    src: url('../fonts/spacegrotesk/SpaceGrotesk-latin.woff2') format('woff2');
+    font-weight: 300 700;
+    font-style: normal;
+    font-display: swap;
+    unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+    font-family: 'Space Grotesk';
+    src: url('../fonts/spacegrotesk/SpaceGrotesk-latin-ext.woff2') format('woff2');
+    font-weight: 300 700;
+    font-style: normal;
+    font-display: swap;
+    unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+/* Archivo Black — titres marketing landing (ultra-gras, remplit l'espace). */
+@font-face {
+    font-family: 'Archivo Black';
+    src: url('../fonts/archivoblack/ArchivoBlack-latin.woff2') format('woff2');
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+    unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+    font-family: 'Archivo Black';
+    src: url('../fonts/archivoblack/ArchivoBlack-latin-ext.woff2') format('woff2');
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+    unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+/* Anton — fallback condensée si Archivo Black indisponible. */
+@font-face {
+    font-family: 'Anton';
+    src: url('../fonts/anton/Anton-latin.woff2') format('woff2');
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+    unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+    font-family: 'Anton';
+    src: url('../fonts/anton/Anton-latin-ext.woff2') format('woff2');
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+    unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+
+:root {
+    /* Tokens par défaut = thème Marron clair (id marron-day) — voir CS.DEFAULT_THEME_ID */
+    --bg-black: #ece7e4;
+    --bg-dark: #d8cfca;
+    --surface: #c2b4ad;
+    --text-white: #1e1714;
+    --text-muted: #594a42;
+    --accent-red: #78350f;
+    --accent-hover: #92400e;
+    --border: #9d8a7f;
+    --success: #2a9850;
+    --error: #d83030;
+    --btn-text: #ffffff;
+    --input-bg: #e1dad5;
+    --input-focus-bg: #ece7e4;
+    --text-on-accent: #ffffff;
+    --output-bg: var(--input-bg);
+    --output-text: var(--text-white);
+    --output-highlight: var(--accent-red);
+    --thinking-bg: var(--input-bg);
+    --thinking-text: var(--text-white);
+    --thinking-accent: var(--accent-red);
+    --role-brand: var(--accent-red);
+    --role-brand-hover: var(--accent-hover);
+    --role-brand-text: var(--accent-red);
+    --role-brand-text-hover: var(--accent-hover);
+    --role-brand-text-on-surface: var(--accent-red);
+    --role-badge-text: var(--accent-red);
+    --role-error-text: var(--error);
+    --role-success-text: var(--success);
+    --role-cta-primary: var(--accent-red);
+    --role-cta-primary-text: #ffffff;
+    --role-cta-primary-muted: var(--accent-red);
+    --role-context: var(--accent-red);
+    --role-context-text: #ffffff;
+    --role-context-surface: var(--surface);
+    --role-options: var(--text-muted);
+    --role-options-surface: var(--bg-dark);
+    --role-chrome: var(--text-muted);
+    --role-listening: var(--accent-red);
+    --role-thinking: var(--accent-red);
+    --role-stream: var(--accent-red);
+    --role-on-accent: #ffffff;
+    --container-max-landing: 1320px;
+    --container-max-app: calc(100vw - 32px);
+    --app-gutter-inline: 16px;
+    --font-body: 'Fira Code', monospace;
+    --font-ui: 'Inconsolata', monospace;
+    --font-display: 'Space Grotesk', 'Inconsolata', monospace;
+    --font-hero: 'Archivo Black', 'Anton', 'Space Grotesk', 'Inconsolata', monospace;
+    --font-hero-stroke-title: 0;
+    --font-hero-stroke-brand: 0.04em;
+    --font-hero-tracking: -0.025em;
+    --font-app-heading: 'Space Grotesk', 'Inconsolata', monospace;
+    --font-weight-app-heading: 650;
+    --text-caption: 0.72rem;
+    --text-small: 0.85rem;
+    --text-body: 1rem;
+    --text-ui: 1.05rem;
+    --text-title: 1.25rem;
+    --text-display: clamp(1.5rem, 4vw, 2.5rem);
+    --text-hero: clamp(2rem, 6vw, 3.5rem);
+    --leading-tight: 1.2;
+    --leading-normal: 1.4;
+    --leading-relaxed: 1.55;
+}
+
+@media (min-width: 1920px) {
+    :root {
+        --container-max-app: calc(100vw - 40px);
+        --app-gutter-inline: 20px;
+    }
+}
+
+@media (min-width: 2560px) {
+    :root {
+        --container-max-app: calc(100vw - 48px);
+        --app-gutter-inline: 24px;
+    }
+}
+
+@media (min-width: 3840px) {
+    :root {
+        --container-max-app: calc(100vw - 64px);
+    }
+}
+
+*, *::before, *::after {
+    margin:0; padding:0; box-sizing:border-box;
+    transition: background-color .25s, color .25s, border-color .25s;
+}
+html { font-size:18px; scroll-behavior:smooth; }
+body {
+    font-family: var(--font-body);
+    font-size: var(--text-body);
+    background:var(--bg-black);
+    color:var(--text-white);
+    line-height: var(--leading-normal);
+    overflow-x:hidden;
+    min-height:100vh;
+}
+a { color:var(--role-brand-text, var(--accent-red)); text-decoration:none; transition:color .2s; }
+a:hover { color:var(--role-brand-text-hover, var(--accent-hover)); text-decoration:underline; }
+*:focus { outline:2px solid var(--accent-red); outline-offset:2px; }
+
+.container { max-width:1320px; margin:0 auto; padding:0 var(--app-gutter-inline, 20px); }
+
+.sec-icon {
+    flex-shrink: 0;
+    font-size: var(--text-title);
+    line-height: var(--leading-tight);
+}
+.sec-icon-sm {
+    font-size: var(--text-ui);
+}
+
+.text-caption { font-size: var(--text-caption); line-height: var(--leading-tight); }
+.text-small   { font-size: var(--text-small);   line-height: var(--leading-normal); }
+.text-body    { font-size: var(--text-body);    line-height: var(--leading-normal); }
+.text-ui      { font-size: var(--text-ui);      line-height: var(--leading-normal); }
+.text-title   { font-size: var(--text-title);   line-height: var(--leading-tight); }
+.text-display { font-size: var(--text-display); line-height: var(--leading-tight); }
+.text-hero    { font-size: var(--text-hero);    line-height: var(--leading-tight); }
+.font-body    { font-family: var(--font-body); }
+.font-ui      { font-family: var(--font-ui); }
+
+#main-nav .container,
+#main-footer .container,
+.section:not(#section-landing) > .container {
+    max-width: var(--container-max-app);
+    width: 100%;
+}
+
+#section-landing .container {
+    max-width: var(--container-max-landing);
+}
+
+/* APP (hors landing) — titres de zone : gras subtil, tailles inchangées. */
+.section:not(#section-landing) :is(
+    .ws-panel-title,
+    .stg-page-title,
+    .stg-title,
+    .stg-label,
+    .stg-theme-current-label,
+    .stg-theme-picker .theme-swatch-name,
+    .prm-title,
+    .prm-context-section-title,
+    .context-summary,
+    .thinking-summary,
+    .ws-history-summary-title,
+    .context-inject-title,
+    .context-quick-add-summary,
+    .context-generate-summary,
+    .context-gen-config-summary,
+    .history-zone-label,
+    .history-modal-kicker,
+    .history-modal-section-title,
+    .history-modal-title,
+    .llm-strip-field-label,
+    .llm-opt-label,
+    .stt-opt-label,
+    .profile-origin-label,
+    .cfg-title
+),
+.section:not(#section-landing) .form-label,
+.export-config-modal :is(.export-config-title, .export-config-field-label, .export-config-field legend),
+.history-modal :is(.history-modal-kicker, .history-modal-title, .history-modal-section-title),
+.legal-content.doc-content :is(h2, h3, th),
+.legal-content h2.legal-title {
+    font-family: var(--font-app-heading);
+    font-weight: var(--font-weight-app-heading);
+}
+
+/* RTL (arabe) — direction de base ; le layout flex s’adapte via dir sur html */
+html[dir="rtl"] body {
+    direction: rtl;
+    text-align: right;
+}
+
+html[dir="rtl"] .nav-links,
+html[dir="rtl"] .footer-nav,
+html[dir="rtl"] .stg-layout,
+html[dir="rtl"] .ws-grid,
+html[dir="rtl"] .prm-grid {
+    direction: rtl;
+}
+
+html[dir="rtl"] .btn-back::before {
+    content: '→';
+}
+
+html[dir="rtl"] .context-toolbar-link,
+html[dir="rtl"] .footer-nav a {
+    unicode-bidi: embed;
+}
+

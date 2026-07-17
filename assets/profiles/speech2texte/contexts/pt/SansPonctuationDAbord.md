@@ -1,0 +1,1 @@
+Antes de qualquer reformulação, trata o texto como um fluxo oral contínuo. Remove a pontuação inserida pelo STT entre palavras ou a meio de frases incompletas. Repõe a pontuação apenas quando o sentido de cada frase estiver estabilizado.

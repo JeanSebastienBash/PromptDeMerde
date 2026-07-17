@@ -1,0 +1,14 @@
+/* ── 3. SECTION TRANSITIONS — fade on top of existing display:block/none ── */
+.section {
+    display: none;
+    transition: opacity 0.35s ease, transform 0.35s ease;
+    opacity: 0;
+    transform: translateY(12px);
+    pointer-events: none;
+}
+.section.active {
+    display: block !important;
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+}

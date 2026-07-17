@@ -1,0 +1,974 @@
+/**
+ * PromptDeMerde.com — ollama.js
+ *
+ * Synopsis : Adaptateur provider Ollama (HTTP, streaming, UI).
+ * Objectif : Appeler le proxy PHP, streamer les réponses et peupler l'UI LLM/marketing.
+ */
+(function() {
+
+var PDM_LLM_TIMEOUT_FALLBACK_MS = 1000000;
+
+/** 0 = illimité (UI) — pas d’AbortController timeout */
+function resolveLlmTimeoutMs(options) {
+    if (options && options.timeoutMs != null) {
+        var o = Number(options.timeoutMs);
+        return Number.isFinite(o) && o >= 0 ? o : 0;
+    }
+    if (window.PDM.Storage && window.PDM.Storage.getLlmTimeoutMs) {
+        return window.PDM.Storage.getLlmTimeoutMs();
+    }
+    return PDM_LLM_TIMEOUT_FALLBACK_MS;
+}
+
+function resolveLlmIdleTimeoutMs(options) {
+    if (options && options.idleTimeoutMs != null) {
+        var o = Number(options.idleTimeoutMs);
+        return Number.isFinite(o) && o >= 0 ? o : 0;
+    }
+    return resolveLlmTimeoutMs(options);
+}
+
+function scheduleAbortTimeout(controller, timeoutMs, onFire) {
+    if (!timeoutMs || timeoutMs <= 0) return null;
+    return setTimeout(function() {
+        if (typeof onFire === 'function') onFire();
+        controller.abort();
+    }, timeoutMs);
+}
+
+var COPY_FALLBACK = {
+    'faq.llm': 'Oui. Toutes les fonctionnalités sont ouvertes sans quota commercial. Le LLM passe uniquement par <strong>Ollama</strong> en local.',
+    'faq.llm.cloud': 'Non. Ce dépôt fonctionne avec <strong>Ollama</strong> installé en amont sur votre machine (<a href="https://ollama.ai/download" target="_blank" rel="noopener">ollama.ai</a>). Aucune clé API cloud n\'est requise.',
+    'faq.export': 'paramètres, prompts, historique, brouillon Workspace, configuration Ollama, dictée vocale',
+    'faq.models': '<strong>Ollama uniquement</strong> (modèles locaux). URL dans <a href="#settings">Options</a> ; modèle dans le <a href="#workspace">Workspace</a>.',
+    'settings.backup': 'prompts, moteur LLM (Ollama), dictée vocale, historique',
+    'legal.features': 'Ollama local, prompts de contexte illimités, prompt système personnalisable, dictée vocale (Vosk Maxi par défaut, Vosk Mini, Whisper Mini/Maxi et Parakeet en option), export/import de configuration.',
+    'legal.prereq': 'Disposer d\'une instance Ollama fonctionnelle pour le nettoyage des prompts',
+    'legal.output': 'Des réponses générées par votre modèle Ollama local',
+    'privacy.llm': 'Le traitement des prompts s\'effectue via <strong>Ollama</strong>, à installer préalablement sur votre machine ou votre réseau. Le fichier <code>lib/proxy/ollama/olama.php</code> assure un relais technique (CORS) vers Ollama, <strong>sans persistance</strong> des contenus transités — les prompts ne sont pas conservés sur le serveur après la requête.',
+    'privacy.backup': 'réglages, prompts, historique, configuration Ollama, dictée vocale',
+    'privacy.transit': 'Lors d\'un nettoyage, votre texte, le prompt système et les contextes actifs sont transmis à votre instance <strong>Ollama</strong> via <code>lib/proxy/ollama/olama.php</code> — <strong>transit en mémoire uniquement</strong>, aucune conservation côté serveur',
+    'privacy.atRest': 'Les clés ci-dessus restent dans votre navigateur. Seul le <strong>nettoyage LLM</strong> envoie le texte en cours (et les instructions actives) au proxy vers Ollama — sans les conserver sur le serveur. Aucune télémétrie.',
+    'privacy.guarantee': 'Garantie produit : aucune base de données, aucune session PHP, aucune télémétrie, aucune écriture applicative des prompts sur disque. Code open source auditable. L\'auto-hébergement permet de contrôler entièrement l\'infrastructure.',
+    'privacy.stt': 'Le nettoyage des prompts utilise <strong>Ollama</strong> sur votre machine ou votre réseau. La dictée vocale embarque des modèles locaux (Vosk, Whisper, Parakeet) sans appel à un service cloud pour l\'audio.',
+    'storage.provider': 'ollama',
+    'storage.url.desc': 'URL Ollama locale'
+};
+
+var COPY_FALLBACK_EN = {
+    'faq.llm': 'Yes. All features are open with no commercial quota. LLM processing runs exclusively through <strong>Ollama</strong> on your machine.',
+    'faq.llm.cloud': 'No. This repository works with <strong>Ollama</strong> installed locally (<a href="https://ollama.ai/download" target="_blank" rel="noopener">ollama.ai</a>). No cloud API key is required.',
+    'faq.export': 'settings, prompts, history, Workspace draft, Ollama configuration, voice dictation',
+    'faq.models': '<strong>Ollama only</strong> (local models). Set the URL in <a href="#settings">Settings</a>; choose the model in the <a href="#workspace">Workspace</a>.',
+    'settings.backup': 'prompts, LLM engine (Ollama), voice dictation, history',
+    'legal.features': 'Local Ollama, unlimited context prompts, customizable system prompt, voice dictation (Vosk Maxi by default, Vosk Mini, Whisper Mini/Maxi and Parakeet optional), configuration export/import.',
+    'legal.prereq': 'A working Ollama instance for prompt cleanup',
+    'legal.output': 'Responses generated by your local Ollama model',
+    'privacy.llm': 'Prompt processing runs through <strong>Ollama</strong>, installed on your machine or network. The file <code>lib/proxy/ollama/olama.php</code> provides a technical relay (CORS) to Ollama, <strong>without persisting</strong> transited content — prompts are not stored on the server after the request.',
+    'privacy.backup': 'settings, prompts, history, Ollama configuration, voice dictation',
+    'privacy.transit': 'During cleanup, your text, system prompt and active contexts are sent to your <strong>Ollama</strong> instance via <code>lib/proxy/ollama/olama.php</code> — <strong>in-memory transit only</strong>, no server-side retention',
+    'privacy.atRest': 'The keys above remain in your browser. Only <strong>LLM cleanup</strong> sends the current text (and active instructions) to the proxy toward Ollama — without storing it on the server. No telemetry.',
+    'privacy.guarantee': 'Product guarantee: no database, no PHP session, no telemetry, no application-level prompt writes to disk. Auditable open-source code. Self-hosting lets you fully control the infrastructure.',
+    'privacy.stt': 'Prompt cleanup uses <strong>Ollama</strong> on your machine or network. Voice dictation embeds local models (Vosk, Whisper, Parakeet) with no cloud call for audio.',
+    'storage.provider': 'ollama',
+    'storage.url.desc': 'Local Ollama URL'
+};
+
+function ollamaT(key, vars) {
+    var I = window.PDM && window.PDM.I18n;
+    if (!I) return null;
+    return I.t('js.ollama.' + key, vars);
+}
+
+function ollamaCopy(key) {
+    var I = window.PDM && window.PDM.I18n;
+    if (I && I.getCopy) {
+        var text = I.getCopy(key);
+        if (text) return text;
+    }
+    var locale = I && I.getLocale ? I.getLocale() : 'fr';
+    if (locale !== 'fr' && COPY_FALLBACK_EN[key]) return COPY_FALLBACK_EN[key];
+    return COPY_FALLBACK[key] || '';
+}
+
+function ollamaHttpError(status, detail) {
+    var msg = ollamaT('httpError', { status: status });
+    var base = msg && msg.indexOf('js.ollama.httpError') !== 0
+        ? msg
+        : ('Ollama HTTP ' + status + ' via proxy');
+    detail = detail != null ? String(detail).trim() : '';
+    return detail ? (base + ' — ' + detail) : base;
+}
+
+function parseOllamaErrorBody(body) {
+    if (!body) return '';
+    try {
+        var data = JSON.parse(body);
+        if (data && data.error) return String(data.error);
+    } catch (e) {
+        var text = String(body).trim();
+        if (text && text.length <= 300) return text;
+    }
+    return '';
+}
+
+function rejectOllamaHttpError(res) {
+    return res.text().then(function(body) {
+        throw new Error(ollamaProxyHttpError(res.status, parseOllamaErrorBody(body)));
+    });
+}
+
+function ollamaProxyHttpError(status, detail) {
+    if (status === 401) {
+        var authMsg = ollamaT('proxyAuthRequired');
+        return authMsg && authMsg.indexOf('js.ollama.proxyAuthRequired') !== 0
+            ? authMsg
+            : 'Accès proxy refusé — renseignez le token proxy dans Options → LLM.';
+    }
+    if (status === 403) {
+        var forbidMsg = ollamaT('proxyForbidden');
+        return forbidMsg && forbidMsg.indexOf('js.ollama.proxyForbidden') !== 0
+            ? forbidMsg
+            : 'Accès proxy refusé depuis votre réseau.';
+    }
+    return ollamaHttpError(status);
+}
+
+function isProxyAuthRequired() {
+    return window.PDM.Env && typeof window.PDM.Env.isProxyAuthRequired === 'function'
+        && window.PDM.Env.isProxyAuthRequired();
+}
+
+function assertProxyTokenAvailable() {
+    if (!isProxyAuthRequired()) return;
+    if (shouldUseDirectOllama()) return;
+    var token = window.PDM.Storage && window.PDM.Storage.getProxyToken
+        ? String(window.PDM.Storage.getProxyToken()).trim()
+        : '';
+    if (token) return;
+    var missing = ollamaT('proxyTokenMissing');
+    var err = new Error(missing && missing.indexOf('js.ollama.proxyTokenMissing') !== 0
+        ? missing
+        : 'Token non renseigné.');
+    err.code = 'PROXY_TOKEN_MISSING';
+    throw err;
+}
+
+function ollamaInvalidResponse(snippet) {
+    var msg = ollamaT('invalidResponse', { snippet: snippet });
+    return msg && msg.indexOf('js.ollama.invalidResponse') !== 0
+        ? msg
+        : ('Réponse Ollama invalide: ' + snippet);
+}
+
+function ollamaUnreachable(status) {
+    var msg = ollamaT('unreachable', { status: status });
+    return msg && msg.indexOf('js.ollama.unreachable') !== 0
+        ? msg
+        : ('Ollama injoignable via proxy — HTTP ' + status);
+}
+
+function llmTimeoutSeconds(ms) {
+    return Math.round((ms || PDM_LLM_TIMEOUT_FALLBACK_MS) / 1000);
+}
+
+function getThinkingMaxChars(allowThinking, options) {
+    if (!allowThinking) return 0;
+    if (options && options.thinkingMaxChars != null) {
+        var override = parseInt(options.thinkingMaxChars, 10);
+        if (Number.isFinite(override) && override >= 0) return override;
+    }
+    if (!window.PDM.Storage || !window.PDM.Storage.getLlmThinkingMaxChars) return 0;
+    return window.PDM.Storage.getLlmThinkingMaxChars();
+}
+
+function mapAbortError(err, opts) {
+    var I = window.PDM && window.PDM.I18n;
+    if (err.name !== 'AbortError') throw err;
+    if (window.PDM._inferenceUserCancel) {
+        var cancelled = new Error(I ? I.t('js.ollama.inferenceInterrupted') : 'Inférence interrompue.');
+        cancelled.userCancelled = true;
+        throw cancelled;
+    }
+    if (window.PDM._inferenceModelSwitch || window.PDM._pendingInferenceRestart) {
+        var restarted = new Error(I ? I.t('js.ollama.inferenceInterrupted') : 'Inférence interrompue.');
+        restarted.userCancelled = true;
+        throw restarted;
+    }
+    if (window.PDM._inferenceAbortReason === 'thinking_limit') {
+        var maxChars = window.PDM.Storage && window.PDM.Storage.getLlmThinkingMaxChars
+            ? window.PDM.Storage.getLlmThinkingMaxChars()
+            : 5000;
+        var thinkingLimit = new Error(I ? I.t('js.ollama.thinkingLimit', { max: maxChars }) : ('Limite de réflexion atteinte (' + maxChars + ' caractères).'));
+        thinkingLimit.thinkingLimitExceeded = true;
+        throw thinkingLimit;
+    }
+    opts = opts || {};
+    if (opts.abortReason === 'idle') {
+        throw new Error(I ? I.t('js.ollama.timeoutIdle', { seconds: llmTimeoutSeconds(opts.idleTimeoutMs) }) : ('⏱️ Timeout : aucune réponse depuis ' + llmTimeoutSeconds(opts.idleTimeoutMs) + ' secondes.'));
+    }
+    throw new Error(I ? I.t('js.ollama.timeoutTotal', { seconds: llmTimeoutSeconds(opts.timeoutMs) }) : ('⏱️ Timeout : l\'inférence a pris plus de ' + llmTimeoutSeconds(opts.timeoutMs) + ' secondes.'));
+}
+
+function normalizeOllamaUrl(url) {
+    var u = String(url || 'http://localhost:11434').trim();
+    if (!/^https?:\/\//i.test(u)) u = 'http://' + u;
+    u = u.replace(/\/api\/chat\/?$/i, '').replace(/\/\/$/, '/');
+    return u.replace(/\/$/, '');
+}
+
+function isAllowedOllamaHost(host) {
+    host = String(host || '').toLowerCase().trim();
+    if (!host) return false;
+    if (host === 'localhost' || host === '127.0.0.1' || host === '::1' || host === '[::1]') return true;
+    if (/^\d{1,3}(\.\d{1,3}){3}$/.test(host)) {
+        if (/^10\./.test(host)) return true;
+        if (/^192\.168\./.test(host)) return true;
+        if (/^172\.(1[6-9]|2\d|3[0-1])\./.test(host)) return true;
+        return false;
+    }
+    if (/\.local$/.test(host)) return true;
+    return false;
+}
+
+function shouldUseDirectOllama() {
+    if (!isProxyAuthRequired()) return false;
+    if (window.PDM.ProxyTokenSession && typeof window.PDM.ProxyTokenSession.shouldUseDirectOllama === 'function') {
+        return window.PDM.ProxyTokenSession.shouldUseDirectOllama();
+    }
+    if (window.PDM.Storage && window.PDM.Storage.isLlmDirectLocal) {
+        return window.PDM.Storage.isLlmDirectLocal();
+    }
+    return true;
+}
+
+function getDirectOllamaBase() {
+    var url = normalizeOllamaUrl(adapter.storage.getUrl());
+    var parsed;
+    try {
+        parsed = new URL(url);
+    } catch (e) {
+        var invalid = ollamaT('directUrlInvalid');
+        throw new Error(invalid && invalid.indexOf('js.ollama.directUrlInvalid') !== 0
+            ? invalid
+            : 'URL Ollama invalide.');
+    }
+    if (parsed.protocol !== 'http:' && parsed.protocol !== 'https:') {
+        var badProto = ollamaT('directUrlInvalid');
+        throw new Error(badProto && badProto.indexOf('js.ollama.directUrlInvalid') !== 0
+            ? badProto
+            : 'URL Ollama invalide.');
+    }
+    var host = parsed.hostname;
+    if (host.charAt(0) === '[' && host.charAt(host.length - 1) === ']') {
+        host = host.slice(1, -1);
+    }
+    if (!isAllowedOllamaHost(host)) {
+        var forbidden = ollamaT('directHostForbidden');
+        throw new Error(forbidden && forbidden.indexOf('js.ollama.directHostForbidden') !== 0
+            ? forbidden
+            : 'Hôte Ollama non autorisé en connexion directe (localhost ou réseau privé uniquement).');
+    }
+    return url;
+}
+
+function resolveOllamaEndpoint(apiPath, opts) {
+    opts = opts || {};
+    apiPath = String(apiPath || '').replace(/^\//, '');
+    var method = String(opts.method || 'POST').toUpperCase();
+    if (shouldUseDirectOllama()) {
+        var headers = {};
+        if (method !== 'GET' && method !== 'HEAD') {
+            headers['Content-Type'] = 'application/json; charset=utf-8';
+        }
+        return {
+            url: getDirectOllamaBase() + '/' + apiPath,
+            headers: headers,
+            direct: true
+        };
+    }
+    assertProxyTokenAvailable();
+    var proxyHeaders = buildProxyHeaders();
+    if (method === 'GET' || method === 'HEAD') {
+        delete proxyHeaders['Content-Type'];
+    }
+    return {
+        url: getProxyUrl() + '?path=' + encodeURIComponent(apiPath),
+        headers: proxyHeaders,
+        direct: false
+    };
+}
+
+function ollamaReachableError(status, direct) {
+    if (direct) {
+        var directMsg = ollamaT('unreachableDirect', { status: status });
+        return directMsg && directMsg.indexOf('js.ollama.unreachableDirect') !== 0
+            ? directMsg
+            : ('Ollama injoignable en connexion directe — HTTP ' + status);
+    }
+    return ollamaUnreachable(status);
+}
+
+function normalizeDirectFetchError(err) {
+    var msg = err && err.message ? String(err.message) : String(err);
+    if (!(err instanceof TypeError) && !/failed to fetch|networkerror|load failed|network request failed/i.test(msg)) {
+        return err;
+    }
+    var origin = '';
+    try { origin = window.location.origin || ''; } catch (e) { origin = ''; }
+    if (!origin) origin = 'https://promptdemerde.com';
+    var corsMsg = ollamaT('directCorsBlocked', { origin: origin });
+    return new Error(corsMsg && corsMsg.indexOf('js.ollama.directCorsBlocked') !== 0
+        ? corsMsg
+        : ('CORS Ollama — redémarrez avec OLLAMA_ORIGINS=' + origin));
+}
+
+function getProxyUrl() {
+    var rel = (window.PDM.Env && window.PDM.Env.getServerPath('ollamaProxy')) || 'lib/proxy/ollama/olama.php';
+    try {
+        return new URL(rel, document.baseURI || window.location.href).href.split('#')[0];
+    } catch (e) {
+        var path = window.location.pathname || '/';
+        var dir = path.substring(0, path.lastIndexOf('/') + 1);
+        return window.location.origin + dir + rel;
+    }
+}
+
+function buildProxyHeaders() {
+    var headers = { 'Content-Type': 'application/json; charset=utf-8' };
+    var url = normalizeOllamaUrl(adapter.storage.getUrl());
+    if (url) headers['X-Ollama-Url'] = url;
+    var proxyToken = window.PDM.Storage && window.PDM.Storage.getProxyToken
+        ? window.PDM.Storage.getProxyToken()
+        : '';
+    if (proxyToken) headers['X-PDM-Proxy-Token'] = proxyToken;
+    if (window.PDM.Storage && window.PDM.Storage.getLlmTimeoutSec) {
+        headers['X-PDM-Llm-Timeout-Sec'] = String(window.PDM.Storage.getLlmTimeoutSec());
+    }
+    return headers;
+}
+
+function isGemma4Family(modelId) {
+    var m = String(modelId || '').toLowerCase();
+    return /gemma-?4/.test(m);
+}
+
+/** Plafond « illimité » UI : certains builds Ollama/Gemma coupent ou buggent avec num_predict:-1. */
+var PDM_NUM_PREDICT_UNLIMITED = 65536;
+
+/**
+ * Corps /api/chat — norme snap 42 :
+ * - format si fourni
+ * - think uniquement si true|false explicite (JSON ⇒ false côté llm.js)
+ * - maxTokens -1 → num_predict haut (65536) ; >0 → plafond ; absent → défaut modèle
+ * - température y compris 0
+ */
+function buildOllamaChatBody(model, messages, stream, options) {
+    var body = { model: model, messages: messages, stream: stream };
+    options = options || {};
+    if (options.format) body.format = options.format;
+    if (options.think === true) body.think = true;
+    else if (options.think === false) body.think = false;
+    var opts = {};
+    var hasOpts = false;
+    if (options.maxTokens === -1) {
+        opts.num_predict = PDM_NUM_PREDICT_UNLIMITED;
+        hasOpts = true;
+    } else if (options.maxTokens > 0) {
+        opts.num_predict = options.maxTokens;
+        hasOpts = true;
+    }
+    if (options.temperature != null && Number.isFinite(Number(options.temperature))) {
+        opts.temperature = Number(options.temperature);
+        hasOpts = true;
+    }
+    if (hasOpts) body.options = opts;
+    return body;
+}
+
+/**
+ * JSON.stringify sûr pour prompts Unicode (HTML, CJK, guillemets, lone surrogates).
+ * Ne filtre rien : remplace uniquement les surrogates orphelins qui font throw stringify.
+ */
+function safeJsonStringify(value) {
+    function scrub(v) {
+        if (typeof v === 'string') {
+            return v.replace(/[\uD800-\uDBFF](?![\uDC00-\uDFFF])/g, '\uFFFD')
+                .replace(/(^|[^\uD800-\uDBFF])[\uDC00-\uDFFF]/g, '$1\uFFFD');
+        }
+        if (Array.isArray(v)) return v.map(scrub);
+        if (v && typeof v === 'object') {
+            var out = {};
+            var keys = Object.keys(v);
+            for (var i = 0; i < keys.length; i++) out[keys[i]] = scrub(v[keys[i]]);
+            return out;
+        }
+        return v;
+    }
+    return JSON.stringify(scrub(value));
+}
+
+function buildChatMessages(sysPrompt, userPrompt) {
+    var messages = [];
+    if (sysPrompt) messages.push({ role: 'system', content: String(sysPrompt) });
+    messages.push({ role: 'user', content: String(userPrompt == null ? '' : userPrompt) });
+    return messages;
+}
+
+function buildVisionChatMessages(sysPrompt, userPrompt, imageBase64) {
+    var messages = [];
+    if (sysPrompt) messages.push({ role: 'system', content: String(sysPrompt) });
+    var b64 = String(imageBase64 || '').replace(/^data:[^;]+;base64,/, '');
+    messages.push({
+        role: 'user',
+        content: String(userPrompt == null ? '' : userPrompt),
+        images: [b64]
+    });
+    return messages;
+}
+
+function ollamaVisionDescribe(model, imagePrompt, imageBase64, options) {
+    options = options || {};
+    var timeoutMs = resolveLlmTimeoutMs(options);
+    var endpoint = resolveOllamaEndpoint('api/chat', { method: 'POST' });
+    var prompt = String(imagePrompt || '').trim();
+    var messages = buildVisionChatMessages(prompt, 'Analyse cette image selon les instructions.', imageBase64);
+
+    var externalCtrl = options.abortController || null;
+    var controller = externalCtrl || new AbortController();
+    var manageGlobalAbort = !externalCtrl;
+    if (manageGlobalAbort) window.PDM._activeAbort = controller;
+    var timeoutId = scheduleAbortTimeout(controller, timeoutMs, null);
+
+    return fetch(endpoint.url, {
+        method: 'POST',
+        headers: endpoint.headers,
+        body: safeJsonStringify(buildOllamaChatBody(model, messages, false, options)),
+        signal: controller.signal
+    }).then(function(res) {
+        if (timeoutId) clearTimeout(timeoutId);
+        if (!res.ok) return rejectOllamaHttpError(res);
+        return res.json();
+    }).then(function(data) {
+        if (manageGlobalAbort) window.PDM._activeAbort = null;
+        if (!data.message && !data.response && !data.result) {
+            throw new Error(ollamaInvalidResponse(JSON.stringify(data).slice(0, 200)));
+        }
+        var msg = data.message || {};
+        var content = data.result != null ? String(data.result)
+            : data.response != null ? String(data.response)
+            : msg.content != null ? String(msg.content) : '';
+        return {
+            result: content,
+            model: data.model || model,
+            usage: {
+                prompt_tokens: data.prompt_eval_count || 0,
+                completion_tokens: data.eval_count || 0,
+                total_tokens: (data.prompt_eval_count || 0) + (data.eval_count || 0)
+            },
+            duration_ms: data.total_duration ? Math.round(data.total_duration / 1e6) : 0
+        };
+    }).catch(function(err) {
+        if (timeoutId) clearTimeout(timeoutId);
+        if (manageGlobalAbort) window.PDM._activeAbort = null;
+        if (endpoint.direct) err = normalizeDirectFetchError(err);
+        mapAbortError(err, { timeoutMs: timeoutMs });
+        throw err;
+    });
+}
+
+function ollamaDirect(model, sysPrompt, userPrompt, options) {
+    options = options || {};
+    var timeoutMs = resolveLlmTimeoutMs(options);
+    var endpoint = resolveOllamaEndpoint('api/chat', { method: 'POST' });
+    var messages = buildChatMessages(sysPrompt, userPrompt);
+
+    var externalCtrl = options.abortController || null;
+    var controller = externalCtrl || new AbortController();
+    var manageGlobalAbort = !externalCtrl;
+    if (manageGlobalAbort) window.PDM._activeAbort = controller;
+    var timeoutId = scheduleAbortTimeout(controller, timeoutMs, null);
+
+    return fetch(endpoint.url, {
+        method: 'POST',
+        headers: endpoint.headers,
+        body: safeJsonStringify(buildOllamaChatBody(model, messages, false, options)),
+        signal: controller.signal
+    }).then(function(res) {
+        if (timeoutId) clearTimeout(timeoutId);
+        if (!res.ok) return rejectOllamaHttpError(res);
+        return res.json();
+    }).then(function(data) {
+        if (manageGlobalAbort) window.PDM._activeAbort = null;
+        if (!data.message && !data.response && !data.result) {
+            throw new Error(ollamaInvalidResponse(JSON.stringify(data).slice(0, 200)));
+        }
+        // Snap 42 : allowThinking si think !== false
+        var allowThinking = options.think !== false;
+        var msg = data.message || {};
+        var rawThinking = msg.thinking != null ? String(msg.thinking) : '';
+        var content = data.result != null ? String(data.result)
+            : data.response != null ? String(data.response)
+            : msg.content != null ? String(msg.content) : '';
+        if (options.format === 'json' && !content && rawThinking) content = rawThinking;
+        if (!allowThinking && !content && rawThinking) content = rawThinking;
+        var thinking = allowThinking ? rawThinking : '';
+        var thinkingMaxChars = getThinkingMaxChars(allowThinking, options);
+        if (thinkingMaxChars > 0 && thinking.length > thinkingMaxChars) {
+            thinking = thinking.slice(0, thinkingMaxChars);
+        }
+        var durationMs = data.total_duration ? Math.round(data.total_duration / 1e6) : 0;
+        var promptTokens = data.prompt_eval_count || 0;
+        var completionTokens = data.eval_count || 0;
+        return {
+            result: content,
+            thinking: thinking,
+            model: data.model || model,
+            thinkingLimitExceeded: thinkingMaxChars > 0 && rawThinking.length > thinkingMaxChars,
+            thinkingLimitMax: thinkingMaxChars > 0 ? thinkingMaxChars : undefined,
+            usage: {
+                prompt_tokens: promptTokens,
+                completion_tokens: completionTokens,
+                total_tokens: promptTokens + completionTokens
+            },
+            duration_ms: durationMs
+        };
+    }).catch(function(err) {
+        if (timeoutId) clearTimeout(timeoutId);
+        if (manageGlobalAbort) window.PDM._activeAbort = null;
+        if (endpoint.direct) err = normalizeDirectFetchError(err);
+        mapAbortError(err, { timeoutMs: timeoutMs });
+    });
+}
+
+function ollamaStream(model, sysPrompt, userPrompt, onToken, options) {
+    options = options || {};
+    var timeoutMs = resolveLlmTimeoutMs(options);
+    var idleTimeoutMs = resolveLlmIdleTimeoutMs(options);
+    // format=schema : Ollama peut rester longtemps sans octet (décodage contraint).
+    // L’idle abort coupait le stream → silence long + résultat partiel. Désactivé si format.
+    if (options.format) idleTimeoutMs = 0;
+    var endpoint = resolveOllamaEndpoint('api/chat', { method: 'POST' });
+    var messages = buildChatMessages(sysPrompt, userPrompt);
+
+    var fullText = '';
+    var fullThinking = '';
+    var lastModel = model;
+    var lastDoneReason = '';
+    var lastEvalCount = 0;
+    var lastPromptEvalCount = 0;
+    // Snap 42 : think !== false (avec format → llm force think:false → allowThinking false)
+    var allowThinking = options.think !== false;
+    var thinkingMaxChars = getThinkingMaxChars(allowThinking, options);
+    var thinkingLimitReached = false;
+    var thinkingLimitAbortScheduled = false;
+    var controller = new AbortController();
+    window.PDM._activeAbort = controller;
+    var abortReason = 'connect';
+    var timeoutId = scheduleAbortTimeout(controller, timeoutMs, function() {
+        abortReason = 'connect';
+    });
+    var idleTimeoutId = null;
+
+    function clearIdleTimeout() {
+        if (idleTimeoutId) { clearTimeout(idleTimeoutId); idleTimeoutId = null; }
+    }
+    function resetIdleTimeout() {
+        clearIdleTimeout();
+        // 0 = illimité / format JSON — pas d’idle abort
+        if (!idleTimeoutMs || idleTimeoutMs <= 0) return;
+        idleTimeoutId = setTimeout(function() {
+            abortReason = 'idle';
+            controller.abort();
+        }, idleTimeoutMs);
+    }
+
+    return fetch(endpoint.url, {
+        method: 'POST',
+        headers: endpoint.headers,
+        body: safeJsonStringify(buildOllamaChatBody(model, messages, true, options)),
+        signal: controller.signal
+    }).then(function(res) {
+        if (timeoutId) clearTimeout(timeoutId);
+        if (!res.ok) return rejectOllamaHttpError(res);
+        resetIdleTimeout();
+        var reader = res.body.getReader();
+        var decoder = new TextDecoder();
+        var buffer = '';
+
+        function applyThinkingLimit(chunk) {
+            // maxChars<=0 → illimité (UI) : pas de troncature
+            if (!chunk) return '';
+            if (thinkingMaxChars <= 0) return chunk;
+            if (thinkingLimitReached) return '';
+            var remaining = thinkingMaxChars - fullThinking.length;
+            if (remaining <= 0) {
+                thinkingLimitReached = true;
+                return '';
+            }
+            if (chunk.length > remaining) {
+                thinkingLimitReached = true;
+                return chunk.slice(0, remaining);
+            }
+            return chunk;
+        }
+
+        function scheduleThinkingLimitContinue() {
+            if (thinkingLimitAbortScheduled || thinkingMaxChars <= 0) return;
+            thinkingLimitAbortScheduled = true;
+            window.PDM._inferenceAbortReason = 'thinking_limit_continue';
+            setTimeout(function() { controller.abort(); }, 0);
+        }
+
+        function processLine(line) {
+            line = line.trim();
+            if (!line) return false;
+            try {
+                var obj = JSON.parse(line);
+                if (obj.model) lastModel = obj.model;
+                if (obj.done) {
+                    if (obj.done_reason != null) lastDoneReason = String(obj.done_reason);
+                    if (obj.eval_count != null) lastEvalCount = obj.eval_count | 0;
+                    if (obj.prompt_eval_count != null) lastPromptEvalCount = obj.prompt_eval_count | 0;
+                }
+                if (!obj.message) return !!obj.done;
+                lastModel = obj.model || lastModel;
+                var rawThinking = obj.message.thinking != null ? String(obj.message.thinking) : '';
+                var content = obj.message.content != null ? String(obj.message.content) : '';
+                if (!content && obj.result != null) content = String(obj.result);
+                if ((options.format === 'json' || (options.format && typeof options.format === 'object'))
+                    && !content && rawThinking) content = rawThinking;
+                if (!allowThinking && !content && rawThinking) content = rawThinking;
+                var thinking = allowThinking && rawThinking ? rawThinking : '';
+                if (thinking) thinking = applyThinkingLimit(thinking);
+                if (thinking) {
+                    fullThinking += thinking;
+                    if (onToken) onToken(fullText, thinking, {
+                        phase: 'thinking',
+                        fullThinking: fullThinking,
+                        thinkingLimitReached: thinkingLimitReached
+                    });
+                }
+                if (thinkingLimitReached) scheduleThinkingLimitContinue();
+                if (content) {
+                    fullText += content;
+                    if (onToken) onToken(fullText, content, {
+                        phase: 'content',
+                        fullThinking: fullThinking,
+                        thinkingLimitReached: thinkingLimitReached
+                    });
+                }
+                if (obj.done && !fullText && content) {
+                    fullText = content;
+                    if (onToken) onToken(fullText, content, { phase: 'content', final: true, fullThinking: fullThinking });
+                }
+                return true;
+            } catch (e) {
+                return false;
+            }
+        }
+
+        function readChunk() {
+            return reader.read().then(function(result) {
+                if (result.done) {
+                    clearIdleTimeout();
+                    if (buffer.trim()) processLine(buffer.trim());
+                    window.PDM._activeAbort = null;
+                    var needsContentPass = !!(thinkingLimitReached && allowThinking && !fullText);
+                    return {
+                        result: fullText,
+                        thinking: fullThinking,
+                        model: lastModel,
+                        usage: {
+                            prompt_tokens: lastPromptEvalCount,
+                            completion_tokens: lastEvalCount,
+                            total_tokens: lastPromptEvalCount + lastEvalCount
+                        },
+                        duration_ms: 0,
+                        done_reason: lastDoneReason || undefined,
+                        eval_count: lastEvalCount || undefined,
+                        thinkingLimitExceeded: thinkingLimitReached,
+                        thinkingLimitMax: thinkingLimitReached ? thinkingMaxChars : undefined,
+                        continueWithoutThinking: needsContentPass
+                    };
+                }
+                if (result.value && result.value.length) resetIdleTimeout();
+                buffer += decoder.decode(result.value, { stream: true });
+                var lines = buffer.split('\n');
+                buffer = lines.pop() || '';
+                var progressed = false;
+                for (var i = 0; i < lines.length; i++) {
+                    if (processLine(lines[i])) progressed = true;
+                }
+                if (progressed) resetIdleTimeout();
+                return readChunk();
+            });
+        }
+        return readChunk();
+    }).catch(function(err) {
+        if (timeoutId) clearTimeout(timeoutId);
+        clearIdleTimeout();
+        window.PDM._activeAbort = null;
+        if (err && err.name === 'AbortError' && window.PDM._inferenceAbortReason === 'thinking_limit_continue') {
+            window.PDM._inferenceAbortReason = null;
+            return {
+                result: fullText,
+                thinking: fullThinking,
+                model: lastModel,
+                usage: { prompt_tokens: 0, completion_tokens: 0, total_tokens: 0 },
+                duration_ms: 0,
+                continueWithoutThinking: true,
+                thinkingLimitExceeded: true,
+                thinkingLimitMax: thinkingMaxChars
+            };
+        }
+        if (endpoint.direct) err = normalizeDirectFetchError(err);
+        mapAbortError(err, { timeoutMs: timeoutMs, idleTimeoutMs: idleTimeoutMs, abortReason: abortReason });
+    });
+}
+
+function capabilitiesIncludeThinking(caps) {
+    return Array.isArray(caps) && caps.indexOf('thinking') !== -1;
+}
+
+function thinkingFlagFromCaps(caps) {
+    if (!Array.isArray(caps)) return null;
+    return capabilitiesIncludeThinking(caps);
+}
+
+function fetchOllamaModels() {
+    var endpoint = resolveOllamaEndpoint('api/tags', { method: 'GET' });
+    return fetch(endpoint.url, { method: 'GET', cache: 'no-store', headers: endpoint.headers })
+        .then(function(res) {
+            if (!res.ok) return rejectOllamaHttpError(res);
+            return res.json();
+        })
+        .then(function(data) {
+            if (!data.models || !Array.isArray(data.models) || data.models.length === 0) return [];
+            return data.models.map(function(m) {
+                var sizeGB = m.size ? (m.size / 1073741824).toFixed(1) + ' GB' : '';
+                var ctxLen = m.details && m.details.context_length
+                    ? m.details.context_length
+                    : null;
+                var caps = Array.isArray(m.capabilities) ? m.capabilities : null;
+                return {
+                    id: m.name,
+                    label: m.name,
+                    sizeLabel: sizeGB,
+                    ctx: ctxLen ? (String(ctxLen) + ' ctx') : sizeGB,
+                    // Ollama récent expose capabilities dans /api/tags — plus besoin de /api/show
+                    thinkingSupported: thinkingFlagFromCaps(caps),
+                    visionSupported: !!(caps && caps.indexOf('vision') !== -1)
+                };
+            });
+        })
+        .catch(function(err) {
+            if (endpoint.direct) throw normalizeDirectFetchError(err);
+            throw err;
+        });
+}
+
+function fetchOllamaModelCapabilities(modelName) {
+    if (!modelName) return Promise.resolve(null);
+    if (isProxyAuthRequired() && !shouldUseDirectOllama()) {
+        var token = window.PDM.Storage && window.PDM.Storage.getProxyToken
+            ? String(window.PDM.Storage.getProxyToken()).trim()
+            : '';
+        if (!token) return Promise.resolve(null);
+    }
+
+    // 1) Méta déjà connue (remplie par /api/tags)
+    var pid = window.PDM.Providers ? window.PDM.Providers.getActiveId() : null;
+    var meta = window.PDM.Providers && window.PDM.Providers.modelMeta
+        ? window.PDM.Providers.modelMeta(pid, modelName)
+        : null;
+    if (meta && meta.thinkingSupported === true) return Promise.resolve(true);
+    if (meta && meta.thinkingSupported === false) return Promise.resolve(false);
+
+    // 2) /api/tags (léger, capabilities inclus) — évite le 404 bruyant de /api/show
+    return fetchOllamaModels().then(function(models) {
+        for (var i = 0; i < models.length; i++) {
+            if (models[i].id === modelName) {
+                if (models[i].thinkingSupported != null) {
+                    if (window.PDM.Providers && window.PDM.Providers.updateModelMeta) {
+                        window.PDM.Providers.updateModelMeta(pid, modelName, {
+                            thinkingSupported: models[i].thinkingSupported
+                        });
+                    }
+                    return models[i].thinkingSupported;
+                }
+                break;
+            }
+        }
+        // 3) Fallback /api/show uniquement si tags n'a pas capabilities (vieux Ollama)
+        var endpoint = resolveOllamaEndpoint('api/show', { method: 'POST' });
+        return fetch(endpoint.url, {
+            method: 'POST',
+            headers: endpoint.headers,
+            body: JSON.stringify({ model: modelName, name: modelName })
+        }).then(function(res) {
+            if (!res.ok) return null;
+            return res.json();
+        }).then(function(data) {
+            if (!data || !Array.isArray(data.capabilities)) return null;
+            return capabilitiesIncludeThinking(data.capabilities);
+        }).catch(function() {
+            return null;
+        });
+    }).catch(function() {
+        return null;
+    });
+}
+
+function enrichOllamaModels(models) {
+    if (!models || !models.length) return Promise.resolve([]);
+    return Promise.resolve(models.map(function(m) {
+        return {
+            id: m.id,
+            label: m.label,
+            sizeLabel: m.sizeLabel,
+            ctx: m.ctx,
+            thinkingSupported: m.thinkingSupported != null ? m.thinkingSupported : null,
+            visionSupported: m.visionSupported === true
+        };
+    }));
+}
+
+function applyMarketingCopy(root) {
+    root = root || document;
+    Object.keys(COPY_FALLBACK).forEach(function(key) {
+        var text = ollamaCopy(key);
+        var nodes = root.querySelectorAll('[data-pdm-copy="' + key + '"]');
+        for (var i = 0; i < nodes.length; i++) {
+            nodes[i].innerHTML = text;
+        }
+    });
+}
+
+function applySettingsUi(card) {
+    card = card || document.getElementById('llm-settings-card');
+    if (!card) return;
+    card.hidden = false;
+    var endpointWrap = document.getElementById('llm-endpoint-wrap');
+    if (endpointWrap) endpointWrap.hidden = !!adapter.hideEndpointUrl;
+    var ep = document.getElementById('llm-endpoint-url');
+    if (ep && adapter.storage) ep.placeholder = adapter.storage.defaultUrl || '';
+    if (window.PDM.ProxyTokenSession && typeof window.PDM.ProxyTokenSession.syncOptionsField === 'function') {
+        window.PDM.ProxyTokenSession.syncOptionsField();
+    }
+}
+
+var adapter = {
+    id: 'ollama',
+    get label() {
+        var msg = ollamaT('label');
+        return msg && msg.indexOf('js.ollama.label') !== 0 ? msg : 'Ollama';
+    },
+    docUrl: 'https://ollama.ai/download',
+    isLocal: true,
+
+    storage: {
+        urlKey: 'pdm_ollama_url',
+        getUrl: function() {
+            return window.PDM.Storage.getOllamaUrl();
+        },
+        setUrl: function(u) {
+            return window.PDM.Storage.setOllamaUrl(u);
+        },
+        defaultUrl: 'http://localhost:11434'
+    },
+
+    formatBadge: function(model) {
+        return model || '—';
+    },
+
+    formatStatusInProgress: function(model) {
+        var I = window.PDM && window.PDM.I18n;
+        return I ? I.t('js.ollama.generationInProgress', { model: model || '—' }) : ('Génération en cours (' + (model || '—') + ')...');
+    },
+
+    getErrorHints: function(err, model) {
+        var msg = err && err.message ? err.message : String(err);
+        var I = window.PDM && window.PDM.I18n;
+        if (msg.indexOf('Timeout') !== -1) {
+            msg += I ? I.t('js.ollama.timeoutHint') : ' Essaie un modèle plus léger dans le Workspace.';
+        }
+        return msg;
+    },
+
+    getEmptyModelsHint: function() {
+        var I = window.PDM && window.PDM.I18n;
+        return I ? I.t('js.ollama.emptyModels') : 'Aucun modèle détecté.';
+    },
+
+    getModelsCountHint: function(n) {
+        var I = window.PDM && window.PDM.I18n;
+        return I ? I.t('js.ollama.modelsCount', { count: n }) : (n + ' modèle(s) détecté(s)');
+    },
+
+    saveEndpointNotification: function() {
+        var I = window.PDM && window.PDM.I18n;
+        return I ? I.t('settings.urlSaved') : 'URL sauvegardée.';
+    },
+
+    sniperise: function(model, sysPrompt, userPrompt, options) {
+        options = options || {};
+        var onToken = options.onToken || null;
+        if (options.streaming === false) {
+            return ollamaDirect(model, sysPrompt, userPrompt, options).then(function(data) {
+                var text = data.result != null ? String(data.result) : '';
+                if (onToken && text) onToken(text, text, { phase: 'content' });
+                return data;
+            });
+        }
+        return ollamaStream(model, sysPrompt, userPrompt, onToken, options);
+    },
+
+    visionDescribe: function(model, imagePrompt, imageBase64, options) {
+        return ollamaVisionDescribe(model, imagePrompt, imageBase64, options);
+    },
+
+    complete: function(model, systemPrompt, userPrompt, options) {
+        options = options || {};
+        if (options.streaming) {
+            return ollamaStream(model, systemPrompt, userPrompt, options.onToken || null, options);
+        }
+        return ollamaDirect(model, systemPrompt, userPrompt, options);
+    },
+
+    test: function(baseUrl) {
+        if (baseUrl) adapter.storage.setUrl(baseUrl);
+        var route = window.PDM.ProxyTokenSession && typeof window.PDM.ProxyTokenSession.getLlmRoute === 'function'
+            ? window.PDM.ProxyTokenSession.getLlmRoute()
+            : (shouldUseDirectOllama() ? 'direct' : 'proxy');
+        return fetchOllamaModels().then(function(models) {
+            return { ok: true, models: models, route: route };
+        }).catch(function(err) {
+            return { ok: false, error: err.message || String(err), route: route };
+        });
+    },
+
+    fetchModels: fetchOllamaModels,
+
+    fetchModelCapabilities: function(modelId) {
+        return fetchOllamaModelCapabilities(modelId).then(function(supported) {
+            if (supported === null || supported === undefined) {
+                return { thinkingSupported: null };
+            }
+            return { thinkingSupported: !!supported };
+        });
+    },
+
+    enrichModels: enrichOllamaModels,
+
+    applyMarketingCopy: applyMarketingCopy,
+    applySettingsUi: applySettingsUi,
+    isGemma4Family: isGemma4Family
+};
+
+window.PDM = window.PDM || {};
+if (window.PDM.Providers && window.PDM.Providers.register) {
+    window.PDM.Providers.register(adapter);
+}
+
+})();

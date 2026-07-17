@@ -1,0 +1,1 @@
+Quando uma ideia aparece várias vezes com formulações diferentes (repetição oral após erro STT), conserva apenas a última versão completa. Remove fragmentos intermédios e palavras erradas de tentativas anteriores.

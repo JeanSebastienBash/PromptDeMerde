@@ -1,0 +1,46 @@
+{
+    "version": "1.0.0",
+    "type": "pdm-profile-prompts",
+    "system": {
+        "enabled": true,
+        "pathTemplate": "prompts/{locale}/system.md"
+    },
+    "contexts": [
+        {
+            "id": "d006",
+            "tag": "Conservateur",
+            "active": false,
+            "pathTemplate": "contexts/{locale}/{tag}.md"
+        },
+        {
+            "id": "d002",
+            "tag": "DerniereFormulation",
+            "active": true,
+            "pathTemplate": "contexts/{locale}/{tag}.md"
+        },
+        {
+            "id": "d005",
+            "tag": "FrancaisNaturel",
+            "active": true,
+            "pathTemplate": "contexts/{locale}/{tag}.md"
+        },
+        {
+            "id": "d004",
+            "tag": "HesitationsOral",
+            "active": true,
+            "pathTemplate": "contexts/{locale}/{tag}.md"
+        },
+        {
+            "id": "d003",
+            "tag": "MotsParasites",
+            "active": true,
+            "pathTemplate": "contexts/{locale}/{tag}.md"
+        },
+        {
+            "id": "d001",
+            "tag": "SansPonctuationDAbord",
+            "active": true,
+            "pathTemplate": "contexts/{locale}/{tag}.md"
+        }
+    ]
+}

@@ -1,0 +1,1 @@
+SUPLEMENTAJ INSTRUKCIOJ (aktivaj profiloj):

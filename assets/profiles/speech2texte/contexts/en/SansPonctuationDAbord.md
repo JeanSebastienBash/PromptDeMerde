@@ -1,0 +1,1 @@
+Before any rephrasing, treat the text as a continuous oral stream. Remove punctuation inserted by STT between words or mid incomplete sentences. Restore punctuation only once each sentence meaning is stable.

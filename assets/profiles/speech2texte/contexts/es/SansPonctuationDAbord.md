@@ -1,0 +1,1 @@
+Antes de cualquier reformulación, trata el texto como un flujo oral continuo. Elimina la puntuación insertada por el STT entre palabras o en medio de frases incompletas. Restablece la puntuación solo cuando el sentido de cada frase esté estabilizado.

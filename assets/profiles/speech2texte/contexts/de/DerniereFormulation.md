@@ -1,0 +1,1 @@
+Wenn eine Idee mehrfach mit unterschiedlichen Formulierungen erscheint (mündliche Wiederholung nach STT-Fehler), behalte nur die letzte vollständige Version. Entferne Zwischenfragmente und falsche Wörter früherer Versuche.

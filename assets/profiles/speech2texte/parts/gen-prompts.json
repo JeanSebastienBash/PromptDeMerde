@@ -1,0 +1,51 @@
+{
+    "version": "1.0.0",
+    "type": "pdm-profile-gen-prompts",
+    "templates": [
+        {
+            "id": "context_gen_system",
+            "storageKey": "pdm_context_gen_system",
+            "pathTemplate": "gen-prompts/{locale}/context-gen-system.md"
+        },
+        {
+            "id": "context_gen_user_intent",
+            "storageKey": "pdm_context_gen_user_intent",
+            "pathTemplate": "gen-prompts/{locale}/context-gen-user-intent.md"
+        },
+        {
+            "id": "context_gen_user_title",
+            "storageKey": "pdm_context_gen_user_title",
+            "pathTemplate": "gen-prompts/{locale}/context-gen-user-title.md"
+        },
+        {
+            "id": "context_inject_header",
+            "storageKey": "pdm_context_inject_header",
+            "pathTemplate": "gen-prompts/{locale}/context-inject-header.md"
+        },
+        {
+            "id": "context_gen_tag_intent_suffix",
+            "storageKey": "pdm_context_gen_tag_intent_suffix",
+            "pathTemplate": "gen-prompts/{locale}/context-gen-tag-intent-suffix.md"
+        },
+        {
+            "id": "context_gen_forced_tag_system_suffix",
+            "storageKey": "pdm_context_gen_forced_tag_system_suffix",
+            "pathTemplate": "gen-prompts/{locale}/context-gen-forced-tag-system-suffix.md"
+        },
+        {
+            "id": "context_gen_retry_system_suffix",
+            "storageKey": "pdm_context_gen_retry_system_suffix",
+            "pathTemplate": "gen-prompts/{locale}/context-gen-retry-system-suffix.md"
+        },
+        {
+            "id": "context_gen_retry_user_suffix",
+            "storageKey": "pdm_context_gen_retry_user_suffix",
+            "pathTemplate": "gen-prompts/{locale}/context-gen-retry-user-suffix.md"
+        },
+        {
+            "id": "context_profile_line_template",
+            "storageKey": "pdm_context_profile_line_template",
+            "pathTemplate": "gen-prompts/{locale}/context-profile-line-template.md"
+        }
+    ]
+}

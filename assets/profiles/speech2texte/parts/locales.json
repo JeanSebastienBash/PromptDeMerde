@@ -1,0 +1,19 @@
+{
+    "version": "1.0.0",
+    "type": "pdm-profile-locales",
+    "defaultLocale": "fr",
+    "locales": [
+        "ar",
+        "de",
+        "en",
+        "eo",
+        "es",
+        "fr",
+        "it",
+        "ja",
+        "ko",
+        "pt",
+        "ru",
+        "zh"
+    ]
+}

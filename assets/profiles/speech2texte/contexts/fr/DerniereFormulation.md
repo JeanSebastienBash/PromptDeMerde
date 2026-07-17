@@ -1,0 +1,1 @@
+Quand une idée apparaît plusieurs fois avec des formulations différentes (reprise orale après erreur STT), garde uniquement la dernière version complète. Supprime les fragments intermédiaires et les mots erronés laissés par les tentatives précédentes.

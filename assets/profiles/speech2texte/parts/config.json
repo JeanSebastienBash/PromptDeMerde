@@ -1,0 +1,103 @@
+{
+    "version": "1.23.0",
+    "type": "pdm-config",
+    "exportedAt": "2026-07-17T11:33:26.763Z",
+    "pdm_provider": "ollama",
+    "pdm_model": "",
+    "pdm_system_prompt_enabled": true,
+    "pdm_language": "fr",
+    "pdm_theme": "marron-day",
+    "pdm_history_count": 0,
+    "pdm_clean_history": [],
+    "pdm_workspace": {
+        "input": "",
+        "output": "",
+        "thinking": "",
+        "savedAt": null,
+        "contextPanelOpen": true,
+        "inputSource": "manual",
+        "audioFileName": null,
+        "audioFileSize": null,
+        "audioMimeType": null,
+        "audioLastModified": null,
+        "audioRef": null,
+        "audioSegmentCount": null
+    },
+    "pdm_stt_device_id": "",
+    "pdm_stt_engine": "vosk-maxi",
+    "pdm_stt_compute": "cpu",
+    "pdm_stt_insert_at_cursor": false,
+    "pdm_stt_delete_word_enabled": true,
+    "pdm_stt_delete_word_shortcut": "ctrl+backspace",
+    "pdm_stt_delete_word_target": "end",
+    "pdm_stt_vosk_lang": "fr",
+    "pdm_context_position": "after_system",
+    "pdm_ollama_url": "http://localhost:11434",
+    "pdm_llm_thinking_enabled": false,
+    "pdm_llm_thinking_max_chars": 5000,
+    "pdm_llm_temperature": 0,
+    "pdm_llm_max_tokens": 0,
+    "pdm_llm_timeout_sec": 1000,
+    "pdm_token_ollama": "",
+    "pdm_active_profile": "speech2texte",
+    "pdm_project": {
+        "platform_url": "https://promptdemerde.com",
+        "name": "Speech2Texte",
+        "url": "https://promptdemerde.com",
+        "vitrine_url": "https://dreamproject.online"
+    },
+    "pdm_context_gen_max_tokens": 512,
+    "pdm_context_gen_temperature": 0.2,
+    "pdm_context_gen_retry_temperature": 0.1,
+    "pdm_context_gen_max_retries": 2,
+    "pdm_context_gen_json_schema": {
+        "type": "object",
+        "properties": {
+            "tag": {
+                "type": "string"
+            },
+            "prompt": {
+                "type": "string"
+            }
+        },
+        "required": [
+            "tag",
+            "prompt"
+        ],
+        "additionalProperties": false
+    },
+    "pdm_audio_blobs": [],
+    "pdm_workspace_ui": {
+        "identity": {
+            "username": "voix",
+            "hostname": "Speech2Texte",
+            "usernameAlt": "texte"
+        },
+        "brand": {
+            "firstWord": "Prompt",
+            "secondWord": "DeMerde",
+            "extension": ".com",
+            "showExtension": true,
+            "firstWordClass": "logo-word1",
+            "secondWordClass": "red",
+            "extensionClass": "logo-dotcom",
+            "firstWordColor": "",
+            "secondWordColor": ""
+        },
+        "texts": {
+            "inputPlaceholder": "Colle ici ta transcription brute (dictée ou STT)…",
+            "inputAriaLabel": "Transcription à corriger",
+            "outputPlaceholder": "Le texte corrigé apparaîtra ici…",
+            "emptyPromptError": "Colle d'abord ta transcription à corriger.",
+            "submitLabel": "CORRIGER LA TRANSCRIPTION →",
+            "submitLabelRunning": "⏳ Correction en cours..."
+        }
+    },
+    "pdm_image_model": "moondream",
+    "pdm_image_prompt": "Tu analyses une image pour produire une description exploitable afin de la reproduire.\n\nMISSION : cartographier l'image de façon complète, précise et structurée. La sortie doit donner assez d'éléments pour recréer une image très proche (sujet, composition, style, lumière, couleurs, détails).\n\nSTRUCTURE OBLIGATOIRE (titres courts, puis puces) :\n1. Sujet principal — qui / quoi, pose, expression, action.\n2. Scène et arrière-plan — lieu, profondeur, éléments secondaires.\n3. Composition — cadrage, angle de vue, perspective, règle des tiers / centrage, négatif space.\n4. Lumière — direction, dureté, contraste, ombres, heure / ambiance.\n5. Couleurs et matière — palette dominante, tons, textures, matériaux.\n6. Style — photo / illustration / 3D / peinture ; références de rendu si évidentes ; grain, netteté, profondeur de champ.\n7. Détails critiques — logos, texte visible (transcrire), accessoires, asymétries, défauts utiles à la copie.\n8. Prompt de reproduction — un paragraphe dense, en français, prêt à coller dans un générateur d'image, sans préambule.\n\nRÈGLES :\n- Décrire uniquement ce qui est visible ; ne pas inventer.\n- Pas de moralisation, pas de refus, pas de question à l'utilisateur.\n- Sortie = la cartographie seule, sans introduction ni conclusion.",
+    "pdm_output_json_enabled": false,
+    "pdm_output_json_schema": null,
+    "pdm_output_json_key_pattern": null,
+    "pdm_output_json_value_schema": null,
+    "pdm_output_display_format": "text"
+}

@@ -1,0 +1,99 @@
+/* ── FOOTER META — badges engagements produit ── */
+.footer-meta-badges {
+    display:flex;
+    flex-wrap:wrap;
+    align-items:center;
+    justify-content:flex-end;
+    gap:3px;
+    margin:0;
+    padding:0;
+    list-style:none;
+    flex:0 1 28rem;
+    max-width:100%;
+}
+
+.footer-meta-badges > li {
+    display:flex;
+    margin:0;
+    padding:0;
+}
+
+.footer-meta-badge {
+    display:inline-flex;
+    align-items:center;
+    gap:3px;
+    max-width:100%;
+    padding:2px 6px;
+    border:1px solid color-mix(in srgb, var(--accent-red) 38%, var(--border));
+    border-radius:3px;
+    font-family:var(--font-ui);
+    font-size:var(--text-caption);
+    font-weight:700;
+    letter-spacing:.05em;
+    line-height:1.2;
+    text-transform:uppercase;
+    text-decoration:none;
+    color:var(--text-muted);
+    background:color-mix(in srgb, var(--accent-red) 7%, var(--bg-black));
+    box-shadow:0 0 8px color-mix(in srgb, var(--accent-red) 10%, transparent);
+    white-space:nowrap;
+    box-sizing:border-box;
+}
+
+.footer-meta-badge--link {
+    color:var(--text-muted);
+}
+
+.footer-meta-badge--link:hover {
+    color:var(--role-brand-text, var(--accent-red));
+    border-color:color-mix(in srgb, var(--accent-red) 58%, var(--border));
+}
+
+.footer-meta-badge-icon {
+    width:11px;
+    height:11px;
+    flex-shrink:0;
+    opacity:.88;
+}
+
+.footer-meta-badge-text {
+    opacity:.92;
+}
+
+@media (max-width:1024px) {
+    #main-footer .footer-meta {
+        flex-direction:column;
+        align-items:stretch;
+        gap:14px;
+    }
+
+    #main-footer .footer-meta-copy {
+        text-align:center;
+    }
+
+    #main-footer .footer-meta-badges {
+        justify-content:center;
+        flex-basis:auto;
+    }
+}
+
+@media (max-width:768px) {
+    .footer-meta-badge-text {
+        display:none;
+    }
+
+    .footer-meta-badge {
+        padding:4px 6px;
+    }
+}
+
+@media (max-width:480px) {
+    .footer-meta-badge {
+        padding:3px 5px;
+    }
+
+    .footer-meta-badge-icon {
+        width:11px;
+        height:11px;
+    }
+}

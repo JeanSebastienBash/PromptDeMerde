@@ -1,0 +1,19 @@
+{
+    "version": "1.23.0",
+    "langs": [
+        "fr",
+        "en",
+        "ar",
+        "zh",
+        "eo",
+        "es",
+        "de",
+        "pt",
+        "it",
+        "ru",
+        "ja",
+        "ko"
+    ],
+    "default": "fr",
+    "fallback": "en"
+}

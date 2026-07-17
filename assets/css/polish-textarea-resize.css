@@ -1,0 +1,94 @@
+/*
+ * PromptDeMerde.com — polish-textarea-resize.css
+ *
+ * Synopsis : Poignée custom (JS) — une seule zone visible et entièrement cliquable.
+ * Objectif : Grip bas-droit large ; poignée native du navigateur masquée.
+ */
+:root {
+    --pdm-resize-hit: 48px;
+}
+
+.pdm-resize-host {
+    position: relative;
+}
+
+.pdm-resize-wrap {
+    position: relative;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.prm-card-system > .pdm-resize-wrap {
+    flex: 1 1 auto;
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+}
+
+.prm-card-system .pdm-resize-wrap > .prm-system-ta {
+    flex: 1 1 auto;
+}
+
+.profile-item > .pdm-resize-wrap {
+    margin-top: 8px;
+}
+
+.profile-item > .pdm-resize-wrap > .profile-prompt {
+    margin-top: 0;
+}
+
+.context-quick-add-body > .pdm-resize-wrap,
+.context-generate-body > .pdm-resize-wrap {
+    margin-top: 10px;
+}
+
+.pdm-resize-target {
+    resize: none !important;
+    padding-bottom: max(32px, var(--pdm-resize-hit) - 6px);
+    padding-right: max(12px, var(--pdm-resize-hit) - 2px);
+}
+
+.pdm-resize-target::-webkit-resizer {
+    display: none;
+}
+
+.output-field-wrap .pdm-resize-target {
+    padding-right: max(36px, var(--pdm-resize-hit) + 2px);
+}
+
+.pdm-resize-grip {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    width: var(--pdm-resize-hit);
+    height: var(--pdm-resize-hit);
+    z-index: 4;
+    cursor: ns-resize;
+    touch-action: none;
+    user-select: none;
+    box-sizing: border-box;
+    background: repeating-linear-gradient(
+        -45deg,
+        rgba(0, 0, 0, 0.45) 0, rgba(0, 0, 0, 0.45) 3px,
+        var(--accent-red) 3px,
+        var(--accent-red) 5px
+    );
+    border-top: 1px solid var(--border);
+    border-left: 1px solid var(--border);
+    border-radius: 4px 0 0 0;
+    transition: filter 0.15s ease;
+}
+
+.pdm-resize-grip:hover,
+.pdm-resize-grip.is-dragging {
+    filter: brightness(1.2);
+}
+
+body.pdm-resize-dragging {
+    cursor: ns-resize !important;
+    user-select: none;
+}
+
+body.pdm-resize-dragging * {
+    cursor: ns-resize !important;
+}

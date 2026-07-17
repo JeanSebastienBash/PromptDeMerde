@@ -1,0 +1,9 @@
+/* ── 18. PRICING BADGE POLISH ── */
+.pricing-badge {
+    animation: badgePulse 2s ease-in-out infinite;
+}
+@keyframes badgePulse {
+    0%, 100% { transform: scale(1); }
+    50%       { transform: scale(1.05); }
+}
+

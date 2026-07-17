@@ -1,0 +1,16 @@
+# PromptDeMerde — manifest restore modèles Vosk mini i18n (hors FR legacy)
+# Format : chemin_relatif|sha256
+# Généré par lib/dev/vosk-update-restore-manifest.mjs
+
+assets/stt/vosk-mini/en-us/model.tar.gz|fe0f70709143c9bdabbf279894e4a9524cb428e54b863e2d388e2858a77e600d
+assets/stt/vosk-mini/ar/model.tar.gz|74c402b74682ea97b44979bad10957491b5b27b12271537db189f82974a4a0e2
+assets/stt/vosk-mini/cn/model.tar.gz|df10c0c900c559c6642acfafb4d27a257de40876a301e984b8a4c965e1b0dd76
+assets/stt/vosk-mini/eo/model.tar.gz|46f4975a7c7483733341fa5451df1b42ed71b03aff14499a1af1373fbb015c90
+assets/stt/vosk-mini/es/model.tar.gz|90f3519a79a71fa7ebd052dba407eb16e9f177620cb80d3955ef30c2a1936a39
+assets/stt/vosk-mini/de/model.tar.gz|42123a5050b6f9cb143158d3e805330cba6329c2b3b9f64e84fdecc6fa88cf1b
+assets/stt/vosk-mini/pt/model.tar.gz|11fd9816dd78dbf43314f512dd07b43600f22b325c76d17a6bf028db4cb8f387
+assets/stt/vosk-mini/it/model.tar.gz|9fa6474f1055f6dc7177f5128656167365c20908f5a262052ea71fd34520d5a5
+assets/stt/vosk-mini/ru/model.tar.gz|2aec2072d4fa5edf7bb85c9659d22d37f90543829e67a0e976f9388ef6a11b86
+assets/stt/vosk-mini/ja/model.tar.gz|9015630eb9a99f042c264269c4f5b691a35db11a2b7189a1113c2062c52afbf0
+assets/stt/vosk-mini/ko/model.tar.gz|8a77c97d01b03c608ef3fd6f9512b053765f76c11fc6768ecc03a41f76de3708
+assets/stt/vosk-maxi/en-us/model.tar.gz|f909390bff730af54089f50c13ad451aaa79d396b2532b539cffe7eb12c7c33c
