@@ -463,7 +463,7 @@ In **flow A** (visitor in production), the browser calls Ollama **directly** on 
 
 ### 11.1 Flow A — implementation
 
-Direct mode detection is handled by `shouldUseDirectOllama()` in [`assets/js/proxy-token-session.js`](../assets/js/proxy-token-session.js). The fetch branch is in [`assets/js/ollama.js`](../assets/js/ollama.js). Ollama must allow the site origin via `OLLAMA_ORIGINS=https://promptdemerde.com`. The CSP `connect-src` directive allows localhost and RFC1918 ranges (see [`server HTTP config`](../server HTTP config)).
+Direct mode detection is handled by `shouldUseDirectOllama()` in [`assets/js/proxy-token-session.js`](../assets/js/proxy-token-session.js). The fetch branch is in [`assets/js/ollama.js`](../assets/js/ollama.js). Ollama must allow the site origin via `OLLAMA_ORIGINS=https://promptdemerde.com`. The CSP `connect-src` directive (server config) allows localhost and RFC1918 ranges.
 
 #### Step by step — visitor (flow A, official site)
 

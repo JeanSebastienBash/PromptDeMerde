@@ -87,7 +87,7 @@ Le token proxy protège le **relais PHP opérateur** vers l'Ollama du serveur pr
    }
    ```
 
-   > Nginx **n’applique pas** `server HTTP config` : CSP, noindex `/lib/`, anti-listing, etc. doivent être repris dans la conf Nginx (équivalent du `server HTTP config` dépôt).
+   > Nginx : CSP, noindex `/lib/`, anti-listing, etc. doivent être repris dans la conf vhost Nginx (équivalents des en-têtes HTTP Apache).
 
 2. **Opérateur** (IP autorisée) — décocher « Je n'ai pas de token », saisir le **Token proxy** pour la session :
 
@@ -168,13 +168,13 @@ Victime importe sur https://promptdemerde.com
 
 Checksums ZIP : vérifier l’intégrité côté client à l’import (modules profil bundle) — pas d’outil serveur dédié dans le clone public.
 
-### Headers HTTP (`server HTTP config`)
+### Headers HTTP (conf serveur)
 
 - `Content-Security-Policy` : `script-src 'self' 'unsafe-inline' 'unsafe-eval'` — inline pour le script `base href` ; `unsafe-eval` pour **Vosk** (Worker `new Function()`) ; `connect-src` inclut `'self' blob: data:` (WASM STT) et **Ollama local/LAN privé** (`localhost`, `127.0.0.1`, plages RFC1918) pour le flux A prod ; `img-src` / `frame-src` autorisent les vignettes et embeds YouTube du footer
 - `Permissions-Policy` : `microphone=(self)` (dictée) ; caméra et géolocalisation refusées
 - `X-Content-Type-Options: nosniff`
 - `Referrer-Policy: strict-origin-when-cross-origin`
-- Rewrite : sous `assets/profiles/`, seul `speech2texte/`, `index.json` et `README.md` sont servis — le reste répond **403**
+- Sous `assets/profiles/`, seul `speech2texte/`, `index.json` et `README.md` sont servis — le reste répond **403** (règle HTTP serveur)
 
 ### Risques résiduels (~5 %)
 
@@ -235,7 +235,7 @@ DreamProjectAI **publie de temps en temps** des mises à jour versionnées sur c
 - [ ] Reverse proxy avec auth ou IP allowlist
 - [ ] Ollama non exposé directement sur Internet (127.0.0.1 ou socket Unix)
 - [ ] HTTPS obligatoire
-- [ ] CSP et headers sécurité actifs (`server HTTP config` ou vhost)
+- [ ] CSP et headers sécurité actifs (conf Apache/Nginx / vhost)
 - [ ] `.env` et secrets hors Git (voir `.gitignore`)
 - [ ] Test : proxy Ollama retourne 401 sans token depuis Internet
 - [ ] Test : import ZIP profil ne déclenche aucun POST serveur avec le contenu de l'archive

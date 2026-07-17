@@ -47,7 +47,7 @@ assets/profiles/<profil-id>/
 
 Le PHP **ne charge pas** les prompts MD ; il valide que le déploiement contient des bundles cohérents.
 
-**HTTP** : règle Apache dans le [`server HTTP config`](../../server HTTP config) racine — refuse tout sous-dossier autre que `speech2texte/`.
+**HTTP** : en déploiement, la conf serveur refuse tout sous-dossier sous `assets/profiles/` autre que `speech2texte/`.
 
 ## Langues des prompts (12 locales)
 

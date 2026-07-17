@@ -463,7 +463,7 @@ En **flux A** (visiteur en production), le navigateur appelle **directement** Ol
 
 ### 11.1 Flux A — implémentation
 
-La détection du mode direct est assurée par `shouldUseDirectOllama()` dans [`assets/js/proxy-token-session.js`](../assets/js/proxy-token-session.js). La branche de fetch se trouve dans [`assets/js/ollama.js`](../assets/js/ollama.js). Ollama doit autoriser l’origine du site via `OLLAMA_ORIGINS=https://promptdemerde.com`. La directive CSP `connect-src` autorise localhost et les plages RFC1918 (voir [`server HTTP config`](../server HTTP config)).
+La détection du mode direct est assurée par `shouldUseDirectOllama()` dans [`assets/js/proxy-token-session.js`](../assets/js/proxy-token-session.js). La branche de fetch se trouve dans [`assets/js/ollama.js`](../assets/js/ollama.js). Ollama doit autoriser l’origine du site via `OLLAMA_ORIGINS=https://promptdemerde.com`. La directive CSP `connect-src` (conf serveur) autorise localhost et les plages RFC1918.
 
 #### Pas à pas — visiteur (flux A, site officiel)
 
