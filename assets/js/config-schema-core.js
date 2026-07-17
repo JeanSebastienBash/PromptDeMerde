@@ -75,7 +75,6 @@ CS.isVisionModelId = function(id) {
 
 CS.isVisionModel = function(modelOrId) {
     if (modelOrId && typeof modelOrId === 'object') {
-        if (modelOrId.visionSupported === true) return true;
         return CS.isVisionModelId(modelOrId.id || modelOrId.name || '');
     }
     return CS.isVisionModelId(modelOrId);
