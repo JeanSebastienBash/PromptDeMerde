@@ -33,7 +33,10 @@
 ## 🎬 Vidéo (bientôt)
 
 <p align="center">
-  <img src="assets/images/screenshots/nav-app-full-nofooter.png" alt="Vue d’ensemble de l’application PromptDeMerde" width="70%" style="border:1px solid #d0d7de;border-radius:8px;box-shadow:0 1px 2px rgba(0,0,0,.08);">
+  <img src="assets/images/screenshots/nav-app-full-nofooter.png" alt="Workspace PromptDeMerde : brouillon Input sur les chats, Output vide, historique LLM à 2 entrées, navigation Workspace active" width="70%" style="border:1px solid #d0d7de;border-radius:8px;box-shadow:0 1px 2px rgba(0,0,0,.08);">
+  <br>
+  <strong>Vue Workspace — brouillon Input, Output vide, 2 entrées d’historique</strong><br>
+  <em>Vue Workspace complète (sans footer de page) : navigation sur Workspace, Input avec brouillon sur les chats pour un blog, Output encore vide avec placeholder, Historique LLM à 2 entrées.</em>
 </p>
 
 <!-- Vidéo démo paysage — URL à ajouter plus tard (YouTube / MP4 hébergé). -->
@@ -168,7 +171,10 @@ Le Workspace est organisé ainsi :
 * Les actions principales sont Nettoyer, copier et Reset (ce dernier demande une confirmation).
 
 <p align="center">
-  <img src="assets/images/screenshots/ws-input-panel.png" alt="Workspace Input" width="70%" style="border:1px solid #d0d7de;border-radius:8px;box-shadow:0 1px 2px rgba(0,0,0,.08);">
+  <img src="assets/images/screenshots/ws-input-panel.gif" alt="Panneau Input du Workspace avec brouillon, bandeau Dictée vocale, Reset et deux prompts de contexte actifs" width="70%" style="border:1px solid #d0d7de;border-radius:8px;box-shadow:0 1px 2px rgba(0,0,0,.08);">
+  <br>
+  <strong>Workspace — panneau Input</strong><br>
+  <em>Le brouillon est visible dans Input, avec le bandeau Dictée vocale et le bouton Reset en haut. En dessous, Prompts de contexte indique 2 actifs.</em>
 </p>
 
 
@@ -193,7 +199,10 @@ Sur l’écran **Prompts**, les générateurs de prompts de contexte créent un 
 [Documentation avancée — génération assistée de `#Tag`](docs/DOCUMENTATION-TECHNIQUE.md#52-génération-assistée-de-tag)
 
 <p align="center">
-  <img src="assets/images/screenshots/prm-context-list-short.png" alt="Liste des prompts de contexte" width="50%" style="border:1px solid #d0d7de;border-radius:8px;box-shadow:0 1px 2px rgba(0,0,0,.08);">
+  <img src="assets/images/screenshots/prm-context-list-short.gif" alt="Écran Prompts : générateur de prompt de contexte par intention, avec sélecteur de modèle, Options et Générer le meilleur contexte" width="50%" style="border:1px solid #d0d7de;border-radius:8px;box-shadow:0 1px 2px rgba(0,0,0,.08);">
+  <br>
+  <strong>Générateur de prompt de contexte (#Tag) par intention</strong><br>
+  <em>Sur Prompts, décrire une intention, choisir un modèle Ollama local, puis générer un nouveau prompt de contexte (#Tag).</em>
 </p>
 
 
@@ -206,7 +215,10 @@ Le bandeau de dictée du Workspace permet une dictée vocale illimitée. Les mot
 La dictée continue lorsque vous ouvrez Options ou la documentation. L’arrêt se fait par un contrôle explicite.
 
 <p align="center">
-  <img src="assets/images/screenshots/ws-stt-engine.png" alt="Moteur de dictée vocale" width="70%" style="border:1px solid #d0d7de;border-radius:8px;box-shadow:0 1px 2px rgba(0,0,0,.08);">
+  <img src="assets/images/screenshots/ws-stt-engine.gif" alt="Options de dictée Workspace : moteur Vosk Maxi, langue français, micro par défaut, insertion en fin et suppression du dernier mot" width="70%" style="border:1px solid #d0d7de;border-radius:8px;box-shadow:0 1px 2px rgba(0,0,0,.08);">
+  <br>
+  <strong>Options moteur STT — Vosk Maxi</strong><br>
+  <em>Panneau moteur de dictée : Vosk Maxi, français, micro par défaut, insertion en fin et raccourci de suppression du dernier mot.</em>
 </p>
 
 [Documentation avancée — dictée et audio](docs/DOCUMENTATION-TECHNIQUE.md#6-dictée-vocale-et-audio)
@@ -244,7 +256,10 @@ Le sélecteur de fichier du Workspace envoie une image à un modèle Ollama capa
 L’historique local des Nettoyer est plafonné. Chaque carte expose Input, le prompt système, les prompts de contexte et Output. Lorsque la compression est active, les paires Original / Compressé sont affichées. Vous pouvez copier un bloc, restaurer un Input ou purger l’historique. Cet historique peut être inclus dans un export de profil complet, selon le preset choisi.
 
 <p align="center">
-  <img src="assets/images/screenshots/ws-history-open.gif" alt="Panneau historique" width="70%" style="border:1px solid #d0d7de;border-radius:8px;box-shadow:0 1px 2px rgba(0,0,0,.08);">
+  <img src="assets/images/screenshots/ws-history-open.gif" alt="Panneau Historique du Workspace ouvert avec cartes des passages Nettoyer LLM exposant Input et Output" width="70%" style="border:1px solid #d0d7de;border-radius:8px;box-shadow:0 1px 2px rgba(0,0,0,.08);">
+  <br>
+  <strong>Historique local avec traces Input et Output</strong><br>
+  <em>Historique LLM ouvert : cartes empilées avec aperçus IN/OUT, horodatage, modèle (ollama · llama3.2) et blocs de zones des passages Nettoyer.</em>
 </p>
 
 [Documentation avancée — Workspace](docs/DOCUMENTATION-TECHNIQUE.md#32-workspace)
@@ -288,7 +303,10 @@ Le contenu d’Output peut être affiché en texte brut, en JSON ou en HTML.
 L’unité portable de PromptDeMerde est une archive **ZIP** qui contient le profil JSON (et les assets associés le cas échéant). L’import n’accepte que le format **`.zip`**. Le traitement reste côté client ; un contrôle d’intégrité s’exécute à l’import. Les tokens proxy sont exclus du profil portable.
 
 <p align="center">
-  <img src="assets/images/screenshots/stg-profile-json.gif" alt="Export et import du profil JSON" width="70%" style="border:1px solid #d0d7de;border-radius:8px;box-shadow:0 1px 2px rgba(0,0,0,.08);">
+  <img src="assets/images/screenshots/stg-profile-json.gif" alt="Panneau Options Profil JSON avec Speech2Texte sélectionné et boutons Créer, Importer, Exporter" width="70%" style="border:1px solid #d0d7de;border-radius:8px;box-shadow:0 1px 2px rgba(0,0,0,.08);">
+  <br>
+  <strong>Profil JSON — créer, importer, exporter</strong><br>
+  <em>Options → Profil JSON : basculer de profil, importer un ZIP ou exporter l’archive portable.</em>
 </p>
 
 [Documentation avancée — export / import ZIP](docs/DOCUMENTATION-TECHNIQUE.md#7-export--import--archive-zip-profil)
@@ -464,7 +482,10 @@ Le pied de page regroupe un carrousel de projets DreamProjectAI, des badges de s
 ## 💾 Profil JSON
 
 <p align="center">
-  <img src="assets/images/screenshots/stg-profile-json.gif" alt="Export et import du profil JSON" width="70%" style="border:1px solid #d0d7de;border-radius:8px;box-shadow:0 1px 2px rgba(0,0,0,.08);">
+  <img src="assets/images/screenshots/stg-profile-json.gif" alt="Panneau Options Profil JSON avec Speech2Texte sélectionné et boutons Créer, Importer, Exporter" width="70%" style="border:1px solid #d0d7de;border-radius:8px;box-shadow:0 1px 2px rgba(0,0,0,.08);">
+  <br>
+  <strong>Profil JSON — créer, importer, exporter</strong><br>
+  <em>Options → Profil JSON : basculer de profil, importer un ZIP ou exporter l’archive portable.</em>
 </p>
 
 Le profil JSON, exporté sous forme de ZIP, peut contenir le prompt système, les prompts de contexte (`#Tag`), les réglages LLM, le thème, la langue, le brouillon du Workspace, l’historique et les libellés d’interface.
@@ -480,7 +501,10 @@ Le profil JSON, exporté sous forme de ZIP, peut contenir le prompt système, le
 ## 📦 Prérequis
 
 <p align="center">
-  <img src="assets/images/screenshots/stg-test-llm.gif" alt="Test de connexion Ollama" width="70%" style="border:1px solid #d0d7de;border-radius:8px;box-shadow:0 1px 2px rgba(0,0,0,.08);">
+  <img src="assets/images/screenshots/stg-test-llm.gif" alt="Carte Options LLM : fournisseur Ollama, URL localhost et bouton Tester" width="70%" style="border:1px solid #d0d7de;border-radius:8px;box-shadow:0 1px 2px rgba(0,0,0,.08);">
+  <br>
+  <strong>Options → LLM — tester la connexion Ollama</strong><br>
+  <em>Avant Nettoyer / reformuler, renseigner le moteur sous Options → LLM (Ollama + URL) et utiliser Tester pour vérifier la connexion locale.</em>
 </p>
 
 ### Site officiel

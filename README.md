@@ -36,7 +36,10 @@ Free · open source (<a href="LICENSE">MIT</a>) · no account.
 ## 🎬 Watch (coming soon)
 
 <p align="center">
-  <img src="assets/images/screenshots/nav-app-full-nofooter.png" alt="PromptDeMerde application overview" width="70%" style="border:1px solid #d0d7de;border-radius:8px;box-shadow:0 1px 2px rgba(0,0,0,.08);">
+  <img src="assets/images/screenshots/nav-app-full-nofooter.png" alt="PromptDeMerde Workspace: Input draft about cats, empty Output, LLM history with 2 entries, Workspace nav active" width="70%" style="border:1px solid #d0d7de;border-radius:8px;box-shadow:0 1px 2px rgba(0,0,0,.08);">
+  <br>
+  <strong>Workspace overview — Input draft, empty Output, 2 history entries</strong><br>
+  <em>Full Workspace view (no page footer): nav on Workspace, Input holds a draft about cats for a blog, Output still empty with placeholder, Historique LLM shows 2 entries.</em>
 </p>
 
 <!-- Landscape demo video — URL to be added later (YouTube / hosted MP4). -->
@@ -171,7 +174,10 @@ Workspace layout:
 * Actions — Clean, copy, Reset (confirmation required)
 
 <p align="center">
-  <img src="assets/images/screenshots/ws-input-panel.png" alt="Workspace Input" width="70%" style="border:1px solid #d0d7de;border-radius:8px;box-shadow:0 1px 2px rgba(0,0,0,.08);">
+  <img src="assets/images/screenshots/ws-input-panel.gif" alt="Workspace Input panel with draft text, voice dictation strip, Reset, and two active context prompts" width="70%" style="border:1px solid #d0d7de;border-radius:8px;box-shadow:0 1px 2px rgba(0,0,0,.08);">
+  <br>
+  <strong>Workspace — Input panel</strong><br>
+  <em>Draft text is visible in Input, with the Dictée vocale strip and Reset at the top. Below, Prompts de contexte shows 2 actifs.</em>
 </p>
 
 
@@ -196,7 +202,10 @@ On the **Prompts** screen, the context prompt generators create a new `#Tag` fro
 [Advanced docs — assisted `#Tag` generation](docs/DOCUMENTATION-TECHNIQUE.en.md#52-génération-assistée-de-tag)
 
 <p align="center">
-  <img src="assets/images/screenshots/prm-context-list-short.png" alt="Context prompts list" width="50%" style="border:1px solid #d0d7de;border-radius:8px;box-shadow:0 1px 2px rgba(0,0,0,.08);">
+  <img src="assets/images/screenshots/prm-context-list-short.gif" alt="Prompts screen: AI context-prompt generator by intention, with model picker, Options, and Generate the best context" width="50%" style="border:1px solid #d0d7de;border-radius:8px;box-shadow:0 1px 2px rgba(0,0,0,.08);">
+  <br>
+  <strong>AI context prompt generator (#Tag) by intention</strong><br>
+  <em>On Prompts, describe an intention, pick a local Ollama model, then generate a new context prompt (#Tag).</em>
 </p>
 
 ---
@@ -208,7 +217,10 @@ The Workspace dictation strip supports unlimited voice dictation. Available engi
 Dictation continues when you open Options or documentation. Stopping uses an explicit control.
 
 <p align="center">
-  <img src="assets/images/screenshots/ws-stt-engine.png" alt="Voice dictation engine" width="70%" style="border:1px solid #d0d7de;border-radius:8px;box-shadow:0 1px 2px rgba(0,0,0,.08);">
+  <img src="assets/images/screenshots/ws-stt-engine.gif" alt="Workspace dictation options: Vosk Maxi engine, French language, default microphone, insert-at-end and delete-last-word controls" width="70%" style="border:1px solid #d0d7de;border-radius:8px;box-shadow:0 1px 2px rgba(0,0,0,.08);">
+  <br>
+  <strong>STT engine options — Vosk Maxi</strong><br>
+  <em>Dictation engine panel with Vosk Maxi, French, default mic, insert at end, and delete-last-word shortcut.</em>
 </p>
 
 [Advanced docs — dictation and audio](docs/DOCUMENTATION-TECHNIQUE.en.md#6-dictée-vocale-et-audio)
@@ -246,7 +258,10 @@ Workspace file picker → vision-capable Ollama model → description text in In
 Capped local history of Clean runs. Cards expose Input, the system prompt, context prompts, and Output; with compression enabled, Original and Compressed pairs. Copy, restore, purge. Included in a full profile export when that preset is selected.
 
 <p align="center">
-  <img src="assets/images/screenshots/ws-history-open.gif" alt="History panel" width="70%" style="border:1px solid #d0d7de;border-radius:8px;box-shadow:0 1px 2px rgba(0,0,0,.08);">
+  <img src="assets/images/screenshots/ws-history-open.gif" alt="Workspace History panel open with LLM Clean run cards showing Input and Output traces" width="70%" style="border:1px solid #d0d7de;border-radius:8px;box-shadow:0 1px 2px rgba(0,0,0,.08);">
+  <br>
+  <strong>Local history with Input and Output traces</strong><br>
+  <em>Historique LLM open: stacked cards with IN/OUT previews, timestamps, model (ollama · llama3.2), and zone blocks for prior Clean runs.</em>
 </p>
 
 [Advanced docs — Workspace](docs/DOCUMENTATION-TECHNIQUE.en.md#32-workspace)
@@ -290,7 +305,10 @@ Output can be shown as plain text, JSON, or HTML.
 Portable unit: **ZIP** archive with the JSON profile (and related assets when included). Import accepts **`.zip` only**. Client-side processing; integrity check on import. Proxy tokens are excluded from the portable profile.
 
 <p align="center">
-  <img src="assets/images/screenshots/stg-profile-json.gif" alt="Profile JSON export and import" width="70%" style="border:1px solid #d0d7de;border-radius:8px;box-shadow:0 1px 2px rgba(0,0,0,.08);">
+  <img src="assets/images/screenshots/stg-profile-json.gif" alt="Options JSON profile panel with Speech2Texte selected and Create, Import, Export buttons" width="70%" style="border:1px solid #d0d7de;border-radius:8px;box-shadow:0 1px 2px rgba(0,0,0,.08);">
+  <br>
+  <strong>JSON profile — create, import, export</strong><br>
+  <em>Options → JSON profile: switch profiles, import a ZIP, or export the portable archive.</em>
 </p>
 
 [Advanced docs — ZIP export / import](docs/DOCUMENTATION-TECHNIQUE.en.md#7-export--import--archive-zip-profil)
@@ -466,7 +484,10 @@ The footer includes a DreamProjectAI project carousel, stack badges (LLM, Ollama
 ## 💾 JSON profile
 
 <p align="center">
-  <img src="assets/images/screenshots/stg-profile-json.gif" alt="JSON profile export and import" width="70%" style="border:1px solid #d0d7de;border-radius:8px;box-shadow:0 1px 2px rgba(0,0,0,.08);">
+  <img src="assets/images/screenshots/stg-profile-json.gif" alt="Options JSON profile panel with Speech2Texte selected and Create, Import, Export buttons" width="70%" style="border:1px solid #d0d7de;border-radius:8px;box-shadow:0 1px 2px rgba(0,0,0,.08);">
+  <br>
+  <strong>JSON profile — create, import, export</strong><br>
+  <em>Options → JSON profile: switch profiles, import a ZIP, or export the portable archive.</em>
 </p>
 
 The JSON profile (exported as ZIP) can hold the system prompt, context prompts (`#Tag`), LLM settings, theme, language, Workspace draft, history, and UI labels.
@@ -482,7 +503,10 @@ The JSON profile (exported as ZIP) can hold the system prompt, context prompts (
 ## 📦 Prerequisites
 
 <p align="center">
-  <img src="assets/images/screenshots/stg-test-llm.gif" alt="Ollama connection test" width="70%" style="border:1px solid #d0d7de;border-radius:8px;box-shadow:0 1px 2px rgba(0,0,0,.08);">
+  <img src="assets/images/screenshots/stg-test-llm.gif" alt="Options LLM card: Ollama provider, localhost URL, and Test button" width="70%" style="border:1px solid #d0d7de;border-radius:8px;box-shadow:0 1px 2px rgba(0,0,0,.08);">
+  <br>
+  <strong>Options → LLM — test the Ollama connection</strong><br>
+  <em>Before using Clean/rephrase, set the LLM engine under Options → LLM (Ollama + URL) and use Test to verify the local connection.</em>
 </p>
 
 ### Official site
