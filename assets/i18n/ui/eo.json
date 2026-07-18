@@ -108,7 +108,27 @@
         "outputMetaModel": "Modelo:",
         "outputMetaTokens": "ĵetonoj:",
         "outputMetaTime": "Tempo:",
-        "tagInvitePrefix": "GASTO:"
+        "tagInvitePrefix": "GASTO:",
+        "compressPanelTitle": "Kunpremado de tokenoj",
+        "compressTargetsAria": "Celoj de kunpremado",
+        "compressIncludeSystem": "Sistema prompto",
+        "compressIncludeContexts": "Kuntekstaj promptoj (aktivaj)",
+        "compressIncludeInput": "Eniga zono",
+        "compressIncludeOutput": "Eliga zono",
+        "compressLockOutput": "Kunpremado daŭras — eligo ŝlosita",
+        "compressCancel": "Ĉesi",
+        "compressCancelTitle": "Ĉesi la kunpremadon de tokenoj",
+        "outputDisplayFormat": "Eliga formato",
+        "outputDisplayFormatAria": "Eliga formato",
+        "outputDisplayFormatHint": "Montrado por kopio: defaŭlte plata teksto. JSON / HTML envolvas la saman enhavon.",
+        "outputFormatText": "Plata teksto",
+        "outputFormatJson": "JSON",
+        "outputFormatHtml": "HTML",
+        "outputFormatMarkdown": "Markdown",
+        "outputFormatXml": "XML",
+        "outputFormatYaml": "YAML",
+        "outputFormatCsv": "CSV",
+        "outputFormatSoon": "Baldaŭ disponebla"
     },
     "stt": {
         "blockAria": "Voĉa diktado",
@@ -188,7 +208,10 @@
             "micGranted": "Permesita",
             "micDenied": "Neita — rekomencigita en retumilo",
             "micBlockedStrip": "Blokiĝis en HTTP — mikroproblemo malsupre",
-            "lanStrip": "Mikrofono blokita en HTTP — provu localhost aŭ HTTPS"
+            "lanStrip": "Mikrofono blokita en HTTP — provu localhost aŭ HTTPS",
+            "engineLangLoaded": "motorlingvo: {{lang}}",
+            "engineLangMismatch": "petita {{target}}, motoro havas {{loaded}} — reŝargi la modelon",
+            "engineLangReloadNeeded": "reŝargi la modelon por apliki la elektitan lingvon"
         },
         "help": {
             "wasmUnsupported": "Voĉa diktado ne subtenata: ĉi tiu retumilo ne subtenas WebAssembly.",
@@ -219,7 +242,10 @@
             "computeGpuVramMaxi": "~{{maxi}} GB VRAM rekomendita por Whisper Maxi kaj Parakeet sur GPU.",
             "computeGpuVramLowMini": "VRAM ~{{vram}} GB < {{mini}} GB rekomendita — Whisper Mini sur GPU povas malsukcesi; CPU-rezervo ebla.",
             "computeGpuVramLowMaxi": "VRAM ~{{vram}} GB < {{maxi}} GB rekomendita — Whisper Maxi / Parakeet sur GPU povas malsukcesi; provu CPU aŭ pli malpezan modelon.",
-            "computeGpuVramBelow1": "VRAM ~{{vram}} GB: Whisper Mini kutime ne ŝargiĝas sur GPU (< 1 GB) — CPU rekomendita."
+            "computeGpuVramBelow1": "VRAM ~{{vram}} GB: Whisper Mini kutime ne ŝargiĝas sur GPU (< 1 GB) — CPU rekomendita.",
+            "voskMaxiLangUnavailable": "Vosk Maxi — diktado en {{lang}} nedisponebla. Franca, angla (US) aŭ Vosk Mini.",
+            "engineLangUnavailable": "Diktada modelo {{lang}} ne instalita — ŝargo neebla. Post klono: cd install && bash restore-large-assets.sh",
+            "engineLangUnselected": "Elekti la motorlingvon antaŭ ŝargo."
         },
         "notif": {
             "micGranted": "Mikrofono rajtigita.",
@@ -232,7 +258,10 @@
             "whisperSlow": "Whisper daŭras tro longe — daŭre parolu aŭ provu Vosk Mini.",
             "whisperCpuOk": "Whisper aktiva en CPU (WASM).",
             "unsupportedBrowser": "Voĉa diktado ne estas subtenata de ĉi tiu retumilo.",
-            "lanNetworkTitle": "Loka reto-reĝimo (HTTP) — mikrofono blokita"
+            "lanNetworkTitle": "Loka reto-reĝimo (HTTP) — mikrofono blokita",
+            "voskMaxiLangBlocked": "Vosk Maxi nedisponebla por {{lang}} — nur franca kaj angla (US).",
+            "engineLangUnselected": "Neniu motorlingvo elektita. Elekti lingvon antaŭ ŝargo.",
+            "engineLangUnavailable": "Ŝargo neebla — mankas modelo {{lang}}. Post klono: cd install && bash restore-large-assets.sh"
         },
         "parakeetLoad": {
             "encoder": "Elŝuto de kodilo (~391 MB)",
@@ -365,7 +394,16 @@
         "resumeOfferTitle": "Daŭrigi la voĉan diktadon?",
         "resumeOfferBody": "La diktado estis interrompita por reŝargi la paĝon. Vi povas tuj rekomenci ĝin, aŭ fermi ĉi tiun fenestron.",
         "resumeOfferResume": "Daŭrigi la diktadon",
-        "resumeOfferDismiss": "Fermi"
+        "resumeOfferDismiss": "Fermi",
+        "preloadBtnLoad": "Ŝargi motoron",
+        "preloadBtnLoading": "Ŝargado…",
+        "preloadBtnReload": "Reŝargi",
+        "preloadReloadTitle": "Reŝargi voĉan modelon — motoro, lingvo aŭ akcelo ŝanĝita",
+        "btnTitleLoadBlocked": "Ŝargo blokita — kontroli motoron kaj lingvon (Opcioj → Diktado).",
+        "engineLangLabel": "Lingvo de la motoro",
+        "engineLangTitle": "Lingvo de voĉa diktado",
+        "engineLangAria": "Lingvo de la diktada motoro",
+        "engineLangChoose": "— Elekti lingvon —"
     },
     "prompts": {
         "systemTitle": "Sistema prompto (opcionala)",
@@ -721,7 +759,8 @@
         "badgeJson": "Profiloj kaj agordo en formato JSON",
         "badgeLocal": "100 % loka — nula telemetrio",
         "badgeOpensource": "Malfermkoda sur GitHub — kontrolinda kodo",
-        "brandPhotoAlt": "Jean-Sébastien Bash, fondinto de PromptDeMerde.com"
+        "brandPhotoAlt": "Jean-Sébastien Bash, fondinto de PromptDeMerde.com",
+        "legalNavAria": "Juridaj informoj"
     },
     "env": {
         "prod": "PROD",

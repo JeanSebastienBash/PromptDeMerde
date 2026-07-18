@@ -108,7 +108,27 @@
         "outputMetaModel": "Model:",
         "outputMetaTokens": "Tokens:",
         "outputMetaTime": "Time:",
-        "tagInvitePrefix": "PROMPT: "
+        "tagInvitePrefix": "PROMPT: ",
+        "compressPanelTitle": "Token compression",
+        "compressTargetsAria": "Compression targets",
+        "compressIncludeSystem": "System prompt",
+        "compressIncludeContexts": "Context prompts (active)",
+        "compressIncludeInput": "Input area",
+        "compressIncludeOutput": "Output area",
+        "compressLockOutput": "Compression in progress — Output locked",
+        "compressCancel": "Stop",
+        "compressCancelTitle": "Stop token compression",
+        "outputDisplayFormat": "Output format",
+        "outputDisplayFormatAria": "Output format",
+        "outputDisplayFormatHint": "Display for copy: plain text by default. JSON / HTML wrap the same content.",
+        "outputFormatText": "Plain text",
+        "outputFormatJson": "JSON",
+        "outputFormatHtml": "HTML",
+        "outputFormatMarkdown": "Markdown",
+        "outputFormatXml": "XML",
+        "outputFormatYaml": "YAML",
+        "outputFormatCsv": "CSV",
+        "outputFormatSoon": "Coming soon"
     },
     "stt": {
         "blockAria": "Voice dictation",
@@ -189,7 +209,10 @@
             "micGranted": "Allowed",
             "micDenied": "Denied — reset in browser settings",
             "micBlockedStrip": "Blocked on HTTP — mic troubleshooting below",
-            "lanStrip": "Mic blocked on HTTP — try localhost or HTTPS"
+            "lanStrip": "Mic blocked on HTTP — try localhost or HTTPS",
+            "engineLangLoaded": "engine language: {{lang}}",
+            "engineLangMismatch": "language {{target}} requested, engine has {{loaded}} — reload the model",
+            "engineLangReloadNeeded": "reload the model to apply the selected language"
         },
         "help": {
             "wasmUnsupported": "Voice dictation not supported: this browser does not support WebAssembly.",
@@ -220,7 +243,10 @@
             "computeGpuVramMaxi": "~{{maxi}} GB VRAM recommended for Whisper Maxi and Parakeet on GPU.",
             "computeGpuVramLowMini": "VRAM ~{{vram}} GB < {{mini}} GB recommended — Whisper Mini on GPU may fail; CPU fallback possible.",
             "computeGpuVramLowMaxi": "VRAM ~{{vram}} GB < {{maxi}} GB recommended — Whisper Maxi / Parakeet on GPU may fail; try CPU or a lighter model.",
-            "computeGpuVramBelow1": "VRAM ~{{vram}} GB: Whisper Mini typically won't load on GPU (< 1 GB) — CPU recommended."
+            "computeGpuVramBelow1": "VRAM ~{{vram}} GB: Whisper Mini typically won't load on GPU (< 1 GB) — CPU recommended.",
+            "voskMaxiLangUnavailable": "Vosk Maxi — dictation in {{lang}} unavailable. Use French, English (US), or Vosk Mini.",
+            "engineLangUnavailable": "{{lang}} dictation model not installed — cannot load. After clone: cd install && bash restore-large-assets.sh",
+            "engineLangUnselected": "Select the engine language before loading."
         },
         "notif": {
             "micGranted": "Microphone allowed.",
@@ -233,7 +259,10 @@
             "whisperSlow": "Whisper is taking too long — keep speaking or try Vosk Mini.",
             "whisperCpuOk": "Whisper running on CPU (WASM).",
             "unsupportedBrowser": "Voice dictation not supported by this browser.",
-            "lanNetworkTitle": "Local network mode (HTTP) — mic blocked"
+            "lanNetworkTitle": "Local network mode (HTTP) — mic blocked",
+            "voskMaxiLangBlocked": "Vosk Maxi unavailable for {{lang}} — French and English (US) only.",
+            "engineLangUnselected": "No engine language selected. Choose a language before loading.",
+            "engineLangUnavailable": "Load failed — {{lang}} model missing. After clone: cd install && bash restore-large-assets.sh"
         },
         "parakeetLoad": {
             "encoder": "Downloading encoder (~391 MB)",
@@ -365,7 +394,16 @@
         "resumeOfferTitle": "Resume voice dictation?",
         "resumeOfferBody": "Dictation was interrupted so the page could reload. You can restart it now, or close this window.",
         "resumeOfferResume": "Resume dictation",
-        "resumeOfferDismiss": "Close"
+        "resumeOfferDismiss": "Close",
+        "preloadBtnLoad": "Load engine",
+        "preloadBtnLoading": "Loading…",
+        "preloadBtnReload": "Reload",
+        "preloadReloadTitle": "Reload voice model — engine, language, or acceleration changed",
+        "btnTitleLoadBlocked": "Load blocked — check engine and language (Options → Dictation).",
+        "engineLangLabel": "Engine language",
+        "engineLangTitle": "Speech dictation language",
+        "engineLangAria": "Speech engine language",
+        "engineLangChoose": "— Choose language —"
     },
     "prompts": {
         "systemTitle": "System prompt (optional)",
@@ -721,7 +759,8 @@
         "badgeJson": "Profiles and configuration in JSON format",
         "badgeLocal": "100% local — zero telemetry",
         "badgeOpensource": "Open source on GitHub — auditable code",
-        "brandPhotoAlt": "Jean-Sébastien Bash, founder of PromptDeMerde.com"
+        "brandPhotoAlt": "Jean-Sébastien Bash, founder of PromptDeMerde.com",
+        "legalNavAria": "Legal information"
     },
     "env": {
         "prod": "PROD",

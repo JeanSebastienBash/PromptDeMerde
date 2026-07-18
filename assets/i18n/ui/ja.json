@@ -108,7 +108,27 @@
         "outputMetaModel": "モデル：",
         "outputMetaTokens": "トークン:",
         "outputMetaTime": "時間：",
-        "tagInvitePrefix": "ゲスト："
+        "tagInvitePrefix": "ゲスト：",
+        "compressPanelTitle": "トークン圧縮",
+        "compressTargetsAria": "圧縮対象",
+        "compressIncludeSystem": "システムプロンプト",
+        "compressIncludeContexts": "コンテキストプロンプト（有効）",
+        "compressIncludeInput": "入力エリア",
+        "compressIncludeOutput": "出力エリア",
+        "compressLockOutput": "圧縮中 — 出力ロック中",
+        "compressCancel": "停止",
+        "compressCancelTitle": "トークン圧縮を停止",
+        "outputDisplayFormat": "出力形式",
+        "outputDisplayFormatAria": "出力形式",
+        "outputDisplayFormatHint": "コピー用表示: 既定はプレーンテキスト。JSON / HTML は同じ内容を包みます。",
+        "outputFormatText": "プレーンテキスト",
+        "outputFormatJson": "JSON",
+        "outputFormatHtml": "HTML",
+        "outputFormatMarkdown": "Markdown",
+        "outputFormatXml": "XML",
+        "outputFormatYaml": "YAML",
+        "outputFormatCsv": "CSV",
+        "outputFormatSoon": "近日公開"
     },
     "stt": {
         "blockAria": "音声ディクテーション",
@@ -188,7 +208,10 @@
             "micGranted": "許可された",
             "micDenied": "拒否されました - ブラウザでリセットされました",
             "micBlockedStrip": "HTTP でスタック — 以下のマイクロ トラブルシューティング",
-            "lanStrip": "マイクが HTTP に固定されています — localhost または HTTPS を試してください"
+            "lanStrip": "マイクが HTTP に固定されています — localhost または HTTPS を試してください",
+            "engineLangLoaded": "エンジン言語: {{lang}}",
+            "engineLangMismatch": "要求 {{target}}、エンジンは {{loaded}} — モデルを再読み込み",
+            "engineLangReloadNeeded": "選択した言語を適用するにはモデルを再読み込み"
         },
         "help": {
             "wasmUnsupported": "音声ディクテーションはサポートされていません: このブラウザは WebAssembly をサポートしていません。",
@@ -219,7 +242,10 @@
             "computeGpuVramMaxi": "Whisper Maxi と Parakeet の GPU 利用には ~{{maxi}} GB VRAM を推奨。",
             "computeGpuVramLowMini": "VRAM ~{{vram}} GB < 推奨 {{mini}} GB — Whisper Mini の GPU 読み込みは失敗する可能性；CPU フォールバック可。",
             "computeGpuVramLowMaxi": "VRAM ~{{vram}} GB < 推奨 {{maxi}} GB — Whisper Maxi / Parakeet の GPU 読み込みは失敗する可能性；CPU または軽量モデルを試してください。",
-            "computeGpuVramBelow1": "VRAM ~{{vram}} GB：Whisper Mini は通常 GPU で読み込めません（< 1 GB）— CPU を推奨。"
+            "computeGpuVramBelow1": "VRAM ~{{vram}} GB：Whisper Mini は通常 GPU で読み込めません（< 1 GB）— CPU を推奨。",
+            "voskMaxiLangUnavailable": "Vosk Maxi — {{lang}} の音声入力不可。フランス語、英語（US）、または Vosk Mini。",
+            "engineLangUnavailable": "{{lang}} 音声モデル未インストール — 読み込み不可。クローン後: cd install && bash restore-large-assets.sh",
+            "engineLangUnselected": "読み込み前にエンジン言語を選択。"
         },
         "notif": {
             "micGranted": "マイクが承認されました。",
@@ -232,7 +258,10 @@
             "whisperSlow": "Whisper には時間がかかりすぎます。話し続けるか、Vosk Mini をお試しください。",
             "whisperCpuOk": "Whisper は CPU (WASM) でアクティブです。",
             "unsupportedBrowser": "このブラウザでは音声ディクテーションがサポートされていません。",
-            "lanNetworkTitle": "ローカル ネットワーク モード (HTTP) — マイクがブロックされています"
+            "lanNetworkTitle": "ローカル ネットワーク モード (HTTP) — マイクがブロックされています",
+            "voskMaxiLangBlocked": "Vosk Maxi は {{lang}} 非対応 — フランス語と英語（US）のみ。",
+            "engineLangUnselected": "エンジン言語未選択。読み込み前に言語を選ぶ。",
+            "engineLangUnavailable": "読み込み不可 — {{lang}} モデルなし。クローン後: cd install && bash restore-large-assets.sh"
         },
         "parakeetLoad": {
             "encoder": "エンコーダのダウンロード (~391 MB)",
@@ -365,7 +394,16 @@
         "resumeOfferTitle": "音声入力を再開しますか？",
         "resumeOfferBody": "ページ再読み込みのため音声入力が中断されました。すぐ再開するか、このウィンドウを閉じられます。",
         "resumeOfferResume": "音声入力を再開",
-        "resumeOfferDismiss": "閉じる"
+        "resumeOfferDismiss": "閉じる",
+        "preloadBtnLoad": "エンジンを読み込む",
+        "preloadBtnLoading": "読み込み中…",
+        "preloadBtnReload": "再読み込み",
+        "preloadReloadTitle": "音声モデルを再読み込み — エンジン・言語または加速が変更されました",
+        "btnTitleLoadBlocked": "読み込み不可 — エンジンと言語を確認（オプション → 音声入力）。",
+        "engineLangLabel": "エンジン言語",
+        "engineLangTitle": "音声入力の言語",
+        "engineLangAria": "音声エンジンの言語",
+        "engineLangChoose": "— 言語を選択 —"
     },
     "prompts": {
         "systemTitle": "システムプロンプト（任意）",
@@ -721,7 +759,8 @@
         "badgeJson": "JSON 形式のプロファイルと設定",
         "badgeLocal": "100% ローカル — テレメトリなし",
         "badgeOpensource": "GitHub のオープンソース — 監査可能なコード",
-        "brandPhotoAlt": "PromptDeMerde.com 創設者 Jean-Sébastien Bash"
+        "brandPhotoAlt": "PromptDeMerde.com 創設者 Jean-Sébastien Bash",
+        "legalNavAria": "法的情報"
     },
     "env": {
         "prod": "PROD",

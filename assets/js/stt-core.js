@@ -502,7 +502,8 @@ STT.isSttModelReloadPending = function() {
 };
 
 STT.setPreloadButtonLabel = function(btn, label) {
-    if (!btn) return;
+    if (!btn || label == null || label === '') return;
+    if (typeof label === 'string' && label.indexOf('stt.') === 0) return;
     var span = btn.querySelector('[data-stt-preload-label]');
     if (span) span.textContent = label;
     else btn.textContent = label;

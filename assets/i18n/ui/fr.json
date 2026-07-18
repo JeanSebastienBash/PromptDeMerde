@@ -108,7 +108,27 @@
         "outputMetaModel": "Modèle:",
         "outputMetaTokens": "Tokens:",
         "outputMetaTime": "Temps:",
-        "tagInvitePrefix": "INVITE : "
+        "tagInvitePrefix": "INVITE : ",
+        "compressPanelTitle": "Compression des tokens",
+        "compressTargetsAria": "Cibles de compression",
+        "compressIncludeSystem": "Prompt système",
+        "compressIncludeContexts": "Prompts de contexte (actifs)",
+        "compressIncludeInput": "Zone Input",
+        "compressIncludeOutput": "Zone Output",
+        "compressLockOutput": "Compression en cours — Output verrouillé",
+        "compressCancel": "Arrêter",
+        "compressCancelTitle": "Arrêter la compression des tokens",
+        "outputDisplayFormat": "Format de sortie",
+        "outputDisplayFormatAria": "Format de sortie",
+        "outputDisplayFormatHint": "Affichage pour copie : texte brut par défaut. JSON / HTML enrobent le même contenu.",
+        "outputFormatText": "Texte brut",
+        "outputFormatJson": "JSON",
+        "outputFormatHtml": "HTML",
+        "outputFormatMarkdown": "Markdown",
+        "outputFormatXml": "XML",
+        "outputFormatYaml": "YAML",
+        "outputFormatCsv": "CSV",
+        "outputFormatSoon": "Bientôt disponible"
     },
     "stt": {
         "blockAria": "Dictée vocale",
@@ -189,7 +209,10 @@
             "micGranted": "Autorisé",
             "micDenied": "Refusé — réinitialiser dans le navigateur",
             "micBlockedStrip": "Bloqué en HTTP — dépannage micro ci-dessous",
-            "lanStrip": "Micro bloqué en HTTP — essaie localhost ou HTTPS"
+            "lanStrip": "Micro bloqué en HTTP — essaie localhost ou HTTPS",
+            "engineLangLoaded": "langue du moteur : {{lang}}",
+            "engineLangMismatch": "langue {{target}} demandée, moteur {{loaded}} chargé — recharger le modèle",
+            "engineLangReloadNeeded": "recharger le modèle pour appliquer la langue choisie"
         },
         "help": {
             "wasmUnsupported": "Dictée vocale non supportée : ce navigateur ne gère pas WebAssembly.",
@@ -220,7 +243,10 @@
             "computeGpuVramMaxi": "~{{maxi}} Go VRAM recommandés pour Whisper Maxi et Parakeet sur GPU.",
             "computeGpuVramLowMini": "VRAM ~{{vram}} Go < {{mini}} Go recommandés — Whisper Mini sur GPU peut échouer ; repli CPU possible.",
             "computeGpuVramLowMaxi": "VRAM ~{{vram}} Go < {{maxi}} Go recommandés — Whisper Maxi / Parakeet sur GPU peut échouer ; essayez CPU ou un modèle plus léger.",
-            "computeGpuVramBelow1": "VRAM ~{{vram}} Go : Whisper Mini ne se charge en général pas sur GPU (< 1 Go) — CPU recommandé."
+            "computeGpuVramBelow1": "VRAM ~{{vram}} Go : Whisper Mini ne se charge en général pas sur GPU (< 1 Go) — CPU recommandé.",
+            "voskMaxiLangUnavailable": "Vosk Maxi — dictée en {{lang}} non disponible. Français, anglais (US), ou moteur Vosk Mini.",
+            "engineLangUnavailable": "Modèle de dictée en {{lang}} non installé — chargement impossible. Après clone : cd install && bash restore-large-assets.sh",
+            "engineLangUnselected": "Sélectionner la langue du moteur avant de charger."
         },
         "notif": {
             "micGranted": "Micro autorisé.",
@@ -233,7 +259,10 @@
             "whisperSlow": "Whisper met trop de temps — continue de parler ou essaie Vosk Mini.",
             "whisperCpuOk": "Whisper actif en CPU (WASM).",
             "unsupportedBrowser": "Dictée vocale non supportée par ce navigateur.",
-            "lanNetworkTitle": "Mode réseau local (HTTP) — micro bloqué"
+            "lanNetworkTitle": "Mode réseau local (HTTP) — micro bloqué",
+            "voskMaxiLangBlocked": "Vosk Maxi indisponible pour {{lang}} — français et anglais (US) seulement.",
+            "engineLangUnselected": "Aucune langue de moteur sélectionnée. Choisir une langue avant de charger.",
+            "engineLangUnavailable": "Chargement impossible — modèle {{lang}} absent. Après clone : cd install && bash restore-large-assets.sh"
         },
         "parakeetLoad": {
             "encoder": "Téléchargement encodeur (~391 Mo)",
@@ -365,7 +394,16 @@
         "resumeOfferTitle": "Reprendre la dictée vocale ?",
         "resumeOfferBody": "La dictée a été interrompue pour recharger la page. Vous pouvez la relancer tout de suite, ou fermer cette fenêtre.",
         "resumeOfferResume": "Reprendre la dictée",
-        "resumeOfferDismiss": "Fermer"
+        "resumeOfferDismiss": "Fermer",
+        "preloadBtnLoad": "Charger le moteur",
+        "preloadBtnLoading": "Chargement…",
+        "preloadBtnReload": "Recharger",
+        "preloadReloadTitle": "Recharger le modèle vocal — moteur, langue ou accélération modifié(e)",
+        "btnTitleLoadBlocked": "Chargement impossible — vérifier le moteur et la langue (Options → Dictée).",
+        "engineLangLabel": "Langue du moteur",
+        "engineLangTitle": "Langue de dictée vocale",
+        "engineLangAria": "Langue du moteur de dictée vocale",
+        "engineLangChoose": "— Choisir la langue —"
     },
     "prompts": {
         "systemTitle": "Prompt système (optionnel)",
@@ -721,7 +759,8 @@
         "badgeJson": "Profils et configuration au format JSON",
         "badgeLocal": "100 % local — zéro télémétrie",
         "badgeOpensource": "Open source sur GitHub — code auditable",
-        "brandPhotoAlt": "Jean-Sébastien Bash, fondateur de PromptDeMerde.com"
+        "brandPhotoAlt": "Jean-Sébastien Bash, fondateur de PromptDeMerde.com",
+        "legalNavAria": "Informations légales"
     },
     "env": {
         "prod": "PROD",

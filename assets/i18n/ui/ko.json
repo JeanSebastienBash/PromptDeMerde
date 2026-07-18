@@ -108,7 +108,27 @@
         "outputMetaModel": "모델:",
         "outputMetaTokens": "토큰:",
         "outputMetaTime": "시간:",
-        "tagInvitePrefix": "손님 :"
+        "tagInvitePrefix": "손님 :",
+        "compressPanelTitle": "토큰 압축",
+        "compressTargetsAria": "압축 대상",
+        "compressIncludeSystem": "시스템 프롬프트",
+        "compressIncludeContexts": "컨텍스트 프롬프트(활성)",
+        "compressIncludeInput": "입력 영역",
+        "compressIncludeOutput": "출력 영역",
+        "compressLockOutput": "압축 중 — 출력 잠김",
+        "compressCancel": "중지",
+        "compressCancelTitle": "토큰 압축 중지",
+        "outputDisplayFormat": "출력 형식",
+        "outputDisplayFormatAria": "출력 형식",
+        "outputDisplayFormatHint": "복사용 표시: 기본은 일반 텍스트. JSON / HTML은 같은 내용을 감쌉니다.",
+        "outputFormatText": "일반 텍스트",
+        "outputFormatJson": "JSON",
+        "outputFormatHtml": "HTML",
+        "outputFormatMarkdown": "Markdown",
+        "outputFormatXml": "XML",
+        "outputFormatYaml": "YAML",
+        "outputFormatCsv": "CSV",
+        "outputFormatSoon": "곧 제공"
     },
     "stt": {
         "blockAria": "음성 받아쓰기",
@@ -188,7 +208,10 @@
             "micGranted": "허용된",
             "micDenied": "거부됨 - 브라우저에서 재설정",
             "micBlockedStrip": "HTTP에 갇혔습니다 — 아래의 세부적인 문제 해결",
-            "lanStrip": "HTTP에 마이크가 멈췄습니다. localhost 또는 HTTPS을 사용해 보세요."
+            "lanStrip": "HTTP에 마이크가 멈췄습니다. localhost 또는 HTTPS을 사용해 보세요.",
+            "engineLangLoaded": "엔진 언어: {{lang}}",
+            "engineLangMismatch": "요청 {{target}}, 엔진은 {{loaded}} — 모델 다시 불러오기",
+            "engineLangReloadNeeded": "선택한 언어를 적용하려면 모델을 다시 불러오기"
         },
         "help": {
             "wasmUnsupported": "음성 받아쓰기가 지원되지 않습니다. 이 브라우저는 WebAssembly를 지원하지 않습니다.",
@@ -219,7 +242,10 @@
             "computeGpuVramMaxi": "Whisper Maxi 및 Parakeet GPU 사용 시 ~{{maxi}} GB VRAM 권장.",
             "computeGpuVramLowMini": "VRAM ~{{vram}} GB < 권장 {{mini}} GB — Whisper Mini GPU 로드 실패 가능; CPU 대체 가능.",
             "computeGpuVramLowMaxi": "VRAM ~{{vram}} GB < 권장 {{maxi}} GB — Whisper Maxi / Parakeet GPU 로드 실패 가능; CPU 또는 경량 모델 시도.",
-            "computeGpuVramBelow1": "VRAM ~{{vram}} GB: Whisper Mini는 일반적으로 GPU에서 로드되지 않음(< 1 GB) — CPU 권장."
+            "computeGpuVramBelow1": "VRAM ~{{vram}} GB: Whisper Mini는 일반적으로 GPU에서 로드되지 않음(< 1 GB) — CPU 권장.",
+            "voskMaxiLangUnavailable": "Vosk Maxi — {{lang}} 받아쓰기 불가. 프랑스어, 영어(US) 또는 Vosk Mini.",
+            "engineLangUnavailable": "{{lang}} 받아쓰기 모델 미설치 — 불러오기 불가. 클론 후: cd install && bash restore-large-assets.sh",
+            "engineLangUnselected": "불러오기 전에 엔진 언어 선택."
         },
         "notif": {
             "micGranted": "마이크가 승인되었습니다.",
@@ -232,7 +258,10 @@
             "whisperSlow": "Whisper 시간이 너무 오래 걸립니다. 계속 말하거나 Vosk Mini를 사용해 보세요.",
             "whisperCpuOk": "Whisper은(는) CPU(WASM)에서 활동 중입니다.",
             "unsupportedBrowser": "이 브라우저에서는 음성 받아쓰기가 지원되지 않습니다.",
-            "lanNetworkTitle": "로컬 네트워크 모드(HTTP) — 마이크 차단됨"
+            "lanNetworkTitle": "로컬 네트워크 모드(HTTP) — 마이크 차단됨",
+            "voskMaxiLangBlocked": "Vosk Maxi는 {{lang}} 미지원 — 프랑스어와 영어(US)만.",
+            "engineLangUnselected": "엔진 언어 미선택. 불러오기 전에 언어를 선택.",
+            "engineLangUnavailable": "불러오기 불가 — {{lang}} 모델 없음. 클론 후: cd install && bash restore-large-assets.sh"
         },
         "parakeetLoad": {
             "encoder": "인코더 다운로드(~391MB)",
@@ -365,7 +394,16 @@
         "resumeOfferTitle": "음성 받아쓰기를 다시 시작할까요?",
         "resumeOfferBody": "페이지를 다시 불러오느라 받아쓰기가 중단되었습니다. 지금 다시 시작하거나 이 창을 닫을 수 있습니다.",
         "resumeOfferResume": "받아쓰기 다시 시작",
-        "resumeOfferDismiss": "닫기"
+        "resumeOfferDismiss": "닫기",
+        "preloadBtnLoad": "엔진 불러오기",
+        "preloadBtnLoading": "불러오는 중…",
+        "preloadBtnReload": "다시 불러오기",
+        "preloadReloadTitle": "음성 모델 다시 불러오기 — 엔진, 언어 또는 가속 변경됨",
+        "btnTitleLoadBlocked": "불러오기 불가 — 엔진과 언어 확인 (옵션 → 받아쓰기).",
+        "engineLangLabel": "엔진 언어",
+        "engineLangTitle": "음성 받아쓰기 언어",
+        "engineLangAria": "음성 엔진 언어",
+        "engineLangChoose": "— 언어 선택 —"
     },
     "prompts": {
         "systemTitle": "시스템 프롬프트(선택)",
@@ -721,7 +759,8 @@
         "badgeJson": "JSON 형식의 프로필 및 설정",
         "badgeLocal": "100% 로컬 — 원격 측정 없음",
         "badgeOpensource": "GitHub 오픈소스 — 감사 가능한 코드",
-        "brandPhotoAlt": "PromptDeMerde.com 창립자 Jean-Sébastien Bash"
+        "brandPhotoAlt": "PromptDeMerde.com 창립자 Jean-Sébastien Bash",
+        "legalNavAria": "법적 정보"
     },
     "env": {
         "prod": "PROD",

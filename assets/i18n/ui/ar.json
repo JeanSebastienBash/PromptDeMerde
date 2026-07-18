@@ -108,7 +108,27 @@
         "outputMetaModel": "نموذج:",
         "outputMetaTokens": "الرموز:",
         "outputMetaTime": "وقت:",
-        "tagInvitePrefix": "ضيف :"
+        "tagInvitePrefix": "ضيف :",
+        "compressPanelTitle": "ضغط الرموز",
+        "compressTargetsAria": "أهداف الضغط",
+        "compressIncludeSystem": "موجه النظام",
+        "compressIncludeContexts": "موجهات السياق (النشطة)",
+        "compressIncludeInput": "منطقة الإدخال",
+        "compressIncludeOutput": "منطقة الإخراج",
+        "compressLockOutput": "الضغط جارٍ — الإخراج مقفل",
+        "compressCancel": "إيقاف",
+        "compressCancelTitle": "إيقاف ضغط الرموز",
+        "outputDisplayFormat": "تنسيق الإخراج",
+        "outputDisplayFormatAria": "تنسيق الإخراج",
+        "outputDisplayFormatHint": "العرض للنسخ: نص عادي افتراضيًا. JSON / HTML يغلّفان المحتوى نفسه.",
+        "outputFormatText": "نص عادي",
+        "outputFormatJson": "JSON",
+        "outputFormatHtml": "HTML",
+        "outputFormatMarkdown": "Markdown",
+        "outputFormatXml": "XML",
+        "outputFormatYaml": "YAML",
+        "outputFormatCsv": "CSV",
+        "outputFormatSoon": "قريبًا"
     },
     "stt": {
         "blockAria": "الإملاء الصوتي",
@@ -188,7 +208,10 @@
             "micGranted": "مسموح",
             "micDenied": "تم الرفض - إعادة التعيين في المتصفح",
             "micBlockedStrip": "عالق في HTTP - استكشاف الأخطاء وإصلاحها الجزئي أدناه",
-            "lanStrip": "الميكروفون عالق في HTTP — حاول localhost أو HTTPS"
+            "lanStrip": "الميكروفون عالق في HTTP — حاول localhost أو HTTPS",
+            "engineLangLoaded": "لغة المحرك: {{lang}}",
+            "engineLangMismatch": "اللغة المطلوبة {{target}}، المحرك محمّل بـ {{loaded}} — إعادة تحميل النموذج",
+            "engineLangReloadNeeded": "إعادة تحميل النموذج لتطبيق اللغة المختارة"
         },
         "help": {
             "wasmUnsupported": "الإملاء الصوتي غير مدعوم: هذا المتصفح لا يدعم WebAssembly.",
@@ -219,7 +242,10 @@
             "computeGpuVramMaxi": "~{{maxi}} جيجابايت VRAM موصى بها لـ Whisper Maxi و Parakeet على GPU.",
             "computeGpuVramLowMini": "VRAM ~{{vram}} جيجابايت < {{mini}} جيجابايت موصى بها — Whisper Mini على GPU قد يفشل؛ احتياطي CPU ممكن.",
             "computeGpuVramLowMaxi": "VRAM ~{{vram}} جيجابايت < {{maxi}} جيجابايت موصى بها — Whisper Maxi / Parakeet على GPU قد يفشل؛ جرّب CPU أو نموذجاً أخف.",
-            "computeGpuVramBelow1": "VRAM ~{{vram}} جيجابايت: Whisper Mini عادةً لا يُحمّل على GPU (< 1 جيجابايت) — يُوصى بـ CPU."
+            "computeGpuVramBelow1": "VRAM ~{{vram}} جيجابايت: Whisper Mini عادةً لا يُحمّل على GPU (< 1 جيجابايت) — يُوصى بـ CPU.",
+            "voskMaxiLangUnavailable": "Vosk Maxi — الإملاء بـ {{lang}} غير متاح. الفرنسية أو الإنجليزية (US) أو Vosk Mini.",
+            "engineLangUnavailable": "نموذج الإملاء {{lang}} غير مثبت — التحميل مستحيل. بعد الاستنساخ: cd install && bash restore-large-assets.sh",
+            "engineLangUnselected": "تحديد لغة المحرك قبل التحميل."
         },
         "notif": {
             "micGranted": "الميكروفون معتمد.",
@@ -232,7 +258,10 @@
             "whisperSlow": "يستغرق Whisper وقتًا طويلاً جدًا - استمر في التحدث أو جرّب Vosk Mini.",
             "whisperCpuOk": "Whisper نشط في CPU (WASM).",
             "unsupportedBrowser": "الإملاء الصوتي غير مدعوم في هذا المتصفح.",
-            "lanNetworkTitle": "وضع الشبكة المحلية (HTTP) - تم حظر الميكروفون"
+            "lanNetworkTitle": "وضع الشبكة المحلية (HTTP) - تم حظر الميكروفون",
+            "voskMaxiLangBlocked": "Vosk Maxi غير متاح لـ {{lang}} — الفرنسية والإنجليزية (US) فقط.",
+            "engineLangUnselected": "لم تُحدد لغة المحرك. اختيار لغة قبل التحميل.",
+            "engineLangUnavailable": "التحميل مستحيل — نموذج {{lang}} غائب. بعد الاستنساخ: cd install && bash restore-large-assets.sh"
         },
         "parakeetLoad": {
             "encoder": "تنزيل برنامج التشفير (~391 ميجابايت)",
@@ -365,7 +394,16 @@
         "resumeOfferTitle": "استئناف الإملاء الصوتي؟",
         "resumeOfferBody": "توقّف الإملاء لإعادة تحميل الصفحة. يمكنك إعادة تشغيله فورًا أو إغلاق هذه النافذة.",
         "resumeOfferResume": "استئناف الإملاء",
-        "resumeOfferDismiss": "إغلاق"
+        "resumeOfferDismiss": "إغلاق",
+        "preloadBtnLoad": "تحميل المحرك",
+        "preloadBtnLoading": "جارٍ التحميل…",
+        "preloadBtnReload": "إعادة التحميل",
+        "preloadReloadTitle": "إعادة تحميل نموذج الصوت — تغيّر المحرك أو اللغة أو التسريع",
+        "btnTitleLoadBlocked": "التحميل محظور — التحقق من المحرك واللغة (الخيارات → الإملاء).",
+        "engineLangLabel": "لغة المحرك",
+        "engineLangTitle": "لغة الإملاء الصوتي",
+        "engineLangAria": "لغة محرك الإملاء الصوتي",
+        "engineLangChoose": "— اختيار اللغة —"
     },
     "prompts": {
         "systemTitle": "مطالبة النظام (اختياري)",
@@ -721,7 +759,8 @@
         "badgeJson": "الملفات الشخصية والإعدادات بصيغة JSON",
         "badgeLocal": "محلي بالكامل — بدون أي تتبّع",
         "badgeOpensource": "مفتوح المصدر على GitHub — كود قابل للتدقيق",
-        "brandPhotoAlt": "Jean-Sébastien Bash، مؤسس PromptDeMerde.com"
+        "brandPhotoAlt": "Jean-Sébastien Bash، مؤسس PromptDeMerde.com",
+        "legalNavAria": "معلومات قانونية"
     },
     "env": {
         "prod": "PROD",

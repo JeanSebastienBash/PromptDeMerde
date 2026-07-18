@@ -108,7 +108,27 @@
         "outputMetaModel": "Modelo:",
         "outputMetaTokens": "Tokens:",
         "outputMetaTime": "Tiempo:",
-        "tagInvitePrefix": "PROMPT: "
+        "tagInvitePrefix": "PROMPT: ",
+        "compressPanelTitle": "Compresión de tokens",
+        "compressTargetsAria": "Objetivos de compresión",
+        "compressIncludeSystem": "Prompt de sistema",
+        "compressIncludeContexts": "Prompts de contexto (activos)",
+        "compressIncludeInput": "Zona Input",
+        "compressIncludeOutput": "Zona Output",
+        "compressLockOutput": "Compresión en curso — Output bloqueado",
+        "compressCancel": "Detener",
+        "compressCancelTitle": "Detener la compresión de tokens",
+        "outputDisplayFormat": "Formato de salida",
+        "outputDisplayFormatAria": "Formato de salida",
+        "outputDisplayFormatHint": "Visualización para copiar: texto plano por defecto. JSON / HTML envuelven el mismo contenido.",
+        "outputFormatText": "Texto plano",
+        "outputFormatJson": "JSON",
+        "outputFormatHtml": "HTML",
+        "outputFormatMarkdown": "Markdown",
+        "outputFormatXml": "XML",
+        "outputFormatYaml": "YAML",
+        "outputFormatCsv": "CSV",
+        "outputFormatSoon": "Próximamente"
     },
     "stt": {
         "blockAria": "Dictado por voz",
@@ -188,7 +208,10 @@
             "micGranted": "Permitido",
             "micDenied": "Denegado — restablecer en el navegador",
             "micBlockedStrip": "Bloqueado en HTTP — solución de micrófono abajo",
-            "lanStrip": "Micrófono bloqueado en HTTP — prueba localhost o HTTPS"
+            "lanStrip": "Micrófono bloqueado en HTTP — prueba localhost o HTTPS",
+            "engineLangLoaded": "idioma del motor: {{lang}}",
+            "engineLangMismatch": "idioma {{target}} solicitado, motor con {{loaded}} — recargar el modelo",
+            "engineLangReloadNeeded": "recargar el modelo para aplicar el idioma elegido"
         },
         "help": {
             "wasmUnsupported": "Dictado por voz no compatible: este navegador no admite WebAssembly.",
@@ -219,7 +242,10 @@
             "computeGpuVramMaxi": "~{{maxi}} GB VRAM recomendados para Whisper Maxi y Parakeet en GPU.",
             "computeGpuVramLowMini": "VRAM ~{{vram}} GB < {{mini}} GB recomendados — Whisper Mini en GPU puede fallar; respaldo CPU posible.",
             "computeGpuVramLowMaxi": "VRAM ~{{vram}} GB < {{maxi}} GB recomendados — Whisper Maxi / Parakeet en GPU puede fallar; prueba CPU o un modelo más ligero.",
-            "computeGpuVramBelow1": "VRAM ~{{vram}} GB: Whisper Mini normalmente no carga en GPU (< 1 GB) — CPU recomendado."
+            "computeGpuVramBelow1": "VRAM ~{{vram}} GB: Whisper Mini normalmente no carga en GPU (< 1 GB) — CPU recomendado.",
+            "voskMaxiLangUnavailable": "Vosk Maxi — dictado en {{lang}} no disponible. Francés, inglés (US) o Vosk Mini.",
+            "engineLangUnavailable": "Modelo de dictado {{lang}} no instalado — carga imposible. Tras clonar: cd install && bash restore-large-assets.sh",
+            "engineLangUnselected": "Seleccionar el idioma del motor antes de cargar."
         },
         "notif": {
             "micGranted": "Micrófono permitido.",
@@ -232,7 +258,10 @@
             "whisperSlow": "Whisper tarda demasiado — sigue hablando o prueba Vosk Mini.",
             "whisperCpuOk": "Whisper activo en CPU (WASM).",
             "unsupportedBrowser": "Dictado por voz no compatible con este navegador.",
-            "lanNetworkTitle": "Modo red local (HTTP) — micrófono bloqueado"
+            "lanNetworkTitle": "Modo red local (HTTP) — micrófono bloqueado",
+            "voskMaxiLangBlocked": "Vosk Maxi no disponible para {{lang}} — solo francés e inglés (US).",
+            "engineLangUnselected": "Ningún idioma de motor seleccionado. Elegir un idioma antes de cargar.",
+            "engineLangUnavailable": "Carga imposible — falta el modelo {{lang}}. Tras clonar: cd install && bash restore-large-assets.sh"
         },
         "parakeetLoad": {
             "encoder": "Descargando codificador (~391 MB)",
@@ -365,7 +394,16 @@
         "resumeOfferTitle": "¿Reanudar el dictado por voz?",
         "resumeOfferBody": "El dictado se interrumpió para recargar la página. Puede reiniciarlo ahora o cerrar esta ventana.",
         "resumeOfferResume": "Reanudar dictado",
-        "resumeOfferDismiss": "Cerrar"
+        "resumeOfferDismiss": "Cerrar",
+        "preloadBtnLoad": "Cargar motor",
+        "preloadBtnLoading": "Cargando…",
+        "preloadBtnReload": "Recargar",
+        "preloadReloadTitle": "Recargar el modelo de voz — motor, idioma o aceleración modificados",
+        "btnTitleLoadBlocked": "Carga bloqueada — revisar motor e idioma (Opciones → Dictado).",
+        "engineLangLabel": "Idioma del motor",
+        "engineLangTitle": "Idioma de dictado por voz",
+        "engineLangAria": "Idioma del motor de dictado",
+        "engineLangChoose": "— Elegir idioma —"
     },
     "prompts": {
         "systemTitle": "Prompt del sistema (opcional)",
@@ -721,7 +759,8 @@
         "badgeJson": "Perfiles y configuración en formato JSON",
         "badgeLocal": "100 % local — cero telemetría",
         "badgeOpensource": "Código abierto en GitHub — auditable",
-        "brandPhotoAlt": "Jean-Sébastien Bash, fundador de PromptDeMerde.com"
+        "brandPhotoAlt": "Jean-Sébastien Bash, fundador de PromptDeMerde.com",
+        "legalNavAria": "Información legal"
     },
     "env": {
         "prod": "PROD",

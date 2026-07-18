@@ -35,7 +35,10 @@ Shared.ENGINE_I18N_KEYS = {
 
 Shared.sttT = function(key, vars) {
     var I = window.PDM && window.PDM.I18n;
-    return I ? I.t('stt.' + key, vars) : '';
+    if (!I) return '';
+    var full = 'stt.' + key;
+    var val = I.t(full, vars);
+    return val === full ? '' : val;
 };
 
 Shared.getSttLocale = function() {

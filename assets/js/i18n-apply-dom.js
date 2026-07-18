@@ -34,7 +34,10 @@ function applyAttrs(el, spec) {
         if (idx === -1) return;
         var attr = pair.slice(0, idx).trim();
         var key = pair.slice(idx + 1).trim();
-        if (attr && key) el.setAttribute(attr, I18n.t(key));
+        if (!attr || !key) return;
+        var val = I18n.t(key);
+        if (val === key) return;
+        el.setAttribute(attr, val);
     });
 }
 
@@ -223,9 +226,13 @@ function applySttPanelLabels(root) {
 
     var preloadBtn = root.getElementById('stt-preload-btn');
     if (preloadBtn) {
-        preloadBtn.setAttribute('title', I18n.t('stt.preloadLoadTitle'));
+        var preloadTitle = I18n.t('stt.preloadLoadTitle');
+        if (preloadTitle !== 'stt.preloadLoadTitle') preloadBtn.setAttribute('title', preloadTitle);
         var preloadLabel = preloadBtn.querySelector('[data-stt-preload-label]');
-        if (preloadLabel) preloadLabel.textContent = I18n.t('stt.preloadBtnLoad');
+        var preloadBtnText = I18n.t('stt.preloadBtnLoad');
+        if (preloadLabel && preloadBtnText !== 'stt.preloadBtnLoad') {
+            preloadLabel.textContent = preloadBtnText;
+        }
     }
 
     var modelBar = root.querySelector('.stt-model-status-bar');
@@ -251,11 +258,16 @@ function applySttPanelLabels(root) {
     }
 
     var voskLangLabel = root.querySelector('label[for="stt-vosk-lang-select"]');
-    if (voskLangLabel) setText(voskLangLabel, I18n.t('stt.engineLangLabel'));
+    var engineLangLabel = I18n.t('stt.engineLangLabel');
+    if (voskLangLabel && engineLangLabel !== 'stt.engineLangLabel') {
+        setText(voskLangLabel, engineLangLabel);
+    }
     var voskLangSel = root.getElementById('stt-vosk-lang-select');
     if (voskLangSel) {
-        voskLangSel.setAttribute('title', I18n.t('stt.engineLangTitle'));
-        voskLangSel.setAttribute('aria-label', I18n.t('stt.engineLangAria'));
+        var engineLangTitle = I18n.t('stt.engineLangTitle');
+        var engineLangAria = I18n.t('stt.engineLangAria');
+        if (engineLangTitle !== 'stt.engineLangTitle') voskLangSel.setAttribute('title', engineLangTitle);
+        if (engineLangAria !== 'stt.engineLangAria') voskLangSel.setAttribute('aria-label', engineLangAria);
     }
     if (voskLangSel && voskLangSel.dataset.voskBound === '1' && window.PDM.STT && window.PDM.STT.populateVoskLangSelect) {
         window.PDM.STT.populateVoskLangSelect();

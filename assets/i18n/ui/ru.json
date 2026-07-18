@@ -108,7 +108,27 @@
         "outputMetaModel": "Модель:",
         "outputMetaTokens": "Токены:",
         "outputMetaTime": "Время:",
-        "tagInvitePrefix": "ГОСТЬ:"
+        "tagInvitePrefix": "ГОСТЬ:",
+        "compressPanelTitle": "Сжатие токенов",
+        "compressTargetsAria": "Цели сжатия",
+        "compressIncludeSystem": "Системный промпт",
+        "compressIncludeContexts": "Контекстные промпты (активные)",
+        "compressIncludeInput": "Зона ввода",
+        "compressIncludeOutput": "Зона вывода",
+        "compressLockOutput": "Идёт сжатие — вывод заблокирован",
+        "compressCancel": "Остановить",
+        "compressCancelTitle": "Остановить сжатие токенов",
+        "outputDisplayFormat": "Формат вывода",
+        "outputDisplayFormatAria": "Формат вывода",
+        "outputDisplayFormatHint": "Отображение для копирования: по умолчанию обычный текст. JSON / HTML оборачивают то же содержимое.",
+        "outputFormatText": "Обычный текст",
+        "outputFormatJson": "JSON",
+        "outputFormatHtml": "HTML",
+        "outputFormatMarkdown": "Markdown",
+        "outputFormatXml": "XML",
+        "outputFormatYaml": "YAML",
+        "outputFormatCsv": "CSV",
+        "outputFormatSoon": "Скоро"
     },
     "stt": {
         "blockAria": "Голосовой диктант",
@@ -188,7 +208,10 @@
             "micGranted": "Допустимый",
             "micDenied": "Отказано — сброс в браузере",
             "micBlockedStrip": "Застрял в HTTP – устранение микро неполадок ниже.",
-            "lanStrip": "Микрофон застрял в HTTP — попробуйте localhost или HTTPS."
+            "lanStrip": "Микрофон застрял в HTTP — попробуйте localhost или HTTPS.",
+            "engineLangLoaded": "язык движка: {{lang}}",
+            "engineLangMismatch": "запрошен {{target}}, в движке {{loaded}} — перезагрузить модель",
+            "engineLangReloadNeeded": "перезагрузить модель, чтобы применить выбранный язык"
         },
         "help": {
             "wasmUnsupported": "Голосовая диктовка не поддерживается: этот браузер не поддерживает WebAssembly.",
@@ -219,7 +242,10 @@
             "computeGpuVramMaxi": "~{{maxi}} ГБ VRAM рекомендуется для Whisper Maxi и Parakeet на GPU.",
             "computeGpuVramLowMini": "VRAM ~{{vram}} ГБ < рекомендуемых {{mini}} ГБ — Whisper Mini на GPU может не загрузиться; возможен резерв CPU.",
             "computeGpuVramLowMaxi": "VRAM ~{{vram}} ГБ < рекомендуемых {{maxi}} ГБ — Whisper Maxi / Parakeet на GPU может не загрузиться; попробуйте CPU или облегчённую модель.",
-            "computeGpuVramBelow1": "VRAM ~{{vram}} ГБ: Whisper Mini обычно не загружается на GPU (< 1 ГБ) — рекомендуется CPU."
+            "computeGpuVramBelow1": "VRAM ~{{vram}} ГБ: Whisper Mini обычно не загружается на GPU (< 1 ГБ) — рекомендуется CPU.",
+            "voskMaxiLangUnavailable": "Vosk Maxi — диктовка на {{lang}} недоступна. Французский, английский (US) или Vosk Mini.",
+            "engineLangUnavailable": "Модель диктовки {{lang}} не установлена — загрузка невозможна. После клона: cd install && bash restore-large-assets.sh",
+            "engineLangUnselected": "Выбрать язык движка перед загрузкой."
         },
         "notif": {
             "micGranted": "Микрофон разрешен.",
@@ -232,7 +258,10 @@
             "whisperSlow": "Whisper занимает слишком много времени. Продолжайте говорить или попробуйте Vosk Mini.",
             "whisperCpuOk": "Whisper активен в CPU (WASM).",
             "unsupportedBrowser": "Голосовой диктовку не поддерживает этот браузер.",
-            "lanNetworkTitle": "Режим локальной сети (HTTP) — микрофон заблокирован"
+            "lanNetworkTitle": "Режим локальной сети (HTTP) — микрофон заблокирован",
+            "voskMaxiLangBlocked": "Vosk Maxi недоступен для {{lang}} — только французский и английский (US).",
+            "engineLangUnselected": "Язык движка не выбран. Выбрать язык перед загрузкой.",
+            "engineLangUnavailable": "Загрузка невозможна — нет модели {{lang}}. После клона: cd install && bash restore-large-assets.sh"
         },
         "parakeetLoad": {
             "encoder": "Загрузка кодировщика (~391 МБ)",
@@ -365,7 +394,16 @@
         "resumeOfferTitle": "Возобновить голосовой ввод?",
         "resumeOfferBody": "Диктовка была прервана для перезагрузки страницы. Можно сразу продолжить или закрыть это окно.",
         "resumeOfferResume": "Возобновить диктовку",
-        "resumeOfferDismiss": "Закрыть"
+        "resumeOfferDismiss": "Закрыть",
+        "preloadBtnLoad": "Загрузить движок",
+        "preloadBtnLoading": "Загрузка…",
+        "preloadBtnReload": "Перезагрузить",
+        "preloadReloadTitle": "Перезагрузить голосовую модель — изменены движок, язык или ускорение",
+        "btnTitleLoadBlocked": "Загрузка недоступна — проверить движок и язык (Параметры → Диктовка).",
+        "engineLangLabel": "Язык движка",
+        "engineLangTitle": "Язык голосовой диктовки",
+        "engineLangAria": "Язык движка диктовки",
+        "engineLangChoose": "— Выбрать язык —"
     },
     "prompts": {
         "systemTitle": "Системный промпт (необязательно)",
@@ -721,7 +759,8 @@
         "badgeJson": "Профили и конфигурация в формате JSON",
         "badgeLocal": "100 % локально — нулевая телеметрия",
         "badgeOpensource": "Open source на GitHub — проверяемый код",
-        "brandPhotoAlt": "Jean-Sébastien Bash, основатель PromptDeMerde.com"
+        "brandPhotoAlt": "Jean-Sébastien Bash, основатель PromptDeMerde.com",
+        "legalNavAria": "Юридическая информация"
     },
     "env": {
         "prod": "PROD",

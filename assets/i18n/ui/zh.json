@@ -108,7 +108,27 @@
         "outputMetaModel": "模型：",
         "outputMetaTokens": "代币：",
         "outputMetaTime": "时间：",
-        "tagInvitePrefix": "客人 ："
+        "tagInvitePrefix": "客人 ：",
+        "compressPanelTitle": "Token 压缩",
+        "compressTargetsAria": "压缩目标",
+        "compressIncludeSystem": "系统提示",
+        "compressIncludeContexts": "上下文提示（已启用）",
+        "compressIncludeInput": "输入区",
+        "compressIncludeOutput": "输出区",
+        "compressLockOutput": "正在压缩 — 输出已锁定",
+        "compressCancel": "停止",
+        "compressCancelTitle": "停止 Token 压缩",
+        "outputDisplayFormat": "输出格式",
+        "outputDisplayFormatAria": "输出格式",
+        "outputDisplayFormatHint": "复制显示：默认纯文本。JSON / HTML 包装相同内容。",
+        "outputFormatText": "纯文本",
+        "outputFormatJson": "JSON",
+        "outputFormatHtml": "HTML",
+        "outputFormatMarkdown": "Markdown",
+        "outputFormatXml": "XML",
+        "outputFormatYaml": "YAML",
+        "outputFormatCsv": "CSV",
+        "outputFormatSoon": "即将推出"
     },
     "stt": {
         "blockAria": "语音听写",
@@ -188,7 +208,10 @@
             "micGranted": "允许",
             "micDenied": "被拒绝 — 在浏览器中重置",
             "micBlockedStrip": "陷入 HTTP — 下面的微观故障排除",
-            "lanStrip": "麦克风卡在 HTTP - 尝试 localhost 或 HTTPS"
+            "lanStrip": "麦克风卡在 HTTP - 尝试 localhost 或 HTTPS",
+            "engineLangLoaded": "引擎语言：{{lang}}",
+            "engineLangMismatch": "请求语言 {{target}}，引擎为 {{loaded}} — 请重新加载模型",
+            "engineLangReloadNeeded": "重新加载模型以应用所选语言"
         },
         "help": {
             "wasmUnsupported": "不支持语音听写：此浏览器不支持 WebAssembly。",
@@ -219,7 +242,10 @@
             "computeGpuVramMaxi": "Whisper Maxi 和 Parakeet 在 GPU 上建议 ~{{maxi}} GB VRAM。",
             "computeGpuVramLowMini": "VRAM ~{{vram}} GB < 建议 {{mini}} GB — Whisper Mini 在 GPU 上可能失败；可回退 CPU。",
             "computeGpuVramLowMaxi": "VRAM ~{{vram}} GB < 建议 {{maxi}} GB — Whisper Maxi / Parakeet 在 GPU 上可能失败；请尝试 CPU 或更轻模型。",
-            "computeGpuVramBelow1": "VRAM ~{{vram}} GB：Whisper Mini 通常无法在 GPU 上加载（< 1 GB）— 建议使用 CPU。"
+            "computeGpuVramBelow1": "VRAM ~{{vram}} GB：Whisper Mini 通常无法在 GPU 上加载（< 1 GB）— 建议使用 CPU。",
+            "voskMaxiLangUnavailable": "Vosk Maxi — 不支持 {{lang}} 听写。用法语、英语（US）或 Vosk Mini。",
+            "engineLangUnavailable": "{{lang}} 听写模型未安装 — 无法加载。克隆后：cd install && bash restore-large-assets.sh",
+            "engineLangUnselected": "加载前选择引擎语言。"
         },
         "notif": {
             "micGranted": "麦克风已授权。",
@@ -232,7 +258,10 @@
             "whisperSlow": "Whisper 花费太长时间 - 继续说话或尝试 Vosk Mini。",
             "whisperCpuOk": "Whisper 活跃于 CPU (WASM)。",
             "unsupportedBrowser": "该浏览器不支持语音听写。",
-            "lanNetworkTitle": "本地网络模式 (HTTP) — 麦克风被阻挡"
+            "lanNetworkTitle": "本地网络模式 (HTTP) — 麦克风被阻挡",
+            "voskMaxiLangBlocked": "Vosk Maxi 不支持 {{lang}} — 仅法语与英语（US）。",
+            "engineLangUnselected": "未选择引擎语言。加载前请选择语言。",
+            "engineLangUnavailable": "无法加载 — 缺少 {{lang}} 模型。克隆后：cd install && bash restore-large-assets.sh"
         },
         "parakeetLoad": {
             "encoder": "编码器下载 (~391 MB)",
@@ -365,7 +394,16 @@
         "resumeOfferTitle": "继续语音听写？",
         "resumeOfferBody": "听写因页面重新加载而中断。您可以立即重新开始，或关闭此窗口。",
         "resumeOfferResume": "继续听写",
-        "resumeOfferDismiss": "关闭"
+        "resumeOfferDismiss": "关闭",
+        "preloadBtnLoad": "加载引擎",
+        "preloadBtnLoading": "加载中…",
+        "preloadBtnReload": "重新加载",
+        "preloadReloadTitle": "重新加载语音模型 — 引擎、语言或加速已更改",
+        "btnTitleLoadBlocked": "无法加载 — 请检查引擎与语言（选项 → 听写）。",
+        "engineLangLabel": "引擎语言",
+        "engineLangTitle": "语音听写语言",
+        "engineLangAria": "语音引擎语言",
+        "engineLangChoose": "— 选择语言 —"
     },
     "prompts": {
         "systemTitle": "系统提示词（可选）",
@@ -721,7 +759,8 @@
         "badgeJson": "JSON 格式的配置与配置文件",
         "badgeLocal": "100% 本地 — 零遥测",
         "badgeOpensource": "GitHub 开源 — 可审计代码",
-        "brandPhotoAlt": "PromptDeMerde.com 创始人 Jean-Sébastien Bash"
+        "brandPhotoAlt": "PromptDeMerde.com 创始人 Jean-Sébastien Bash",
+        "legalNavAria": "法律信息"
     },
     "env": {
         "prod": "PROD",
