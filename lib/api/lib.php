@@ -363,7 +363,46 @@ function pdm_json_response(array $payload, int $status = 200): void
 }
 
 /**
- * Lit une variable d'environnement booléenne (getenv → $_SERVER → REDIRECT_*).
+ * Carte /etc/environment (cache requête). Utile sous PHP-FPM : les clés
+ * ajoutées après le dernier restart FPM ne sont pas dans getenv().
+ */
+function pdm_etc_environment_map(): array
+{
+    static $map = null;
+    if ($map !== null) {
+        return $map;
+    }
+    $map = [];
+    $path = '/etc/environment';
+    if (!is_readable($path)) {
+        return $map;
+    }
+    $lines = file($path, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
+    if (!is_array($lines)) {
+        return $map;
+    }
+    $n = count($lines);
+    for ($i = 0; $i < $n; $i++) {
+        $line = trim((string) $lines[$i]);
+        if ($line === '' || $line[0] === '#') {
+            continue;
+        }
+        $eq = strpos($line, '=');
+        if ($eq === false) {
+            continue;
+        }
+        $key = trim(substr($line, 0, $eq));
+        $val = trim(substr($line, $eq + 1), " \t\"'");
+        if ($key !== '') {
+            $map[$key] = $val;
+        }
+    }
+    return $map;
+}
+
+/**
+ * Lit une variable d'environnement booléenne.
+ * Ordre : getenv → $_SERVER → REDIRECT_* → /etc/environment → flags.local.php.
  * Vrai si 1 / true / yes / on (insensible à la casse). Défaut : faux.
  */
 function pdm_env_flag_truthy(string $name): bool
@@ -372,8 +411,43 @@ function pdm_env_flag_truthy(string $name): bool
     if ($raw === false || $raw === '') {
         $raw = $_SERVER[$name] ?? $_SERVER['REDIRECT_' . $name] ?? '';
     }
+    if ($raw === false || $raw === '') {
+        $map = pdm_etc_environment_map();
+        $raw = $map[$name] ?? '';
+    }
+    if ($raw === false || $raw === '') {
+        $local = pdm_local_flags_map();
+        $raw = $local[$name] ?? '';
+    }
     $v = strtolower(trim((string) $raw));
     return $v === '1' || $v === 'true' || $v === 'yes' || $v === 'on';
+}
+
+/**
+ * Overrides serveur locaux (lib/env/flags.local.php) — hors git, non UI.
+ * Ex. return ['PDM_MARKET_VIGNETTES_MAINTENANCE' => '1'];
+ */
+function pdm_local_flags_map(): array
+{
+    static $map = null;
+    if ($map !== null) {
+        return $map;
+    }
+    $map = [];
+    $path = dirname(__DIR__) . '/env/flags.local.php';
+    if (!is_readable($path)) {
+        return $map;
+    }
+    $data = include $path;
+    if (!is_array($data)) {
+        return $map;
+    }
+    foreach ($data as $k => $v) {
+        if (is_string($k) && $k !== '') {
+            $map[$k] = is_bool($v) ? ($v ? '1' : '0') : (string) $v;
+        }
+    }
+    return $map;
 }
 
 function pdm_resolve_deployment(): array

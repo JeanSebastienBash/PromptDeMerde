@@ -125,6 +125,18 @@ if ($hasMarket) {
         }
         sort($marketEarly, SORT_STRING);
         sort($marketUiBits, SORT_STRING);
+        /* cards en dernier parmi market-ui-* : unique propriétaire de _renderResults. */
+        $cardsRel = 'assets/js/market-ui-cards.js';
+        $withoutCards = [];
+        $cardsOnly = [];
+        foreach ($marketUiBits as $rel) {
+            if ($rel === $cardsRel) {
+                $cardsOnly[] = $rel;
+            } else {
+                $withoutCards[] = $rel;
+            }
+        }
+        $marketUiBits = array_merge($withoutCards, $cardsOnly);
         $marketScripts = array_merge($marketEarly, $marketUiBits, $marketUiMain);
     }
 }

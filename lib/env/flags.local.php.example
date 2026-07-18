@@ -1,0 +1,7 @@
+<?php
+/**
+ * Copier vers flags.local.php (hors git) pour forcer des flags serveur en local.
+ */
+return [
+    // 'PDM_MARKET_VIGNETTES_MAINTENANCE' => '1',
+];
