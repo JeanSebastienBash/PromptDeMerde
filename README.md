@@ -23,8 +23,8 @@ PromptDeMerde turns freeform input into structured prompts in the browser: local
 </p>
 
 <p align="center">
-  <a href="https://promptdemerde.com/">Official site</a> ·
-  <a href="docs/Documentation.md">Advanced documentation</a> ·
+  <a href="https://dreamproject.online/prj/promptdemerde/">DreamprojectAI</a> ·
+  <a href="./docs/Documentation.md">Advanced documentation</a> ·
   <a href="SECURITY.md">Security</a> ·
   <a href="CONTRIBUTING.md">Contributing</a>
 </p>
