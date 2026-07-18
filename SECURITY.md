@@ -1,9 +1,7 @@
 # Security — PromptDeMerde.com
 
 <p align="center">
-  <a href="SECURITY.md"><img src="assets/images/flags/en.svg" alt="English" width="28" height="20"></a>
-  &nbsp;
-  <a href="SECURITY.fr.md"><img src="assets/images/flags/fr.svg" alt="Français" width="28" height="20"></a>
+  <img src="assets/images/flags/en.svg" alt="English" width="28" height="20">
 </p>
 
 
@@ -181,7 +179,7 @@ ZIP checksums: verify client-side integrity on import (profile bundle modules) �
 - `Permissions-Policy`: `microphone=(self)` (dictation); camera and geolocation denied
 - `X-Content-Type-Options: nosniff`
 - `Referrer-Policy: strict-origin-when-cross-origin`
-- Under `assets/profiles/`, only `speech2texte/` and `index.json` are served (zone doc: [`docs/Profiles.en.md`](docs/Profiles.en.md)) — everything else returns **403** (server HTTP rule)
+- Under `assets/profiles/`, only `speech2texte/` and `index.json` are served (zone doc: [`docs/Profiles.md`](docs/Profiles.md)) — everything else returns **403** (server HTTP rule)
 
 ### Residual risks (~5%)
 
@@ -252,11 +250,11 @@ DreamProjectAI **publishes versioned updates from time to time** on this reposit
 | Document | Role |
 |----------|------|
 | [`README.md`](README.md) | Product pitch (EN) |
-| [`docs/Documentation.en.md`](docs/Documentation.en.md) | Technical documentation (EN) |
+| [`docs/Documentation.md`](docs/Documentation.md) | Technical documentation (EN) |
 | [`CONTRIBUTING.md`](CONTRIBUTING.md) | Contributing (EN) |
 | [`SECURITY.md`](SECURITY.md) | Security (EN) |
 | [`THIRD_PARTY_NOTICES.md`](THIRD_PARTY_NOTICES.md) | Third-party notices (EN) |
-| [`docs/Stt.en.md`](docs/Stt.en.md) | STT zone (EN) |
-| [`docs/Stt-vosk.en.md`](docs/Stt-vosk.en.md) | Vosk catalogue (EN) |
-| [`docs/Profiles.en.md`](docs/Profiles.en.md) | Profiles zone (EN) |
-| [`docs/Vendor.en.md`](docs/Vendor.en.md) | Vendor zone (EN) |
+| [`docs/Stt.md`](docs/Stt.md) | STT zone (EN) |
+| [`docs/Stt-vosk.md`](docs/Stt-vosk.md) | Vosk catalogue (EN) |
+| [`docs/Profiles.md`](docs/Profiles.md) | Profiles zone (EN) |
+| [`docs/Vendor.md`](docs/Vendor.md) | Vendor zone (EN) |

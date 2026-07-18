@@ -1,9 +1,7 @@
 # Contributing to PromptDeMerde
 
 <p align="center">
-  <a href="CONTRIBUTING.md"><img src="assets/images/flags/en.svg" alt="English" width="28" height="20"></a>
-  &nbsp;
-  <a href="CONTRIBUTING.fr.md"><img src="assets/images/flags/fr.svg" alt="Français" width="28" height="20"></a>
+  <img src="assets/images/flags/en.svg" alt="English" width="28" height="20">
 </p>
 
 
@@ -11,7 +9,7 @@
 
 - **No build step** — vanilla JS IIFE modules on `window.PDM.*` (ES modules only for STT engine entry points).
 - **Short files** — domain-prefixed modules (`workspace-*`, `stt-shared-*`, `storage-*`): target **≤ 100** lines, **150** max; functions **≤ 30** lines.
-- **English identifiers** in code; French for UI strings and documentation.
+- **English identifiers** in code; UI strings are translated (twelve locales); public Markdown documentation is English.
 - **Zero behavior change** during a refactor — move code, do not rewrite logic.
 
 ## UI register (good practice)
@@ -40,11 +38,11 @@ When the repository is changed directly, it takes precedence over any external o
 
 ## Structure
 
-**Profile ZIP export (1.23.0)**: **51** `pdm_*` keys in the `pdm-config` object (archive content). Canon: `CS.PDM_KEYS` **≡** `assets/config/pdm-config.schema.json` (same names, including `pdm_output_*`); optional root `i18n` + `langs`. Any new key → core + schema + [`docs/Documentation.en.md`](docs/Documentation.en.md#13-the-51-pdm-keys) §13. **Default theme**: `marron-day` (Light Brown) — `CS.DEFAULT_THEME_ID`. **Do not** enumerate keys in `README.md` — point to user documentation and the schema.
+**Profile ZIP export (1.23.0)**: **51** `pdm_*` keys in the `pdm-config` object (archive content). Canon: `CS.PDM_KEYS` **≡** `assets/config/pdm-config.schema.json` (same names, including `pdm_output_*`); optional root `i18n` + `langs`. Any new key → core + schema + [`docs/Documentation.md`](docs/Documentation.md#13-the-51-pdm-keys) §13. **Default theme**: `marron-day` (Light Brown) — `CS.DEFAULT_THEME_ID`. **Do not** enumerate keys in `README.md` — point to user documentation and the schema.
 
 **Privacy**: align `SECURITY.md` with runtime behavior.
 
-**Public README**: [`README.md`](README.md) (English) + [`README.fr.md`](README.fr.md) (French) — general audience, welcoming tone. Technical detail → [`docs/Documentation.en.md`](docs/Documentation.en.md) (EN) · [`docs/Documentation.md`](docs/Documentation.md) (FR) — no key lists in the README.
+**Public README**: [`README.md`](README.md) — general audience, welcoming tone. Technical detail → [`docs/Documentation.md`](docs/Documentation.md) — no key lists in the README.
 
 ## Architecture (contributors)
 
@@ -52,9 +50,9 @@ When the repository is changed directly, it takes precedence over any external o
 Scripts listed in `index.html` (static) and `lib/env/env.php` / `assets/js/env.js` (dynamic, synchronized FALLBACK).  
 Responsive CSS: `style-responsive.css`, `polish-responsive.css`, `style-workspace.css` (`.ws-grid`); Workspace and Prompts in 2 columns from **1024px**; Options in 2 columns from **768px**.
 
-**Prod LLM — two flows** (detail in [`docs/Documentation.en.md`](docs/Documentation.en.md) / [`SECURITY.md`](SECURITY.md)): **flow A** = prod visitor → **direct** browser connection → local Ollama (`shouldUseDirectOllama()` in `proxy-token-session.js`, branch in `ollama.js`); **flow B** = operator → `olama.php` + token + IP allowlist. Visitors and self-hosters: flow A — no proxy token.
+**Prod LLM — two flows** (detail in [`docs/Documentation.md`](docs/Documentation.md) / [`SECURITY.md`](SECURITY.md)): **flow A** = prod visitor → **direct** browser connection → local Ollama (`shouldUseDirectOllama()` in `proxy-token-session.js`, branch in `ollama.js`); **flow B** = operator → `olama.php` + token + IP allowlist. Visitors and self-hosters: flow A — no proxy token.
 
-**`PDM_ENV`** (Apache, optional): `prod` | `preprod` | absent → footer badge PROD / PRE-PROD / SELF-HOSTED — see [`docs/Documentation.en.md`](docs/Documentation.en.md#deploy-pdm-env-badges) · [`SECURITY.md`](SECURITY.md).
+**`PDM_ENV`** (Apache, optional): `prod` | `preprod` | absent → footer badge PROD / PRE-PROD / SELF-HOSTED — see [`docs/Documentation.md`](docs/Documentation.md#deploy-pdm-env-badges) · [`SECURITY.md`](SECURITY.md).
 
 Do not reintroduce monoliths (`storage.js`, `stt.js`, `workspace.js`, monolithic `i18n.js`).
 
@@ -133,7 +131,7 @@ The codebase is structured for upcoming unit and regression tests. Do not reintr
 - valid JSON (schema, configs, i18n manifest, 12 UI locales)
 - i18n key parity vs `fr.json`
 - `CS.VERSION` aligned with README / CONTRIBUTING
-- presence of LICENSE, SECURITY, CONTRIBUTING, THIRD_PARTY_NOTICES, `docs/Documentation.en.md` (+ `.md` FR)
+- presence of LICENSE, SECURITY, CONTRIBUTING, THIRD_PARTY_NOTICES, `docs/Documentation.md`
 - basic anti-secret scan (hard-coded proxy token)
 
 Manual checks before merge: workspace, prompts, options, **profile ZIP export/import**, dictation and history panel.
@@ -151,13 +149,13 @@ The public repository versions the official `speech2texte` profile under `assets
 - **Logical format**: `pdm-config` object (**51** `pdm_*` keys + metadata) assembled from `parts/config.json`, `parts/session.json`, Markdown prompts — see `profile-bundle-loader.js` / `profile-bundle-export.js`.
 - **Presets**: `minimal` (prompts + parts); `maximal` (+ `i18n/ui/` for checked languages).
 - **Excluded from export**: `pdm_token_proxy`, `pdm_llm_direct_local` (sessionStorage); local `(perso)` profiles.
-- **Machine schema**: `assets/config/pdm-config.schema.json` — key detail in [`docs/Documentation.en.md`](docs/Documentation.en.md), not in README.
+- **Machine schema**: `assets/config/pdm-config.schema.json` — key detail in [`docs/Documentation.md`](docs/Documentation.md), not in README.
 
 ## In-app documentation and legal pages
 
 - **Clone / GitHub** (without `assets/i18n/site-pages/`): footer Mentions, Terms, Privacy and Support open [promptdemerde.com](https://promptdemerde.com) (hash) with a green badge — same pattern as Marketplace. `pages.*` stubs in `assets/i18n/ui/*.json` are not shown in navigation.
 - **Official site** (with `site-pages/`): full local legal pages; no green badge.
-- **Documentation** footer: GitHub [`docs/Documentation.en.md`](docs/Documentation.en.md) (EN) / [`.md`](docs/Documentation.md) (FR).
+- **Documentation** footer: GitHub [`docs/Documentation.md`](docs/Documentation.md) (English, all UI locales).
 - **Detection**: `features.sitePages` via `lib/env/env.php` (readable `assets/i18n/site-pages/fr.json`).
 
 ## Pull requests
@@ -169,12 +167,11 @@ The public repository versions the official `speech2texte` profile under `assets
 
 | Document | Role |
 |----------|------|
-| [`README.md`](README.md) | Product pitch (EN) |
-| [`docs/Documentation.en.md`](docs/Documentation.en.md) | Technical documentation (EN) |
-| [`CONTRIBUTING.md`](CONTRIBUTING.md) | Contributing (EN) |
-| [`SECURITY.md`](SECURITY.md) | Security (EN) |
-| [`THIRD_PARTY_NOTICES.md`](THIRD_PARTY_NOTICES.md) | Third-party notices (EN) |
-| [`docs/Stt.en.md`](docs/Stt.en.md) | STT zone (EN) |
-| [`docs/Stt-vosk.en.md`](docs/Stt-vosk.en.md) | Vosk catalogue (EN) |
-| [`docs/Profiles.en.md`](docs/Profiles.en.md) | Profiles zone (EN) |
-| [`docs/Vendor.en.md`](docs/Vendor.en.md) | Vendor zone (EN) |
+| [`README.md`](README.md) | Product pitch |
+| [`docs/Documentation.md`](docs/Documentation.md) | Technical documentation |
+| [`SECURITY.md`](SECURITY.md) | Security |
+| [`THIRD_PARTY_NOTICES.md`](THIRD_PARTY_NOTICES.md) | Third-party notices |
+| [`docs/Stt.md`](docs/Stt.md) | STT zone |
+| [`docs/Stt-vosk.md`](docs/Stt-vosk.md) | Vosk catalogue |
+| [`docs/Profiles.md`](docs/Profiles.md) | Profiles zone |
+| [`docs/Vendor.md`](docs/Vendor.md) | Vendor zone |

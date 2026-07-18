@@ -1,9 +1,7 @@
 # Third-party notices — PromptDeMerde.com
 
 <p align="center">
-  <a href="THIRD_PARTY_NOTICES.md"><img src="assets/images/flags/en.svg" alt="English" width="28" height="20"></a>
-  &nbsp;
-  <a href="THIRD_PARTY_NOTICES.fr.md"><img src="assets/images/flags/fr.svg" alt="Français" width="28" height="20"></a>
+  <img src="assets/images/flags/en.svg" alt="English" width="28" height="20">
 </p>
 
 
@@ -72,11 +70,11 @@ If an attribution is missing, write to **dreamproject-ai@proton.me** with the fi
 | Document | Role |
 |----------|------|
 | [`README.md`](README.md) | Product pitch (EN) |
-| [`docs/Documentation.en.md`](docs/Documentation.en.md) | Technical documentation (EN) |
+| [`docs/Documentation.md`](docs/Documentation.md) | Technical documentation (EN) |
 | [`CONTRIBUTING.md`](CONTRIBUTING.md) | Contributing (EN) |
 | [`SECURITY.md`](SECURITY.md) | Security (EN) |
 | [`THIRD_PARTY_NOTICES.md`](THIRD_PARTY_NOTICES.md) | Third-party notices (EN) |
-| [`docs/Stt.en.md`](docs/Stt.en.md) | STT zone (EN) |
-| [`docs/Stt-vosk.en.md`](docs/Stt-vosk.en.md) | Vosk catalogue (EN) |
-| [`docs/Profiles.en.md`](docs/Profiles.en.md) | Profiles zone (EN) |
-| [`docs/Vendor.en.md`](docs/Vendor.en.md) | Vendor zone (EN) |
+| [`docs/Stt.md`](docs/Stt.md) | STT zone (EN) |
+| [`docs/Stt-vosk.md`](docs/Stt-vosk.md) | Vosk catalogue (EN) |
+| [`docs/Profiles.md`](docs/Profiles.md) | Profiles zone (EN) |
+| [`docs/Vendor.md`](docs/Vendor.md) | Vendor zone (EN) |

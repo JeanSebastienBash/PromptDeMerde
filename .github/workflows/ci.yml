@@ -82,10 +82,8 @@ jobs:
           test -f CONTRIBUTING.md
           test -f THIRD_PARTY_NOTICES.md
           test -f docs/Documentation.md
-          test -f docs/Documentation.en.md
           test -f install/restore-large-assets.sh
           grep -q "$V" docs/Documentation.md
-          grep -q "$V" docs/Documentation.en.md
 
       - name: Secret patterns (basic)
         run: |

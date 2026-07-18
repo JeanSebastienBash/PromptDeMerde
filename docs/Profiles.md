@@ -1,80 +1,77 @@
-# Profils applicatifs (`assets/profiles/`)
+# Application profiles (`assets/profiles/`)
 
 <p align="center">
-  <a href="Profiles.en.md"><img src="../assets/images/flags/en.svg" alt="English" width="28" height="20"></a>
-  &nbsp;
-  <a href="Profiles.md"><img src="../assets/images/flags/fr.svg" alt="Français" width="28" height="20"></a>
+  <img src="../assets/images/flags/en.svg" alt="English" width="28" height="20">
 </p>
 
-Chaque profil **bundlé au boot** vit dans son propre dossier. L’**UI traduite** (12 langues) est **partagée** : [`assets/i18n/ui/`](../assets/i18n/ui/).
+Each profile **bundled at boot** lives in its own folder. The **translated UI** (12 languages) is **shared**: [`assets/i18n/ui/`](../assets/i18n/ui/).
 
-## Politique dépôt GitHub (canon)
+## GitHub repository policy (canon)
 
-| Couche | Chemin | Sur GitHub public |
+| Layer | Path | On public GitHub |
 |--------|--------|-------------------|
-| **Profil par défaut** | `speech2texte/` + [`index.json`](../assets/profiles/index.json) | **Oui** — seul profil servi au boot |
-| **Autres profils** | import ZIP utilisateur | **Non** — jamais de second dossier sous `assets/profiles/` |
+| **Default profile** | `speech2texte/` + [`index.json`](../assets/profiles/index.json) | **Yes** — only profile served at boot |
+| **Other profiles** | user ZIP import | **No** — never a second folder under `assets/profiles/` |
 
-> **Règle** : `assets/profiles/index.json` ne liste **que** `speech2texte`. Les extensions s’obtiennent par **import ZIP** (localStorage `pdm_custom_profiles`) — pas comme dossier versionné ici.
+> **Rule**: `assets/profiles/index.json` lists **only** `speech2texte`. Extensions come from **ZIP import** (localStorage `pdm_custom_profiles`) — not as a versioned folder here.
 
-Le profil par défaut au runtime est `manifest.defaultProfileId` (API `lib/api/manifest.php`), calculé depuis `"default": true` dans `manifest.json` ou le premier profil valide.
+The runtime default profile is `manifest.defaultProfileId` (API `lib/api/manifest.php`), computed from `"default": true` in `manifest.json` or the first valid profile.
 
-## Arborescence par profil bundlé
+## Tree per bundled profile
 
 ```
-assets/profiles/<profil-id>/
-  manifest.json              # id, label, synopsis, project, default (sélecteur)
+assets/profiles/<profile-id>/
+  manifest.json              # id, label, synopsis, project, default (selector)
   prompts/{locale}/system.md
   contexts/{locale}/{Tag}.md
   gen-prompts/{locale}/*.md
   parts/
     locales.json               # defaultLocale + locales[]
-    prompts.json               # index system + contexts
+    prompts.json               # system + contexts index
     gen-prompts.json
-    config.json                # réglages numériques / STT (sans textes)
+    config.json                # numeric / STT settings (no prose)
 ```
 
-## Quelle clé vit où (interdits croisés)
+## Which key lives where (cross prohibitions)
 
-| Fichier | Rôle | Clés interdites ailleurs |
+| File | Role | Keys forbidden elsewhere |
 |---------|------|--------------------------|
-| `manifest.json` | id, label, **synopsis** (≤ 100 car.) | — |
+| `manifest.json` | id, label, **synopsis** (≤ 100 chars) | — |
 | `parts/locales.json` | `defaultLocale`, `locales[]` | — |
-| `parts/prompts.json` | index system + contexts | `availableLocales`, `defaultLocale` |
-| `parts/gen-prompts.json` | index templates gen | `availableLocales`, `defaultLocale` |
-| `parts/config.json` | réglages | `pdm_system_prompt`, `pdm_profiles`, clés `pdm_context_gen_*` ; **`pdm_theme` par défaut : `marron-day`** |
+| `parts/prompts.json` | system + contexts index | `availableLocales`, `defaultLocale` |
+| `parts/gen-prompts.json` | gen templates index | `availableLocales`, `defaultLocale` |
+| `parts/config.json` | settings | `pdm_system_prompt`, `pdm_profiles`, `pdm_context_gen_*` keys; **default `pdm_theme`: `marron-day`** |
 
-## Rôle PHP vs navigateur
+## PHP vs browser roles
 
-| Couche | Fichiers | Rôle |
+| Layer | Files | Role |
 |--------|----------|------|
-| PHP mince | `lib/api/manifest.php`, `lib/api/lib.php` | `runtimeOk`, liste profils **depuis index.json**, `defaultProfileId` |
-| Navigateur | `profile-bundle-loader.js`, etc. | fetch statique des `.md`, assemblage `pdm-config` |
+| Thin PHP | `lib/api/manifest.php`, `lib/api/lib.php` | `runtimeOk`, profile list **from index.json**, `defaultProfileId` |
+| Browser | `profile-bundle-loader.js`, etc. | static fetch of `.md`, `pdm-config` assembly |
 
-Le PHP **ne charge pas** les prompts MD ; il valide que le déploiement contient des bundles cohérents.
+PHP **does not load** MD prompts; it validates that the deployment contains coherent bundles.
 
-**HTTP** : en déploiement, la conf serveur refuse tout sous-dossier sous `assets/profiles/` autre que `speech2texte/`.
+**HTTP**: in deployment, server config rejects any subdirectory under `assets/profiles/` other than `speech2texte/`.
 
-## Langues des prompts (12 locales)
+## Prompt languages (12 locales)
 
-Locales dans `parts/locales.json` (`ar`, `de`, `en`, `eo`, `es`, `fr`, `it`, `ja`, `ko`, `pt`, `ru`, `zh`). Langue UI → locale prompts (1:1).
+Locales in `parts/locales.json` (`ar`, `de`, `en`, `eo`, `es`, `fr`, `it`, `ja`, `ko`, `pt`, `ru`, `zh`). UI language → prompt locale (1:1).
 
-## Export / import utilisateur
+## User export / import
 
-- **Session** : prompts édités mémorisés par locale (`pdm_prompts_bundle`).
-- **Export ZIP** : archive profil complète.
-- **Import ZIP** : restaure un profil dans `pdm_custom_profiles` — **pas** dans `assets/profiles/`.
+- **Session**: edited prompts remembered per locale (`pdm_prompts_bundle`).
+- **ZIP export**: full profile archive.
+- **ZIP import**: restores a profile into `pdm_custom_profiles` — **not** into `assets/profiles/`.
 
-## Documents liés
+## Related documents
 
-| Document | Rôle |
+| Document | Role |
 |----------|------|
-| [`../README.fr.md`](../README.fr.md) | Accroche produit (FR) |
-| [`Documentation.md`](Documentation.md) | Documentation technique (FR) |
-| [`../CONTRIBUTING.fr.md`](../CONTRIBUTING.fr.md) | Contribuer (FR) |
-| [`../SECURITY.fr.md`](../SECURITY.fr.md) | Sécurité (FR) |
-| [`../THIRD_PARTY_NOTICES.fr.md`](../THIRD_PARTY_NOTICES.fr.md) | Mentions tierces (FR) |
-| [`Stt.md`](Stt.md) | Zone STT (FR) |
-| [`Stt-vosk.md`](Stt-vosk.md) | Catalogue Vosk (FR) |
-| [`Profiles.md`](Profiles.md) | Zone profils (FR) |
-| [`Vendor.md`](Vendor.md) | Zone vendor (FR) |
+| [`../README.md`](../README.md) | Product pitch |
+| [`Documentation.md`](Documentation.md) | Technical documentation |
+| [`../CONTRIBUTING.md`](../CONTRIBUTING.md) | Contributing |
+| [`../SECURITY.md`](../SECURITY.md) | Security |
+| [`../THIRD_PARTY_NOTICES.md`](../THIRD_PARTY_NOTICES.md) | Third-party notices |
+| [`Stt.md`](Stt.md) | STT zone |
+| [`Stt-vosk.md`](Stt-vosk.md) | Vosk catalogue |
+| [`Vendor.md`](Vendor.md) | Vendor zone |

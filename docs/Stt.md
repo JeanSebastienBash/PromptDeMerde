@@ -1,74 +1,71 @@
-# Modèles STT (Speech-to-Text)
+# STT models (Speech-to-Text)
 
 <p align="center">
-  <a href="Stt.en.md"><img src="../assets/images/flags/en.svg" alt="English" width="28" height="20"></a>
-  &nbsp;
-  <a href="Stt.md"><img src="../assets/images/flags/fr.svg" alt="Français" width="28" height="20"></a>
+  <img src="../assets/images/flags/en.svg" alt="English" width="28" height="20">
 </p>
 
-> **Synopsis** : Arborescence des moteurs de dictée vocale locaux (un dossier par engine_id).
+> **Synopsis**: Layout of local speech-to-text engines (one folder per `engine_id`).
 >
-> **Objectif** : Documenter où placer les modèles Vosk, Whisper et Parakeet pour les moteurs STT.
+> **Purpose**: Document where to place Vosk, Whisper, and Parakeet models for the STT engines.
 
-Un répertoire par moteur, nommé comme l'`engine_id` du sélecteur (`stt-core.js` / `storage-core.js`).
+One directory per engine, named like the selector `engine_id` (`stt-core.js` / `storage-core.js`).
 
-| Répertoire | Moteur affiché | Contenu |
+| Directory | Displayed engine | Contents |
 |---|---|---|
-| `vosk-mini/` | Vosk Mini | `model.tar.gz` (FR legacy) ; `/{langId}/model.tar.gz` pour les autres langues |
-| `vosk-maxi/` | Vosk Maxi | `model.tar.gz` (FR legacy) — pas de Maxi multilingue produit |
+| `vosk-mini/` | Vosk Mini | `model.tar.gz` (FR legacy); `/{langId}/model.tar.gz` for other languages |
+| `vosk-maxi/` | Vosk Maxi | `model.tar.gz` (FR legacy) — no product multilingual Maxi |
 | `whisper-mini/` | Whisper Mini | tokenizer + ONNX q4 / q4f16 |
-| `whisper-maxi/` | Whisper Maxi | tokenizer + ONNX hybride fp16+q4 / q4 (import audio/vidéo Workspace) |
-| `parakeet/` | Parakeet | encodeur int4, décodeur int8, `vocab.txt` |
+| `whisper-maxi/` | Whisper Maxi | tokenizer + hybrid ONNX fp16+q4 / q4 (Workspace audio/video import) |
+| `parakeet/` | Parakeet | int4 encoder, int8 decoder, `vocab.txt` |
 
-**État open source (juillet 2026)** : sous **Linux**, seul **Vosk Maxi** est fiable dans tous les navigateurs testés. Whisper GPU (Mini/Maxi) et Parakeet GPU restent expérimentaux ; Whisper Maxi non validé. **Windows + GPU récent** : à valider.
+**Open-source status (July 2026)**: on **Linux**, only **Vosk Maxi** is reliable across tested browsers. Whisper GPU (Mini/Maxi) and Parakeet GPU remain experimental; Whisper Maxi is not validated. **Windows + recent GPU**: still to validate.
 
-### Clone GitHub — binaires > 40 Mo
+### GitHub clone — binaries > 40 MB
 
-Les fichiers lourds (`model.tar.gz`, decodeurs Whisper ONNX, encodeur Parakeet) sont livrés en **parts ≤ 30 Mo** (`*.partNNN`). Après clone : `cd install && bash restore-large-assets.sh`.
+Heavy files (`model.tar.gz`, Whisper ONNX decoders, Parakeet encoder) ship as **parts ≤ 30 MB** (`*.partNNN`). After clone: `cd install && bash restore-large-assets.sh`.
 
-Après `git clone` :
+After `git clone`:
 
 ```bash
 cd install
 bash restore-large-assets.sh
 ```
 
-Le script reconstitue chaque fichier à son emplacement exact, vérifie l'empreinte SHA256, puis **supprime les parts**. À exécuter **depuis `install/`**.
+The script rebuilds each file at its exact path, verifies the SHA256 fingerprint, then **deletes the parts**. Run it **from `install/`**.
 
-Modèles Vosk mini i18n (hors FR legacy) : manifest [`install/vosk-assets.manifest`](../install/vosk-assets.manifest).
+Vosk mini i18n models (outside FR legacy): manifest [`install/vosk-assets.manifest`](../install/vosk-assets.manifest).
 
-Catalogue runtime : [`vosk/catalog.json`](../assets/stt/vosk/catalog.json) — sélecteur **Langue du moteur** (**Vosk Mini** = voie multilingue produit). Doc zone : [`Stt-vosk.md`](Stt-vosk.md).
+Runtime catalogue: [`vosk/catalog.json`](../assets/stt/vosk/catalog.json) — **Engine language** selector (**Vosk Mini** = product multilingual path). Zone docs: [`Stt-vosk.md`](Stt-vosk.md).
 
-**Périmètre** : couverture langues STT / Vosk **figée** pour le produit open source (catalogue embarqué). Pas de refonte Vosk ni d’élargissement majeur de langues — correctifs mineurs seulement.
+**Scope**: STT / Vosk language coverage is **frozen** for the open-source product (shipped catalogue). No Vosk redesign and no major language expansion — minor fixes only.
 
-**Maintainer** (dépôt local avec binaires complets) :
+**Maintainer** (local repo with full binaries):
 
 ```bash
 cd install
 bash split-large-assets.sh
 ```
 
-Ne supprime jamais les originaux — régénère uniquement les parts `*.partNNN`.
+Never delete the originals — only regenerate `*.partNNN` parts.
 
-## Artefacts non modifiables (pas d'en-tête fichier)
+## Immutable artefacts (no file headers)
 
-Les fichiers suivants sont des **binaires ou données tierces** — ne pas y ajouter de commentaire (casseraient parsers ONNX/HuggingFace) :
+The following are **binaries or third-party data** — do not add comments (they would break ONNX/HuggingFace parsers):
 
 - `*.onnx`, `*.wasm`, `*.tar.gz`, `*.ttf`, `*.png`
-- `whisper-*/tokenizer*.json`, `vocab.json`, `merges.txt`, configs HuggingFace
+- `whisper-*/tokenizer*.json`, `vocab.json`, `merges.txt`, HuggingFace configs
 - `parakeet/vocab.txt`
-- Bundles minifiés sous `assets/js/vendor/` (voir [`Vendor.md`](Vendor.md))
+- Minified bundles under `assets/js/vendor/` (see [`Vendor.md`](Vendor.md))
 
-## Documents liés
+## Related documents
 
-| Document | Rôle |
+| Document | Role |
 |----------|------|
-| [`../README.fr.md`](../README.fr.md) | Accroche produit (FR) |
-| [`Documentation.md`](Documentation.md) | Documentation technique (FR) |
-| [`../CONTRIBUTING.fr.md`](../CONTRIBUTING.fr.md) | Contribuer (FR) |
-| [`../SECURITY.fr.md`](../SECURITY.fr.md) | Sécurité (FR) |
-| [`../THIRD_PARTY_NOTICES.fr.md`](../THIRD_PARTY_NOTICES.fr.md) | Mentions tierces (FR) |
-| [`Stt.md`](Stt.md) | Zone STT (FR) |
-| [`Stt-vosk.md`](Stt-vosk.md) | Catalogue Vosk (FR) |
-| [`Profiles.md`](Profiles.md) | Zone profils (FR) |
-| [`Vendor.md`](Vendor.md) | Zone vendor (FR) |
+| [`../README.md`](../README.md) | Product pitch |
+| [`Documentation.md`](Documentation.md) | Technical documentation |
+| [`../CONTRIBUTING.md`](../CONTRIBUTING.md) | Contributing |
+| [`../SECURITY.md`](../SECURITY.md) | Security |
+| [`../THIRD_PARTY_NOTICES.md`](../THIRD_PARTY_NOTICES.md) | Third-party notices |
+| [`Stt-vosk.md`](Stt-vosk.md) | Vosk catalogue |
+| [`Profiles.md`](Profiles.md) | Profiles zone |
+| [`Vendor.md`](Vendor.md) | Vendor zone |

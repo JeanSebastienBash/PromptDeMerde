@@ -1,36 +1,33 @@
 # Vendor JavaScript — PromptDeMerde
 
 <p align="center">
-  <a href="Vendor.en.md"><img src="../assets/images/flags/en.svg" alt="English" width="28" height="20"></a>
-  &nbsp;
-  <a href="Vendor.md"><img src="../assets/images/flags/fr.svg" alt="Français" width="28" height="20"></a>
+  <img src="../assets/images/flags/en.svg" alt="English" width="28" height="20">
 </p>
 
-> **Synopsis** : Dépendances tierces servies localement (sans CDN).
+> **Synopsis**: Third-party dependencies served locally (no CDN).
 >
-> **Objectif** : Documenter les bibliothèques embarquées dont le corps minifié ne doit pas être modifié.
+> **Purpose**: Document embedded libraries whose minified body must not be modified.
 
-| Chemin | Rôle | Module consommateur |
+| Path | Role | Consumer module |
 |--------|------|---------------------|
-| `jszip.min.js` | ZIP navigateur | `profile-bundle-export.js`, `storage-config-import.js` |
-| `vosk/vosk.js` | API Vosk WASM | `stt-vosk-engine.js`, `stt-vosk-model.js` |
-| `parakeet/parakeet-lib.js` | ONNX Parakeet | `stt-parakeet.js`, `stt-parakeet-engine.js` |
-| `transformers/transformers-lib.js` | HuggingFace Transformers (minifié) | `stt-whisper-worker.js` |
+| `jszip.min.js` | Browser ZIP | `profile-bundle-export.js`, `storage-config-import.js` |
+| `vosk/vosk.js` | Vosk WASM API | `stt-vosk-engine.js`, `stt-vosk-model.js` |
+| `parakeet/parakeet-lib.js` | Parakeet ONNX | `stt-parakeet.js`, `stt-parakeet-engine.js` |
+| `transformers/transformers-lib.js` | HuggingFace Transformers (minified) | `stt-whisper-worker.js` |
 | `onnxruntime-web/*.mjs`, `*.wasm` | ONNX Runtime Web | Whisper, Parakeet |
-| `transformers/ort-*.mjs`, `*.wasm` | ONNX Runtime (copie Transformers) | Whisper worker |
+| `transformers/ort-*.mjs`, `*.wasm` | ONNX Runtime (Transformers copy) | Whisper worker |
 
-**Règle** : ne pas préfixer d'en-tête dans les fichiers `.mjs` minifiés ou `.wasm` — risque de casser les loaders WASM.
+**Rule**: do not prepend headers in minified `.mjs` or `.wasm` files — that can break WASM loaders.
 
-## Documents liés
+## Related documents
 
-| Document | Rôle |
+| Document | Role |
 |----------|------|
-| [`../README.fr.md`](../README.fr.md) | Accroche produit (FR) |
-| [`Documentation.md`](Documentation.md) | Documentation technique (FR) |
-| [`../CONTRIBUTING.fr.md`](../CONTRIBUTING.fr.md) | Contribuer (FR) |
-| [`../SECURITY.fr.md`](../SECURITY.fr.md) | Sécurité (FR) |
-| [`../THIRD_PARTY_NOTICES.fr.md`](../THIRD_PARTY_NOTICES.fr.md) | Mentions tierces (FR) |
-| [`Stt.md`](Stt.md) | Zone STT (FR) |
-| [`Stt-vosk.md`](Stt-vosk.md) | Catalogue Vosk (FR) |
-| [`Profiles.md`](Profiles.md) | Zone profils (FR) |
-| [`Vendor.md`](Vendor.md) | Zone vendor (FR) |
+| [`../README.md`](../README.md) | Product pitch |
+| [`Documentation.md`](Documentation.md) | Technical documentation |
+| [`../CONTRIBUTING.md`](../CONTRIBUTING.md) | Contributing |
+| [`../SECURITY.md`](../SECURITY.md) | Security |
+| [`../THIRD_PARTY_NOTICES.md`](../THIRD_PARTY_NOTICES.md) | Third-party notices |
+| [`Stt.md`](Stt.md) | STT zone |
+| [`Stt-vosk.md`](Stt-vosk.md) | Vosk catalogue |
+| [`Profiles.md`](Profiles.md) | Profiles zone |

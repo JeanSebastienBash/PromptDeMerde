@@ -1,30 +1,27 @@
-# Catalogue Vosk (runtime)
+# Vosk catalogue (runtime)
 
 <p align="center">
-  <a href="Stt-vosk.en.md"><img src="../assets/images/flags/en.svg" alt="English" width="28" height="20"></a>
-  &nbsp;
-  <a href="Stt-vosk.md"><img src="../assets/images/flags/fr.svg" alt="Français" width="28" height="20"></a>
+  <img src="../assets/images/flags/en.svg" alt="English" width="28" height="20">
 </p>
 
-- **`catalog.json`** — manifest runtime (langues, chemins, SHA, `available`, blocs `maxi` optionnels).
-- **FR legacy mini** : `../vosk-mini/model.tar.gz` (intouchable).
-- **FR legacy maxi** : `../vosk-maxi/model.tar.gz` (intouchable).
-- **Autres langues (produit)** : **Vosk Mini uniquement** — `../vosk-mini/{langId}/model.tar.gz` + parts GitHub (`install/vosk-assets.manifest`).
+- **`catalog.json`** — runtime manifest (languages, paths, SHA, `available`, optional `maxi` blocks).
+- **FR legacy mini**: `../vosk-mini/model.tar.gz` (do not touch).
+- **FR legacy maxi**: `../vosk-maxi/model.tar.gz` (do not touch).
+- **Other product languages**: **Vosk Mini only** — `../vosk-mini/{langId}/model.tar.gz` + GitHub parts (`install/vosk-assets.manifest`).
 
-**Politique** : le multilingue produit passe par **Vosk Mini** (langues embarquées dans le catalogue — déjà livré). **Vosk Maxi** reste centré FR (chemin legacy) — pas d’extension Maxi aux autres langues open source. Ne pas régénérer les tarballs FR legacy.
+**Policy**: product multilingual coverage goes through **Vosk Mini** (languages shipped in the catalogue — already delivered). **Vosk Maxi** stays French-centred (legacy path) — no Maxi extension to other open-source languages. Do not regenerate FR legacy tarballs.
 
-**Périmètre** : le chantier langues STT / Vosk est **clos** pour le produit open source. Pas de refonte de la logique Vosk ; pas d’élargissement majeur du catalogue. Seuls des correctifs mineurs restent envisageables.
+**Scope**: the STT / Vosk language effort is **closed** for the open-source product. No Vosk engine redesign; no major catalogue expansion. Only minor fixes remain in scope.
 
-## Documents liés
+## Related documents
 
-| Document | Rôle |
+| Document | Role |
 |----------|------|
-| [`../README.fr.md`](../README.fr.md) | Accroche produit (FR) |
-| [`Documentation.md`](Documentation.md) | Documentation technique (FR) |
-| [`../CONTRIBUTING.fr.md`](../CONTRIBUTING.fr.md) | Contribuer (FR) |
-| [`../SECURITY.fr.md`](../SECURITY.fr.md) | Sécurité (FR) |
-| [`../THIRD_PARTY_NOTICES.fr.md`](../THIRD_PARTY_NOTICES.fr.md) | Mentions tierces (FR) |
-| [`Stt.md`](Stt.md) | Zone STT (FR) |
-| [`Stt-vosk.md`](Stt-vosk.md) | Catalogue Vosk (FR) |
-| [`Profiles.md`](Profiles.md) | Zone profils (FR) |
-| [`Vendor.md`](Vendor.md) | Zone vendor (FR) |
+| [`../README.md`](../README.md) | Product pitch |
+| [`Documentation.md`](Documentation.md) | Technical documentation |
+| [`../CONTRIBUTING.md`](../CONTRIBUTING.md) | Contributing |
+| [`../SECURITY.md`](../SECURITY.md) | Security |
+| [`../THIRD_PARTY_NOTICES.md`](../THIRD_PARTY_NOTICES.md) | Third-party notices |
+| [`Stt.md`](Stt.md) | STT zone |
+| [`Profiles.md`](Profiles.md) | Profiles zone |
+| [`Vendor.md`](Vendor.md) | Vendor zone |

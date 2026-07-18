@@ -5,13 +5,13 @@
 
 ## Résumé
 
-- **Documentation** : route SPA `#documentation` retirée ; footer → documentation technique GitHub (FR/EN selon langue IHM).
+- **Documentation** : route SPA `#documentation` retirée ; footer → documentation technique GitHub ([`docs/Documentation.md`](../docs/Documentation.md), English).
 - **Import image → description** dans le Workspace : bouton file picker (PNG/JPEG/WebP/GIF), **pas** de glisser-déposer.
 - Modèle vision Ollama (`pdm_image_model`, défaut `moondream`) + consigne éditable (`pdm_image_prompt`, défaut cartographie pour reproduire).
 - Édition dans **Prompts** (modèle + prompt).
 - Contrat : **51** clés `pdm_*` ; profil livré `speech2texte` aligné v1.23.0.
-- Miroir public : [`README.md`](../README.md) (EN) · [`README.fr.md`](../README.fr.md) (FR) — Features 1–40.
-- Doc technique bilingue : [`docs/Documentation.md`](../docs/Documentation.md) (FR) · [`docs/Documentation.en.md`](../docs/Documentation.en.md) (EN).
+- Miroir public : [`README.md`](../README.md) (English) — Features 1–40.
+- Doc technique : [`docs/Documentation.md`](../docs/Documentation.md).
 
 ## Smoke
 

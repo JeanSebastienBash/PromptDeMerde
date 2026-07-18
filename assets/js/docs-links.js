@@ -1,37 +1,20 @@
 /**
  * PromptDeMerde.com — docs-links.js
  *
- * Synopsis : Lien documentation GitHub selon la langue IHM.
- * Objectif : FR → Documentation.md ; autres locales → Documentation.en.md.
+ * Synopsis : Lien documentation GitHub (miroir public anglais).
+ * Objectif : footer et hash legacy → docs/Documentation.md.
  */
 (function () {
 
 var BASE = 'https://github.com/JeanSebastienBash/promptdemerde/blob/main/docs/';
 var Docs = {};
 
-function currentLang(lang) {
-    var l = String(lang || '').trim().toLowerCase();
-    if (l) return l;
-    var I = window.PDM && window.PDM.I18n;
-    if (I && typeof I.getLocale === 'function') {
-        l = String(I.getLocale() || '').toLowerCase();
-        if (l) return l;
-    }
-    var S = window.PDM && window.PDM.Storage;
-    if (S && typeof S.getLanguage === 'function') {
-        return String(S.getLanguage() || '').toLowerCase();
-    }
-    return 'fr';
-}
-
-Docs.techDocUrl = function (lang) {
-    return BASE + (currentLang(lang) === 'fr'
-        ? 'Documentation.md'
-        : 'Documentation.en.md');
+Docs.techDocUrl = function () {
+    return BASE + 'Documentation.md';
 };
 
-Docs.openTechDoc = function (lang) {
-    var url = Docs.techDocUrl(lang);
+Docs.openTechDoc = function () {
+    var url = Docs.techDocUrl();
     window.open(url, '_blank', 'noopener,noreferrer');
     return url;
 };
