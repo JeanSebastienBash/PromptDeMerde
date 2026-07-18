@@ -81,11 +81,11 @@ jobs:
           test -f SECURITY.md
           test -f CONTRIBUTING.md
           test -f THIRD_PARTY_NOTICES.md
-          test -f docs/DOCUMENTATION-TECHNIQUE.md
-          test -f docs/DOCUMENTATION-TECHNIQUE.en.md
+          test -f docs/Documentation.md
+          test -f docs/Documentation.en.md
           test -f install/restore-large-assets.sh
-          grep -q "$V" docs/DOCUMENTATION-TECHNIQUE.md
-          grep -q "$V" docs/DOCUMENTATION-TECHNIQUE.en.md
+          grep -q "$V" docs/Documentation.md
+          grep -q "$V" docs/Documentation.en.md
 
       - name: Secret patterns (basic)
         run: |
