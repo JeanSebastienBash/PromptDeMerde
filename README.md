@@ -31,18 +31,37 @@ PromptDeMerde turns freeform input into structured prompts in the browser: local
 
 ---
 
-## 🎬 Watch (coming soon)
+<a id="menu-videos"></a>
 
-<p align="center">
-  <img src="assets/images/screenshots/nav-app-full-nofooter.png" alt="PromptDeMerde Workspace: Input draft about cats, empty Output, LLM history with 2 entries, Workspace nav active" width="70%" style="border:1px solid #d0d7de;border-radius:8px;box-shadow:0 1px 2px rgba(0,0,0,.08);">
-  <br>
-  <strong>Workspace overview — Input draft, empty Output, 2 history entries</strong><br>
-  <em>Full Workspace view (no page footer): nav on Workspace, Input holds a draft about cats for a blog, Output still empty with placeholder, Historique LLM shows 2 entries.</em>
-</p>
+## Videos
 
-<!-- Landscape demo video — URL to be added later (YouTube / hosted MP4). -->
+<table>
+<tr>
+<td width="28%" valign="top">
 
-> **Landscape demo video — slot reserved (16:9).**
+More videos will follow on the PromptDeMerde YouTube playlist. The Short on the right is a scripted marketing clip (internal tooling, not published) — music and framing, not a product tutorial.
+
+</td>
+<td width="44%" valign="top" align="center">
+
+<img src="assets/images/screenshots/readme-watch-workspace-en.png" alt="PromptDeMerde Workspace: classifieds-style Input draft, active context prompts, empty Output with Thinking on, deepseek-r1:671b, LLM history with two unrelated professional entries" width="100%" style="border:1px solid #d0d7de;border-radius:8px;box-shadow:0 1px 2px rgba(0,0,0,.08);">
+
+<strong>Workspace — classifieds draft, contexts, empty Output, LLM history</strong><br>
+<em>Theme Plum light (`prune-day`). Input holds a spoken-style comics listing (Lyon, bus-stop meetup). Context prompts open (personal info / meetup / firm price). Output empty with Thinking on and model <code>deepseek-r1:671b</code>. History shows two other daily LLM uses (workshop notes, supplier RFQ).</em>
+
+</td>
+<td width="28%" valign="top" align="center">
+
+<a href="https://www.youtube.com/shorts/SR2TaUZ7bTw">
+<img src="https://img.youtube.com/vi/SR2TaUZ7bTw/hqdefault.jpg" alt="PromptDeMerde YouTube Short" width="100%" style="border:1px solid #d0d7de;border-radius:8px;">
+</a>
+
+<br>
+<a href="https://www.youtube.com/shorts/SR2TaUZ7bTw">Watch the Short on YouTube</a>
+
+</td>
+</tr>
+</table>
 
 ---
 
@@ -76,6 +95,7 @@ PromptDeMerde turns freeform input into structured prompts in the browser: local
 
 ## Menu
 
+* [Videos](#menu-videos)
 * [What’s new](#menu-whats-new)
 * [What PromptDeMerde is](#menu-what-is)
 * [Who it is for](#menu-who)
