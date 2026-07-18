@@ -6,13 +6,6 @@
   <a href="Stt.md"><img src="../assets/images/flags/fr.svg" alt="Français" width="28" height="20"></a>
 </p>
 
-
-<p align="center">
-  <a href="README.md"><img src="../images/flags/en.svg" alt="English" width="28" height="20"></a>
-  &nbsp;
-  <a href="README.fr.md"><img src="../images/flags/fr.svg" alt="Français" width="28" height="20"></a>
-</p>
-
 > **Synopsis** : Arborescence des moteurs de dictée vocale locaux (un dossier par engine_id).
 >
 > **Objectif** : Documenter où placer les modèles Vosk, Whisper et Parakeet pour les moteurs STT.

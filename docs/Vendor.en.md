@@ -6,13 +6,6 @@
   <a href="Vendor.md"><img src="../assets/images/flags/fr.svg" alt="Français" width="28" height="20"></a>
 </p>
 
-
-<p align="center">
-  <a href="README.md"><img src="../../images/flags/en.svg" alt="English" width="28" height="20"></a>
-  &nbsp;
-  <a href="README.fr.md"><img src="../../images/flags/fr.svg" alt="Français" width="28" height="20"></a>
-</p>
-
 > **Synopsis**: Third-party dependencies served locally (no CDN).
 >
 > **Purpose**: Document embedded libraries whose minified body must not be modified.

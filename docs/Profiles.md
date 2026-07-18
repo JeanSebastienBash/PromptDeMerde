@@ -6,13 +6,6 @@
   <a href="Profiles.md"><img src="../assets/images/flags/fr.svg" alt="Français" width="28" height="20"></a>
 </p>
 
-
-<p align="center">
-  <a href="README.md"><img src="../images/flags/en.svg" alt="English" width="28" height="20"></a>
-  &nbsp;
-  <a href="README.fr.md"><img src="../images/flags/fr.svg" alt="Français" width="28" height="20"></a>
-</p>
-
 Chaque profil **bundlé au boot** vit dans son propre dossier. L’**UI traduite** (12 langues) est **partagée** : [`assets/i18n/ui/`](../assets/i18n/ui/).
 
 ## Politique dépôt GitHub (canon)

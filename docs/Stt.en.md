@@ -6,13 +6,6 @@
   <a href="Stt.md"><img src="../assets/images/flags/fr.svg" alt="Français" width="28" height="20"></a>
 </p>
 
-
-<p align="center">
-  <a href="README.md"><img src="../images/flags/en.svg" alt="English" width="28" height="20"></a>
-  &nbsp;
-  <a href="README.fr.md"><img src="../images/flags/fr.svg" alt="Français" width="28" height="20"></a>
-</p>
-
 > **Synopsis**: Layout of local speech-to-text engines (one folder per `engine_id`).
 >
 > **Purpose**: Document where to place Vosk, Whisper, and Parakeet models for the STT engines.

@@ -6,13 +6,6 @@
   <a href="Documentation.md"><img src="../assets/images/flags/fr.svg" alt="Français" width="28" height="20"></a>
 </p>
 
-
-<p align="center">
-  <a href="Documentation.en.md"><img src="../assets/images/flags/en.svg" alt="English" width="28" height="20"></a>
-  &nbsp;
-  <a href="Documentation.md"><img src="../assets/images/flags/fr.svg" alt="Français" width="28" height="20"></a>
-</p>
-
 <p align="center">
   <a href="../LICENSE"><img src="https://img.shields.io/badge/License-MIT-yellow.svg" alt="License: MIT"></a>
   <a href="../README.md"><img src="https://img.shields.io/badge/version-1.23.0-blue.svg" alt="Version 1.23.0"></a>

@@ -6,13 +6,6 @@
   <a href="Vendor.md"><img src="../assets/images/flags/fr.svg" alt="Français" width="28" height="20"></a>
 </p>
 
-
-<p align="center">
-  <a href="README.md"><img src="../../images/flags/en.svg" alt="English" width="28" height="20"></a>
-  &nbsp;
-  <a href="README.fr.md"><img src="../../images/flags/fr.svg" alt="Français" width="28" height="20"></a>
-</p>
-
 > **Synopsis** : Dépendances tierces servies localement (sans CDN).
 >
 > **Objectif** : Documenter les bibliothèques embarquées dont le corps minifié ne doit pas être modifié.

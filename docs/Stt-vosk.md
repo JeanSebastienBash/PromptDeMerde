@@ -6,13 +6,6 @@
   <a href="Stt-vosk.md"><img src="../assets/images/flags/fr.svg" alt="Français" width="28" height="20"></a>
 </p>
 
-
-<p align="center">
-  <a href="README.md"><img src="../../images/flags/en.svg" alt="English" width="28" height="20"></a>
-  &nbsp;
-  <a href="README.fr.md"><img src="../../images/flags/fr.svg" alt="Français" width="28" height="20"></a>
-</p>
-
 - **`catalog.json`** — manifest runtime (langues, chemins, SHA, `available`, blocs `maxi` optionnels).
 - **FR legacy mini** : `../vosk-mini/model.tar.gz` (intouchable).
 - **FR legacy maxi** : `../vosk-maxi/model.tar.gz` (intouchable).
