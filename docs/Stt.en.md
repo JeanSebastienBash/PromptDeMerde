@@ -15,7 +15,7 @@ One directory per engine, named like the selector `engine_id` (`stt-core.js` / `
 | Directory | Displayed engine | Contents |
 |---|---|---|
 | `vosk-mini/` | Vosk Mini | `model.tar.gz` (FR legacy); `/{langId}/model.tar.gz` for other languages |
-| `vosk-maxi/` | Vosk Maxi | `model.tar.gz` |
+| `vosk-maxi/` | Vosk Maxi | `model.tar.gz` (FR legacy) — no product multilingual Maxi |
 | `whisper-mini/` | Whisper Mini | tokenizer + ONNX q4 / q4f16 |
 | `whisper-maxi/` | Whisper Maxi | tokenizer + hybrid ONNX fp16+q4 / q4 (Workspace audio/video import) |
 | `parakeet/` | Parakeet | int4 encoder, int8 decoder, `vocab.txt` |
@@ -37,7 +37,9 @@ The script rebuilds each file at its exact path, verifies the SHA256 fingerprint
 
 Vosk mini i18n models (outside FR legacy): manifest [`install/vosk-assets.manifest`](../install/vosk-assets.manifest).
 
-Runtime catalogue: [`vosk/catalog.json`](../assets/stt/vosk/catalog.json) — **Engine language** selector (Vosk Mini). Zone docs: [`Stt-vosk.en.md`](Stt-vosk.en.md).
+Runtime catalogue: [`vosk/catalog.json`](../assets/stt/vosk/catalog.json) — **Engine language** selector (**Vosk Mini** = product multilingual path). Zone docs: [`Stt-vosk.en.md`](Stt-vosk.en.md).
+
+**Scope**: STT / Vosk language coverage is **frozen** for the open-source product (shipped catalogue). No Vosk redesign and no major language expansion — minor fixes only.
 
 **Maintainer** (local repo with full binaries):
 

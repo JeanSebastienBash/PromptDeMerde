@@ -11,7 +11,9 @@
 - **FR legacy maxi**: `../vosk-maxi/model.tar.gz` (do not touch).
 - **Other product languages**: **Vosk Mini only** — `../vosk-mini/{langId}/model.tar.gz` + GitHub parts (`install/vosk-assets.manifest`).
 
-**Policy**: no multilingual Vosk Maxi retained for the open-source product; do not regenerate FR legacy tarballs.
+**Policy**: product multilingual coverage goes through **Vosk Mini** (languages shipped in the catalogue — already delivered). **Vosk Maxi** stays French-centred (legacy path) — no Maxi extension to other open-source languages. Do not regenerate FR legacy tarballs.
+
+**Scope**: the STT / Vosk language effort is **closed** for the open-source product. No Vosk engine redesign; no major catalogue expansion. Only minor fixes remain in scope.
 
 ## Related documents
 

@@ -214,6 +214,8 @@ On the **Prompts** screen, the context prompt generators create a new `#Tag` fro
 
 The Workspace dictation strip supports unlimited voice dictation. Available engines are **Vosk**, **Parakeet** and **Whisper**, depending on which one you load. Recognition runs in the browser: microphone audio stays on the device.
 
+Language coverage is delivered as-is: **Vosk Mini** for the shipped languages, **Vosk Maxi** for French. No major language expansion or Vosk engine redesign is planned on the path to product maturity; only minor fixes.
+
 Dictation continues when you open Options or documentation. Stopping uses an explicit control.
 
 <p align="center">

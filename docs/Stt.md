@@ -15,7 +15,7 @@ Un répertoire par moteur, nommé comme l'`engine_id` du sélecteur (`stt-core.j
 | Répertoire | Moteur affiché | Contenu |
 |---|---|---|
 | `vosk-mini/` | Vosk Mini | `model.tar.gz` (FR legacy) ; `/{langId}/model.tar.gz` pour les autres langues |
-| `vosk-maxi/` | Vosk Maxi | `model.tar.gz` |
+| `vosk-maxi/` | Vosk Maxi | `model.tar.gz` (FR legacy) — pas de Maxi multilingue produit |
 | `whisper-mini/` | Whisper Mini | tokenizer + ONNX q4 / q4f16 |
 | `whisper-maxi/` | Whisper Maxi | tokenizer + ONNX hybride fp16+q4 / q4 (import audio/vidéo Workspace) |
 | `parakeet/` | Parakeet | encodeur int4, décodeur int8, `vocab.txt` |
@@ -37,7 +37,9 @@ Le script reconstitue chaque fichier à son emplacement exact, vérifie l'emprei
 
 Modèles Vosk mini i18n (hors FR legacy) : manifest [`install/vosk-assets.manifest`](../install/vosk-assets.manifest).
 
-Catalogue runtime : [`vosk/catalog.json`](../assets/stt/vosk/catalog.json) — sélecteur **Langue du moteur** (Vosk Mini). Doc zone : [`Stt-vosk.md`](Stt-vosk.md).
+Catalogue runtime : [`vosk/catalog.json`](../assets/stt/vosk/catalog.json) — sélecteur **Langue du moteur** (**Vosk Mini** = voie multilingue produit). Doc zone : [`Stt-vosk.md`](Stt-vosk.md).
+
+**Périmètre** : couverture langues STT / Vosk **figée** pour le produit open source (catalogue embarqué). Pas de refonte Vosk ni d’élargissement majeur de langues — correctifs mineurs seulement.
 
 **Maintainer** (dépôt local avec binaires complets) :
 

@@ -381,10 +381,12 @@ In Options, **Load engine** remains available to preload without dictating. The 
 
 | ID `pdm_stt_engine`             | Files                              | Notes                    |
 | ------------------------------- | ---------------------------------- | ------------------------ |
-| `vosk-mini` / `vosk-maxi`       | `assets/stt/vosk-*/model.tar.gz`   | CPU, reliable on Linux   |
+| `vosk-mini`                     | `vosk-mini/model.tar.gz` (FR); `vosk-mini/{langId}/` | CPU; **multilingual path** (catalogue) |
+| `vosk-maxi`                     | `vosk-maxi/model.tar.gz` (FR)      | CPU, reliable on Linux; product FR |
 | `whisper-mini` / `whisper-maxi` | `assets/stt/whisper-*/onnx/*.onnx` | WebGPU recommended       |
 | `parakeet`                      | `assets/stt/parakeet/*.onnx`       | Best quality, GPU        |
 
+Vosk multilingual = **Mini** (shipped languages). **Maxi** = French. The STT / Vosk language effort is **closed** for open source (minor fixes only — no Vosk redesign). Detail: [`Stt-vosk.en.md`](Stt-vosk.en.md).
 
 The canonical engine list is `CS.STT_ENGINES` in `config-schema-core.js`.
 

@@ -212,6 +212,8 @@ Sur l’écran **Prompts**, les générateurs de prompts de contexte créent un 
 
 Le bandeau de dictée du Workspace permet une dictée vocale illimitée. Les moteurs disponibles sont **Vosk**, **Parakeet** et **Whisper**, selon celui que vous chargez. La reconnaissance tourne dans le navigateur : l’audio du micro reste sur l’appareil.
 
+Côté langues, la dictée s’appuie sur **Vosk Mini** (plusieurs modèles embarqués) et **Vosk Maxi** pour le français. Ce périmètre est considéré comme livré : pas d’extension majeure de langues ni de refonte des moteurs Vosk prévue d’ici la maturité produit ; seuls des ajustements mineurs restent possibles.
+
 La dictée continue lorsque vous ouvrez Options ou la documentation. L’arrêt se fait par un contrôle explicite.
 
 <p align="center">

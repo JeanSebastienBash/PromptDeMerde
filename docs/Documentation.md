@@ -381,10 +381,12 @@ Dans Options, **Charger le moteur** reste disponible pour précharger sans dicte
 
 | ID `pdm_stt_engine`             | Fichiers                           | Notes                  |
 | ------------------------------- | ---------------------------------- | ---------------------- |
-| `vosk-mini` / `vosk-maxi`       | `assets/stt/vosk-*/model.tar.gz`   | CPU, fiable Linux      |
+| `vosk-mini`                     | `vosk-mini/model.tar.gz` (FR) ; `vosk-mini/{langId}/` | CPU ; **voie multilingue** (catalogue) |
+| `vosk-maxi`                     | `vosk-maxi/model.tar.gz` (FR)      | CPU, fiable Linux ; FR produit |
 | `whisper-mini` / `whisper-maxi` | `assets/stt/whisper-*/onnx/*.onnx` | WebGPU conseillé       |
 | `parakeet`                      | `assets/stt/parakeet/*.onnx`       | Meilleure qualité, GPU |
 
+Multilingue Vosk = **Mini** (langues embarquées). **Maxi** = FR. Chantier langues STT / Vosk **clos** pour l’open source (correctifs mineurs seulement — pas de refonte Vosk). Détail : [`Stt-vosk.md`](Stt-vosk.md).
 
 La liste canonique des moteurs est `CS.STT_ENGINES` dans `config-schema-core.js`.
 
