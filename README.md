@@ -11,14 +11,15 @@
 </p>
 
 <p align="center">
-  <strong>PromptDeMerde turns freeform input into structured prompts in the browser: local Ollama Clean, voice dictation (STT), media transcription, vision image-to-text, system + context prompt stacking, multipass Input, LLM history, and portable JSON profile ZIP export for offline collaboration. Fully private — no account, no product telemetry, data stays in the browser. Official site promptdemerde.com or self-host PHP — same codebase.</strong>
+  <strong>On <a href="https://promptdemerde.com/">promptdemerde.com</a> and in this repository: the same codebase, the same 100% privacy model — no account, no product telemetry. Current line is a release candidate, still being stabilized.</strong>
 </p>
 
 <p align="justify">
-<strong>PromptDeMerde</strong> is a browser SPA: you write or dictate a draft; the app rephrases it into a structured instruction via <a href="https://ollama.com">Ollama</a> on your machine.
-The result appears in the Output panel and can be copied into ChatGPT, Claude, Midjourney, another Ollama model, or the tool of your choice.
-The site <a href="https://promptdemerde.com/">promptdemerde.com</a> serves the same codebase as a self-hosted clone of this repository.
-Free · open source (<a href="LICENSE">MIT</a>) · no account.
+PromptDeMerde turns freeform input into structured prompts in the browser: local Ollama Clean, voice dictation (STT), media transcription, vision image-to-text, system + context prompt stacking, multipass Input, LLM history, and portable JSON profile ZIP export for offline collaboration. Fully private — no account, no product telemetry, data stays in the browser. Official site promptdemerde.com or self-host PHP — same codebase.
+</p>
+
+<p align="center">
+  <strong>Install <a href="https://ollama.com">Ollama</a> locally — without it, Clean/LLM is off (voice dictation, audio/video transcription, and profile ZIP still work).</strong>
 </p>
 
 <p align="center">
