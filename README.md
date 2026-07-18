@@ -1,4 +1,4 @@
-# PromptDeMerde
+# <img src="assets/images/favicon-poo-glasses-3d.png" alt="" width="36" height="36"> PromptDeMerde
 
 <p align="center">
   <img src="assets/images/flags/en.svg" alt="English" width="28" height="20">
