@@ -122,7 +122,9 @@ A._boot = function() {
             A.bindPrompts();
             A.bindSettings();
             if (typeof A.bindMarket === 'function') A.bindMarket();
-            if (window.PDM.Env && typeof window.PDM.Env.applyMarketplaceNavLinks === 'function') {
+            if (window.PDM.Env && typeof window.PDM.Env.applyOfficialNavLinks === 'function') {
+                window.PDM.Env.applyOfficialNavLinks();
+            } else if (window.PDM.Env && typeof window.PDM.Env.applyMarketplaceNavLinks === 'function') {
                 window.PDM.Env.applyMarketplaceNavLinks();
             }
             A.bindNav();
@@ -248,6 +250,28 @@ A._parseHashRoute = function(raw) {
     return { section: 'workspace', anchor: null, preserveHash: false };
 };
 
+A._redirectOfficialSection = function(section) {
+    var Env = window.PDM && window.PDM.Env;
+    if (!Env) return false;
+    if (section === 'market' && !Env.hasMarketplace()) {
+        var mUrl = (typeof Env.officialMarketplaceUrl === 'function')
+            ? Env.officialMarketplaceUrl()
+            : 'https://promptdemerde.com/#market';
+        window.location.replace(mUrl);
+        return true;
+    }
+    var legal = section === 'mentions' || section === 'cgu'
+        || section === 'privacy' || section === 'support';
+    if (legal && typeof Env.hasSitePages === 'function' && !Env.hasSitePages()) {
+        var lUrl = (typeof Env.officialLegalUrl === 'function')
+            ? Env.officialLegalUrl(section)
+            : ('https://promptdemerde.com/#' + section);
+        window.location.replace(lUrl);
+        return true;
+    }
+    return false;
+};
+
 A.router = function() {
     var raw = window.location.hash.replace('#', '') || '';
     var parsed = A._parseHashRoute(raw);
@@ -259,28 +283,17 @@ A.router = function() {
         parsed = { section: 'workspace', anchor: null, preserveHash: false };
     }
     if (section === 'landing' && !A._homepageActive()) section = 'workspace';
-
-    if (section === 'market' && window.PDM.Env && !window.PDM.Env.hasMarketplace()) {
-        var official = (typeof window.PDM.Env.officialMarketplaceUrl === 'function')
-            ? window.PDM.Env.officialMarketplaceUrl()
-            : 'https://promptdemerde.com/#market';
-        window.location.replace(official);
-        return;
-    }
+    if (A._redirectOfficialSection(section)) return;
 
     if (section !== 'landing') A.stopDemoRotation();
-
     window.PDM.UI.show(section, { preserveHash: parsed.preserveHash });
-
     if (section === 'workspace') A.refreshWorkspace();
     if (section === 'prompts') A.refreshPrompts();
     if (section === 'market' && typeof A.refreshMarket === 'function') A.refreshMarket();
     if (section === 'settings') A.refreshSettings();
-
     if (section === 'mentions' || section === 'cgu' || section === 'privacy' || section === 'support') {
         window.scrollTo(0, 0);
     }
-
     if (section === 'landing') {
         if (window.PDM.Video && typeof window.PDM.Video.init === 'function') {
             window.PDM.Video.init();

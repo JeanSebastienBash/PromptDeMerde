@@ -394,13 +394,14 @@ function applyStaticIds(root) {
         }
     }
 
-    var marketExtTitle = I18n.t('nav.marketExternalTitle');
-    ['nav-link-market', 'footer-link-market'].forEach(function(id) {
-        var marketLink = root.getElementById(id);
-        if (!marketLink || !marketLink.hasAttribute('data-pdm-market-external')) return;
-        if (marketExtTitle) marketLink.setAttribute('title', marketExtTitle);
-        else marketLink.removeAttribute('title');
-    });
+    if (window.PDM && window.PDM.Env && typeof window.PDM.Env.applyOfficialNavLinks === 'function') {
+        window.PDM.Env.applyOfficialNavLinks();
+    } else if (window.PDM && window.PDM.Env && typeof window.PDM.Env.applyMarketplaceNavLinks === 'function') {
+        window.PDM.Env.applyMarketplaceNavLinks();
+        if (typeof window.PDM.Env.applyLegalNavLinks === 'function') {
+            window.PDM.Env.applyLegalNavLinks();
+        }
+    }
 
     var loaderMsg = root.querySelector('.loader-msg');
     if (loaderMsg) setText(loaderMsg, I18n.t('loader.message'));

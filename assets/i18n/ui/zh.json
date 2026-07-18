@@ -61,7 +61,8 @@
         "brandExtension": ".com",
         "promptSuffix": "@promptdemerde:~# ",
         "market": "应用市场",
-        "marketExternalTitle": "在 promptdemerde.com 打开 Marketplace 目录"
+        "marketExternalTitle": "在 promptdemerde.com 打开 Marketplace 目录",
+        "legalExternalTitle": "在 promptdemerde.com 打开该页面"
     },
     "loader": {
         "message": "精准化进行中..."

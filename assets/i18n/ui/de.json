@@ -61,7 +61,8 @@
         "brandExtension": ".com",
         "promptSuffix": "@promptdemerde:~# ",
         "market": "Marktplatz",
-        "marketExternalTitle": "Öffnet den Marketplace-Katalog auf promptdemerde.com"
+        "marketExternalTitle": "Öffnet den Marketplace-Katalog auf promptdemerde.com",
+        "legalExternalTitle": "Öffnet die Seite auf promptdemerde.com"
     },
     "loader": {
         "message": "SNIPER-BEREINIGUNG LÄUFT..."

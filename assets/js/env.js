@@ -2,7 +2,7 @@
  * PromptDeMerde.com — env.js
  *
  * Synopsis : Client de configuration serveur (GET lib/env/env.php).
- * Objectif : Exposer PDM.Env avec environnement, capacités LLM, homepage, sélecteur profils, market et extension .com nav.
+ * Objectif : Exposer PDM.Env (env, LLM, homepage, profils, market, site-pages) ; liens officiels → env-official-nav.js.
  */
 (function() {
 
@@ -22,7 +22,8 @@ var FALLBACK = {
         profilesRuntimeOk: false,
         brandNavExtension: false,
         marketplace: false,
-        marketVignettesMaintenance: false
+        marketVignettesMaintenance: false,
+        sitePages: false
     },
     llm: {
         enabled: ['ollama'],
@@ -151,7 +152,8 @@ function normalizePayload(json) {
             profileSelector: false,
             brandNavExtension: false,
             marketplace: false,
-            marketVignettesMaintenance: false
+            marketVignettesMaintenance: false,
+            sitePages: false
         };
     } else {
         if (typeof json.features.profileSelector !== 'boolean') {
@@ -169,6 +171,9 @@ function normalizePayload(json) {
         if (typeof json.features.marketVignettesMaintenance !== 'boolean') {
             json.features.marketVignettesMaintenance = false;
         }
+        if (typeof json.features.sitePages !== 'boolean') {
+            json.features.sitePages = false;
+        }
     }
     return json;
 }
@@ -185,7 +190,7 @@ E.load = function() {
         .then(function(json) {
             _data = normalizePayload(json);
             E.applyBrandNavExtensionFlag();
-            E.applyMarketplaceNavLinks();
+            if (typeof E.applyOfficialNavLinks === 'function') E.applyOfficialNavLinks();
             E.injectExtraStylesheets();
             return _data;
         })
@@ -193,7 +198,7 @@ E.load = function() {
             console.warn('[PDM.Env] Fallback selfhosted:', err && err.message ? err.message : err);
             _data = FALLBACK;
             E.applyBrandNavExtensionFlag();
-            E.applyMarketplaceNavLinks();
+            if (typeof E.applyOfficialNavLinks === 'function') E.applyOfficialNavLinks();
             return _data;
         });
 
@@ -243,45 +248,6 @@ E.injectExtraStylesheets = function() {
         link.setAttribute('data-pdm-env-css', href);
         document.head.appendChild(link);
     }
-};
-E.officialMarketplaceUrl = function() {
-    var base = (window.PDM.ConfigSchema && window.PDM.ConfigSchema.DEFAULT_PLATFORM_URL)
-        || 'https://promptdemerde.com';
-    return String(base).replace(/\/$/, '') + '/#market';
-};
-E.applyMarketplaceNavLinks = function() {
-    var local = E.hasMarketplace();
-    var official = E.officialMarketplaceUrl();
-    var nodes = [
-        document.getElementById('nav-link-market'),
-        document.getElementById('footer-link-market')
-    ];
-    var extTitle = '';
-    if (!local && window.PDM && window.PDM.I18n && typeof window.PDM.I18n.t === 'function') {
-        extTitle = window.PDM.I18n.t('nav.marketExternalTitle') || '';
-    }
-    for (var i = 0; i < nodes.length; i++) {
-        var el = nodes[i];
-        if (!el) continue;
-        el.hidden = false;
-        if (local) {
-            el.setAttribute('href', '#market');
-            el.setAttribute('data-nav', 'market');
-            el.removeAttribute('target');
-            el.removeAttribute('rel');
-            el.removeAttribute('data-pdm-market-external');
-            el.removeAttribute('title');
-        } else {
-            el.setAttribute('href', official);
-            el.removeAttribute('data-nav');
-            el.removeAttribute('target');
-            el.removeAttribute('rel');
-            el.setAttribute('data-pdm-market-external', '1');
-            if (extTitle) el.setAttribute('title', extTitle);
-            else el.removeAttribute('title');
-        }
-    }
-    return local;
 };
 E.applyBrandNavExtensionFlag = function() {
     var on = E.showBrandNavExtension();

@@ -61,7 +61,8 @@
         "brandExtension": ".com",
         "promptSuffix": "@promptdemerde:~# ",
         "market": "السوق",
-        "marketExternalTitle": "يفتح كتالوج السوق على promptdemerde.com"
+        "marketExternalTitle": "يفتح كتالوج السوق على promptdemerde.com",
+        "legalExternalTitle": "يفتح الصفحة على promptdemerde.com"
     },
     "loader": {
         "message": "جاري التحسين..."

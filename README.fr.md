@@ -347,7 +347,7 @@ Sur un clone public sans catalogue local, le menu Marketplace ouvre cette URL.
 
 ### 19. Navigation SPA par hash
 
-L’interface bascule entre Workspace, Prompts, Options, Marketplace et les pages stubs (mentions, CGU, confidentialité, support) via le hash d’URL, sans rechargement complet de la page. Le lien Documentation du footer ouvre la documentation technique GitHub (FR ou EN selon la langue IHM).
+L’interface bascule entre Workspace, Prompts, Options et Marketplace via le hash d’URL, sans rechargement complet. Sur un clone sans `site-pages/`, Mentions / CGU / Confidentialité / Support du footer ouvrent [promptdemerde.com](https://promptdemerde.com) (pastille verte, comme Marketplace). Le lien Documentation ouvre la doc technique GitHub (FR ou EN selon la langue IHM).
 
 ---
 

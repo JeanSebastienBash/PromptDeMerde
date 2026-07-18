@@ -61,7 +61,8 @@
         "brandExtension": ".com",
         "promptSuffix": "@promptdemerde:~#",
         "market": "マーケットプレイス",
-        "marketExternalTitle": "promptdemerde.com の Marketplace カタログを開きます"
+        "marketExternalTitle": "promptdemerde.com の Marketplace カタログを開きます",
+        "legalExternalTitle": "promptdemerde.com でページを開きます"
     },
     "loader": {
         "message": "狙撃中..."

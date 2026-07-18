@@ -61,7 +61,8 @@
         "brandExtension": ".com",
         "promptSuffix": "@promptdemerde:~#",
         "market": "Маркетплейс",
-        "marketExternalTitle": "Открывает каталог Marketplace на promptdemerde.com"
+        "marketExternalTitle": "Открывает каталог Marketplace на promptdemerde.com",
+        "legalExternalTitle": "Открывает страницу на promptdemerde.com"
     },
     "loader": {
         "message": "СНАЙПЕРИЗАЦИЯ В ПРОГРЕССЕ..."

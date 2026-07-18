@@ -61,7 +61,8 @@
         "brandExtension": ".com",
         "promptSuffix": "@promptdemerde:~# ",
         "market": "Merkato",
-        "marketExternalTitle": "Malfermas la Marketplace-katalogon ĉe promptdemerde.com"
+        "marketExternalTitle": "Malfermas la Marketplace-katalogon ĉe promptdemerde.com",
+        "legalExternalTitle": "Malfermas la paĝon ĉe promptdemerde.com"
     },
     "loader": {
         "message": "SNIPER-PURIGADO OKAZAS..."

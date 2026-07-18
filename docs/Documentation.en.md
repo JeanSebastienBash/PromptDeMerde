@@ -31,7 +31,7 @@ This document describes behaviour that is **verifiable in the repository**: file
 7. [Options, profiles, export, and danger zone](#7-options-profiles-export-and-danger-zone)
 8. [Voice dictation and audio (STT)](#8-voice-dictation-and-audio-stt)
 9. [Image import → description (vision)](#9-image-import-description-vision)
-10. [Marketplace (clone vs official site)](#10-marketplace-clone-vs-official-site)
+10. [Marketplace and legal pages (clone vs official site)](#10-marketplace-clone-vs-official-site)
 11. [Ollama — flow A and flow B](#11-ollama-flow-a-and-flow-b)
 12. [Export / import — profile ZIP archive](#12-export-import-profile-zip-archive)
 13. [The 51 `pdm_*` keys](#13-the-51-pdm-keys)
@@ -446,9 +446,14 @@ The **Import an image** button in the Input area opens a file picker (**no** dra
 ---
 
 <a id="10-marketplace-clone-vs-official-site"></a>
-## 10. Marketplace (clone vs official site)
+## 10. Marketplace and legal pages (clone vs official site)
 
-On a public clone, the **Marketplace** menu opens the online catalogue at [promptdemerde.com](https://promptdemerde.com/#market). Implementation detail is not part of this repository’s public mirror.
+On a public clone:
+
+- **Marketplace** opens the online catalogue at [promptdemerde.com/#market](https://promptdemerde.com/#market) (green badge).
+- **Legal notice / Terms / Privacy / Support** open the matching pages on [promptdemerde.com](https://promptdemerde.com) (same badge). Detection: presence of `assets/i18n/site-pages/fr.json` (`features.sitePages`).
+
+Marketplace implementation detail is not part of this repository’s public mirror.
 
 
 ---
@@ -836,6 +841,7 @@ The total is **131** versioned `assets/js/*.js` files (excluding vendor). Roles 
 | [`app.js`](../assets/js/app.js) | SPA entry point: hash routing, initialization, and global navigation. |
 | [`bootstrap.js`](../assets/js/bootstrap.js) | Dynamic loader for scripts listed by lib/env/env.php. |
 | [`env.js`](../assets/js/env.js) | Server configuration client (GET lib/env/env.php). |
+| [`env-official-nav.js`](../assets/js/env-official-nav.js) | Market / legal / support links to the official site when the local artefact is missing (green badge). |
 
 ### 15.2 config-schema
 

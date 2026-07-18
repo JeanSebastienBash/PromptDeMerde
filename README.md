@@ -349,7 +349,7 @@ On a public clone without a local catalogue, the Marketplace menu opens that URL
 
 ### 19. Hash-based SPA navigation
 
-The UI switches between Workspace, Prompts, Options, Marketplace and stub pages (legal notice, terms, privacy, support) via the URL hash, without a full page reload. The footer Documentation link opens the GitHub technical docs (FR or EN according to the UI language).
+The UI switches between Workspace, Prompts, Options and Marketplace via the URL hash, without a full page reload. On a clone without `site-pages/`, footer Mentions / Terms / Privacy / Support open [promptdemerde.com](https://promptdemerde.com) (green badge, same pattern as Marketplace). The Documentation link opens the GitHub technical docs (FR or EN according to the UI language).
 
 ---
 

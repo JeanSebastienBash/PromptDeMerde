@@ -31,7 +31,7 @@ Ce document décrit le fonctionnement **vérifiable dans le dépôt** : fichiers
 7. [Options, profils, export et zone danger](#7-options-profils-export-et-zone-danger)
 8. [Dictée vocale et audio (STT)](#8-dictée-vocale-et-audio-stt)
 9. [Import image → description (vision)](#9-import-image-description-vision)
-10. [Marketplace (clone vs site officiel)](#10-marketplace-clone-vs-site-officiel)
+10. [Marketplace et pages légales (clone vs site officiel)](#10-marketplace-clone-vs-site-officiel)
 11. [Ollama — flux A et flux B](#11-ollama-flux-a-et-flux-b)
 12. [Export / import — archive ZIP profil](#12-export-import-archive-zip-profil)
 13. [Les 51 clés `pdm_*`](#13-les-51-clés-pdm)
@@ -446,9 +446,14 @@ Le bouton **Importer une image** dans la zone Input ouvre un file picker (**pas*
 ---
 
 <a id="10-marketplace-clone-vs-site-officiel"></a>
-## 10. Marketplace (clone vs site officiel)
+## 10. Marketplace et pages légales (clone vs site officiel)
 
-Sur un clone public, le menu **Marketplace** mène au catalogue en ligne sur [promptdemerde.com](https://promptdemerde.com/#market). Le détail d’implémentation n’appartient pas au miroir public de ce dépôt.
+Sur un clone public :
+
+- **Marketplace** ouvre le catalogue en ligne sur [promptdemerde.com/#market](https://promptdemerde.com/#market) (pastille verte).
+- **Mentions / CGU / Confidentialité / Support** ouvrent les pages correspondantes sur [promptdemerde.com](https://promptdemerde.com) (même pastille). Détection : présence de `assets/i18n/site-pages/fr.json` (`features.sitePages`).
+
+Le détail d’implémentation marketplace n’appartient pas au miroir public de ce dépôt.
 
 
 ---
@@ -836,6 +841,7 @@ Le total s’élève à **131** fichiers `assets/js/*.js` versionnés (hors vend
 | [`app.js`](../assets/js/app.js) | Point d'entrée SPA : routage hash, initialisation et navigation globale. |
 | [`bootstrap.js`](../assets/js/bootstrap.js) | Chargeur dynamique des scripts listés par lib/env/env.php. |
 | [`env.js`](../assets/js/env.js) | Client de configuration serveur (GET lib/env/env.php). |
+| [`env-official-nav.js`](../assets/js/env-official-nav.js) | Liens Market / légal / support vers le site officiel si artefact local absent (pastille verte). |
 
 ### 15.2 config-schema
 

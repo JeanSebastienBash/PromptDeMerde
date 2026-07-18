@@ -61,7 +61,8 @@
         "brandExtension": ".com",
         "promptSuffix": "@promptdemerde:~# ",
         "market": "Market",
-        "marketExternalTitle": "Opens the Marketplace catalog on promptdemerde.com"
+        "marketExternalTitle": "Opens the Marketplace catalog on promptdemerde.com",
+        "legalExternalTitle": "Opens the page on promptdemerde.com"
     },
     "loader": {
         "message": "SNIPERISATION IN PROGRESS..."

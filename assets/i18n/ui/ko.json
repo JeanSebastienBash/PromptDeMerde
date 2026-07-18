@@ -61,7 +61,8 @@
         "brandExtension": ".com",
         "promptSuffix": "@promptdemerde:~#",
         "market": "마켓플레이스",
-        "marketExternalTitle": "promptdemerde.com에서 Marketplace 카탈로그를 엽니다"
+        "marketExternalTitle": "promptdemerde.com에서 Marketplace 카탈로그를 엽니다",
+        "legalExternalTitle": "promptdemerde.com에서 페이지를 엽니다"
     },
     "loader": {
         "message": "저격 진행 중..."

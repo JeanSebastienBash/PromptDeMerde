@@ -155,9 +155,10 @@ Le dépôt public versionne le profil officiel `speech2texte` sous `assets/profi
 
 ## Documentation in-app et pages légales
 
-- **Clone / GitHub** : stubs `pages.*` dans `assets/i18n/ui/*.json` — liens vers [promptdemerde.com](https://promptdemerde.com), GitHub et la [fiche projet DreamProject](https://www.dreamproject.online/prj/promptdemerde/).
-- **Site officiel** : pages légales complètes servies sur promptdemerde.com ; documentation = [`docs/Documentation.md`](docs/Documentation.md) (FR) / [`.en.md`](docs/Documentation.en.md) (EN).
-- **Footer** : liens externes (documentation technique GitHub ; légal/support → site ou hash légal selon instance).
+- **Clone / GitHub** (sans `assets/i18n/site-pages/`) : Mentions, CGU, Confidentialité et Support du footer pointent vers [promptdemerde.com](https://promptdemerde.com) (hash) avec pastille verte — même logique que Marketplace. Les stubs `pages.*` dans `assets/i18n/ui/*.json` ne s’affichent plus en navigation.
+- **Site officiel** (avec `site-pages/`) : pages légales locales complètes ; pas de pastille.
+- **Documentation** footer : GitHub [`docs/Documentation.md`](docs/Documentation.md) (FR) / [`.en.md`](docs/Documentation.en.md) (EN).
+- **Détection** : `features.sitePages` via `lib/env/env.php` (fichier `assets/i18n/site-pages/fr.json` lisible).
 
 ## Pull requests
 

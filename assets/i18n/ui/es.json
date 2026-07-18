@@ -61,7 +61,8 @@
         "brandExtension": ".com",
         "promptSuffix": "@promptdemerde:~# ",
         "market": "Mercado",
-        "marketExternalTitle": "Abre el catálogo Marketplace en promptdemerde.com"
+        "marketExternalTitle": "Abre el catálogo Marketplace en promptdemerde.com",
+        "legalExternalTitle": "Abre la página en promptdemerde.com"
     },
     "loader": {
         "message": "PRECISIÓN EN CURSO..."
