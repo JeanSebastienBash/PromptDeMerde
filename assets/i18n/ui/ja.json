@@ -1327,7 +1327,9 @@
         "metaUpdated": "更新日",
         "ioInput": "入力",
         "ioOutput": "出力",
-        "metaSizeValue": "{{value}} B"
+        "metaSizeValue": "{{value}} B",
+        "vignettesMaintenanceTitle": "メンテナンス中",
+        "vignettesMaintenanceHint": "カタログのプレビューは一時的に利用できません。後でもう一度お試しください。"
     },
     "profileSelector": {
         "profileSwitchError": "プロファイルを切り替えられません。再試行するかページを再読み込みしてください。",

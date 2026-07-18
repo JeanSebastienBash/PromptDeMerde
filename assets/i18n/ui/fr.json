@@ -1327,7 +1327,9 @@
         "ioInput": "Entrée",
         "ioOutput": "Sortie",
         "metaPublished": "Publication",
-        "metaSizeValue": "{{value}} o"
+        "metaSizeValue": "{{value}} o",
+        "vignettesMaintenanceTitle": "Maintenance en cours",
+        "vignettesMaintenanceHint": "Les aperçus du catalogue sont temporairement indisponibles. Réessayer plus tard."
     },
     "profileSelector": {
         "profileSwitchError": "Changement de profil impossible. Réessayez ou rechargez la page.",

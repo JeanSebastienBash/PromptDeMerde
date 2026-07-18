@@ -362,6 +362,20 @@ function pdm_json_response(array $payload, int $status = 200): void
     exit;
 }
 
+/**
+ * Lit une variable d'environnement booléenne (getenv → $_SERVER → REDIRECT_*).
+ * Vrai si 1 / true / yes / on (insensible à la casse). Défaut : faux.
+ */
+function pdm_env_flag_truthy(string $name): bool
+{
+    $raw = getenv($name);
+    if ($raw === false || $raw === '') {
+        $raw = $_SERVER[$name] ?? $_SERVER['REDIRECT_' . $name] ?? '';
+    }
+    $v = strtolower(trim((string) $raw));
+    return $v === '1' || $v === 'true' || $v === 'yes' || $v === 'on';
+}
+
 function pdm_resolve_deployment(): array
 {
     $raw = getenv('PDM_ENV');

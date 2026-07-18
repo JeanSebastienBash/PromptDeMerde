@@ -1327,7 +1327,9 @@
         "metaUpdated": "Aggiornato",
         "ioInput": "Input",
         "ioOutput": "Output",
-        "metaSizeValue": "{{value}} B"
+        "metaSizeValue": "{{value}} B",
+        "vignettesMaintenanceTitle": "Manutenzione in corso",
+        "vignettesMaintenanceHint": "Le anteprime del catalogo sono temporaneamente non disponibili. Riprovare più tardi."
     },
     "profileSelector": {
         "profileSwitchError": "Impossibile cambiare profilo. Riprova o ricarica la pagina.",

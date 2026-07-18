@@ -1327,7 +1327,9 @@
         "metaUpdated": "Aktualisiert",
         "ioInput": "Eingabe",
         "ioOutput": "Ausgabe",
-        "metaSizeValue": "{{value}} B"
+        "metaSizeValue": "{{value}} B",
+        "vignettesMaintenanceTitle": "Wartung läuft",
+        "vignettesMaintenanceHint": "Katalogvorschauen sind vorübergehend nicht verfügbar. Später erneut versuchen."
     },
     "profileSelector": {
         "profileSwitchError": "Profilwechsel fehlgeschlagen. Erneut versuchen oder Seite neu laden.",

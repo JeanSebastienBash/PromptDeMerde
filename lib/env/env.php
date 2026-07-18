@@ -3,7 +3,7 @@
  * PromptDeMerde.com — env.php
  *
  * Synopsis : Endpoint JSON de configuration déploiement (prod/preprod/selfhosted).
- * Objectif : Lire PDM_ENV, lister scripts autorisés, providers LLM, features homepage/profils et marque nav.
+ * Objectif : Lire PDM_ENV, lister scripts autorisés, providers LLM, features homepage/profils/market et marque nav.
  */
 header('Content-Type: application/json; charset=utf-8');
 header('Cache-Control: no-store, no-cache, must-revalidate');
@@ -22,6 +22,7 @@ $hasHomepage = is_readable($homepageFragment);
 
 $marketIndex = $root . '/assets/market/index.json';
 $hasMarket = is_readable($marketIndex);
+$marketVignettesMaintenance = pdm_env_flag_truthy('PDM_MARKET_VIGNETTES_MAINTENANCE');
 
 $hasProfiles = pdm_profiles_runtime_available();
 
@@ -201,6 +202,7 @@ echo json_encode([
         'profilesRuntimeOk' => $hasProfiles,
         'brandNavExtension' => $isProd || $isPreprod,
         'marketplace' => $hasMarket,
+        'marketVignettesMaintenance' => $marketVignettesMaintenance,
     ],
     'llm' => [
         'enabled' => $llmEnabled,

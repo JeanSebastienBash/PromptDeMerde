@@ -1327,7 +1327,9 @@
         "metaUpdated": "Ĝisdatigita",
         "ioInput": "Enigo",
         "ioOutput": "Eligo",
-        "metaSizeValue": "{{value}} B"
+        "metaSizeValue": "{{value}} B",
+        "vignettesMaintenanceTitle": "Prizorgado en progreso",
+        "vignettesMaintenanceHint": "Katalogaj antaŭrigardoj dumtempe nedisponeblas. Reprovi poste."
     },
     "profileSelector": {
         "profileSwitchError": "Ne eblis ŝanĝi profilon. Reprovu aŭ reŝargu la paĝon.",

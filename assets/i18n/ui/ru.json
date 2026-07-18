@@ -1327,7 +1327,9 @@
         "metaUpdated": "Обновлено",
         "ioInput": "Ввод",
         "ioOutput": "Вывод",
-        "metaSizeValue": "{{value}} Б"
+        "metaSizeValue": "{{value}} Б",
+        "vignettesMaintenanceTitle": "Идёт обслуживание",
+        "vignettesMaintenanceHint": "Превью каталога временно недоступны. Повторить попытку позже."
     },
     "profileSelector": {
         "profileSwitchError": "Не удалось сменить профиль. Повторите или обновите страницу.",

@@ -2,7 +2,7 @@
  * PromptDeMerde.com — env.js
  *
  * Synopsis : Client de configuration serveur (GET lib/env/env.php).
- * Objectif : Exposer PDM.Env avec environnement, capacités LLM, homepage, sélecteur profils et extension .com nav.
+ * Objectif : Exposer PDM.Env avec environnement, capacités LLM, homepage, sélecteur profils, market et extension .com nav.
  */
 (function() {
 
@@ -21,7 +21,8 @@ var FALLBACK = {
         profileSelector: false,
         profilesRuntimeOk: false,
         brandNavExtension: false,
-        marketplace: false
+        marketplace: false,
+        marketVignettesMaintenance: false
     },
     llm: {
         enabled: ['ollama'],
@@ -145,7 +146,13 @@ function normalizePayload(json) {
         json.security = { proxyAuthRequired: false };
     }
     if (!json.features || typeof json.features.homepage !== 'boolean') {
-        json.features = { homepage: false, profileSelector: false, brandNavExtension: false };
+        json.features = {
+            homepage: false,
+            profileSelector: false,
+            brandNavExtension: false,
+            marketplace: false,
+            marketVignettesMaintenance: false
+        };
     } else {
         if (typeof json.features.profileSelector !== 'boolean') {
             json.features.profileSelector = false;
@@ -158,6 +165,9 @@ function normalizePayload(json) {
         }
         if (typeof json.features.marketplace !== 'boolean') {
             json.features.marketplace = false;
+        }
+        if (typeof json.features.marketVignettesMaintenance !== 'boolean') {
+            json.features.marketVignettesMaintenance = false;
         }
     }
     return json;
@@ -212,6 +222,10 @@ E.showBrandNavExtension = function() {
 E.hasMarketplace = function() {
     var features = E.get().features;
     return !!(features && features.marketplace === true);
+};
+E.hasMarketVignettesMaintenance = function() {
+    var features = E.get().features;
+    return !!(features && features.marketVignettesMaintenance === true);
 };
 E.injectExtraStylesheets = function() {
     var assets = E.get().assets;

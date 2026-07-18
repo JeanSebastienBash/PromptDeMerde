@@ -1327,7 +1327,9 @@
         "metaUpdated": "Actualizado",
         "ioInput": "Entrada",
         "ioOutput": "Salida",
-        "metaSizeValue": "{{value}} B"
+        "metaSizeValue": "{{value}} B",
+        "vignettesMaintenanceTitle": "Mantenimiento en curso",
+        "vignettesMaintenanceHint": "Las vistas previas del catálogo no están disponibles temporalmente. Reintentar más tarde."
     },
     "profileSelector": {
         "profileSwitchError": "No se pudo cambiar de perfil. Reintenta o recarga la página.",

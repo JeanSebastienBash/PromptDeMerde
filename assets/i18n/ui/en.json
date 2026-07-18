@@ -1327,7 +1327,9 @@
         "ioInput": "Input",
         "ioOutput": "Output",
         "metaPublished": "Published",
-        "metaSizeValue": "{{value}} B"
+        "metaSizeValue": "{{value}} B",
+        "vignettesMaintenanceTitle": "Maintenance in progress",
+        "vignettesMaintenanceHint": "Catalog previews are temporarily unavailable. Try again later."
     },
     "profileSelector": {
         "profileSwitchError": "Could not switch profile. Retry or reload the page.",

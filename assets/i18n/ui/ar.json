@@ -1327,7 +1327,9 @@
         "metaUpdated": "آخر تحديث",
         "ioInput": "إدخال",
         "ioOutput": "إخراج",
-        "metaSizeValue": "{{value}} بايت"
+        "metaSizeValue": "{{value}} بايت",
+        "vignettesMaintenanceTitle": "صيانة جارية",
+        "vignettesMaintenanceHint": "معاينات الكتالوج غير متاحة مؤقتًا. إعادة المحاولة لاحقًا."
     },
     "profileSelector": {
         "profileSwitchError": "تعذّر تبديل الملف الشخصي. أعد المحاولة أو أعد تحميل الصفحة.",

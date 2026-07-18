@@ -1327,7 +1327,9 @@
         "metaUpdated": "更新日期",
         "ioInput": "输入",
         "ioOutput": "输出",
-        "metaSizeValue": "{{value}} 字节"
+        "metaSizeValue": "{{value}} 字节",
+        "vignettesMaintenanceTitle": "维护中",
+        "vignettesMaintenanceHint": "目录预览暂时不可用。请稍后再试。"
     },
     "profileSelector": {
         "profileSwitchError": "无法切换配置文件。请重试或刷新页面。",

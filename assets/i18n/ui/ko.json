@@ -1327,7 +1327,9 @@
         "metaUpdated": "업데이트",
         "ioInput": "입력",
         "ioOutput": "출력",
-        "metaSizeValue": "{{value}} B"
+        "metaSizeValue": "{{value}} B",
+        "vignettesMaintenanceTitle": "유지보수 중",
+        "vignettesMaintenanceHint": "카탈로그 미리보기를 일시적으로 사용할 수 없습니다. 나중에 다시 시도하세요."
     },
     "profileSelector": {
         "profileSwitchError": "프로필을 전환할 수 없습니다. 다시 시도하거나 페이지를 새로고침하세요.",
