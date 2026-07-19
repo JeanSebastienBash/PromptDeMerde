@@ -44,9 +44,9 @@ More videos will follow on the PromptDeMerde YouTube playlist. The Short on the 
 </td>
 <td width="44%" valign="top" align="center">
 
-<img src="assets/images/screenshots/readme-watch-workspace-en.png" alt="PromptDeMerde Workspace: classifieds-style Input draft, active context prompts, empty Output with Thinking on, deepseek-r1:671b, LLM history with two unrelated professional entries" width="100%" style="border:1px solid #d0d7de;border-radius:8px;box-shadow:0 1px 2px rgba(0,0,0,.08);">
+<img src="assets/images/screenshots/readme-watch-workspace-en.png" alt="PromptDeMerde Workspace: comics classifieds raw prompt in Input, active context prompts, empty Output with Thinking on, deepseek-r1:671b, LLM history with two unrelated professional entries" width="100%" style="border:1px solid #d0d7de;border-radius:8px;box-shadow:0 1px 2px rgba(0,0,0,.08);">
 
-<strong>Workspace — classifieds draft, contexts, empty Output, LLM history</strong><br>
+<strong>Workspace — raw prompt in Input (comics classifieds), contexts, empty Output, LLM history</strong><br>
 <em>Theme Plum light (`prune-day`). Input holds a spoken-style comics listing (Lyon, bus-stop meetup). Context prompts open (personal info / meetup / firm price). Output empty with Thinking on and model <code>deepseek-r1:671b</code>. History shows two other daily LLM uses (workshop notes, supplier RFQ).</em>
 
 </td>
@@ -93,37 +93,84 @@ More videos will follow on the PromptDeMerde YouTube playlist. The Short on the 
 
 ---
 
-## Menu
+## Table of contents
 
-* [Videos](#menu-videos)
-* [What’s new](#menu-whats-new)
-* [What PromptDeMerde is](#menu-what-is)
-* [Who it is for](#menu-who)
-* [Official site = self-hosted copy](#menu-official-site)
-* [Zero telemetry](#menu-zero-telemetry)
-* [Features](#menu-features)
-  * [1–18 — core capabilities](#1-clean-rephrase-with-ollama)
-  * [19–40 — shell, UX, Options, Market, footer](#19-hash-based-spa-navigation)
-* [JSON profile](#menu-json-profile)
-* [Prerequisites](#menu-prerequisites)
-* [Try it in three steps](#menu-try-it)
-* [Self-hosting](#menu-self-hosting)
-* [Credits](#menu-credits)
-* [License](#menu-license)
+**Numbering (LLM pilot):** product sections **1–12**. Under **§5 Features**, theme groups are **5.1–5.7**; each capability is **5.x.y** (seven groups, dozens of capabilities). Every TOC glyph below is unique. Videos and What’s new sit **above** this list and are **not** numbered product sections.
 
+* ✨ [1. What PromptDeMerde is](#menu-what-is) — raw prompt in, structured prompt out; Ollama local; session in the browser
+* 👤 [2. Who it is for](#menu-who) — solo · power user · small team · one shared language (JSON profile) for humans and LLMs
+* 🌐 [3. Official site = self-hosted copy](#menu-official-site) — official site or private install · same SPA, ZIP, and client-side data
+* 🔒 [4. Zero telemetry](#menu-zero-telemetry) — no product telemetry; no server DB of Workspace content · identical privacy on the official site and on a clone
+* 🧩 [5. Features](#menu-features) — dozens of delivered capabilities (screenshots under `assets/images/screenshots/`)
+  * ✦ [5.1. Clean & Workspace](#feat-5-1)
+    * 🪄 [5.1.1. Clean / rephrase with Ollama](#feat-5-1-1) — local model + system prompt + enabled `#Tag` → Output
+    * ↔️ [5.1.2. Workspace Input → Output](#feat-5-1-2) — the workbench: prompt cleaning · voice dictation · audio transcription · image to text recognition
+    * 🎛 [5.1.3. Workspace LLM options](#feat-5-1-3) — model choice · temperature control · token limit · custom timeout · thinking toggle
+    * 📄 [5.1.4. Output display formats](#feat-5-1-4) — plain text · JSON · HTML
+    * 🔢 [5.1.5. Input character counter, Reset and trash](#feat-5-1-5) — 50k characters on Input · Reset (confirm) clears Input+Output · trash clears Input
+    * 💾 [5.1.6. Workspace autosave and prompt guard](#feat-5-1-6) — Workspace session state; Clean blocked until a prompt is active
+    * ⛔ [5.1.7. Mutual exclusion of Input modes](#feat-5-1-7) — dictate · media · image · Clean never overlap blindly
+    * ⏱ [5.1.8. Thinking, Stop and stream metadata](#feat-5-1-8) — cancel mid-run; time · tokens · throughput · multipass index
+  * ✧ [5.2. System prompt, `#Tag` contexts & generators](#feat-5-2)
+    * #️⃣ [5.2.1. System prompt and context prompts (#Tag)](#feat-5-2-1) — stackable blocks; inject before or after system
+    * 🧠 [5.2.2. AI-assisted context prompt generators](#feat-5-2-2) — intention or title → new `#Tag` via Ollama
+    * 🗂 [5.2.3. Workspace context-prompt panel](#feat-5-2-3) — pick which `#Tag` contexts join Clean · active count · edit on Prompts
+    * ↕ [5.2.4. Prompts screen: order, drag-and-drop and counter](#feat-5-2-4) — reorder `#Tag` · inject before/after system · tag count
+  * ✶ [5.3. Voice, media & vision into Input](#feat-5-3)
+    * 🎤 [5.3.1. Unlimited voice dictation with Vosk, Parakeet or Whisper](#feat-5-3-1) — in-browser STT · local recognition · no cloud audio
+    * 🎬 [5.3.2. Import audio or video (audio transcription)](#feat-5-3-2) — Whisper Maxi path; voice dictation still available after
+    * ⬇ [5.3.3. Export one session audio file](#feat-5-3-3) — merge dictation takes → one download
+    * 🖼 [5.3.4. Describe an image (Ollama vision)](#feat-5-3-4) — file picker → vision model → text in Input
+    * ⚙ [5.3.5. Advanced dictation options](#feat-5-3-5) — preload, language, CPU/GPU, mic, caret insert, delete-word · while voice dictation
+    * ↻ [5.3.6. Dictation outside Workspace and resume after interrupt](#feat-5-3-6) — keep talking in Options/docs; confirm before wipe/reload
+  * ✷ [5.4. History, compression & long Input](#feat-5-4)
+    * 📜 [5.4.1. Local history with traces](#feat-5-4-1) — Input / system / `#Tag` / Output cards; Original · Compressed pairs
+    * 🗜 [5.4.2. Optional token compression](#feat-5-4-2) — checkboxes applied on Clean (no separate Compress button)
+    * ∞ [5.4.3. Long Input, multi-pass](#feat-5-4-3) — split → successive Ollama passes → concatenate
+    * ⏸ [5.4.4. Compression panel, overlay and Stop](#feat-5-4-4) — lock Output while compressing; Stop; session chips
+    * 📤 [5.4.5. History](#feat-5-4-5) — restore, modal and JSON export; ~100 entries; per-block copy; optional source audio
+  * ✸ [5.5. JSON profile ZIP & Marketplace](#feat-5-5)
+    * 📦 [5.5.1. Import / export JSON profile (ZIP)](#feat-5-5-1) — `.zip` only; integrity check; proxy tokens excluded
+    * 🎨 [5.5.2. UI personalization](#feat-5-5-2) — logo colours, titles, labels, theme, synopsis via profile keys
+    * 🏪 [5.5.3. Marketplace of JSON profiles](#feat-5-5-3) — ready-made packs on the official site (clone falls back to `#market`)
+    * 🔀 [5.5.4. Profiles: create, switch, export modal](#feat-5-5-4) — minimal / maximal preset; startup language
+    * 🔎 [5.5.5. Marketplace: search, filters and detail card](#feat-5-5-5) — when a local catalogue is present
+  * ✹ [5.6. Languages, themes & same code everywhere](#feat-5-6)
+    * 🗣 [5.6.1. Twelve UI languages & about 50 themes](#feat-5-6-1) — default Marron clair (`marron-day`)
+    * ≡ [5.6.2. Same code everywhere](#feat-5-6-2) — promptdemerde.com ≡ this repo’s SPA
+    * 🌓 [5.6.3. Day / night theme toggle](#feat-5-6-3) — light ↔ dark of the active family
+    * ♿ [5.6.4. Reduced motion and RTL](#feat-5-6-4) — `prefers-reduced-motion`; Arabic `dir=rtl`
+  * ✺ [5.7. Shell, navigation, Options & footer](#feat-5-7)
+    * 🧭 [5.7.1. Hash-based SPA navigation](#feat-5-7-1) — Workspace · Prompts · Options · Market without full reload
+    * ☰ [5.7.2. Burger menu, Escape and loader](#feat-5-7-2) — mobile nav; Escape closes; startup loader
+    * 🏷 [5.7.3. Environment badge and GitHub version](#feat-5-7-3) — PROD / PRE-PROD / SELF-HOSTED via web server configuration; version links to GitHub tags
+    * ⌨ [5.7.4. Clean shortcut and on-screen feedback](#feat-5-7-4) — Ctrl/Cmd+Enter runs Clean; brief toast notices; “Copied” after copy
+    * 💫 [5.7.5. Logo, shell animation and profile synopsis](#feat-5-7-5) — brand driven by the active JSON profile
+    * 🔌 [5.7.6. LLM Options: Test and proxy token](#feat-5-7-6) — Ollama URL test; model list; session proxy token for operator prod relay
+    * ⚠ [5.7.7. Danger zone Wipe all](#feat-5-7-7) — localStorage · sessionStorage · audio IDB · STT caches → fresh install
+    * 📎 [5.7.8. Footer: project carousel and resources](#feat-5-7-8) — DreamProjectAI carousel · stack badges · docs / support
+* 🧳 [6. JSON profile](#menu-json-profile) — export prompts, LLM settings, UI labels · logo · language, theme and history in one portable archive
+* 📋 [7. Prerequisites](#menu-prerequisites) — what to install before the first Clean
+  * 🌍 [7.1. Official site](#prereq-7-1) — browser + local Ollama (+ `OLLAMA_ORIGINS`)
+  * 🛠 [7.2. Self-host](#prereq-7-2) — PHP stack + `install/restore-large-assets.sh` + Ollama
+* ▶ [8. Try it in three steps](#menu-try-it) — pull an Ollama model · open your self-hosted app or go to the official site (same privacy) to Clean a raw prompt
+* 🖥 [9. Self-hosting (optional)](#menu-self-hosting) — clone from GitHub · reassemble dictation models from local parts · run with PHP · open your local URL
+* © [10. Credits](#menu-credits) — Ollama, STT engines, fonts, and related stacks
+* 📚 [11. Further reading](#menu-further-reading) — advanced docs, security, contributing, tag notes
+* ⚖ [12. License](#menu-license) — MIT
 ---
 
 <a id="menu-what-is"></a>
 
-## ✨ What PromptDeMerde is
+## ✨ 1. What PromptDeMerde is
 
-PromptDeMerde reformulates a **draft** (typed, dictated, transcribed from audio/video, or described from an image) into a **prompt** using:
+PromptDeMerde reformulates a **raw prompt** (typed, dictated via voice dictation, transcribed from audio/video, or described from an image) into a **cleaned prompt** using:
 
 * an optional **system prompt**;
 * optional **context prompts (`#Tag`)** enabled in the Workspace;
 * a model served by **Ollama** on the user’s machine.
 
-Session data (draft, history, settings, profiles) is stored in the **browser** (`localStorage`; IndexedDB for dictation audio). No signup required. User drafts stay outside any server-side application database.
+Session data (raw prompt / Workspace state, history, settings, profiles) is stored in the **browser** (`localStorage`; IndexedDB for voice-dictation audio). No signup required. User session state stays outside any server-side application database.
 
 [Advanced documentation — presentation](docs/Documentation.md#1-présentation) · [Privacy model](docs/Documentation.md#2-modèle-de-confidentialité)
 
@@ -131,7 +178,7 @@ Session data (draft, history, settings, profiles) is stored in the **browser** (
 
 <a id="menu-who"></a>
 
-## 👥 Who it is for
+## 👤 2. Who it is for
 
 * **Solo / freelancer** — one JSON profile reused for recurring prompt work (mail, posts, briefs, image prompts, etc.).
 * **Power user** — local Ollama, editable system prompt and context prompts, in-browser STT, vision model, compression, multipass Input.
@@ -142,11 +189,11 @@ Session data (draft, history, settings, profiles) is stored in the **browser** (
 
 <a id="menu-official-site"></a>
 
-## 🏠 Official site = self-hosted copy
+## 🌐 3. Official site = self-hosted copy
 
 [promptdemerde.com](https://promptdemerde.com/) and a clone from this repository run the **same application** (same SPA, Workspace, profile ZIP format).
 
-While the official site is online, DreamProjectAI allows using it under the same conditions as a private install for application behaviour. Self-hosting: clone, run `install/restore-large-assets.sh`, serve with Apache or Nginx + PHP, point the browser at your URL.
+While the official site is online, DreamProjectAI allows using it under the same conditions as a private install for application behaviour. Self-hosting: clone, reassemble dictation models from local parts (`install/restore-large-assets.sh`), run with Apache or Nginx + PHP, open your local URL.
 
 In both cases, Workspace content and profiles stay in the browser.
 
@@ -154,7 +201,7 @@ In both cases, Workspace content and profiles stay in the browser.
 
 <a id="menu-zero-telemetry"></a>
 
-## 🛡️ Zero telemetry
+## 🔒 4. Zero telemetry
 
 > Prompts, history, imported media, transcriptions, and profile data are processed and stored in the **browser**. The application collects **no product telemetry**. There is **no** application database of user content on the official server.
 
@@ -167,13 +214,21 @@ Same client-side model on the official site and on a self-hosted copy.
 
 <a id="menu-features"></a>
 
-## 🚀 Features
+## 🧩 5. Features
 
-Each subsection describes a delivered capability and links to the matching section in the advanced documentation. Screenshots: `assets/images/screenshots/`.
+Theme groups **5.1–5.7**; capabilities **5.x.y** (dozens in total). Each subsection describes a delivered capability and links to the matching section in the advanced documentation. Screenshots: `assets/images/screenshots/`.
 
 ---
 
-### 1. Clean / rephrase with Ollama
+<a id="feat-5-1"></a>
+
+### ✦ 5.1. Clean & Workspace
+
+---
+
+<a id="feat-5-1-1"></a>
+
+### 🪄 5.1.1. Clean / rephrase with Ollama
 
 **Clean** sends Input to a local Ollama model with the active system prompt and the enabled context prompts (`#Tag`). Output is the rephrased prompt, ready to copy.
 
@@ -183,27 +238,102 @@ The model is the one configured in the app (pulled with `ollama pull`). Connecti
 
 ---
 
-### 2. Workspace Input → Output
+<a id="feat-5-1-2"></a>
+
+### ↔️ 5.1.2. Workspace Input → Output
 
 Workspace layout:
 
-* **Input** — draft (type, dictate, import media, image description)
+* **Input** — raw prompt (type, voice dictation, import media, image description)
 * **Output** — cleaned prompt
 * Actions — Clean, copy, Reset (confirmation required)
 
 <p align="center">
-  <img src="assets/images/screenshots/ws-input-panel.gif" alt="Workspace Input panel with draft text, voice dictation strip, Reset, and two active context prompts" width="70%" style="border:1px solid #d0d7de;border-radius:8px;box-shadow:0 1px 2px rgba(0,0,0,.08);">
+  <img src="assets/images/screenshots/ws-input-panel.gif" alt="Workspace Input panel with raw prompt text, voice dictation strip, Reset, and two active context prompts" width="70%" style="border:1px solid #d0d7de;border-radius:8px;box-shadow:0 1px 2px rgba(0,0,0,.08);">
   <br>
   <strong>Workspace — Input panel</strong><br>
-  <em>Draft text is visible in Input, with the Dictée vocale strip and Reset at the top. Below, Prompts de contexte shows 2 actifs.</em>
+  <em>Raw prompt text is visible in Input, with the voice dictation (Dictée vocale) strip and Reset at the top. Below, Prompts de contexte shows 2 actifs.</em>
 </p>
-
 
 [Advanced docs — Workspace](docs/Documentation.md#32-workspace)
 
 ---
 
-### 3. System prompt and context prompts (#Tag)
+<a id="feat-5-1-3"></a>
+
+### 🎛 5.1.3. Workspace LLM options
+
+On the Output strip: **model choice** (dropdown of local Ollama models). Open **⚙ Options** for the rest of the run knobs:
+
+* **Temperature control** — slider (creativity / determinism)
+* **Token limit** — max output tokens
+* **Custom timeout** — inference deadline (0 = unlimited)
+* **Thinking toggle** — ON/OFF for model thinking when the model supports it (optional max thinking characters)
+
+URL and connection test: Options → LLM. Public path: leave **“I don’t have a token”** checked and use local Ollama. Display format radios in the same panel are covered in **5.1.4**.
+
+[Advanced docs — LLM parameters](docs/Documentation.md#43-paramètres-llm-workspace-panel)
+
+---
+
+<a id="feat-5-1-4"></a>
+
+### 📄 5.1.4. Output display formats
+
+Output can be shown as plain text, JSON, or HTML.
+
+[Advanced docs — OUTPUT display format](docs/Documentation.md#322-format-daffichage-output)
+
+---
+
+<a id="feat-5-1-5"></a>
+
+### 🔢 5.1.5. Input character counter, Reset and trash
+
+**Character counter** beside Input: live `count / 50000`. The Input textarea is capped at **50,000** characters (`maxlength`); the same ceiling applies when exporting `pdm_workspace.input` in a ZIP. Inference itself has **no** hard length cap — long Input uses multipass (see **5.4.3**).
+
+Two different clear actions (not one “Input only or both panes” choice):
+
+* **Reset** (header on Input and on Output — same control): confirmation required; clears **Input and Output**.
+* **Trash** (under Input): clears Input without confirmation; when Input is empty, Output is cleared too (Workspace sync). Blocked during dictation. Reset is also blocked during dictation or an active Clean.
+
+[Advanced docs — Workspace](docs/Documentation.md#32-workspace) · [Long Input / 50k export note](docs/Documentation.md#321-input-long-multi-pass-inférence)
+
+---
+
+<a id="feat-5-1-6"></a>
+
+### 💾 5.1.6. Workspace autosave and prompt guard
+
+The Workspace session state (Input raw prompt, Output, thinking, context-panel state) autosaves in the browser. **Clean** stays disabled until a system prompt or at least one context prompt is active; a guard message explains what to enable.
+
+---
+
+<a id="feat-5-1-7"></a>
+
+### ⛔ 5.1.7. Mutual exclusion of Input modes
+
+Dictation, audio/video import, image import and inference lock each other out. Inline status and toasts state the cause and the next action when modes conflict.
+
+---
+
+<a id="feat-5-1-8"></a>
+
+### ⏱ 5.1.8. Thinking, Stop and stream metadata
+
+When the model supports it, thinking can be enabled with a character cap (0 = unlimited). A dedicated panel shows and copies thinking text. **Stop** cancels inference or compression. During the stream, the UI shows time, tokens, throughput and multi-pass index.
+
+---
+
+<a id="feat-5-2"></a>
+
+### ✧ 5.2. System prompt, `#Tag` contexts & generators
+
+---
+
+<a id="feat-5-2-1"></a>
+
+### #️⃣ 5.2.1. System prompt and context prompts (#Tag)
 
 The **system prompt** sets the cleaning personality. It can be enabled or disabled. When empty, the built-in default is used.
 
@@ -213,7 +343,9 @@ The **system prompt** sets the cleaning personality. It can be enabled or disabl
 
 ---
 
-### 4. AI-assisted context prompt generators
+<a id="feat-5-2-2"></a>
+
+### 🧠 5.2.2. AI-assisted context prompt generators
 
 On the **Prompts** screen, the context prompt generators create a new `#Tag` from an **intention** or a **title** via the local Ollama model. Streaming, Stop, model selection and basic options are available on that screen.
 
@@ -228,9 +360,35 @@ On the **Prompts** screen, the context prompt generators create a new `#Tag` fro
 
 ---
 
-### 5. Unlimited voice dictation with Vosk, Parakeet or Whisper
+<a id="feat-5-2-3"></a>
 
-The Workspace dictation strip supports unlimited voice dictation. Available engines are **Vosk**, **Parakeet** and **Whisper**, depending on which one you load. Recognition runs in the browser: microphone audio stays on the device.
+### 🗂 5.2.3. Workspace context-prompt panel
+
+Under Input, the **Context prompts** panel is the `#Tag` picker for Clean: enable or disable which context blocks ride with the system prompt. Starts collapsed (open/closed state remembered). An **active count** badge shows how many tags are on. Toolbar: **All** / **None** for bulk toggle; **Manage →** opens the Prompts screen to create or edit tags.
+
+[Advanced docs — Workspace / active tags](docs/Documentation.md#32-workspace) · [Context prompts `#Tag`](docs/Documentation.md#5-prompts--système-prompts-de-contexte-générateurs)
+
+---
+
+<a id="feat-5-2-4"></a>
+
+### ↕ 5.2.4. Prompts screen: order, drag-and-drop and counter
+
+On the Prompts screen, the system prompt toggles with autosave. **Injection order** (`pdm_context_position`) chooses whether active `#Tag` contexts are sent **before** or **after** the system prompt — the UI shows that stack as a small diagram (`#context-inject-diagram`). The tag list reorders by drag-and-drop or arrows (display order = injection order among contexts). A counter shows how many context prompts exist.
+
+---
+
+<a id="feat-5-3"></a>
+
+### ✶ 5.3. Voice, media & vision into Input
+
+---
+
+<a id="feat-5-3-1"></a>
+
+### 🎤 5.3.1. Unlimited voice dictation with Vosk, Parakeet or Whisper
+
+The Workspace dictation strip supports unlimited voice dictation. Available engines are **Vosk**, **Parakeet** and **Whisper**, depending on which one is loaded. Recognition runs **in the browser**: audio is not sent to a remote STT server.
 
 Language coverage is delivered as-is: **Vosk Mini** for the shipped languages, **Vosk Maxi** for French. No major language expansion or Vosk engine redesign is planned on the path to product maturity; only minor fixes.
 
@@ -247,7 +405,9 @@ Dictation continues when you open Options or documentation. Stopping uses an exp
 
 ---
 
-### 6. Import audio or video (audio transcription)
+<a id="feat-5-3-2"></a>
+
+### 🎬 5.3.2. Import audio or video (audio transcription)
 
 The 🎵 import accepts audio files and, when the browser can decode them, video containers. Audio transcription uses the local Whisper Maxi path; the resulting text is written into Input. Afterwards, dictation remains available without a full Reset.
 
@@ -257,7 +417,9 @@ Media is processed on the machine that opened the page.
 
 ---
 
-### 7. Export one session audio file
+<a id="feat-5-3-3"></a>
+
+### ⬇ 5.3.3. Export one session audio file
 
 Download a single audio file that merges the dictation takes of the current session. Merge and download run in the browser.
 
@@ -265,7 +427,9 @@ Download a single audio file that merges the dictation takes of the current sess
 
 ---
 
-### 8. Describe an image (Ollama vision)
+<a id="feat-5-3-4"></a>
+
+### 🖼 5.3.4. Describe an image (Ollama vision)
 
 Workspace file picker → vision-capable Ollama model → description text in Input. Model and instruction are set under Prompts. Missing model: toast with `ollama pull <model>` and a pointer to Prompts → image.
 
@@ -273,7 +437,31 @@ Workspace file picker → vision-capable Ollama model → description text in In
 
 ---
 
-### 9. Local history with traces
+<a id="feat-5-3-5"></a>
+
+### ⚙ 5.3.5. Advanced dictation options
+
+The dictation strip includes an options panel: engine preload, Vosk language, CPU or GPU acceleration, microphone choice, insert at end or at caret, and a delete-word shortcut. A progress bar tracks model load. Hints cover HTTPS / LAN constraints.
+
+---
+
+<a id="feat-5-3-6"></a>
+
+### ↻ 5.3.6. Dictation outside Workspace and resume after interrupt
+
+Dictation can continue while opening Options or documentation. Before a disruptive reload (language change, wipe, profile import), a modal asks for confirmation; a beep and a resume offer are available after reload.
+
+---
+
+<a id="feat-5-4"></a>
+
+### ✷ 5.4. History, compression & long Input
+
+---
+
+<a id="feat-5-4-1"></a>
+
+### 📜 5.4.1. Local history with traces
 
 Capped local history of Clean runs. Cards expose Input, the system prompt, context prompts, and Output; with compression enabled, Original and Compressed pairs. Copy, restore, purge. Included in a full profile export when that preset is selected.
 
@@ -288,7 +476,9 @@ Capped local history of Clean runs. Cards expose Input, the system prompt, conte
 
 ---
 
-### 10. Optional token compression
+<a id="feat-5-4-2"></a>
+
+### 🗜 5.4.2. Optional token compression
 
 Checkboxes cover the system prompt, context prompts, Input, and Output. Applied when **Clean** runs. Default: all off.
 
@@ -296,7 +486,9 @@ Checkboxes cover the system prompt, context prompts, Input, and Output. Applied 
 
 ---
 
-### 11. Long Input, multi-pass
+<a id="feat-5-4-3"></a>
+
+### ∞ 5.4.3. Long Input, multi-pass
 
 Long Input is split into successive Ollama passes; results are concatenated. Limits and behaviour: advanced docs.
 
@@ -304,23 +496,31 @@ Long Input is split into successive Ollama passes; results are concatenated. Lim
 
 ---
 
-### 12. Workspace LLM options
+<a id="feat-5-4-4"></a>
 
-Workspace panel: model, temperature, max tokens, timeout, thinking when supported. URL and connection test: Options → LLM. Public path: leave **“I don’t have a token”** checked and use local Ollama.
+### ⏸ 5.4.4. Compression panel, overlay and Stop
 
-[Advanced docs — LLM parameters](docs/Documentation.md#43-paramètres-llm-workspace-panel)
-
----
-
-### 13. Output display formats
-
-Output can be shown as plain text, JSON, or HTML.
-
-[Advanced docs — OUTPUT display format](docs/Documentation.md#322-format-daffichage-output)
+Token compression is configured in a collapsible panel. While Output compression runs, an overlay locks the area and offers **Stop**. Chips mark targets already compressed in the session.
 
 ---
 
-### 14. Import / export JSON profile (ZIP)
+<a id="feat-5-4-5"></a>
+
+### 📤 5.4.5. History: restore, modal and JSON export
+
+Local history (about 100 entries) can restore Input, Output and thinking. Entries open in a modal, support per-block copy, JSON export and optional source audio from IndexedDB. Global purge and single-entry delete ask for confirmation.
+
+---
+
+<a id="feat-5-5"></a>
+
+### ✸ 5.5. JSON profile ZIP & Marketplace
+
+---
+
+<a id="feat-5-5-1"></a>
+
+### 📦 5.5.1. Import / export JSON profile (ZIP)
 
 Portable unit: **ZIP** archive with the JSON profile (and related assets when included). Import accepts **`.zip` only**. Client-side processing; integrity check on import. Proxy tokens are excluded from the portable profile.
 
@@ -335,7 +535,9 @@ Portable unit: **ZIP** archive with the JSON profile (and related assets when in
 
 ---
 
-### 15. UI personalization
+<a id="feat-5-5-2"></a>
+
+### 🎨 5.5.2. UI personalization
 
 Profile can include logo colours, screen titles, button labels, theme, header animation / synopsis. Documented under ZIP customization keys.
 
@@ -343,23 +545,9 @@ Profile can include logo colours, screen titles, button labels, theme, header an
 
 ---
 
-### 16. Twelve UI languages & about 50 themes
+<a id="feat-5-5-3"></a>
 
-Twelve UI locales. Themes: light/dark families. First-visit default: **Marron clair** (`marron-day`). Language and theme can be included in a profile export.
-
-[Advanced docs — i18n](docs/Documentation.md#35-i18n)
-
----
-
-### 17. Same code everywhere
-
-Official site and self-hosted install share the application codebase. Operator proxy token: official production relay only. Visitors using local Ollama keep **“I don’t have a token”** checked.
-
-[Advanced docs — installation](docs/Documentation.md#10-installation-auto-hébergée) · [`SECURITY.md`](SECURITY.md)
-
----
-
-### 18. Marketplace of JSON profiles
+### 🏪 5.5.3. Marketplace of JSON profiles
 
 A marketplace of ready-to-import JSON profiles is available on the [official site](https://promptdemerde.com/#market) (soon).
 
@@ -367,141 +555,136 @@ On a public clone without a local catalogue, the Marketplace menu opens that URL
 
 ---
 
-### 19. Hash-based SPA navigation
+<a id="feat-5-5-4"></a>
 
-The UI switches between Workspace, Prompts, Options and Marketplace via the URL hash, without a full page reload. On a clone without `site-pages/`, footer Mentions / Terms / Privacy / Support open [promptdemerde.com](https://promptdemerde.com) (green badge, same pattern as Marketplace). The Documentation link opens the GitHub technical docs ([`docs/Documentation.md`](docs/Documentation.md)).
-
----
-
-### 20. Burger menu, Escape and loader
-
-On small viewports, the burger menu opens and closes navigation. Escape closes the menu. A full-screen loader shows during startup initialisation.
-
----
-
-### 21. Environment badge and GitHub version
-
-The footer shows an environment badge (PROD, PRE-PROD or SELF-HOSTED) from `PDM_ENV`. The version label links to the project’s GitHub repository (versioning is via **git tags** only — no GitHub Releases).
-
----
-
-### 22. Ctrl/Cmd+Enter, toasts and Copied feedback
-
-**Ctrl+Enter** (or **Cmd+Enter** on macOS) runs **Clean**. Toast notifications stay visible for about 4.5 seconds. Copy buttons show a short “Copied” confirmation.
-
----
-
-### 23. Reduced motion and RTL
-
-The app respects `prefers-reduced-motion` to limit animations. Right-to-left locales (for example Arabic) set `lang` and `dir` on the document.
-
----
-
-### 24. Logo, shell animation and profile synopsis
-
-The navigation logo, header shell animation and typewriter synopsis can be driven by the profile (brand, colours, text).
-
----
-
-### 25. Day / night theme toggle
-
-A navigation control switches quickly between light and dark variants of the active theme family.
-
----
-
-### 26. Input counter, confirmed Reset and trash
-
-Input shows a character counter (export ceiling 50,000). **Reset** asks for confirmation and clears Input and Output. A trash control clears Input only. These actions stay blocked during dictation or an active inference.
-
----
-
-### 27. Draft autosave and prompt guard
-
-The Workspace draft (Input, Output, thinking, context-panel state) autosaves in the browser. **Clean** stays disabled until a system prompt or at least one context prompt is active; a guard message explains what to enable.
-
----
-
-### 28. Advanced dictation options
-
-The dictation strip includes an options panel: engine preload, Vosk language, CPU or GPU acceleration, microphone choice, insert at end or at caret, and a delete-word shortcut. A progress bar tracks model load. Hints cover HTTPS / LAN constraints.
-
----
-
-### 29. Dictation outside Workspace and resume after interrupt
-
-Dictation can continue while opening Options or documentation. Before a disruptive reload (language change, wipe, profile import), a modal asks for confirmation; a beep and a resume offer are available after reload.
-
----
-
-### 30. Mutual exclusion of Input modes
-
-Dictation, audio/video import, image import and inference lock each other out. Inline status and toasts state the cause and the next action when modes conflict.
-
----
-
-### 31. Compression panel, overlay and Stop
-
-Token compression is configured in a collapsible panel. While Output compression runs, an overlay locks the area and offers **Stop**. Chips mark targets already compressed in the session.
-
----
-
-### 32. Workspace context-prompt panel
-
-The context-prompt panel starts collapsed; open/closed state is remembered. A badge shows how many tags are active. **All** / **None** bulk-select tags. A **Manage** link opens the Prompts screen.
-
----
-
-### 33. Thinking, Stop and stream metadata
-
-When the model supports it, thinking can be enabled with a character cap (0 = unlimited). A dedicated panel shows and copies thinking text. **Stop** cancels inference or compression. During the stream, the UI shows time, tokens, throughput and multi-pass index.
-
----
-
-### 34. History: restore, modal and JSON export
-
-Local history (about 100 entries) can restore Input, Output and thinking. Entries open in a modal, support per-block copy, JSON export and optional source audio from IndexedDB. Global purge and single-entry delete ask for confirmation.
-
----
-
-### 35. Prompts screen: order, drag-and-drop and counter
-
-On the Prompts screen, the system prompt toggles with autosave. Context-prompt injection order (before or after system) includes a diagram. The tag list reorders by drag-and-drop or arrows. A counter shows how many context prompts exist.
-
----
-
-### 36. LLM Options: Test, token and themes
-
-Under Options → LLM, **Test** checks the Ollama URL and refreshes the model list. A proxy token, when used, stays in browser session storage. The theme picker offers twenty-five families in light and dark.
-
----
-
-### 37. Profiles: create, switch, export modal
+### 🔀 5.5.4. Profiles: create, switch, export modal
 
 Options → JSON profile can create a profile, switch (with confirm and reload), import a ZIP and export through a modal (file name, minimal or maximal preset, startup language, i18n flags).
 
 ---
 
-### 38. Danger zone Wipe all
+<a id="feat-5-5-5"></a>
 
-**Wipe all** asks for confirmation, then clears localStorage, sessionStorage, audio IndexedDB and STT caches, and reloads into a fresh-install state.
-
----
-
-### 39. Marketplace: search, filters and detail card
+### 🔎 5.5.5. Marketplace: search, filters and detail card
 
 When a local catalogue is present, Marketplace provides search, filters (price, domains, languages, publishers), sort, grid or list views and a detail modal with download. On a clone without a catalogue, the menu opens the official site.
 
 ---
 
-### 40. Footer: project carousel and resources
+<a id="feat-5-6"></a>
 
-The footer includes a DreamProjectAI project carousel, stack badges (LLM, Ollama, STT, JSON, OSS, and related labels) and links to documentation, support and external resources.
+### ✹ 5.6. Languages, themes & same code everywhere
 
 ---
 
+<a id="feat-5-6-1"></a>
+
+### 🗣 5.6.1. Twelve UI languages & about 50 themes
+
+Twelve UI locales. Themes: light/dark families. First-visit default: **Marron clair** (`marron-day`). Language and theme can be included in a profile export.
+
+[Advanced docs — i18n](docs/Documentation.md#35-i18n)
+
+---
+
+<a id="feat-5-6-2"></a>
+
+### ≡ 5.6.2. Same code everywhere
+
+Official site and self-hosted install share the application codebase. Operator proxy token: official production relay only. Visitors using local Ollama keep **“I don’t have a token”** checked.
+
+[Advanced docs — installation](docs/Documentation.md#10-installation-auto-hébergée) · [`SECURITY.md`](SECURITY.md)
+
+---
+
+<a id="feat-5-6-3"></a>
+
+### 🌓 5.6.3. Day / night theme toggle
+
+A navigation control switches quickly between light and dark variants of the active theme family.
+
+---
+
+<a id="feat-5-6-4"></a>
+
+### ♿ 5.6.4. Reduced motion and RTL
+
+The app respects `prefers-reduced-motion` to limit animations. Right-to-left locales (for example Arabic) set `lang` and `dir` on the document.
+
+---
+
+<a id="feat-5-7"></a>
+
+### ✺ 5.7. Shell, navigation, Options & footer
+
+---
+
+<a id="feat-5-7-1"></a>
+
+### 🧭 5.7.1. Hash-based SPA navigation
+
+The UI switches between Workspace, Prompts, Options and Marketplace via the URL hash, without a full page reload. On a clone without `site-pages/`, footer Mentions / Terms / Privacy / Support open [promptdemerde.com](https://promptdemerde.com) (green badge, same pattern as Marketplace). The Documentation link opens the GitHub technical docs ([`docs/Documentation.md`](docs/Documentation.md)).
+
+---
+
+<a id="feat-5-7-2"></a>
+
+### ☰ 5.7.2. Burger menu, Escape and loader
+
+On small viewports, the burger menu opens and closes navigation. Escape closes the menu. A full-screen loader shows during startup initialisation.
+
+---
+
+<a id="feat-5-7-3"></a>
+
+### 🏷 5.7.3. Environment badge and GitHub version
+
+The footer shows an environment badge (PROD, PRE-PROD or SELF-HOSTED) from `PDM_ENV` (web server configuration). The version label links to the project’s GitHub tags.
+
+---
+
+<a id="feat-5-7-4"></a>
+
+### ⌨ 5.7.4. Clean shortcut and on-screen feedback
+
+**Ctrl+Enter** (or **Cmd+Enter** on macOS) runs **Clean**. Status toasts (success, error, info) stay on screen about 4.5 seconds. Copy actions show a short “Copied” confirmation.
+
+---
+
+<a id="feat-5-7-5"></a>
+
+### 💫 5.7.5. Logo, shell animation and profile synopsis
+
+The navigation logo, header shell animation and typewriter synopsis can be driven by the profile (brand, colours, text).
+
+---
+
+<a id="feat-5-7-6"></a>
+
+### 🔌 5.7.6. LLM Options: Test and proxy token
+
+Under Options → LLM, **Test** checks the Ollama URL and refreshes the model list. An optional proxy token (operator production relay only) stays in browser session storage — visitors and self-hosters keep **“I don’t have a token”** checked.
+
+---
+
+<a id="feat-5-7-7"></a>
+
+### ⚠ 5.7.7. Danger zone Wipe all
+
+**Wipe all** asks for confirmation, then clears localStorage, sessionStorage, audio IndexedDB and STT caches, and reloads into a fresh-install state.
+
+---
+
+<a id="feat-5-7-8"></a>
+
+### 📎 5.7.8. Footer: project carousel and resources
+
+The footer includes a DreamProjectAI project carousel, stack badges (LLM, Ollama, STT, JSON, OSS, and related labels) and links to documentation, support and external resources.
+
+
 <a id="menu-json-profile"></a>
 
-## 💾 JSON profile
+## 🧳 6. JSON profile
 
 <p align="center">
   <img src="assets/images/screenshots/stg-profile-json.gif" alt="Options JSON profile panel with Speech2Texte selected and Create, Import, Export buttons" width="70%" style="border:1px solid #d0d7de;border-radius:8px;box-shadow:0 1px 2px rgba(0,0,0,.08);">
@@ -510,7 +693,7 @@ The footer includes a DreamProjectAI project carousel, stack badges (LLM, Ollama
   <em>Options → JSON profile: switch profiles, import a ZIP, or export the portable archive.</em>
 </p>
 
-The JSON profile (exported as ZIP) can hold the system prompt, context prompts (`#Tag`), LLM settings, theme, language, Workspace draft, history, and UI labels.
+The JSON profile (exported as ZIP) can hold the system prompt, context prompts (`#Tag`), LLM settings, theme, language, Workspace session state, history, and UI labels.
 
 **Before clearing site data or changing machine:** export the profile (*Options → JSON profile → Export*). Import: *Options → JSON profile → Import* (`.zip` only).
 
@@ -520,7 +703,7 @@ The JSON profile (exported as ZIP) can hold the system prompt, context prompts (
 
 <a id="menu-prerequisites"></a>
 
-## 📦 Prerequisites
+## 📋 7. Prerequisites
 
 <p align="center">
   <img src="assets/images/screenshots/stg-test-llm.gif" alt="Options LLM card: Ollama provider, localhost URL, and Test button" width="70%" style="border:1px solid #d0d7de;border-radius:8px;box-shadow:0 1px 2px rgba(0,0,0,.08);">
@@ -529,7 +712,9 @@ The JSON profile (exported as ZIP) can hold the system prompt, context prompts (
   <em>Before using Clean/rephrase, set the LLM engine under Options → LLM (Ollama + URL) and use Test to verify the local connection.</em>
 </p>
 
-### Official site
+<a id="prereq-7-1"></a>
+
+### 7.1. Official site
 
 * Desktop browser (Chromium or Firefox recommended for STT / WebAudio)
 * [Ollama](https://ollama.com/download) on the **same computer** as the browser
@@ -546,7 +731,9 @@ OLLAMA_ORIGINS=https://promptdemerde.com ollama serve
 
 [Advanced docs — Ollama](docs/Documentation.md#4-ollama--flux-a-et-flux-b)
 
-### Self-host
+<a id="prereq-7-2"></a>
+
+### 7.2. Self-host
 
 * PHP-capable host (Apache or Nginx + PHP)
 * Git
@@ -568,7 +755,7 @@ Clean quality depends on the chosen Ollama model. STT uses ONNX / WASM in the br
 
 <a id="menu-try-it"></a>
 
-## ▶️ Try it in three steps
+## ▶ 8. Try it in three steps
 
 | Step | Action |
 |------|--------|
@@ -584,7 +771,7 @@ Clean quality depends on the chosen Ollama model. STT uses ONNX / WASM in the br
 
 <a id="menu-self-hosting"></a>
 
-## 🖥️ Self-hosting (optional)
+## 🖥 9. Self-hosting (optional)
 
 ```bash
 git clone https://github.com/JeanSebastienBash/promptdemerde.git
@@ -592,7 +779,7 @@ cd promptdemerde/install
 bash restore-large-assets.sh
 ```
 
-Serve the folder with Apache or Nginx + PHP; install Ollama; open your URL. `restore-large-assets.sh` is required after clone.
+After clone, `restore-large-assets.sh` **reassembles** the large dictation model files from the `*.partNNN` pieces already in the repository (no download). Run the site with Apache or Nginx + PHP, install Ollama, then open your local URL in the browser.
 
 <details>
 <summary><strong>Operators — token proxy and PDM_ENV</strong></summary>
@@ -609,7 +796,7 @@ Visitors and self-hosters: keep **“I don’t have a token”** checked. Proxy 
 
 <a id="menu-credits"></a>
 
-## 🙏 Credits
+## © 10. Credits
 
 Published by **[DreamProjectAI](https://dreamproject.online)**.
 
@@ -624,7 +811,9 @@ Security reports: see [`SECURITY.md`](SECURITY.md).
 
 ---
 
-## 📚 Further reading
+<a id="menu-further-reading"></a>
+
+## 📚 11. Further reading
 
 | Topic | Document |
 |-------|----------|
@@ -641,6 +830,6 @@ Security reports: see [`SECURITY.md`](SECURITY.md).
 
 <a id="menu-license"></a>
 
-## License
+## ⚖ 12. License
 
 MIT — [DreamProjectAI](https://dreamproject.online)

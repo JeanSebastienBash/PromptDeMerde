@@ -67,9 +67,9 @@ PromptDeMerde is an HTML/CSS/JavaScript **SPA** (IIFE, `window.PDM` namespace), 
 
 | Present in the repository | Absent from the shipped application runtime |
 |----------------------|-------------------------------------|
-| Reformulation via Ollama (draft clean-up / structuring) | Autonomous multi-turn chatbot |
+| Reformulation via Ollama (raw-prompt clean-up / structuring) | Autonomous multi-turn chatbot |
 | Browser STT (Vosk, Whisper, Parakeet) | Mandated cloud transcription service |
-| Optional PHP proxy toward Ollama | Server database of user drafts |
+| Optional PHP proxy toward Ollama | Server database of user raw prompts / session state |
 | Bundled `speech2texte` profile | Requirement for a user account |
 
 Sources of truth: [`assets/js/config-schema-core.js`](../assets/js/config-schema-core.js) (`CS.VERSION`) · [`assets/config/pdm-config.schema.json`](../assets/config/pdm-config.schema.json).
@@ -119,7 +119,7 @@ The **same promise** applies on [promptdemerde.com](https://promptdemerde.com/) 
 Here **server** means the **VPS or PHP vhost** that serves `index.html`, assets, and optionally `olama.php` — whether [promptdemerde.com](https://promptdemerde.com/) or a self-hosted install. It is **not** Ollama (on the browser machine) and not the browser (`localStorage`).
 
 - The server does not log profile ZIP imports (**100% client** processing).
-- It does not store clean history or user drafts.
+- It does not store clean history or user raw prompts / Workspace session state.
 - It does not send audio to the cloud for transcription (STT stays in the browser).
 
 **Operator flow B**: the POST body transits in **RAM** via `olama.php` with no application disk write — see [`SECURITY.md`](../SECURITY.md).
@@ -689,7 +689,7 @@ Generation specifications are defined in [`gen-prompt-specs.js`](../assets/js/ge
 
 | Key                 | Role                                                                                  |
 | ------------------- | ------------------------------------------------------------------------------------- |
-| `pdm_workspace`     | Draft `{ input, output, thinking, contextPanelOpen, inputSource, audioFileName }`     |
+| `pdm_workspace`     | Session state `{ input, output, thinking, contextPanelOpen, inputSource, audioFileName }` (Input = raw prompt)     |
 | `pdm_workspace_ui`  | Profile UI: `identity`, `texts`, and `brand` (two-word nav logo + optional hex colors) |
 | `pdm_history_count` | Clean counter                                                                         |
 | `pdm_clean_history` | Journal max 100 entries — legacy fields + `trace` (before/after compression matrix)   |
@@ -876,7 +876,7 @@ The total is **131** versioned `assets/js/*.js` files (excluding vendor). Roles 
 | [`workspace-llm-config.js`](../assets/js/workspace-llm-config.js) | Reads Workspace LLM options from Storage / DOM. |
 | [`workspace-llm-options.js`](../assets/js/workspace-llm-options.js) | Workspace LLM Options panel (temperature, tokens, thinking…). |
 | [`workspace-output-format.js`](../assets/js/workspace-output-format.js) | Output display format chips (text / json / html). |
-| [`workspace-persistence.js`](../assets/js/workspace-persistence.js) | Persists Workspace draft (input/output/thinking) to Storage. |
+| [`workspace-persistence.js`](../assets/js/workspace-persistence.js) | Persists Workspace session state (input/output/thinking) to Storage. |
 | [`workspace-refresh.js`](../assets/js/workspace-refresh.js) | Refreshes Workspace UI after profile / settings changes. |
 | [`workspace-stream.js`](../assets/js/workspace-stream.js) | Ollama stream consumer + thinking panel. |
 | [`workspace-thinking.js`](../assets/js/workspace-thinking.js) | Thinking (réflexion) panel UI during Clean. |
@@ -899,8 +899,8 @@ The total is **131** versioned `assets/js/*.js` files (excluding vendor). Roles 
 | [`storage-prompts-bundle.js`](../assets/js/storage-prompts-bundle.js) | Local storage of system prompts + context prompts per locale and profile. |
 | [`storage-settings.js`](../assets/js/storage-settings.js) | Storage settings entry point (wipe/prompts/meta/llm modules). |
 | [`storage-wipe.js`](../assets/js/storage-wipe.js) | Wipes user data, provider tokens, and PDM browser caches. |
-| [`storage-workspace-audio.js`](../assets/js/storage-workspace-audio.js) | Workspace draft extension for audio import (metadata + audioRef). |
-| [`storage-workspace-stt.js`](../assets/js/storage-workspace-stt.js) | Persists workspace draft and voice-dictation settings. |
+| [`storage-workspace-audio.js`](../assets/js/storage-workspace-audio.js) | Workspace session extension for audio import (metadata + audioRef). |
+| [`storage-workspace-stt.js`](../assets/js/storage-workspace-stt.js) | Persists workspace session state and voice-dictation settings. |
 
 ### 15.5 stt
 

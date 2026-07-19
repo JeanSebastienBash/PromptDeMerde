@@ -57,7 +57,9 @@ Loaded locally under `assets/fonts/` (no CDN) — `@font-face` declarations in `
 
 ## Ollama
 
-PromptDeMerde **does not redistribute** Ollama or LLM weights. The user installs [Ollama](https://ollama.ai/) separately and chooses models.
+PromptDeMerde **does not redistribute** the Ollama runtime or LLM weights. The user installs [Ollama](https://ollama.com) separately and chooses models.
+
+**README mark only:** `assets/images/third-party/ollama-mark.svg` / `.png` are the small official llama mark from the [Ollama docs tree](https://github.com/ollama/ollama/tree/main/docs) (upstream project MIT). Used for attribution in `README.md`; not a redistribution of Ollama itself.
 
 ---
 
