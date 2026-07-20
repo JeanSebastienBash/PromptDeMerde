@@ -226,7 +226,7 @@ CS._validateGenAndUiFields = function(data, errors) {
         errors.push('pdm_context_gen_json_schema doit être un objet JSON Schema.');
     }
 
-    if (data.pdm_output_json_enabled !== undefined && typeof data.pdm_output_json_enabled !== 'boolean') {
+    if (data.pdm_output_json_enabled !== undefined && !CS.isStrictBoolean(data.pdm_output_json_enabled)) {
         errors.push('pdm_output_json_enabled doit être un booléen.');
     }
     if (data.pdm_output_json_schema !== undefined && data.pdm_output_json_schema !== null

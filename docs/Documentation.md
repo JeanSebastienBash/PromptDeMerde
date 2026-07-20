@@ -1038,6 +1038,8 @@ i18n/               # MAXIMAL preset only
 
 The files involved are `profile-bundle-loader.js`, `storage-config-import.js`, and `settings-ui.js`.
 
+Export fills each `pdm_*` key through Storage getters (`Storage._exportValueForKey`), not raw `localStorage` nulls. On import, `ConfigSchema.normalizeLegacyConfig` coerces a non-boolean `pdm_output_json_enabled` to `false` and an invalid `pdm_output_display_format` to `text` before `validatePdmConfig` (strict boolean / enum). The key set and schema types stay unchanged.
+
 <a id="75-personnalisation-par-édition-zip"></a>
 ### 12.5 Customization by ZIP editing
 

@@ -212,6 +212,15 @@ CS.normalizeLegacyConfig = function(data) {
         copy.pdm_stt_vosk_lang = CS.STT_VOSK_LANGS.indexOf(voskLangNorm) !== -1 ? voskLangNorm : 'fr';
     }
 
+    if (!CS.isStrictBoolean(copy.pdm_output_json_enabled)) {
+        copy.pdm_output_json_enabled = false;
+    }
+    if (copy.pdm_output_display_format !== 'text'
+        && copy.pdm_output_display_format !== 'json'
+        && copy.pdm_output_display_format !== 'html') {
+        copy.pdm_output_display_format = 'text';
+    }
+
     return CS.mergeMissingPdmKeys(copy);
 };
 

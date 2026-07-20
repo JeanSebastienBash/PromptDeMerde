@@ -52,6 +52,7 @@ S._exportValueForKey = function(key) {
     if (key === S.KEYS.STT_DELETE_WORD_ENABLED) return S.getSttDeleteWordEnabled();
     if (key === S.KEYS.STT_DELETE_WORD_SHORTCUT) return S.getSttDeleteWordShortcut();
     if (key === S.KEYS.STT_DELETE_WORD_TARGET) return S.getSttDeleteWordTarget();
+    if (key === S.KEYS.STT_VOSK_LANG) return S.getSttVoskLang ? S.getSttVoskLang() : (S.get(S.KEYS.STT_VOSK_LANG) || 'fr');
     if (key === S.KEYS.HISTORY) return S.getCleanHistory().length;
     if (key === S.KEYS.CONTEXT_POSITION) return S.getContextPosition();
     if (key === S.KEYS.OLLAMA_URL) return S.getOllamaUrl();
@@ -78,9 +79,20 @@ S._exportValueForKey = function(key) {
     if (key === S.KEYS.CONTEXT_GEN_RETRY_TEMPERATURE) return S.getContextGenRetryTemperature();
     if (key === S.KEYS.CONTEXT_GEN_MAX_RETRIES) return S.getContextGenMaxRetries();
     if (key === S.KEYS.CONTEXT_GEN_JSON_SCHEMA) return S.getContextGenJsonSchemaEffective();
+    if (key === S.KEYS.OUTPUT_JSON_ENABLED) return S.isOutputJsonEnabled ? S.isOutputJsonEnabled() : !!S.get(S.KEYS.OUTPUT_JSON_ENABLED);
+    if (key === S.KEYS.OUTPUT_JSON_SCHEMA) return S.getOutputJsonSchema ? S.getOutputJsonSchema() : (S.get(S.KEYS.OUTPUT_JSON_SCHEMA) || null);
+    if (key === S.KEYS.OUTPUT_JSON_KEY_PATTERN) {
+        return S.getOutputJsonKeyPattern ? S.getOutputJsonKeyPattern() : (S.get(S.KEYS.OUTPUT_JSON_KEY_PATTERN) || null);
+    }
+    if (key === S.KEYS.OUTPUT_JSON_VALUE_SCHEMA) {
+        return S.getOutputJsonValueSchema ? S.getOutputJsonValueSchema() : (S.get(S.KEYS.OUTPUT_JSON_VALUE_SCHEMA) || null);
+    }
+    if (key === S.KEYS.OUTPUT_DISPLAY_FORMAT) {
+        return S.getOutputDisplayFormat ? S.getOutputDisplayFormat() : (S.get(S.KEYS.OUTPUT_DISPLAY_FORMAT) || 'text');
+    }
     if (key === S.KEYS.WORKSPACE_UI) return S.getWorkspaceUiEffective();
     if (key === 'pdm_audio_blobs') return {};
-    return null;
+    return S.get(key);
 };
 
 S._detectConfigFormat = function(data) {
