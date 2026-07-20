@@ -1387,5 +1387,14 @@
         "profileAssembleFailed": "组装配置文件失败。请检查打包文件后重试。",
         "importZipUnavailable": "无法导入 ZIP。请刷新页面或检查配置文件脚本。",
         "exportFail": "无法导出 ZIP。请允许下载后重试。"
+    },
+    "nudge": {
+        "ollamaMissing": {
+            "p1": "使用 Clean / LLM 需事先在本机安装 Ollama 并至少拉取一个模型。",
+            "p2": "未检测到 Ollama。安装 Ollama、拉取模型，然后检查选项 → LLM。",
+            "install": "安装 Ollama",
+            "models": "模型",
+            "close": "关闭"
+        }
     }
 }

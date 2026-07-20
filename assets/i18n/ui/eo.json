@@ -1387,5 +1387,14 @@
         "profileAssembleFailed": "Kunmeto de profilo malsukcesis. Kontrolu la dosierojn de la pakaĵo.",
         "importZipUnavailable": "ZIP-importo nedisponebla. Reŝargu la paĝon aŭ kontrolu profilajn skriptojn.",
         "exportFail": "ZIP-eksporto neebla. Permesu elŝutojn, poste reprovu."
+    },
+    "nudge": {
+        "ollamaMissing": {
+            "p1": "Clean / LLM postulas antaŭan instalon de Ollama kaj almenaŭ unu modelon sur la maŝino.",
+            "p2": "Ollama ne detektita. Instali Ollama, tiri modelon, poste kontroli Opcioj → LLM.",
+            "install": "Instali Ollama",
+            "models": "Modeloj",
+            "close": "Fermi"
+        }
     }
 }

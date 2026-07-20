@@ -1387,5 +1387,14 @@
         "profileAssembleFailed": "プロファイルの組み立てに失敗しました。バンドルファイルを確認してください。",
         "importZipUnavailable": "ZIP インポートが使えません。ページを再読み込みするかプロファイル用スクリプトを確認してください。",
         "exportFail": "ZIP エクスポートに失敗しました。ダウンロードを許可して再試行してください。"
+    },
+    "nudge": {
+        "ollamaMissing": {
+            "p1": "Clean / LLM の利用には、あらかじめ本機へ Ollama と少なくとも1つのモデルの導入が必要です。",
+            "p2": "Ollama が検出されません。Ollama を導入しモデルを取得したうえで、オプション → LLM を確認。",
+            "install": "Ollama をインストール",
+            "models": "モデル",
+            "close": "閉じる"
+        }
     }
 }

@@ -108,6 +108,7 @@ var FALLBACK = {
             'assets/js/history-ui-list.js',
             'assets/js/proxy-token-session.js',
             'assets/js/settings-ui.js',
+            'assets/js/ollama-missing-nudge.js',
             'assets/js/polish-textarea-resize.js',
             'assets/js/polish.js'
         ]

@@ -1387,5 +1387,14 @@
         "profileAssembleFailed": "프로필 조립에 실패했습니다. 번들 파일을 확인하세요.",
         "importZipUnavailable": "ZIP 가져오기를 사용할 수 없습니다. 페이지를 새로고침하거나 프로필 스크립트를 확인하세요.",
         "exportFail": "ZIP 내보내기에 실패했습니다. 다운로드를 허용한 뒤 다시 시도하세요."
+    },
+    "nudge": {
+        "ollamaMissing": {
+            "p1": "Clean / LLM 사용에는 기기에 Ollama와 모델 하나 이상을 미리 설치해야 합니다.",
+            "p2": "Ollama가 감지되지 않음. Ollama 설치, 모델 받은 뒤 옵션 → LLM 확인.",
+            "install": "Ollama 설치",
+            "models": "모델",
+            "close": "닫기"
+        }
     }
 }

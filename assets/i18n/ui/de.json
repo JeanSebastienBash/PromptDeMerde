@@ -1387,5 +1387,14 @@
         "profileAssembleFailed": "Profil-Zusammenbau fehlgeschlagen. Bundle-Dateien prüfen.",
         "importZipUnavailable": "ZIP-Import nicht verfügbar. Seite neu laden oder Profil-Skripte prüfen.",
         "exportFail": "ZIP-Export fehlgeschlagen. Downloads erlauben, dann erneut versuchen."
+    },
+    "nudge": {
+        "ollamaMissing": {
+            "p1": "Clean / LLM setzt die vorherige Installation von Ollama und mindestens einem Modell auf dem Rechner voraus.",
+            "p2": "Ollama nicht erkannt. Ollama installieren, Modell laden, dann Optionen → LLM prüfen.",
+            "install": "Ollama installieren",
+            "models": "Modelle",
+            "close": "Schließen"
+        }
     }
 }

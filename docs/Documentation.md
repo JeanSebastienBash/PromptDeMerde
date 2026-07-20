@@ -1560,6 +1560,8 @@ Under **Options → LLM**:
 
 **Connection test.** The **Test** button checks reachability to the configured URL and refreshes the Workspace model list (`#ws-output-model-select`) from Ollama. **Blur** on the URL field can trigger the same refresh. Only models actually returned by the instance appear (no ghost “saved model” outside the list). On success, status text reports how many models were found; on failure, the list and stored model are invalidated. When inference goes through a locked relay, a wrong proxy token fails the check.
 
+On every deploy (prod, preprod, and self-hosted), if the boot connection probe does not detect Ollama, a non-blocking corner reminder appears once per browser session (disclaimer + install links; dismiss with × or Escape).
+
 <a id="7-2-voice-dictation-options-panel"></a>
 
 Flow A/B detail: see 5.1.1.

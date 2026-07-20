@@ -471,9 +471,11 @@ A.bootstrapLlmFromProvider = function(opts) {
         if (opts.thinkingOffOnAuto && typeof A.updateThinkingAvailabilityUi === 'function') {
             A.updateThinkingAvailabilityUi();
         }
+        if (window.PDM.OllamaMissingNudge) window.PDM.OllamaMissingNudge.maybeShow(result);
         return result;
     }).catch(function() {
         if (typeof A.refreshConfigModels === 'function') A.refreshConfigModels(pid);
+        if (window.PDM.OllamaMissingNudge) window.PDM.OllamaMissingNudge.maybeShow(null);
         return null;
     });
 };

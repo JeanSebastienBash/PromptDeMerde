@@ -1387,5 +1387,14 @@
         "profileAssembleFailed": "Montagem do perfil falhou. Verifica os ficheiros do bundle.",
         "importZipUnavailable": "Importação ZIP indisponível. Recarrega a página ou verifica os scripts de perfil.",
         "exportFail": "Exportação ZIP impossível. Autoriza transferências e tenta de novo."
+    },
+    "nudge": {
+        "ollamaMissing": {
+            "p1": "Clean / LLM pressupõe a instalação prévia do Ollama e de pelo menos um modelo na máquina.",
+            "p2": "Ollama não detetado. Instalar o Ollama, obter um modelo e verificar Opções → LLM.",
+            "install": "Instalar Ollama",
+            "models": "Modelos",
+            "close": "Fechar"
+        }
     }
 }

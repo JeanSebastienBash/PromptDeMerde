@@ -1387,5 +1387,14 @@
         "profileAssembleFailed": "Profile assembly failed. Check the bundle files, then retry.",
         "importZipUnavailable": "ZIP import unavailable. Reload the page or check profile scripts.",
         "exportFail": "ZIP export failed. Allow downloads, then retry."
+    },
+    "nudge": {
+        "ollamaMissing": {
+            "p1": "Clean / LLM requires prior installation of Ollama and at least one model on the machine.",
+            "p2": "Ollama not detected. Install Ollama, pull a model, then check Options → LLM.",
+            "install": "Install Ollama",
+            "models": "Models",
+            "close": "Close"
+        }
     }
 }

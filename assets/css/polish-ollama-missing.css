@@ -1,0 +1,102 @@
+/**
+ * PromptDeMerde.com — polish-ollama-missing.css
+ * Synopsis : Carte nudge Ollama manquant (coin écran, non modale).
+ * Objectif : Rappel léger, tokens thème, motion cheap, responsive.
+ */
+.ollama-nudge {
+    position: fixed;
+    top: 80px;
+    right: 16px;
+    z-index: 9998;
+    max-width: 380px;
+    width: calc(100vw - 32px);
+    padding: 14px 36px 14px 14px;
+    border-radius: 8px;
+    border: 1px solid var(--border, rgba(255, 255, 255, 0.12));
+    background: color-mix(in srgb, var(--surface, #1a1a1a) 92%, transparent);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.28);
+    color: var(--text-white, #fff);
+    font-size: var(--text-ui, 0.9rem);
+    line-height: var(--leading-normal, 1.4);
+    pointer-events: auto;
+    animation: ollamaNudgeIn 0.35s cubic-bezier(0.22, 0.61, 0.36, 1) forwards;
+}
+.ollama-nudge__close {
+    position: absolute;
+    top: 6px;
+    right: 8px;
+    width: 28px;
+    height: 28px;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    border-radius: 4px;
+    background: transparent;
+    color: var(--text-muted, #aaa);
+    font-size: 1.25rem;
+    line-height: 1;
+    cursor: pointer;
+}
+.ollama-nudge__close:hover,
+.ollama-nudge__close:focus-visible {
+    color: var(--text-white, #fff);
+    background: rgba(255, 255, 255, 0.08);
+    outline: none;
+}
+.ollama-nudge__row {
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+    min-width: 0;
+}
+.ollama-nudge__mark {
+    flex: 0 0 auto;
+    width: 32px;
+    height: 32px;
+    object-fit: contain;
+}
+.ollama-nudge__body {
+    min-width: 0;
+    flex: 1 1 auto;
+}
+.ollama-nudge__p {
+    margin: 0 0 0.5em;
+    font-weight: 500;
+}
+.ollama-nudge__p:last-of-type {
+    margin-bottom: 0.65em;
+}
+.ollama-nudge__links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px 14px;
+}
+.ollama-nudge__link {
+    color: var(--role-accent-text, var(--accent, #e8a87c));
+    text-decoration: underline;
+    text-underline-offset: 2px;
+    font-weight: 600;
+}
+.ollama-nudge__link:hover,
+.ollama-nudge__link:focus-visible {
+    opacity: 0.9;
+}
+@keyframes ollamaNudgeIn {
+    from { opacity: 0; transform: translateX(24px); }
+    to   { opacity: 1; transform: translateX(0); }
+}
+@media (max-width: 480px) {
+    .ollama-nudge {
+        top: auto;
+        bottom: 12px;
+        right: 8px;
+        left: 8px;
+        max-width: none;
+        width: auto;
+    }
+}
+@media (prefers-reduced-motion: reduce) {
+    .ollama-nudge {
+        animation: none;
+    }
+}
