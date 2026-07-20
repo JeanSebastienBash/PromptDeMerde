@@ -494,6 +494,8 @@ System prompt keys, context prompt lists, and generation settings are under the 
 <a id="feat-5-2-1"></a>
 ### #️⃣ 5.2.1. System prompt and context prompts (#Tag)
 
+The **system prompt** is optional session text. When **enabled** and non-empty, it is sent as the model `system` message (with active `#Tag` contexts stacked before or after it). When **disabled**, it is omitted. When **enabled but empty**, nothing is substituted — there is **no** built-in Nettoyeur / reformulator fallback. Personality (reformulation, chatbot, code, HTML, …) comes from the profile ZIP or from text stored in `pdm_system_prompt`. Empty system is valid in session and in ZIP round-trip (`prompts/{locale}/system.md` may be blank). The Workspace Input is sent as the **user** message without a hard-coded `clean_only` task envelope.
+
 ```
 after_system:
   [system] system prompt
@@ -510,7 +512,7 @@ before_system:
 
 | Key                         | Role                               |
 | --------------------------- | ---------------------------------- |
-| `pdm_system_prompt`         | Global instruction markdown text   |
+| `pdm_system_prompt`         | Global instruction markdown text (may be empty) |
 | `pdm_system_prompt_enabled` | Enabled or not                     |
 
 | Key                                 | Role                                         |
@@ -889,9 +891,10 @@ Chunk size follows `min(3200, max(1200, 10000 − overhead − 600))`, where `ov
 Chunking and inference behaviour:
 
 1. Split on paragraphs, lines, sentence endings, then spaces.
-2. Each chunk is cleaned separately; the final OUTPUT is the **concatenation** of all passes (`\n\n` between chunks).
-3. During the stream, the indicator shows `pass: i/n`.
-4. Meta drift (agent, “ambitious request”) → **1 strict retry** per chunk.
+2. Single-pass user message = Input as-is; multi-pass adds a neutral `Partie i/n` label (no hard-coded clean task).
+3. Final OUTPUT is the **concatenation** of all passes (`\n\n` between chunks) — oriented toward reformulation of long text.
+4. During the stream, the indicator shows `pass: i/n`.
+5. Narrow meta-drift warn (sniper / “ambitious request” signatures) — **no** automatic strict retry.
 
 
 The modules involved are `workspace-input-chunk.js` and `workspace-inference.js`.
