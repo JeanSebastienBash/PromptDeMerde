@@ -37,8 +37,6 @@ CS._validateScalarFields = function(data, errors) {
 
     if (typeof data.pdm_system_prompt !== 'string') {
         errors.push('pdm_system_prompt doit être une chaîne.');
-    } else if (!data.pdm_system_prompt.trim()) {
-        errors.push('pdm_system_prompt ne peut pas être vide.');
     }
 
     if (!CS.isStrictBoolean(data.pdm_system_prompt_enabled)) {

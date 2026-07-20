@@ -121,7 +121,9 @@ S._importConfigKeys = function(data) {
         S.set(S.KEYS.IMAGE_MODEL, data[S.KEYS.IMAGE_MODEL] || '');
     }
     S.set(S.KEYS.IMAGE_PROMPT, data[S.KEYS.IMAGE_PROMPT] || (S.getImagePromptEffective ? S.getImagePromptEffective() : ''));
-    S.set(S.KEYS.SYSTEM_PROMPT, data[S.KEYS.SYSTEM_PROMPT] || S.getSystemPromptEffective());
+    S.set(S.KEYS.SYSTEM_PROMPT, data[S.KEYS.SYSTEM_PROMPT] != null
+        ? String(data[S.KEYS.SYSTEM_PROMPT])
+        : '');
     S.setSystemPromptEnabled(data[S.KEYS.SYSTEM_PROMPT_ENABLED]);
     S.setProfiles(data[S.KEYS.PROFILES].slice());
     S.set(S.KEYS.LANGUAGE, data[S.KEYS.LANGUAGE]);

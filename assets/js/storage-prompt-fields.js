@@ -37,6 +37,9 @@ function makePromptField(storageKey, defaultField, getName, setName, effectiveNa
 }
 
 makePromptField(S.KEYS.SYSTEM_PROMPT, 'DEFAULT_SYSTEM_PROMPT', 'getSystemPrompt', 'setSystemPrompt', 'getSystemPromptEffective');
+S.getSystemPromptEffective = function() {
+    return S.getSystemPrompt();
+};
 (function wrapSystemPromptSet() {
     var orig = S.setSystemPrompt;
     if (typeof orig !== 'function' || orig._pdmCompressWrapped) return;

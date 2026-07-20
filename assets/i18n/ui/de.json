@@ -476,7 +476,7 @@
         "injectContexts0": "① Kontext-Prompts <span class=\"inject-highlight\">(#TonFormel, etc.)</span>\n",
         "injectContexts1": "① Kontext-Prompts <span class=\"inject-highlight\">(#TonFormel, etc.)</span>\n",
         "injectUserMessage": "──────────────────────── Benutzernachricht (immer zuletzt)\n",
-        "injectCleanText": "③ Zu bereinigender Text (oberer Workspace-Bereich)",
+        "injectCleanText": "③ Workspace-Input-Text (oberer Bereich)",
         "profileCountHtml": "<span class=\"num\">{{count}}/{{max}}</span> Prompts verwendet",
         "dragReorderTitle": "Ziehen zum Neuordnen",
         "moveUpTitle": "Nach oben",
@@ -964,7 +964,8 @@
         "imageEmptyResult": "Ollama lieferte keinen Text. Erneut versuchen oder Modell in Prompts → Bild-Prompts ändern.",
         "imageOllamaUnreachable": "Ollama nicht erreichbar. Ollama starten, dann Optionen → LLM (URL / Proxy) prüfen.",
         "imageAnalyzeTimeout": "Zeitlimit der Analyse überschritten. Erneut versuchen oder leichteres Modell (Prompts → Bild-Prompts).",
-        "inferenceMetaDriftWarn": "Das Modell antwortete erneut außerhalb der Aufgabe (Rolle / Meta). Kontexte reduzieren oder Tokens komprimieren."
+        "inferenceMetaDriftWarn": "Ausgabe weicht von den Systemvorgaben ab (Meta / Sniper). Aktive Kontexte reduzieren oder Tokens komprimieren.",
+        "inferenceMetaRetry": "Meta-Abweichung erkannt — Vorgaben nicht eingehalten."
     },
     "themes": {
         "families": {

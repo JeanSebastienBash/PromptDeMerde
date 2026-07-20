@@ -76,8 +76,8 @@ POJ.freeformJsonSystemSuffix = function(lang, pattern) {
     return '\n\n[PDM_OUTPUT_MODE=plain]\n' +
         'IGNORE toute consigne d’enveloppe JSON ci-dessus (y compris <output_contract> / {"' +
         key + '":"..."}).\n' +
-        'Réponds UNIQUEMENT avec le texte nettoyé final, en UTF-8 brut.\n' +
-        'Conserve tous les caractères du texte nettoyé : guillemets " \' « » „ “ ”, ' +
+        'Réponds UNIQUEMENT avec le texte final, en UTF-8 brut.\n' +
+        'Conserve tous les caractères du texte final : guillemets " \' « » „ “ ”, ' +
         'apostrophes, slashs / \\, accents, ligatures, HTML/XML si présents, emoji, ' +
         'CJK, arabes, cyrilliques, etc. Ne les escape pas, ne les retire pas.\n' +
         'Aucun objet JSON, aucun markdown, aucun fence ```, aucun préambule.\n' +

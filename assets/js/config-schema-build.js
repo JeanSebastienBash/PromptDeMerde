@@ -113,8 +113,10 @@ CS.normalizeLegacyConfig = function(data) {
     if (copy.pdm_context_gen_user_title === undefined || !String(copy.pdm_context_gen_user_title).trim()) {
         copy.pdm_context_gen_user_title = csLocale('DEFAULT_CONTEXT_GEN_USER_TITLE');
     }
-    if (copy.pdm_system_prompt === undefined || !String(copy.pdm_system_prompt).trim()) {
-        copy.pdm_system_prompt = csLocale('DEFAULT_SYSTEM_PROMPT');
+    if (copy.pdm_system_prompt === undefined || copy.pdm_system_prompt === null) {
+        copy.pdm_system_prompt = '';
+    } else {
+        copy.pdm_system_prompt = String(copy.pdm_system_prompt);
     }
     if (copy.pdm_image_prompt === undefined || !String(copy.pdm_image_prompt).trim()) {
         copy.pdm_image_prompt = csLocale('DEFAULT_IMAGE_PROMPT');
@@ -253,7 +255,7 @@ CS.buildDefaultConfig = function() {
         pdm_model: '',
         pdm_image_model: CS.DEFAULT_IMAGE_MODEL || 'moondream',
         pdm_image_prompt: csLocale('DEFAULT_IMAGE_PROMPT'),
-        pdm_system_prompt: csLocale('DEFAULT_SYSTEM_PROMPT'),
+        pdm_system_prompt: '',
         pdm_system_prompt_enabled: true,
         pdm_profiles: JSON.parse(JSON.stringify(CS.DEFAULT_PROFILES)),
         pdm_language: 'fr',

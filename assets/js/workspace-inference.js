@@ -175,7 +175,7 @@ A._doSniperiseAfterCompress = function() {
                 '<output_contract>\nTexte brut UTF-8 uniquement. Pas d’objet JSON.\n</output_contract>')
             .replace(/\{"output_[a-z]{2}"\s*:\s*"\.\.\."\}/g, '(texte brut)')
             .replace(/Un seul objet JSON[^\n]*/gi, 'Une seule chaîne texte brut (pas de JSON).')
-            .replace(/Aucun texte hors JSON[^\n]*/gi, 'Aucun préambule hors texte nettoyé.');
+            .replace(/Aucun texte hors JSON[^\n]*/gi, 'Aucun préambule hors texte final.');
         if (typeof POJ.freeformJsonSystemSuffix === 'function') {
             sys = sys + POJ.freeformJsonSystemSuffix(langForOut, patternForOut);
         }
@@ -393,7 +393,7 @@ A._doSniperiseAfterCompress = function() {
         });
     }
 
-    function runInputChunks(index, accPlain, lastData, strictRetry) {
+    function runInputChunks(index, accPlain, lastData) {
         if (index >= inputChunks.length) {
             return Promise.resolve({
                 data: lastData || { result: accPlain },
@@ -405,8 +405,7 @@ A._doSniperiseAfterCompress = function() {
         var userPayload = IC && typeof IC.wrapUserChunk === 'function'
             ? IC.wrapUserChunk(rawChunk, {
                 index: index,
-                total: inputChunks.length,
-                strict: !!strictRetry
+                total: inputChunks.length
             })
             : rawChunk;
 
@@ -416,30 +415,8 @@ A._doSniperiseAfterCompress = function() {
                 piece = canonicalizeOutput(IC.unwrapEchoedUserWrapper(piece, rawChunk));
             }
             if (IC && typeof IC.looksLikeMetaDrift === 'function'
-                && IC.looksLikeMetaDrift(piece, rawChunk) && !strictRetry) {
-                window.PDM.UI.notif(wuText('inferenceMetaRetry'), 'info');
-                contentTokenCount = 0;
-                syncOutputToPrefix();
-                return runInputChunks(index, accPlain, lastData, true);
-            }
-            if (IC && typeof IC.looksLikeMetaDrift === 'function'
-                && IC.looksLikeMetaDrift(piece, rawChunk) && strictRetry) {
-                // Dernier recours : si l’écho PDM_TASK reste, garder le texte après --- (souvent = chunk)
-                if (IC.unwrapEchoedUserWrapper) {
-                    var salvaged = canonicalizeOutput(IC.unwrapEchoedUserWrapper(
-                        String(data && data.result != null ? data.result : piece),
-                        rawChunk
-                    ));
-                    if (salvaged && !IC.looksLikeMetaDrift(salvaged, rawChunk)) {
-                        piece = salvaged;
-                    } else if (/\[PDM_TASK=clean_only/i.test(piece) && rawChunk) {
-                        piece = canonicalizeOutput(rawChunk);
-                    } else {
-                        window.PDM.UI.notif(wuText('inferenceMetaDriftWarn'), 'err');
-                    }
-                } else {
-                    window.PDM.UI.notif(wuText('inferenceMetaDriftWarn'), 'err');
-                }
+                && IC.looksLikeMetaDrift(piece, rawChunk)) {
+                window.PDM.UI.notif(wuText('inferenceMetaDriftWarn'), 'err');
             }
             var thinkPiece = String((data && data.thinking) || '');
             if (thinkPiece) {
@@ -454,11 +431,11 @@ A._doSniperiseAfterCompress = function() {
                 outputTa.scrollTop = outputTa.scrollHeight;
             }
             if (data) data.thinking = accumulatedThinking;
-            return runInputChunks(index + 1, nextAcc, data, false);
+            return runInputChunks(index + 1, nextAcc, data);
         });
     }
 
-    runInputChunks(0, '', null, false).then(function(pack){
+    runInputChunks(0, '', null).then(function(pack){
         var data = pack && pack.data;
         var plainOut = pack && pack.plain != null ? pack.plain : '';
         clearMetaTick();

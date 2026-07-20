@@ -476,7 +476,7 @@
         "injectContexts0": "① 컨텍스트 프롬프트 <span class=\"inject-highlight\">(#TonFormel, etc.)</span>\n",
         "injectContexts1": "① 컨텍스트 프롬프트 <span class=\"inject-highlight\">(#TonFormel, etc.)</span>\n",
         "injectUserMessage": "──────────────────────── 사용자 메시지 (항상 마지막)\n",
-        "injectCleanText": "③ 정리할 텍스트(Workspace 상단 영역)",
+        "injectCleanText": "③ Workspace Input 텍스트(상단 영역)",
         "profileCountHtml": "<span class=\"num\">{{count}}/{{max}}</span> 프롬프트 사용",
         "dragReorderTitle": "드래그하여 재정렬",
         "moveUpTitle": "위로",
@@ -964,7 +964,8 @@
         "imageEmptyResult": "Ollama가 텍스트를 반환하지 않았습니다. 다시 시도하거나 프롬프트 → 이미지 프롬프트에서 모델을 바꾸세요.",
         "imageOllamaUnreachable": "Ollama에 연결할 수 없습니다. Ollama를 실행한 뒤 옵션 → LLM(URL / 프록시)을 확인하세요.",
         "imageAnalyzeTimeout": "분석 시간이 초과되었습니다. 다시 시도하거나 더 가벼운 모델을 쓰세요(프롬프트 → 이미지 프롬프트).",
-        "inferenceMetaDriftWarn": "모델이 여전히 작업 외(역할/메타)로 응답했습니다. 컨텍스트를 줄이거나 토큰을 압축하세요."
+        "inferenceMetaDriftWarn": "출력이 시스템 지시에서 벗어남(메타/스나이퍼). 활성 컨텍스트를 줄이거나 토큰을 압축할 것.",
+        "inferenceMetaRetry": "메타 이탈 감지 — 지시 미준수."
     },
     "themes": {
         "families": {

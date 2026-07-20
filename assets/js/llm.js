@@ -59,8 +59,8 @@ function buildSystemWithProfiles(systemPrompt, profiles) {
     var base = '';
     if (systemEnabled) {
         base = systemPrompt && String(systemPrompt).trim()
-            ? systemPrompt
-            : buildDefaultSystemPrompt();
+            ? String(systemPrompt)
+            : '';
     }
     if (!base) return block;
     if (!block) return base;

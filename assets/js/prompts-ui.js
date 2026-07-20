@@ -53,7 +53,9 @@ A.updateContextInjectUI = function() {
 };
 
 A.getSystemPromptDisplayValue = function() {
-    return window.PDM.Storage.getSystemPromptEffective();
+    return window.PDM.Storage.getSystemPrompt
+        ? window.PDM.Storage.getSystemPrompt()
+        : '';
 };
 
 A._promptTemplateBindings = [
@@ -154,10 +156,10 @@ A.syncContextGenTextareas = function(forceValue) {
 A.syncSystemPromptTextarea = function(forceValue) {
     var sys = document.getElementById('prompts-system');
     if (!sys) return;
-    var effective = A.getSystemPromptDisplayValue();
-    sys.placeholder = effective || prT('systemProfilePlaceholder');
+    var stored = A.getSystemPromptDisplayValue();
+    sys.placeholder = prT('systemProfilePlaceholder');
     if (forceValue || document.activeElement !== sys) {
-        sys.value = effective;
+        sys.value = stored;
     }
 };
 

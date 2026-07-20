@@ -476,7 +476,7 @@
         "injectContexts0": "① Prompts de contexto <span class=\"inject-highlight\">(#TonFormel, etc.)</span>\n",
         "injectContexts1": "① Prompts de contexto <span class=\"inject-highlight\">(#TonFormel, etc.)</span>\n",
         "injectUserMessage": "──────────────────────── mensagem do usuário (sempre por último)\n",
-        "injectCleanText": "③ Texto a limpar (zona superior do Workspace)",
+        "injectCleanText": "③ Texto Workspace Input (área superior)",
         "profileCountHtml": "<span class=\"num\">{{count}}/{{max}}</span> prompts usados",
         "dragReorderTitle": "Arrastar para reordenar",
         "moveUpTitle": "Subir",
@@ -964,7 +964,8 @@
         "imageEmptyResult": "Ollama não devolveu texto. Tenta de novo ou muda o modelo em Prompts → Prompts de imagem.",
         "imageOllamaUnreachable": "Ollama inacessível. Inicia o Ollama e verifica Opções → LLM (URL / proxy).",
         "imageAnalyzeTimeout": "Tempo esgotado na análise. Tenta de novo ou um modelo mais leve (Prompts → Prompts de imagem).",
-        "inferenceMetaDriftWarn": "O modelo ainda respondeu fora da tarefa (papel / meta). Reduzir contextos ou comprimir tokens."
+        "inferenceMetaDriftWarn": "Saída desviou das instruções do sistema (meta / sniper). Reduzir contextos ativos ou comprimir tokens.",
+        "inferenceMetaRetry": "Desvio meta detetado — instruções não seguidas."
     },
     "themes": {
         "families": {

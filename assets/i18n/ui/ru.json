@@ -476,7 +476,7 @@
         "injectContexts0": "① Контекстные промпты <span class=\"inject-highlight\">(#TonFormel, etc.)</span>\n",
         "injectContexts1": "① Контекстные промпты <span class=\"inject-highlight\">(#TonFormel, etc.)</span>\n",
         "injectUserMessage": "──────────────────────── сообщение пользователя (всегда последним)\n",
-        "injectCleanText": "③ Текст для очистки (верхняя зона Workspace)",
+        "injectCleanText": "③ Текст Workspace Input (верхняя зона)",
         "profileCountHtml": "<span class=\"num\">{{count}}/{{max}}</span> промптов использовано",
         "dragReorderTitle": "Перетащите для сортировки",
         "moveUpTitle": "Вверх",
@@ -964,7 +964,8 @@
         "imageEmptyResult": "Ollama не вернул текст. Повторите или смените модель в Промпты → Промпты изображения.",
         "imageOllamaUnreachable": "Ollama недоступен. Запустите Ollama и проверьте Параметры → LLM (URL / proxy).",
         "imageAnalyzeTimeout": "Таймаут анализа. Повторите или возьмите более лёгкую модель (Промпты → Промпты изображения).",
-        "inferenceMetaDriftWarn": "Модель снова ответила вне задачи (роль / мета). Сократите контексты или сожмите токены."
+        "inferenceMetaDriftWarn": "Вывод отклонился от системных инструкций (мета / снайпер). Сократить активные контексты или сжать токены.",
+        "inferenceMetaRetry": "Обнаружен мета-дрейф — инструкции не соблюдены."
     },
     "themes": {
         "families": {

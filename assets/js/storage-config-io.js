@@ -39,7 +39,7 @@ S._exportValueForKey = function(key) {
     if (key === S.KEYS.MODEL) return S.getModel();
     if (key === S.KEYS.IMAGE_MODEL) return S.getImageModel ? S.getImageModel() : (S.get(S.KEYS.IMAGE_MODEL) || '');
     if (key === S.KEYS.IMAGE_PROMPT) return S.getImagePromptEffective ? S.getImagePromptEffective() : (S.get(S.KEYS.IMAGE_PROMPT) || '');
-    if (key === S.KEYS.SYSTEM_PROMPT) return S.getSystemPromptEffective();
+    if (key === S.KEYS.SYSTEM_PROMPT) return S.getSystemPrompt();
     if (key === S.KEYS.LANGUAGE) return S.getLanguage();
     if (key === S.KEYS.THEME) return S.getTheme();
     if (key === S.KEYS.PROFILES) return S.getProfiles();

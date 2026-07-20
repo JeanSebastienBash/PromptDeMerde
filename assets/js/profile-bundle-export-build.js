@@ -32,7 +32,7 @@ PBE._buildFileMapCore = function(options) {
         promptLocales = PBun.getExportLocales(profileId, promptLocales);
     }
 
-    var systemPrompt = S.getSystemPromptEffective ? S.getSystemPromptEffective() : '';
+    var systemPrompt = S.getSystemPrompt ? S.getSystemPrompt() : '';
     var systemEnabled = S.getSystemPromptEnabled ? S.getSystemPromptEnabled() : true;
     var profiles = S.getProfiles ? S.getProfiles() : [];
 

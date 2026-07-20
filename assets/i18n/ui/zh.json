@@ -476,7 +476,7 @@
         "injectContexts0": "① 上下文提示 <span class=\"inject-highlight\">(#TonFormel, etc.)</span>\n",
         "injectContexts1": "① 上下文提示 <span class=\"inject-highlight\">(#TonFormel, etc.)</span>\n",
         "injectUserMessage": "──────────────────────── 用户消息（始终在最后）\n",
-        "injectCleanText": "③ 待清理的文本（工作区上部）",
+        "injectCleanText": "③ Workspace Input 文本（顶部区域）",
         "profileCountHtml": "<span class=\"num\">{{count}}/{{max}}</span> 个提示词已使用",
         "dragReorderTitle": "拖动以重新排序",
         "moveUpTitle": "上移",
@@ -964,7 +964,8 @@
         "imageEmptyResult": "Ollama 未返回文本。请重试或在提示词 → 图片提示词中更换模型。",
         "imageOllamaUnreachable": "无法连接 Ollama。请启动 Ollama，并检查选项 → LLM（URL / 代理）。",
         "imageAnalyzeTimeout": "分析超时。请重试或使用更轻量的模型（提示词 → 图片提示词）。",
-        "inferenceMetaDriftWarn": "模型仍偏离任务（角色/元信息）。请减少上下文或压缩 token。"
+        "inferenceMetaDriftWarn": "输出偏离系统指令（元信息/狙击式）。请减少活动上下文或压缩 token。",
+        "inferenceMetaRetry": "检测到元信息偏离 — 未遵循指令。"
     },
     "themes": {
         "families": {

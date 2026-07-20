@@ -476,7 +476,7 @@
         "injectContexts0": "① Les prompts de contexte <span class=\"inject-highlight\">(#TonFormel, etc.)</span>\n",
         "injectContexts1": "① Les prompts de contexte <span class=\"inject-highlight\">(#TonFormel, etc.)</span>\n",
         "injectUserMessage": "──────────────────────── message utilisateur (toujours en dernier)\n",
-        "injectCleanText": "③ Le texte à nettoyer (zone du haut du Workspace)",
+        "injectCleanText": "③ Texte Workspace Input (zone du haut)",
         "profileCountHtml": "<span class=\"num\">{{count}}/{{max}}</span> prompts utilisés",
         "dragReorderTitle": "Glisser pour réorganiser",
         "moveUpTitle": "Monter",
@@ -964,7 +964,8 @@
         "imageEmptyResult": "Ollama n’a renvoyé aucun texte. Réessayez ou changez le modèle dans Prompts → Prompts image.",
         "imageOllamaUnreachable": "Ollama injoignable. Lancez Ollama, puis vérifiez Options → LLM (URL / proxy).",
         "imageAnalyzeTimeout": "Délai dépassé sur l’analyse. Réessayez ou prenez un modèle plus léger (Prompts → Prompts image).",
-        "inferenceMetaDriftWarn": "Le modèle a encore répondu hors tâche (rôle / méta). Réduire les contextes ou compresser les tokens."
+        "inferenceMetaDriftWarn": "Sortie hors consignes système détectée (méta / sniper). Réduire les contextes actifs ou compresser les tokens.",
+        "inferenceMetaRetry": "Dérive méta détectée — consigne non respectée."
     },
     "themes": {
         "families": {

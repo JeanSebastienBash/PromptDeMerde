@@ -476,7 +476,7 @@
         "injectContexts0": "① مطالبات السياق <span class=\"inject-highlight\">(#TonFormel, etc.)</span>\n",
         "injectContexts1": "① مطالبات السياق <span class=\"inject-highlight\">(#TonFormel, etc.)</span>\n",
         "injectUserMessage": "──────────────────────── رسالة المستخدم (دائمًا في الأخير)\n",
-        "injectCleanText": "③ النص المراد تنظيفه (المنطقة العليا من مساحة العمل)",
+        "injectCleanText": "③ نص مساحة العمل Input (المنطقة العلوية)",
         "profileCountHtml": "<span class=\"num\">{{count}}/{{max}}</span> مطالبات مستخدمة",
         "dragReorderTitle": "اسحب لإعادة الترتيب",
         "moveUpTitle": "تحريك لأعلى",
@@ -964,7 +964,8 @@
         "imageEmptyResult": "لم يُرجع Ollama أي نص. أعد المحاولة أو غيّر النموذج من المطالبات → مطالبات الصورة.",
         "imageOllamaUnreachable": "تعذّر الوصول إلى Ollama. شغّله ثم راجع خيارات → LLM (الرابط / الوكيل).",
         "imageAnalyzeTimeout": "انتهت مهلة التحليل. أعد المحاولة أو استخدم نموذجًا أخف (المطالبات → مطالبات الصورة).",
-        "inferenceMetaDriftWarn": "لا يزال النموذج يجيب خارج المهمة (دور / ميتا). قلل السياقات أو اضغط الرموز."
+        "inferenceMetaDriftWarn": "انحراف المخرجات عن تعليمات النظام (ميتا / قناص). تقليل السياقات النشطة أو ضغط الرموز.",
+        "inferenceMetaRetry": "انحراف ميتا مُكتشف — التعليمات غير مُتبعة."
     },
     "themes": {
         "families": {

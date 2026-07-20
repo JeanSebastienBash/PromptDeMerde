@@ -476,7 +476,7 @@
         "injectContexts0": "① コンテキストプロンプト <span class=\"inject-highlight\">(#TonFormel, etc.)</span>\n",
         "injectContexts1": "① コンテキストプロンプト <span class=\"inject-highlight\">(#TonFormel, etc.)</span>\n",
         "injectUserMessage": "──────────────────────── ユーザーメッセージ（常に最後）\n",
-        "injectCleanText": "③ クリーニングするテキスト（Workspace上部）",
+        "injectCleanText": "③ Workspace Input のテキスト（上部）",
         "profileCountHtml": "<span class=\"num\">{{count}}/{{max}}</span> プロンプト使用中",
         "dragReorderTitle": "ドラッグして並べ替え",
         "moveUpTitle": "上へ",
@@ -964,7 +964,8 @@
         "imageEmptyResult": "Ollama がテキストを返しませんでした。再試行するか、プロンプト → 画像プロンプトでモデルを変更してください。",
         "imageOllamaUnreachable": "Ollama に接続できません。Ollama を起動し、オプション → LLM（URL / プロキシ）を確認してください。",
         "imageAnalyzeTimeout": "解析がタイムアウトしました。再試行するか、より軽いモデルを使ってください（プロンプト → 画像プロンプト）。",
-        "inferenceMetaDriftWarn": "モデルがまだタスク外（役割/メタ）で応答しました。コンテキストを減らすかトークンを圧縮してください。"
+        "inferenceMetaDriftWarn": "出力がシステム指示から逸脱（メタ／スナイパー）。有効なコンテキストを減らすかトークンを圧縮する。",
+        "inferenceMetaRetry": "メタ逸脱を検出 — 指示未遵守。"
     },
     "themes": {
         "families": {

@@ -87,71 +87,52 @@ IC.wrapUserChunk = function(chunk, opts) {
     opts = opts || {};
     var idx = opts.index != null ? opts.index : 0;
     var total = opts.total != null ? opts.total : 1;
-    var strict = !!opts.strict;
-    var head = strict
-        ? '[PDM_TASK=clean_only_STRICT]\n'
-        : '[PDM_TASK=clean_only]\n';
-    var rules = [
-        'Tâche UNIQUE : post-éditer / nettoyer le texte utilisateur ci-dessous.',
-        'INTERDIT : te présenter, expliquer ton rôle, dire que la demande est ambitieuse,',
-        'proposer un plan, fabriquer un « prompt sniper », résumer au lieu de tout couvrir.',
-        'Sortie = le texte nettoyé UNIQUEMENT (UTF-8 brut). Aucun préambule.'
-    ].join(' ');
-    if (strict) {
-        rules += ' Si tu commences par une présentation ou un méta-commentaire, tu as ÉCHOUÉ.';
-    }
-    var partLine = total > 1
-        ? ('Partie ' + (idx + 1) + '/' + total + ' du monologue (traite cette partie seule, sans résumer les autres).\n\n')
-        : '';
-    return head + rules + '\n\n---\n' + partLine + String(chunk || '');
+    var part = String(chunk || '');
+    if (total <= 1) return part;
+    return 'Partie ' + (idx + 1) + '/' + total +
+        ' du monologue (traite cette partie seule, sans résumer les autres).\n\n' + part;
 };
 
-/** Si le modèle a renvoyé le wrapper user (PDM_TASK…---…texte), récupère le texte après ---. */
 IC.unwrapEchoedUserWrapper = function(output, inputChunk) {
     var out = String(output || '').trim();
     if (!out) return out;
-    if (!/\[PDM_TASK=clean_only/i.test(out)) return out;
     var marker = '\n---\n';
     var idx = out.indexOf(marker);
     if (idx < 0) {
         idx = out.indexOf('\n---');
         if (idx >= 0) marker = '\n---';
     }
-    if (idx < 0) return out;
-    var after = out.slice(idx + marker.length).trim();
-    after = after.replace(/^Partie\s+\d+\s*\/\s*\d+[^\n]*\n+/i, '').trim();
-    var inp = String(inputChunk || '').trim();
-    if (!after && inp) return inp;
-    return after || out;
+    if (/\[PDM_TASK=clean_only/i.test(out) && idx >= 0) {
+        var after = out.slice(idx + marker.length).trim();
+        after = after.replace(/^Partie\s+\d+\s*\/\s*\d+[^\n]*\n+/i, '').trim();
+        var inp = String(inputChunk || '').trim();
+        if (!after && inp) return inp;
+        return after || out;
+    }
+    if (/^Partie\s+\d+\s*\/\s*\d+[^\n]*\n+/i.test(out)) {
+        var stripped = out.replace(/^Partie\s+\d+\s*\/\s*\d+[^\n]*\n+/i, '').trim();
+        return stripped || out;
+    }
+    return out;
 };
 
 IC.looksLikeMetaDrift = function(output, inputChunk) {
     var out = String(output || '').trim();
-    var inp = String(inputChunk || '').trim();
-    if (!out) return true;
-    // Écho du wrapper d’envoi (fréquent sur petits modèles)
+    if (!out) return false;
     if (/\[PDM_TASK=clean_only/i.test(out)) return true;
     if (/t[aâ]che unique\s*:\s*post-[\u00e9e]diter/i.test(out)) return true;
     if (/sortie\s*=\s*le texte nettoy/i.test(out) && /INTERDIT\s*:/i.test(out)) return true;
     var head = out.slice(0, 280).toLowerCase();
     var patterns = [
-        /^bonjour[, ]/,
-        /^je suis (un |l['’])?/,
-        /^en tant qu/,
-        /mon rôle (est|consiste)/,
         /votre demande (est |semble )?ambitieuse/,
         /demande (est |semble )?ambitieuse/,
-        /je vais (vous )?(aider|fabriquer|créer|générer)/,
-        /prompt(s)? de (qualité|sniper)/,
+        /prompt(s)? de (qualit[eé]|sniper)/,
         /fabriquer des prompts/,
-        /agent (de |spécialisé )?(prompt|ia)/,
-        /^voici (un )?plan/,
-        /^pour (bien )?répondre/
+        /agent (de |sp[eé]cialis[eé] )?(prompt|ia)/
     ];
     for (var i = 0; i < patterns.length; i++) {
         if (patterns[i].test(head)) return true;
     }
-    if (inp.length > 400 && out.length < Math.min(120, inp.length * 0.04)) return true;
     return false;
 };
 

@@ -476,7 +476,7 @@
         "injectContexts0": "① Kuntekstaj promptoj <span class=\"inject-highlight\">(#TonFormel, etc.)</span>\n",
         "injectContexts1": "① Kuntekstaj promptoj <span class=\"inject-highlight\">(#TonFormel, etc.)</span>\n",
         "injectUserMessage": "──────────────────────── uzanto-mesaĝo (ĉiam lasta)\n",
-        "injectCleanText": "③ Teksto por purigi (supra zono de Workspace)",
+        "injectCleanText": "③ Workspace Input-teksto (supra zono)",
         "profileCountHtml": "<span class=\"num\">{{count}}/{{max}}</span> promptoj uzitaj",
         "dragReorderTitle": "Trenu por reordigi",
         "moveUpTitle": "Movi supren",
@@ -964,7 +964,8 @@
         "imageEmptyResult": "Ollama ne liveris tekston. Reprovu aŭ ŝanĝu la modelon en Promptoj → Bildaj promptoj.",
         "imageOllamaUnreachable": "Ollama nestingebla. Lanĉu Ollama, poste kontrolu Opcioj → LLM (URL / prokurilo).",
         "imageAnalyzeTimeout": "Tempolimo de la analizo. Reprovu aŭ uzu pli malpezan modelon (Promptoj → Bildaj promptoj).",
-        "inferenceMetaDriftWarn": "La modelo ankoraŭ respondis ekster tasko (rolo / meta). Reduktu kuntekstojn aŭ densigu ĵetonojn."
+        "inferenceMetaDriftWarn": "Eligo foriris de la sistemaj instrukcioj (meta / snajpero). Reduktu aktivajn kuntekstojn aŭ densigu ĵetonojn.",
+        "inferenceMetaRetry": "Meta-derivo detektita — instrukcioj ne sekvitaj."
     },
     "themes": {
         "families": {

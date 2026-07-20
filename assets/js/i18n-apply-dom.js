@@ -561,8 +561,8 @@ function applyStaticIds(root) {
     var sysToggle = root.getElementById('system-prompt-toggle-wrap');
     if (sysToggle) sysToggle.setAttribute('title', I18n.t('prompts.systemToggleTitle'));
     var sysTa = root.getElementById('prompts-system');
-    if (sysTa && I18n.t('prompts.systemPromptPlaceholder')) {
-        sysTa.placeholder = I18n.t('prompts.systemPromptPlaceholder');
+    if (sysTa && I18n.t('prompts.systemProfilePlaceholder')) {
+        sysTa.placeholder = I18n.t('prompts.systemProfilePlaceholder');
     }
     var ctxTitle = root.querySelector('.prm-col-context > .prm-card > .prm-title span:last-child');
     if (ctxTitle) setText(ctxTitle, I18n.t('prompts.contextTitle'));

@@ -96,7 +96,7 @@ PBUNDLE.captureFromSession = function(locale, profileId) {
     if (profileId) bundle.profileId = profileId;
 
     var slot = PBUNDLE.ensureLocaleSlot(bundle, locale);
-    slot.system = S.getSystemPromptEffective ? S.getSystemPromptEffective() : '';
+    slot.system = S.getSystemPrompt ? S.getSystemPrompt() : '';
     slot.systemEnabled = S.isSystemPromptEnabled ? S.isSystemPromptEnabled() : true;
     slot.profiles = cloneProfiles(S.getProfiles ? S.getProfiles() : []);
     slot.gen = readGenFromSession();

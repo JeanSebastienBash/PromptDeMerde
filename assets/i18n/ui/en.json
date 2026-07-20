@@ -476,7 +476,7 @@
         "injectContexts0": "① Context prompts <span class=\"inject-highlight\">(#TonFormel, etc.)</span>\n",
         "injectContexts1": "① Context prompts <span class=\"inject-highlight\">(#TonFormel, etc.)</span>\n",
         "injectUserMessage": "──────────────────────── user message (always last)\n",
-        "injectCleanText": "③ Text to clean (top Workspace area)",
+        "injectCleanText": "③ Workspace Input text (top area)",
         "profileCountHtml": "<span class=\"num\">{{count}}/{{max}}</span> prompts used",
         "dragReorderTitle": "Drag to reorder",
         "moveUpTitle": "Move up",
@@ -964,7 +964,8 @@
         "imageEmptyResult": "Ollama returned no text. Retry or change the model in Prompts → Image prompts.",
         "imageOllamaUnreachable": "Ollama unreachable. Start Ollama, then check Options → LLM (URL / proxy).",
         "imageAnalyzeTimeout": "Image analysis timed out. Retry or use a lighter model (Prompts → Image prompts).",
-        "inferenceMetaDriftWarn": "The model still answered off-task (role / meta). Reduce contexts or compress tokens."
+        "inferenceMetaDriftWarn": "Output drifted from system instructions (meta / sniper). Reduce active contexts or compress tokens.",
+        "inferenceMetaRetry": "Meta drift detected — instructions not followed."
     },
     "themes": {
         "families": {
