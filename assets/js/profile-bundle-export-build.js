@@ -111,24 +111,31 @@ PBE._writeLocaleExport = function(core, loc, bundled) {
     var locData = core.PBun && typeof core.PBun.getLocaleData === 'function'
         ? core.PBun.getLocaleData(core.profileId, loc)
         : null;
+    var profiles = PBE.profilesAlignedToIndex(
+        core.profiles,
+        locData && locData.profiles
+    );
     if (locData) {
-        PBE.writePromptMdFiles(core.files, loc, locData.system, locData.profiles);
+        PBE.writePromptMdFiles(core.files, loc, locData.system || core.systemPrompt, profiles);
         if (locData.gen && typeof locData.gen === 'object') {
             PBE.writeGenPromptMdFiles(core.files, loc, locData.gen);
+        } else if (loc === core.language) {
+            PBE.writeGenPromptMdFiles(core.files, loc, PBE.collectGenPromptValues(core.S, null));
         }
         return Promise.resolve();
     }
     if (bundled) {
         return PBE.fetchBundledLocaleTexts(core.profileId, loc).then(function(depot) {
-            PBE.writePromptMdFiles(core.files, loc, depot.system, depot.profiles);
+            var depotProfiles = PBE.profilesAlignedToIndex(core.profiles, depot.profiles);
+            PBE.writePromptMdFiles(core.files, loc, depot.system, depotProfiles);
             PBE.writeGenPromptMdFiles(core.files, loc, depot.gen);
         });
     }
     if (loc === core.language) {
-        PBE.writePromptMdFiles(core.files, loc, core.systemPrompt, core.profiles);
+        PBE.writePromptMdFiles(core.files, loc, core.systemPrompt, profiles);
         PBE.writeGenPromptMdFiles(core.files, loc, PBE.collectGenPromptValues(core.S, null));
     } else {
-        PBE.writePromptMdFiles(core.files, loc, core.systemPrompt, core.profiles);
+        PBE.writePromptMdFiles(core.files, loc, core.systemPrompt, profiles);
     }
     return Promise.resolve();
 };
@@ -170,16 +177,20 @@ PBE.buildFileMap = function(options) {
         var locData = core.PBun && typeof core.PBun.getLocaleData === 'function'
             ? core.PBun.getLocaleData(core.profileId, loc)
             : null;
+        var profiles = PBE.profilesAlignedToIndex(
+            core.profiles,
+            locData && locData.profiles
+        );
         if (locData) {
-            PBE.writePromptMdFiles(core.files, loc, locData.system, locData.profiles);
+            PBE.writePromptMdFiles(core.files, loc, locData.system || core.systemPrompt, profiles);
             if (locData.gen && typeof locData.gen === 'object') {
                 PBE.writeGenPromptMdFiles(core.files, loc, locData.gen);
             }
         } else if (loc === core.language) {
-            PBE.writePromptMdFiles(core.files, loc, core.systemPrompt, core.profiles);
+            PBE.writePromptMdFiles(core.files, loc, core.systemPrompt, profiles);
             PBE.writeGenPromptMdFiles(core.files, loc, PBE.collectGenPromptValues(core.S, null));
         } else if (!bundled) {
-            PBE.writePromptMdFiles(core.files, loc, core.systemPrompt, core.profiles);
+            PBE.writePromptMdFiles(core.files, loc, core.systemPrompt, profiles);
         }
     }
     PBE._appendI18nFiles(core.files, options);

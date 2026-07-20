@@ -248,16 +248,24 @@ PBUNDLE.importFromFileMap = function(fileMap, promptsIndex, profileId, genPrompt
 
         var profiles = [];
         if (Array.isArray(promptsIndex.contexts)) {
+            var defLoc = String(localesIndex.defaultLocale || locales[0] || 'fr');
             for (var i = 0; i < promptsIndex.contexts.length; i++) {
                 var ctx = promptsIndex.contexts[i];
                 if (!ctx) continue;
                 var ctxPath = PB && PB.resolvePromptPath
                     ? PB.resolvePromptPath(ctx.pathTemplate, loc, ctx.tag)
                     : ('contexts/' + loc + '/' + ctx.tag + '.md');
+                var body = fileMap[ctxPath];
+                if (body == null && defLoc !== loc) {
+                    var defPath = PB && PB.resolvePromptPath
+                        ? PB.resolvePromptPath(ctx.pathTemplate, defLoc, ctx.tag)
+                        : ('contexts/' + defLoc + '/' + ctx.tag + '.md');
+                    body = fileMap[defPath];
+                }
                 profiles.push({
                     id: String(ctx.id),
                     tag: String(ctx.tag),
-                    prompt: fileMap[ctxPath] != null ? String(fileMap[ctxPath]).trim() : '',
+                    prompt: body != null ? String(body).trim() : '',
                     active: !!ctx.active
                 });
             }

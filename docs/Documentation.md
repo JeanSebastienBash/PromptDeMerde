@@ -1040,6 +1040,8 @@ The files involved are `profile-bundle-loader.js`, `storage-config-import.js`, a
 
 Export fills each `pdm_*` key through Storage getters (`Storage._exportValueForKey`), not raw `localStorage` nulls. On import, `ConfigSchema.normalizeLegacyConfig` coerces a non-boolean `pdm_output_json_enabled` to `false` and an invalid `pdm_output_display_format` to `text` before `validatePdmConfig` (strict boolean / enum). The key set and schema types stay unchanged.
 
+Context Markdown in the ZIP must match `parts/prompts.json` for every listed locale. Export aligns each locale’s context files to the session tag set (reuse translated copy when the same tag exists; otherwise copy the session prompt). Import falls back to another locale’s Markdown when a path is missing (UI language ≠ complete prompt set).
+
 <a id="75-personnalisation-par-édition-zip"></a>
 ### 12.5 Customization by ZIP editing
 

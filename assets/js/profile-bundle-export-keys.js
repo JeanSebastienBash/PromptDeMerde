@@ -154,5 +154,23 @@ PBE.writePromptMdFiles = function(files, locale, systemPrompt, profiles) {
     }
 };
 
+PBE.profilesAlignedToIndex = function(wantedProfiles, locProfiles) {
+    var wanted = Array.isArray(wantedProfiles) ? wantedProfiles : [];
+    if (!wanted.length) return [];
+    var byTag = {};
+    var list = Array.isArray(locProfiles) ? locProfiles : [];
+    for (var i = 0; i < list.length; i++) {
+        var p = list[i];
+        if (p && p.tag) byTag[String(p.tag)] = p;
+    }
+    var out = [];
+    for (var j = 0; j < wanted.length; j++) {
+        var w = wanted[j];
+        if (!w || !w.tag) continue;
+        out.push(byTag[String(w.tag)] || w);
+    }
+    return out;
+};
+
 
 })();

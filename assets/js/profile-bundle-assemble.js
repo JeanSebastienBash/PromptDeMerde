@@ -63,13 +63,17 @@ PB.readGenPromptsFromFiles = function(files, genPromptsIndex, locale) {
     return out;
 };
 
-PB.loadTextsForLocale = function(baseUrl, promptsIndex, genPromptsIndex, locale, fileMap) {
+PB.loadTextsForLocale = function(baseUrl, promptsIndex, genPromptsIndex, locale, fileMap, fallbackLocales) {
     var paths = PB.collectRequiredPaths(promptsIndex, genPromptsIndex, locale);
     if (fileMap) {
         var out = {};
+        var fb = Array.isArray(fallbackLocales) ? fallbackLocales : [];
         for (var i = 0; i < paths.length; i++) {
             var p = paths[i];
             var txt = PB.readFileFromMap(fileMap, p);
+            if (txt == null) {
+                txt = PB._readFallbackLocaleText(fileMap, p, locale, fb);
+            }
             if (txt == null) {
                 return Promise.reject(new Error('Fichier MD manquant dans l\'archive : ' + p));
             }
@@ -89,6 +93,23 @@ PB.loadTextsForLocale = function(baseUrl, promptsIndex, genPromptsIndex, locale,
         }
         return map;
     });
+};
+
+PB._readFallbackLocaleText = function(fileMap, path, locale, fallbackLocales) {
+    var loc = String(locale || '');
+    var needle = '/' + loc + '/';
+    var idx = String(path || '').indexOf(needle);
+    if (idx < 0 || !fallbackLocales || !fallbackLocales.length) return null;
+    var prefix = path.slice(0, idx + 1);
+    var suffix = path.slice(idx + needle.length);
+    for (var i = 0; i < fallbackLocales.length; i++) {
+        var alt = String(fallbackLocales[i] || '').trim();
+        if (!alt || alt === loc) continue;
+        var altPath = prefix + alt + '/' + suffix;
+        var txt = PB.readFileFromMap(fileMap, altPath);
+        if (txt != null) return txt;
+    }
+    return null;
 };
 
 PB.assembleToPdmConfig = function(bundle, locale) {

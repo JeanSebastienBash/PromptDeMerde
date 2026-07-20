@@ -32,7 +32,13 @@ PB.loadFromParts = function(baseUrl, manifest, config, promptsIndex, localesInde
             return Promise.reject(new Error('Aucune locale de prompts disponible pour ce profil.'));
         }
         var resolvedLocale = candidates[tryIndex++];
-        return PB.loadTextsForLocale(baseUrl, promptsIndex, genPromptsIndex, resolvedLocale, fileMap).then(function(texts) {
+        var fallbackLocales = candidates.slice();
+        if (localesIndex && localesIndex.defaultLocale) {
+            fallbackLocales.unshift(String(localesIndex.defaultLocale));
+        }
+        return PB.loadTextsForLocale(
+            baseUrl, promptsIndex, genPromptsIndex, resolvedLocale, fileMap, fallbackLocales
+        ).then(function(texts) {
             var bundle = {
                 manifest: manifest || null,
                 config: config,
@@ -51,7 +57,6 @@ PB.loadFromParts = function(baseUrl, manifest, config, promptsIndex, localesInde
             bundle.assembled = assembled;
             return bundle;
         }).catch(function(err) {
-            if (fileMap) throw err;
             return attemptNext();
         });
     }
@@ -158,6 +163,7 @@ PB.loadFromZip = function(arrayBuffer, locale) {
                 bundle.session = session;
                 bundle.rawFileMap = fileMap;
                 if (session) {
+                    var resolved = bundle.resolvedLocale || bundle.locale || locale;
                     bundle.assembled = PB.assembleToPdmConfig({
                         manifest: manifest,
                         config: config,
@@ -166,8 +172,8 @@ PB.loadFromZip = function(arrayBuffer, locale) {
                         genPromptsIndex: genPromptsIndex,
                         session: session,
                         files: bundle.files,
-                        locale: locale
-                    }, locale);
+                        locale: resolved
+                    }, resolved);
                 }
                 return bundle;
             });
