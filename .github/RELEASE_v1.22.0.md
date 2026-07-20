@@ -1,6 +1,6 @@
 # Tag notes v1.22.0 (RC)
 
-> Notes du **tag** **1.22.0** (historique). Version applicative courante : voir [`RELEASE_v1.23.0.md`](RELEASE_v1.23.0.md) (`CS.VERSION` **1.23.0**).  
+> Notes du **tag** **1.22.0** (historique). Version applicative courante : voir [`RELEASE_v1.23.1.md`](RELEASE_v1.23.1.md) (`CS.VERSION` **1.23.1**).  
 > Pas une GitHub Release — tags seulement.
 
 ## Résumé
@@ -10,7 +10,7 @@
 - Compress / history / header identity + caches *(Compress = cases au Nettoyer, plus de bouton dédié)*
 - Découpe monolithes critiques (selector export, storage, profile-bundle)
 - Rattrapage i18n : `settings.export*` / import ZIP + `meta.routes.*` traduits sur les 12 locales ; détecteur `i18n-check-untranslated.js` (copies FR)
-- Menu **Marketplace** : sur un clone, l’entrée mène au catalogue officiel [promptdemerde.com](https://promptdemerde.com/#market) (pastille verte au-dessus du libellé)
+- Menu **Marketplace** : sur un clone, l’entrée mène au catalogue officiel <a href="https://promptdemerde.com/#market" target="_blank" rel="noopener noreferrer">promptdemerde.com</a> (pastille verte au-dessus du libellé)
 - Import Workspace 🎵 : audio **ou** vidéo (piste locale via Web Audio) ; précheck Whisper Maxi aligné sur les ONNX `*_q4` / `*_fp16` ; après transcription, dictée à nouveau disponible sans Reset
 - Fix import `pdm_workspace_ui.texts` : clés `audioModelMissing` / `audioUnsupportedMedia` whitelistées (alignement i18n)
 - Speech-To-Text-Pro : archive recompilée `…-profile-v1.22.0.zip` via générateur (phases 10–12) ; anciennes `v1.20.0` / `---0N` **conservées**

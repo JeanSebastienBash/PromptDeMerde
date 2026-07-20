@@ -80,7 +80,7 @@
                 upsertMeta('name', 'description', meta.description);
                 upsertMeta('name', 'keywords', meta.keywords);
                 upsertMeta('name', 'robots', 'index, follow');
-                upsertMeta('name', 'author', 'DreamProject AI');
+                upsertMeta('name', 'author', 'DreamProjectAI');
 
                 var socialTitle = t('meta.titleSocial') || meta.title;
                 upsertLink('canonical', SITE_URL + '/');

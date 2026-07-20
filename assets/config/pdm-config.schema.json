@@ -1,5 +1,5 @@
 {
-  "$comment": "PromptDeMerde.com — pdm-config.schema.json | Objet logique dans l'archive ZIP profil 1.23.0 (sécurité v2).",
+  "$comment": "PromptDeMerde.com — pdm-config.schema.json | Objet logique dans l'archive ZIP profil 1.23.1 (sécurité v2).",
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://promptdemerde.com/schemas/pdm-config.schema.json",
   "title": "PromptDeMerde pdm-config",

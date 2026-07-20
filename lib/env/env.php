@@ -96,6 +96,7 @@ $coreScripts = [
     'assets/js/prompts-ui-generate.js',
     'assets/js/prompts-ui-list.js',
     'assets/js/history-ui.js',
+    'assets/js/history-trace.js',
     'assets/js/history-ui-modal.js',
     'assets/js/history-ui-list.js',
     'assets/js/proxy-token-session.js',

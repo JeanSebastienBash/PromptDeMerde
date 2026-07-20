@@ -99,7 +99,7 @@ The proxy token protects the **operator PHP relay** to the prod server Ollama. *
    - **Options → LLM**: checkbox + token field on one line.
    - Storage: **`sessionStorage`** — `pdm_token_proxy` (secret) and `pdm_llm_direct_local` (flow A/B) — reset on each browser session.
 
-3. **Prod visitors (flow A)** — leave **"I don't have a token"** checked; install [Ollama](https://ollama.ai/download) locally; default URL `http://localhost:11434` in *Options → LLM*. **CORS required** on the workstation:
+3. **Prod visitors (flow A)** — leave **"I don't have a token"** checked; install <a href="https://ollama.ai/download" target="_blank" rel="noopener noreferrer">Ollama</a> locally; default URL `http://localhost:11434` in *Options → LLM*. **CORS required** on the workstation:
 
    ```bash
    OLLAMA_ORIGINS=https://promptdemerde.com ollama serve
@@ -164,7 +164,7 @@ Victim imports on https://promptdemerde.com
 
 ### ZIP integrity (checksum) vs crypto signature
 
-| Layer | Status (v1.23.0) |
+| Layer | Status (v1.23.1) |
 |-------|------------------|
 | SHA-256 on ZIP bytes | **Yes** — export (`buildZipPackage`), creator (`profile-zip-checksum.mjs`) |
 | Import verification | **Yes** if `options.expectedChecksum` / `checksum_sha256` (otherwise unsigned dialog only) |
@@ -222,7 +222,7 @@ Contact **dreamproject-ai@proton.me** by email (sole support channel).
 
 **GitHub is not a project follow-up channel for DreamProjectAI**: no code review or issue triage on our side on the public repository. A security report via GitHub issue will therefore not be handled as a maintained ticket — prefer email.
 
-DreamProjectAI **publishes versioned updates from time to time** on this repository via **[git tags](https://github.com/JeanSebastienBash/PromptDeMerde/tags)** only — **no** GitHub Releases. The 1.x line is currently **RC** (not yet stable). No public schedule commitment.
+DreamProjectAI **publishes versioned updates from time to time** on this repository via **<a href="https://github.com/JeanSebastienBash/PromptDeMerde/tags" target="_blank" rel="noopener noreferrer">git tags</a>** only — **no** GitHub Releases. The 1.x line is currently **RC** (not yet stable). No public schedule commitment.
 
 ## Public deployment checklist
 

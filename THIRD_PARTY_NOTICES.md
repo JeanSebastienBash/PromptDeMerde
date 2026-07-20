@@ -20,7 +20,7 @@
 | **Vosk browser** | `assets/js/vendor/vosk/vosk.js` | Apache-2.0 | Vosk WASM API |
 | **Parakeet runtime** | `assets/js/vendor/parakeet/parakeet-lib.js` | See upstream NVIDIA NeMo / ONNX export | Minified bundle — do not modify |
 
-Full upstream licenses: see respective repositories ([ONNX Runtime](https://github.com/microsoft/onnxruntime), [Transformers.js](https://github.com/huggingface/transformers.js), [Vosk](https://github.com/alphacep/vosk-api), [JSZip](https://github.com/Stuk/jszip)).
+Full upstream licenses: see respective repositories (<a href="https://github.com/microsoft/onnxruntime" target="_blank" rel="noopener noreferrer">ONNX Runtime</a>, <a href="https://github.com/huggingface/transformers.js" target="_blank" rel="noopener noreferrer">Transformers.js</a>, <a href="https://github.com/alphacep/vosk-api" target="_blank" rel="noopener noreferrer">Vosk</a>, <a href="https://github.com/Stuk/jszip" target="_blank" rel="noopener noreferrer">JSZip</a>).
 
 ---
 
@@ -28,9 +28,9 @@ Full upstream licenses: see respective repositories ([ONNX Runtime](https://gith
 
 | Engine | Files | Origin / license (summary) |
 |--------|-------|------------------------------|
-| **Vosk** | `vosk-*/model.tar.gz` | Models from [alphacep/vosk-models](https://alphacephei.com/vosk/models) — Apache-2.0 |
+| **Vosk** | `vosk-*/model.tar.gz` | Models from <a href="https://alphacephei.com/vosk/models" target="_blank" rel="noopener noreferrer">alphacep/vosk-models</a> — Apache-2.0 |
 | **Whisper** (ONNX) | `whisper-*/onnx/*.onnx`, HF tokenizer | Derived from OpenAI Whisper; Hugging Face configs — see `config.json` / upstream |
-| **Parakeet** | `parakeet/*.onnx`, `vocab.txt` | NVIDIA NeMo Parakeet TDT — local use; respect [NVIDIA license terms](https://www.nvidia.com/en-us/agreements/enterprise-software/nvidia-software-license-agreement/) |
+| **Parakeet** | `parakeet/*.onnx`, `vocab.txt` | NVIDIA NeMo Parakeet TDT — local use; respect <a href="https://www.nvidia.com/en-us/agreements/enterprise-software/nvidia-software-license-agreement/" target="_blank" rel="noopener noreferrer">NVIDIA license terms</a> |
 
 Binaries > 40 MB are versioned in **parts** (`*.partNNN`); restore after clone:
 
@@ -57,9 +57,9 @@ Loaded locally under `assets/fonts/` (no CDN) — `@font-face` declarations in `
 
 ## Ollama
 
-PromptDeMerde **does not redistribute** the Ollama runtime or LLM weights. The user installs [Ollama](https://ollama.com) separately and chooses models.
+PromptDeMerde **does not redistribute** the Ollama runtime or LLM weights. The user installs <a href="https://ollama.com" target="_blank" rel="noopener noreferrer">Ollama</a> separately and chooses models.
 
-**README mark only:** `assets/images/third-party/ollama-mark.svg` / `.png` are the small official llama mark from the [Ollama docs tree](https://github.com/ollama/ollama/tree/main/docs) (upstream project MIT). Used for attribution in `README.md`; not a redistribution of Ollama itself.
+**README mark only:** `assets/images/third-party/ollama-mark.svg` / `.png` are the small official llama mark from the <a href="https://github.com/ollama/ollama/tree/main/docs" target="_blank" rel="noopener noreferrer">Ollama docs tree</a> (upstream project MIT). Used for attribution in `README.md`; not a redistribution of Ollama itself.
 
 ---
 

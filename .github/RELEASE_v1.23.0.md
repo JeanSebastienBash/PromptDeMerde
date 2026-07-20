@@ -1,6 +1,6 @@
 # Tag notes v1.23.0 (RC)
 
-> **Version courante** : `CS.VERSION` **1.23.0** — **release candidate** (pas encore stable).  
+> Notes du **tag** **1.23.0** (historique). Version applicative courante : voir [`RELEASE_v1.23.1.md`](RELEASE_v1.23.1.md) (`CS.VERSION` **1.23.1**).  
 > Fichier = journal de **tag git** + checklist smoke. **Pas** une GitHub Release (`gh release create` interdit tant que le porteur n’a pas levé le verrou).
 
 ## Résumé

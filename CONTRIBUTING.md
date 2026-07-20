@@ -38,7 +38,7 @@ When the repository is changed directly, it takes precedence over any external o
 
 ## Structure
 
-**Profile ZIP export (1.23.0)**: **51** `pdm_*` keys in the `pdm-config` object (archive content). Canon: `CS.PDM_KEYS` **≡** `assets/config/pdm-config.schema.json` (same names, including `pdm_output_*`); optional root `i18n` + `langs`. Any new key → core + schema + [`docs/Documentation.md`](docs/Documentation.md#13-the-51-pdm-keys) §13. **Default theme**: `marron-day` (Light Brown) — `CS.DEFAULT_THEME_ID`. **Do not** enumerate keys in `README.md` — point to user documentation and the schema.
+**Profile ZIP export (1.23.1)**: **51** `pdm_*` keys in the `pdm-config` object (archive content). Canon: `CS.PDM_KEYS` **≡** `assets/config/pdm-config.schema.json` (same names, including `pdm_output_*`); optional root `i18n` + `langs`. Any new key → core + schema + [`docs/Documentation.md`](docs/Documentation.md#13-the-51-pdm-keys) §13. **Default theme**: `marron-day` (Light Brown) — `CS.DEFAULT_THEME_ID`. **Do not** enumerate keys in `README.md` — point to user documentation and the schema.
 
 **Privacy**: align `SECURITY.md` with runtime behavior.
 
@@ -142,7 +142,7 @@ The public repository versions the official `speech2texte` profile under `assets
 
 **Responsive** — breakpoints: `assets/css/style-responsive.css` + `polish-responsive.css`. Workspace layout: `assets/css/style-workspace.css` (`.ws-grid` — 2 columns from 1024px, `minmax(0,1fr)`). Test viewports **375, 390, 414, 768, 1024** px: no unintended horizontal scroll; burger nav; Input/Output stacked below 1024px; Prompts in 2 columns from 1024px; Options in 2 columns from 768px.
 
-## Export / Import — profile ZIP archive (v1.23.0)
+## Export / Import — profile ZIP archive (v1.23.1)
 
 - **Portable container**: **ZIP** archive (`{slug}-promptdemerde-profile-v{CS.VERSION}.zip`) — no standalone `.json` at the root.
 - **UI import**: **`.zip` only** — explicit rejection if JSON (`importJsonDeprecated` in `settings-ui.js`).
@@ -153,7 +153,7 @@ The public repository versions the official `speech2texte` profile under `assets
 
 ## In-app documentation and legal pages
 
-- **Clone / GitHub** (without `assets/i18n/site-pages/`): footer Mentions, Terms, Privacy and Support open [promptdemerde.com](https://promptdemerde.com) (hash) with a green badge — same pattern as Marketplace. `pages.*` stubs in `assets/i18n/ui/*.json` are not shown in navigation.
+- **Clone / GitHub** (without `assets/i18n/site-pages/`): footer Mentions, Terms, Privacy and Support open <a href="https://promptdemerde.com" target="_blank" rel="noopener noreferrer">promptdemerde.com</a> (hash) with a green badge — same pattern as Marketplace. `pages.*` stubs in `assets/i18n/ui/*.json` are not shown in navigation.
 - **Official site** (with `site-pages/`): full local legal pages; no green badge.
 - **Documentation** footer: GitHub [`docs/Documentation.md`](docs/Documentation.md) (English, all UI locales).
 - **Detection**: `features.sitePages` via `lib/env/env.php` (readable `assets/i18n/site-pages/fr.json`).
