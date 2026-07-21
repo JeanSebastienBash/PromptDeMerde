@@ -21,6 +21,8 @@ PS._getExportModalEls = function() {
         labelInput: document.getElementById('export-config-label'),
         presetMinimal: modal.querySelector('input[name="export-preset"][value="minimal"]'),
         presetMaximal: modal.querySelector('input[name="export-preset"][value="maximal"]'),
+        cleanFull: modal.querySelector('input[name="export-clean"][value="full"]'),
+        cleanPure: modal.querySelector('input[name="export-clean"][value="clean"]'),
         langFlags: document.getElementById('export-config-lang-flags'),
         i18nWrap: document.getElementById('export-config-i18n-wrap'),
         i18nFlags: document.getElementById('export-config-i18n-flags'),
@@ -156,7 +158,15 @@ PS._exportModalState = function(els) {
         }
     }
     var label = els.labelInput ? String(els.labelInput.value || '').trim() : '';
-    return { preset: preset, language: language, includeI18n: includeI18n, i18nLangs: i18nLangs, label: label };
+    var cleanArchive = !!(els.cleanPure && els.cleanPure.checked);
+    return {
+        preset: preset,
+        language: language,
+        includeI18n: includeI18n,
+        i18nLangs: i18nLangs,
+        label: label,
+        cleanArchive: cleanArchive
+    };
 };
 
 PS._estimateExportBytes = function(state) {
@@ -169,7 +179,8 @@ PS._estimateExportBytes = function(state) {
             includeI18n: state.includeI18n,
             i18nLangs: state.i18nLangs,
             promptLocales: promptLocales,
-            customProfile: true
+            customProfile: true,
+            cleanArchive: !!state.cleanArchive
         });
         var total = 0;
         var files = built.files || {};

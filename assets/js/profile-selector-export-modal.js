@@ -91,6 +91,16 @@ PS._bindExportModalOnce = function() {
             if (els.presetMaximal.checked) PS._applyExportPreset(els, 'maximal');
         });
     }
+    if (els.cleanFull) {
+        els.cleanFull.addEventListener('change', function() {
+            if (els.cleanFull.checked) PS._updateExportSizeHint(els);
+        });
+    }
+    if (els.cleanPure) {
+        els.cleanPure.addEventListener('change', function() {
+            if (els.cleanPure.checked) PS._updateExportSizeHint(els);
+        });
+    }
     if (els.labelInput) {
         els.labelInput.addEventListener('input', function() {
             PS._updateExportSizeHint(els);

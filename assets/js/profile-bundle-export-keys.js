@@ -45,17 +45,28 @@ PBE.GEN_PROMPT_CONFIG_KEYS = PB && PB.GEN_PROMPT_STORAGE_KEYS
 
 PBE.buildManifest = function(label, profileId) {
     var S = window.PDM && window.PDM.Storage;
+    var name = String(label || 'MonProfil');
     var project = S && S.getProjectEffective ? S.getProjectEffective() : null;
-    return {
-        id: String(profileId || 'custom-profile'),
-        label: String(label || 'MonProfil'),
-        synopsis: '',
-        project: project ? JSON.parse(JSON.stringify(project)) : {
+    if (project) {
+        project = JSON.parse(JSON.stringify(project));
+        project.name = name;
+    } else {
+        project = {
             platform_url: 'https://promptdemerde.com',
-            name: String(label || 'MonProfil'),
+            name: name,
             url: 'https://promptdemerde.com',
             vitrine_url: 'https://dreamproject.online'
-        }
+        };
+    }
+    var synopsis = '';
+    if (S && typeof S.getProfileSynopsis === 'function') {
+        synopsis = String(S.getProfileSynopsis() || '').trim();
+    }
+    return {
+        id: String(profileId || 'custom-profile'),
+        label: name,
+        synopsis: synopsis,
+        project: project
     };
 };
 

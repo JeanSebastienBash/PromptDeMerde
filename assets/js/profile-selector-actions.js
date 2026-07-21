@@ -154,7 +154,7 @@ PS._pruneDuplicateCustomProfiles = function(keepId, label) {
 PS.registerImportedConfig = function(config, options) {
     options = options || {};
     if (!config || !window.PDM.Storage) return null;
-    var label = PS.inferProfileLabel(config, options.filename || '');
+    var label = PS.inferProfileLabel(config, options.filename || '', options);
     var id = PS.resolveCustomProfileId(config, label);
     if (PS.isBundledProfileId(id) || PS.isBundledProfileId(id.replace(/^custom-/, ''))) {
         id = window.PDM.Storage.ensureCustomProfileId(PS.labelToProfileId(label));

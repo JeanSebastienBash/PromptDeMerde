@@ -147,7 +147,7 @@ More videos will follow on the <a href="https://www.youtube.com/@DreamprojectAI/
     - 📤 [5.4.5. History: restore, modal and JSON export](#feat-5-4-5) — restore, modal and JSON export; ~100 entries; per-block copy; optional source audio
   - ✸ [5.5. JSON profile ZIP & Marketplace](#feat-5-5)
     - 📦 [5.5.1. Import / export JSON profile (ZIP)](#feat-5-5-1) — ZIP only (never lone `.json`); import overwrites session; export = portable pack
-    - 🎨 [5.5.2. UI personalization](#feat-5-5-2) — two-word nav logo, terminal identity, Workspace chrome copy, theme & synopsis from the profile ZIP
+    - 🎨 [5.5.2. UI personalization](#feat-5-5-2) — Configure profile (logo, identity, texts); theme & synopsis from the pack
     - 🏪 [5.5.3. Marketplace of JSON profiles](#feat-5-5-3) — ready-made packs on the official site (clone falls back to `#market`)
     - 🔀 [5.5.4. Profiles: create, switch, export modal](#feat-5-5-4) — create a personal pack, switch with confirm, export ZIP via guided modal
     - 🔎 [5.5.5. Marketplace: search, filters and detail card](#feat-5-5-5) — when a local catalogue is present
@@ -822,9 +822,11 @@ Local history (about 100 entries) can restore Input, Output and thinking. Entrie
 
 ### 📦 5.5.1. Import / export JSON profile (ZIP)
 
-A **JSON profile archive** is a **ZIP** file that packages the portable configuration of PromptDeMerde: JSON parts (`config`, session, prompts index, locales, and more), Markdown system and `#Tag` context prompts, and optional UI i18n when the **maximal** export preset is chosen. That archive is the user’s offline pack — all the keys that personalise reformulation, branding, language, theme, Workspace state and history when included. Because nothing is stored as a server-side account database, the browser session keeps updating locally as work continues; **exporting** the ZIP at the right moment is how that session becomes a reusable file. Export can take the full session (including history and related assets, depending on the preset). Proxy / Ollama tokens are **stripped** from portable archives and are not restored on import.
+A **JSON profile archive** is a **ZIP** file that packages the portable configuration of PromptDeMerde: JSON parts (`config`, session, prompts index, locales, and more), Markdown system and `#Tag` context prompts, and optional UI i18n when the **maximal** export preset is chosen. That archive is the user’s offline pack — all the keys that personalise reformulation, branding, language, theme, Workspace state and history when included. Because nothing is stored as a server-side account database, the browser session keeps updating locally as work continues; **exporting** the ZIP at the right moment is how that session becomes a reusable file.
 
-**Import** accepts **only** a `.zip` archive — a lone `.json` / raw JSON file is **never** accepted (the UI refuses it). The archive is checked for integrity before apply. Import **replaces the current local session**: export or otherwise save a copy first if the present setup must be kept. After a successful import, the Workspace and Prompts screens reflect the new pack — system prompt, active `#Tag` contexts, labels and theme included. The pair of clips below shows a full **import** of **Speech-To-Text-Pro**, then a short **autosave → export** path (maximal preset).
+**Full vs clean export.** By default the export is a **full** archive: every contract key is present with the current session values (including history, work in progress, voice-dictation audio refs, Ollama URL and token when confirmed). Choose **clean archive** in the export dialog (below the language flags) to keep the **same keys** while neutralizing personal session values (history, workspace text, dictation blobs, Ollama URL, token) so the ZIP is safer to share. The browser session itself is **not** wiped. Marketplace metadata is **not** written by the browser export UI.
+
+**Import** accepts **only** a `.zip` archive — a lone `.json` / raw JSON file is **never** accepted (the UI refuses it). The archive is checked for integrity before apply. Import **replaces the current local session**: export or otherwise save a copy first if the present setup must be kept. After a successful import, the Workspace and Prompts screens reflect the new pack — system prompt, active `#Tag` contexts, labels and theme included. The export **profile name** chosen in the dialog becomes the personal profile label in Options after import. The pair of clips below shows a full **import** of **Speech-To-Text-Pro**, then a short **autosave → export** path (maximal preset).
 
 <table>
 <tr>
@@ -859,6 +861,8 @@ A **JSON profile archive** is a **ZIP** file that packages the portable configur
 
 A JSON profile does more than carry prompts: it can **rebrand the whole shell**. After import (**5.5.1**), the active pack drives chrome, colours, and Workspace wording so the same application can feel like “PromptDeMerde”, “Speech-To-Text-Pro”, or another product without changing application code. Marketplace packs already ship a complete skin this way.
 
+**Configure profile (Options).** Under **Options → JSON profile**, **Configure profile** opens a tabbed dialog for pack chrome that used to require unzipping the ZIP: nav **logo** (two words + optional hex colours), header **identity** (usernames + hostname), Workspace **texts** (buttons, placeholders, messages), **project** URLs, and **synopsis**. Saving writes the live session (and updates the active personal pack snapshot when one is selected). Theme, language, LLM, voice dictation, and Prompts still change **in the live UI** before export — an info panel in the dialog explains that path. Power users can still unzip / edit / re-zip a maximal export for advanced JSON edits.
+
 **Nav logo.** The top-left mark is a fixed `>_` glyph plus a **two-word** brand (for example Prompt + DeMerde). Each word can carry an optional hex colour; if colours are omitted, the active theme paints word 1 and word 2 with distinct palette roles so they stay readable across all **fifty** themes (twenty-five families × light / dark). An optional TLD-style extension (typically `.com`) can be shown or hidden with the brand. Profile hex values override theme defaults when present.
 
 **Header identity.** The terminal-style prompt in the header uses a primary username, an alternate username used by the inversion animation, and a hostname suffix in the `@host:~#` style. Changing those values retargets the “who / where” line without touching the rest of the SPA.
@@ -869,7 +873,7 @@ A JSON profile does more than carry prompts: it can **rebrand the whole shell**.
 
 **Synopsis and shell motion.** The short typewriter synopsis under the header, and the related header shell animations, come from the active profile’s configuration (project / pack metadata). See **5.7.5**.
 
-**How to customise deliberately.** Export with the **maximal** preset (**5.5.1**), unzip the archive, edit the JSON and Markdown that define brand, identity, Workspace texts, theme, and synopsis, re-zip, then import again. Validation stays in the browser; the server never reads the archive contents. Keep a copy of the previous ZIP before re-import if the current session must be recoverable — import replaces the local session.
+**How to customise deliberately.** Prefer **Configure profile** for brand / identity / texts / synopsis. For the rest, set Options / Workspace / Prompts live, then export (**5.5.1**). Optional power path: export with the **maximal** preset, unzip, edit JSON/Markdown, re-zip, import again. Validation stays in the browser; the server never reads the archive contents. Keep a copy of the previous ZIP before re-import if the current session must be recoverable — import replaces the local session.
 
 [Technical documentation](docs/Documentation.md#feat-5-5-2)
 
@@ -907,14 +911,15 @@ Under **Options → JSON profile**, four everyday actions sit side by side: **ch
 
 **Export modal.** Export opens a dialog rather than downloading silently. Choose:
 
-1. **File name** — the label used for the downloaded archive (the product still appends its versioned ZIP naming).
+1. **Profile name** — label for the personal profile after import and stem of the ZIP filename (hint + tooltip in the dialog). Other pack chrome is edited via **Configure profile** (**5.5.2**).
 2. **Preset — session only (minimal)** — packs the working configuration **without** embedding UI translation dictionaries. After someone imports that ZIP elsewhere, the twelve project languages from the host install remain available. A personal pack that relied on custom embedded languages can lose those extras under this preset.
-3. **Preset — session + embedded UI translations (maximal)** — also embeds the checked language dictionaries (labels, home, documentation, legal copy) inside the ZIP. After import, Options language flags follow what was embedded. Use this when the pack must travel as a self-contained skin and language set (also the preset recommended before hand-editing brand / identity / chrome texts in **5.5.2**).
+3. **Preset — session + embedded UI translations (maximal)** — also embeds the checked language dictionaries (labels, home, documentation, legal copy) inside the ZIP. After import, Options language flags follow what was embedded. Use this when the pack must travel as a self-contained skin and language set.
 4. **Startup language** — which interface language opens right after import (always stored in the archive). Flag buttons pick it.
 5. **Languages to embed** — visible only with the **maximal** preset; the startup language is always included among them.
-6. **Live summary** — estimated size, what will be in the ZIP, and what happens after import; then **Download** or Cancel.
+6. **Archive contents — full or clean** — full keeps session history, work in progress, voice-dictation refs, Ollama URL and token (with the existing token confirm); clean keeps every contract key but neutralizes those personal values for sharing. Browser session unchanged.
+7. **Live summary** — estimated size, what will be in the ZIP, and what happens after import; then **Download** or Cancel.
 
-Tokens for proxy / Ollama stay stripped from portable archives (**5.5.1**). Large exports may ask for a size confirmation before the download starts.
+Large exports may ask for a size confirmation before the download starts.
 
 [Technical documentation](docs/Documentation.md#feat-5-5-4)
 

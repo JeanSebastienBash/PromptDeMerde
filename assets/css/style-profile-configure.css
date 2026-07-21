@@ -1,0 +1,32 @@
+/**
+ * PromptDeMerde.com — style-profile-configure.css
+ * Synopsis : Onglets / listes de la modale Configurer le profil.
+ * Objectif : Layout simple, réutilise coque export-config-modal.
+ */
+body.configure-profile-modal-open { overflow: hidden; }
+.configure-profile-shell { max-width: 560px; width: min(96vw, 560px); max-height: 90vh; display: flex; flex-direction: column; }
+.configure-profile-tabs {
+    display: flex; flex-wrap: wrap; gap: 4px; margin: 0 0 12px; padding: 0;
+}
+.configure-profile-tab {
+    border: 1px solid var(--border); background: transparent; color: var(--text-muted);
+    padding: 6px 10px; border-radius: 6px; cursor: pointer; font-size: var(--text-small);
+}
+.configure-profile-tab.is-active {
+    color: var(--text); border-color: var(--accent, var(--border)); background: var(--surface-2, rgba(255,255,255,.04));
+}
+.configure-profile-body { overflow: auto; min-height: 0; flex: 1; }
+.configure-profile-panel { display: flex; flex-direction: column; gap: 8px; }
+.configure-profile-panel[hidden] { display: none !important; }
+.configure-brand-preview {
+    margin-top: 8px; font-size: 1.25rem; font-weight: 700; letter-spacing: 0.02em;
+}
+.configure-texts-list { display: flex; flex-direction: column; gap: 10px; max-height: 42vh; overflow: auto; }
+.configure-text-row { display: flex; flex-direction: column; gap: 4px; }
+.configure-text-key { font-size: var(--text-small); color: var(--text-muted); font-family: var(--font-mono, monospace); }
+.configure-text-input { min-height: 2.5rem; resize: vertical; }
+.configure-synopsis { min-height: 6rem; resize: vertical; }
+@media (max-width: 480px) {
+    .configure-profile-tabs { gap: 3px; }
+    .configure-profile-tab { padding: 5px 8px; }
+}

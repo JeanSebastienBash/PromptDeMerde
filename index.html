@@ -47,6 +47,7 @@ Objectif : Déclarer la structure des écrans, charger bootstrap et servir de sh
 <link rel="stylesheet" href="assets/css/style-landing.css">
 <link rel="stylesheet" href="assets/css/style-workspace.css">
 <link rel="stylesheet" href="assets/css/style-config.css">
+<link rel="stylesheet" href="assets/css/style-profile-configure.css">
 <link rel="stylesheet" href="assets/css/style-prompts.css">
 <link rel="stylesheet" href="assets/css/style-settings.css">
 <link rel="stylesheet" href="assets/css/style-components.css">
@@ -571,6 +572,7 @@ Objectif : Déclarer la structure des écrans, charger bootstrap et servir de sh
     <div class="stg-card-body" id="profile-selector-wrap">
         <div class="stg-profile-toolbar">
             <select id="profile-selector" class="stg-select stg-profile-select" aria-label="Profil JSON" hidden data-i18n-attr="aria-label:settings.profileAria"></select>
+            <button type="button" id="profile-configure-btn" class="btn secondary btn-sm stg-profile-btn" data-i18n="settings.profileConfigure" data-i18n-attr="title:settings.profileConfigureTitle,aria-label:settings.profileConfigureAria">Configurer le profil</button>
             <button type="button" id="profile-create-btn" class="btn secondary btn-sm stg-profile-btn" title="Cr&#233;er un profil personnel &#224; partir de la configuration actuelle" aria-label="Cr&#233;er un profil JSON" hidden data-i18n="settings.profileCreate" data-i18n-attr="title:settings.profileCreateTitle,aria-label:settings.profileCreateAria">+ Cr&#233;er un profil</button>
             <button id="config-import-btn" type="button" class="btn secondary btn-sm stg-profile-btn" data-i18n="settings.import">Importer</button>
             <button id="config-export-btn" type="button" class="btn secondary btn-sm stg-profile-btn" data-i18n="settings.export">Exporter</button>
@@ -1145,8 +1147,9 @@ Objectif : Déclarer la structure des écrans, charger bootstrap et servir de sh
         <h2 id="export-config-modal-title" class="export-config-title" data-i18n="settings.exportModalTitle">Exporter la configuration</h2>
         <div class="export-config-body">
             <div class="export-config-field">
-                <label for="export-config-label" class="export-config-field-label" data-i18n="settings.exportFilenameLabel">Nom du fichier export&#233;</label>
-                <input type="text" id="export-config-label" class="stg-input export-config-label-input" autocomplete="off" maxlength="80">
+                <label for="export-config-label" class="export-config-field-label" data-i18n="settings.exportFilenameLabel">Nom du profil export&#233;</label>
+                <input type="text" id="export-config-label" class="stg-input export-config-label-input" autocomplete="off" maxlength="80" data-i18n-attr="placeholder:settings.exportFilenamePlaceholder,title:settings.exportFilenameTooltip">
+                <p class="export-config-field-hint" data-i18n="settings.exportFilenameHint">Libell&#233; du profil perso &#224; l&#8217;import et slug du fichier ZIP. Les autres r&#233;glages pack : Configurer le profil.</p>
             </div>
             <fieldset class="export-config-field">
                 <legend data-i18n="settings.exportPresetLegend">Traductions UI dans le fichier</legend>
@@ -1175,11 +1178,101 @@ Objectif : Déclarer la structure des écrans, charger bootstrap et servir de sh
                 <p class="export-config-field-hint" data-i18n="settings.exportI18nLangsHint">Drapeaux disponibles dans Options apr&#232;s import. La langue de d&#233;marrage ci-dessus est toujours incluse.</p>
                 <div id="export-config-i18n-flags" class="stg-lang-flags export-config-i18n-flags" role="group" aria-label="Traductions à embarquer"></div>
             </div>
+            <fieldset class="export-config-field">
+                <legend data-i18n="settings.exportCleanLegend">Contenu de l&#8217;archive</legend>
+                <label class="export-config-radio">
+                    <input type="radio" name="export-clean" value="full" checked>
+                    <span class="export-config-radio-text">
+                        <strong data-i18n="settings.exportCleanFull">Archive compl&#232;te</strong>
+                        <span class="export-config-radio-hint" data-i18n="settings.exportCleanFullHint">Tous les r&#233;glages et la session (historique, travail en cours, URL, token, dict&#233;e). Pour reprendre plus tard.</span>
+                    </span>
+                </label>
+                <label class="export-config-radio">
+                    <input type="radio" name="export-clean" value="clean">
+                    <span class="export-config-radio-text">
+                        <strong data-i18n="settings.exportCleanPure">Archive propre</strong>
+                        <span class="export-config-radio-hint" data-i18n="settings.exportCleanPureHint">M&#234;mes cl&#233;s, sans historique, travail en cours, dict&#233;e, URL Ollama ni token. Session navigateur inchang&#233;e.</span>
+                    </span>
+                </label>
+            </fieldset>
             <div id="export-config-summary" class="export-config-summary" aria-live="polite"></div>
         </div>
         <div class="export-config-actions">
             <button type="button" class="btn secondary btn-sm" data-export-modal-close="1" data-i18n="settings.exportCancel">Annuler</button>
             <button type="button" id="export-config-confirm-btn" class="btn btn-sm" data-i18n="settings.exportConfirm">T&#233;l&#233;charger</button>
+        </div>
+    </div>
+</div>
+
+<div id="configure-profile-modal" class="export-config-modal configure-profile-modal" hidden aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="configure-profile-modal-title">
+    <div class="export-config-backdrop" data-configure-modal-close="1"></div>
+    <div class="export-config-shell configure-profile-shell" role="document">
+        <h2 id="configure-profile-modal-title" class="export-config-title" data-i18n="settings.configureModalTitle">Configurer le profil</h2>
+        <div class="configure-profile-tabs" role="tablist">
+            <button type="button" class="configure-profile-tab is-active" role="tab" aria-selected="true" data-configure-tab="logo" data-i18n="settings.configureTabLogo">Logo</button>
+            <button type="button" class="configure-profile-tab" role="tab" aria-selected="false" data-configure-tab="identity" data-i18n="settings.configureTabIdentity">Identity</button>
+            <button type="button" class="configure-profile-tab" role="tab" aria-selected="false" data-configure-tab="texts" data-i18n="settings.configureTabTexts">Textes</button>
+            <button type="button" class="configure-profile-tab" role="tab" aria-selected="false" data-configure-tab="project" data-i18n="settings.configureTabProject">Projet</button>
+            <button type="button" class="configure-profile-tab" role="tab" aria-selected="false" data-configure-tab="synopsis" data-i18n="settings.configureTabSynopsis">Synopsis</button>
+        </div>
+        <div class="export-config-body configure-profile-body">
+            <div class="configure-profile-panel is-active" data-configure-panel="logo">
+                <label class="export-config-field-label" for="cfg-brand-first" data-i18n="settings.configureFirstWord">Premier mot du logo</label>
+                <input id="cfg-brand-first" class="stg-input" type="text" maxlength="32">
+                <label class="export-config-field-label" for="cfg-brand-second" data-i18n="settings.configureSecondWord">Second mot du logo</label>
+                <input id="cfg-brand-second" class="stg-input" type="text" maxlength="32">
+                <label class="export-config-field-label" for="cfg-brand-color1" data-i18n="settings.configureFirstColor">Couleur premier mot (hex ou vide)</label>
+                <input id="cfg-brand-color1" class="stg-input" type="text" maxlength="7" placeholder="#RGB">
+                <label class="export-config-field-label" for="cfg-brand-color2" data-i18n="settings.configureSecondColor">Couleur second mot (hex ou vide)</label>
+                <input id="cfg-brand-color2" class="stg-input" type="text" maxlength="7" placeholder="#RGB">
+                <label class="export-config-radio"><input id="cfg-brand-show-ext" type="checkbox"> <span data-i18n="settings.configureShowExt">Afficher l'extension (.com)</span></label>
+                <div id="cfg-brand-preview" class="configure-brand-preview" aria-hidden="true"></div>
+            </div>
+            <div class="configure-profile-panel" data-configure-panel="identity" hidden>
+                <label class="export-config-field-label" for="cfg-id-user" data-i18n="settings.configureUsername">Username animation</label>
+                <input id="cfg-id-user" class="stg-input" type="text" maxlength="64">
+                <label class="export-config-field-label" for="cfg-id-alt" data-i18n="settings.configureUsernameAlt">Username alternatif</label>
+                <input id="cfg-id-alt" class="stg-input" type="text" maxlength="64">
+                <label class="export-config-field-label" for="cfg-id-host" data-i18n="settings.configureHostname">Hostname (@…:~#)</label>
+                <input id="cfg-id-host" class="stg-input" type="text" maxlength="64">
+            </div>
+            <div class="configure-profile-panel" data-configure-panel="texts" hidden>
+                <p class="export-config-field-hint" data-i18n="settings.configureTextsHint">Libellés Workspace (boutons, placeholders, messages).</p>
+                <input id="cfg-texts-filter" class="stg-input" type="search" data-i18n-attr="placeholder:settings.configureTextsFilter">
+                <div id="cfg-texts-list" class="configure-texts-list"></div>
+            </div>
+            <div class="configure-profile-panel" data-configure-panel="project" hidden>
+                <label class="export-config-field-label" for="cfg-proj-name" data-i18n="settings.configureProjectName">Nom projet</label>
+                <input id="cfg-proj-name" class="stg-input" type="text" maxlength="80">
+                <label class="export-config-field-label" for="cfg-proj-url" data-i18n="settings.configureProjectUrl">URL projet</label>
+                <input id="cfg-proj-url" class="stg-input" type="url">
+                <label class="export-config-field-label" for="cfg-proj-platform" data-i18n="settings.configurePlatformUrl">URL plateforme</label>
+                <input id="cfg-proj-platform" class="stg-input" type="url">
+                <label class="export-config-field-label" for="cfg-proj-vitrine" data-i18n="settings.configureVitrineUrl">URL vitrine</label>
+                <input id="cfg-proj-vitrine" class="stg-input" type="url">
+            </div>
+            <div class="configure-profile-panel" data-configure-panel="synopsis" hidden>
+                <label class="export-config-field-label" for="cfg-synopsis" data-i18n="settings.configureSynopsisLabel">Synopsis profil</label>
+                <textarea id="cfg-synopsis" class="stg-input configure-synopsis" rows="5" maxlength="500"></textarea>
+            </div>
+        </div>
+        <div class="export-config-actions">
+            <button type="button" id="configure-profile-help-btn" class="btn secondary btn-sm" data-i18n="settings.configureHelpBtn">Autres réglages</button>
+            <button type="button" class="btn secondary btn-sm" data-configure-modal-close="1" data-i18n="settings.configureCancel">Fermer</button>
+            <button type="button" id="configure-profile-save-btn" class="btn btn-sm" data-i18n="settings.configureSave">Enregistrer</button>
+        </div>
+    </div>
+</div>
+
+<div id="configure-profile-help-modal" class="export-config-modal" hidden aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="configure-profile-help-title">
+    <div class="export-config-backdrop" data-configure-help-close="1"></div>
+    <div class="export-config-shell" role="document">
+        <h2 id="configure-profile-help-title" class="export-config-title" data-i18n="settings.configureHelpTitle">Régler le reste en session</h2>
+        <div class="export-config-body">
+            <p id="configure-profile-help-body" data-i18n="settings.configureHelpBody">Thème, langue, LLM, dictée vocale, prompts système et contextes se règlent dans l'application avant l'export. L'archive emporte l'état courant. Sinon, réexporter après modification, ou éditer les JSON de l'archive ZIP.</p>
+        </div>
+        <div class="export-config-actions">
+            <button type="button" class="btn btn-sm" data-configure-help-close="1" data-i18n="settings.configureHelpClose">Compris</button>
         </div>
     </div>
 </div>

@@ -501,6 +501,8 @@ function applyStaticIds(root) {
     if (clearBtn) setText(clearBtn, I18n.t('settings.clearAll'));
     var createProf = root.getElementById('profile-create-btn');
     if (createProf) setText(createProf, I18n.t('settings.profileCreate'));
+    var configureProf = root.getElementById('profile-configure-btn');
+    if (configureProf) setText(configureProf, I18n.t('settings.profileConfigure'));
 
     var footerHeadings = root.querySelectorAll('.footer-menus-primary .footer-nav-heading');
     var fhKeys = ['footer.brandHeading', 'footer.resourcesHeading', 'footer.legalHeading'];
@@ -626,6 +628,11 @@ function applyStaticIds(root) {
     if (createProf) {
         createProf.setAttribute('title', I18n.t('settings.profileCreateTitle'));
         createProf.setAttribute('aria-label', I18n.t('settings.profileCreateAria'));
+    }
+    var configureProf2 = root.getElementById('profile-configure-btn');
+    if (configureProf2) {
+        configureProf2.setAttribute('title', I18n.t('settings.profileConfigureTitle'));
+        configureProf2.setAttribute('aria-label', I18n.t('settings.profileConfigureAria'));
     }
 
     var ctxTitleWs = root.querySelector('#context-panel .context-title');

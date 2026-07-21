@@ -14,7 +14,11 @@ PS._updateExportSummary = function(els) {
     var state = PS._exportModalState(els);
     var lines = [];
     lines.push(PS._exportModalT('settings.exportSummaryTitle'));
-    lines.push(PS._exportModalT('settings.exportSummarySession'));
+    if (state.cleanArchive) {
+        lines.push(PS._exportModalT('settings.exportSummaryClean'));
+    } else {
+        lines.push(PS._exportModalT('settings.exportSummarySession'));
+    }
     lines.push(PS._exportModalT('settings.exportSummaryStartLang', { label: PS._formatLangLabel(state.language) }));
     if (!state.includeI18n) {
         lines.push(PS._exportModalT('settings.exportSummaryI18nNone'));
@@ -40,7 +44,8 @@ PS._updateExportSummary = function(els) {
             includeI18n: state.includeI18n,
             i18nLangs: state.i18nLangs,
             promptLocales: PS._exportPromptLocales(state),
-            customProfile: true
+            customProfile: true,
+            cleanArchive: !!state.cleanArchive
         });
         lines.push(PS._exportModalT('settings.exportSummaryFiles', { count: exportFiles.length }));
         for (var fi = 0; fi < Math.min(exportFiles.length, 12); fi++) {

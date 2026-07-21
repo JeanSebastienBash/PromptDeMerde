@@ -17,7 +17,8 @@ PBE._buildFileMapCore = function(options) {
     if (!S) return { files: {}, manifest: null };
 
     var label = String(options.label || 'MonProfil').trim();
-    var profileId = options.profileId || S.getActiveProfile() || 'custom-profile';
+    var sourceProfileId = options.profileId || S.getActiveProfile() || 'custom-profile';
+    var profileId = sourceProfileId;
     var language = options.language || (S.getLanguage ? S.getLanguage() : 'fr');
     var promptLocales = Array.isArray(options.promptLocales) && options.promptLocales.length
         ? options.promptLocales.slice()
@@ -26,10 +27,10 @@ PBE._buildFileMapCore = function(options) {
 
     var PBun = window.PDM && window.PDM.PromptsBundle;
     if (PBun && typeof PBun.captureFromSession === 'function') {
-        PBun.captureFromSession(language, profileId);
+        PBun.captureFromSession(language, sourceProfileId);
     }
     if (PBun && typeof PBun.getExportLocales === 'function') {
-        promptLocales = PBun.getExportLocales(profileId, promptLocales);
+        promptLocales = PBun.getExportLocales(sourceProfileId, promptLocales);
     }
 
     var systemPrompt = S.getSystemPrompt ? S.getSystemPrompt() : '';
@@ -49,6 +50,9 @@ PBE._buildFileMapCore = function(options) {
         var sk = PBE.SESSION_KEYS[i];
         if (exported[sk] !== undefined) session[sk] = exported[sk];
     }
+    if (options.cleanArchive && typeof PBE.neutralizeCleanSession === 'function') {
+        session = PBE.neutralizeCleanSession(session);
+    }
     config.pdm_language = language;
     session.pdm_language = language;
     delete config.pdm_system_prompt;
@@ -61,8 +65,19 @@ PBE._buildFileMapCore = function(options) {
     var localesIndex = PBE.buildLocalesIndex(promptLocales, promptLocales[0] || language);
     var genPromptsIndex = PBE.buildGenPromptsIndex();
 
+    var exportId = sourceProfileId;
+    var PS = window.PDM && window.PDM.ProfileSelector;
+    if (options.customProfile && PS && typeof PS.labelToProfileId === 'function' &&
+        S.ensureCustomProfileId) {
+        exportId = S.ensureCustomProfileId(PS.labelToProfileId(label));
+    }
+    if (typeof PBE.stampExportLabelOnConfig === 'function') {
+        PBE.stampExportLabelOnConfig(config, label, exportId);
+    }
+    profileId = options.customProfile ? exportId : sourceProfileId;
+
     var manifest = PBE.buildManifest(label, profileId);
-    manifest.id = options.customProfile ? profileId : manifest.id;
+    manifest.id = profileId;
 
     var files = {};
     files['manifest.json'] = JSON.stringify(manifest, null, 2) + '\n';
@@ -80,7 +95,8 @@ PBE._buildFileMapCore = function(options) {
         promptsIndex: promptsIndex,
         genPromptsIndex: genPromptsIndex,
         session: session,
-        profileId: profileId,
+        profileId: sourceProfileId,
+        exportProfileId: profileId,
         language: language,
         promptLocales: promptLocales,
         systemPrompt: systemPrompt,
@@ -139,71 +155,5 @@ PBE._writeLocaleExport = function(core, loc, bundled) {
     }
     return Promise.resolve();
 };
-
-PBE.buildFileMapAsync = function(options) {
-    options = options || {};
-    var core = PBE._buildFileMapCore(options);
-    if (!core.S) return Promise.resolve({ files: {}, manifest: null });
-    var bundled = PBE.isBundledOfficialProfile(core.profileId);
-    var chain = Promise.resolve();
-    for (var i = 0; i < core.promptLocales.length; i++) {
-        (function(loc) {
-            chain = chain.then(function() {
-                return PBE._writeLocaleExport(core, loc, bundled);
-            });
-        })(core.promptLocales[i]);
-    }
-    return chain.then(function() {
-        PBE._appendI18nFiles(core.files, options);
-        return {
-            files: core.files,
-            manifest: core.manifest,
-            config: core.config,
-            localesIndex: core.localesIndex,
-            promptsIndex: core.promptsIndex,
-            genPromptsIndex: core.genPromptsIndex,
-            session: core.session
-        };
-    });
-};
-
-PBE.buildFileMap = function(options) {
-    options = options || {};
-    var core = PBE._buildFileMapCore(options);
-    if (!core.S) return { files: {}, manifest: null };
-    var bundled = PBE.isBundledOfficialProfile(core.profileId);
-    for (var i = 0; i < core.promptLocales.length; i++) {
-        var loc = core.promptLocales[i];
-        var locData = core.PBun && typeof core.PBun.getLocaleData === 'function'
-            ? core.PBun.getLocaleData(core.profileId, loc)
-            : null;
-        var profiles = PBE.profilesAlignedToIndex(
-            core.profiles,
-            locData && locData.profiles
-        );
-        if (locData) {
-            PBE.writePromptMdFiles(core.files, loc, locData.system || core.systemPrompt, profiles);
-            if (locData.gen && typeof locData.gen === 'object') {
-                PBE.writeGenPromptMdFiles(core.files, loc, locData.gen);
-            }
-        } else if (loc === core.language) {
-            PBE.writePromptMdFiles(core.files, loc, core.systemPrompt, profiles);
-            PBE.writeGenPromptMdFiles(core.files, loc, PBE.collectGenPromptValues(core.S, null));
-        } else if (!bundled) {
-            PBE.writePromptMdFiles(core.files, loc, core.systemPrompt, profiles);
-        }
-    }
-    PBE._appendI18nFiles(core.files, options);
-    return {
-        files: core.files,
-        manifest: core.manifest,
-        config: core.config,
-        localesIndex: core.localesIndex,
-        promptsIndex: core.promptsIndex,
-        genPromptsIndex: core.genPromptsIndex,
-        session: core.session
-    };
-};
-
 
 })();

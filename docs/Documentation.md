@@ -1111,7 +1111,9 @@ Mitigations include sanitization, size limits, token stripping, and a confirmati
 <a id="75-personnalisation-par-édition-zip"></a>
 ### 🎨 5.5.2. UI personalization
 
-Power-user workflow:
+**Primary path:** Options → **Configure profile** — tabbed editor for `pdm_workspace_ui.brand` / `identity` / `texts`, `pdm_project`, and synopsis. Saves to the live session (and the active personal pack snapshot). Theme, LLM, STT, and Prompts remain live UI settings before export; an info panel documents that.
+
+**Power-user path (ZIP hand-edit):**
 
 1. Export the profile with the **maximal** preset.
 2. Unzip the archive, then edit the Markdown and JSON (an LLM is recommended for consistency).

@@ -53,6 +53,7 @@ PS._exportConfigDirect = function(options, exportState) {
         i18nLangs: exportState.i18nLangs,
         promptLocales: promptLocales,
         customProfile: true,
+        cleanArchive: !!exportState.cleanArchive,
         profileId: window.PDM.Storage.getActiveProfile ? window.PDM.Storage.getActiveProfile() : 'custom-profile'
     };
 

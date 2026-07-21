@@ -424,6 +424,9 @@ S.importConfigZip = function(arrayBuffer, options) {
             window.PDM.ProfileSelector &&
             typeof window.PDM.ProfileSelector.registerImportedConfig === 'function') {
             var regOpts = Object.assign({}, options);
+            if (bundle.manifest && bundle.manifest.label) {
+                regOpts.exportLabel = String(bundle.manifest.label).trim();
+            }
             if (marketplace && marketplace.synopsis_short) {
                 regOpts.synopsis = marketplace.synopsis_short;
             }

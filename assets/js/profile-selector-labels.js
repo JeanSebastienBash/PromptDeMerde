@@ -45,10 +45,17 @@ PS.resolveCustomProfileId = function(config, label) {
 
 PS.getActiveLabel = function() {
     var sel = PS._getSelect();
+    var raw = '';
     if (sel && sel.selectedIndex >= 0 && sel.options[sel.selectedIndex]) {
-        return String(sel.options[sel.selectedIndex].textContent || '').trim();
+        raw = String(sel.options[sel.selectedIndex].textContent || '').trim();
+    } else {
+        raw = String(PS._getActiveId() || '').trim();
     }
-    return PS._getActiveId();
+    var suffix = psT('profilePersonalSuffix', null, ' (perso)');
+    if (suffix && raw.slice(-suffix.length) === suffix) {
+        raw = raw.slice(0, -suffix.length).trim();
+    }
+    return raw;
 };
 
 PS.buildExportFilename = function(profileLabel, version) {
@@ -106,12 +113,20 @@ PS.promptNewProfileLabel = function() {
     return label;
 };
 
-PS.inferProfileLabel = function(config, filename) {
+PS.inferProfileLabel = function(config, filename, options) {
+    options = options || {};
+    var exportLabel = options.exportLabel != null ? String(options.exportLabel).trim() : '';
+    if (exportLabel) return exportLabel;
     if (config && config.pdm_project && config.pdm_project.name) {
-        return String(config.pdm_project.name).trim();
+        var projectName = String(config.pdm_project.name).trim();
+        if (projectName) return projectName;
     }
     var stem = PS._getFileStem(filename || '');
-    stem = stem.replace(/-promptdemerde-config-v[\d.]+$/i, '').replace(/-+/g, ' ').trim();
+    stem = stem
+        .replace(/-promptdemerde-profile-v[\d.]+$/i, '')
+        .replace(/-promptdemerde-config-v[\d.]+$/i, '')
+        .replace(/-+/g, ' ')
+        .trim();
     return stem || psT('profileDefaultLabel', null, 'MonProfil');
 };
 
