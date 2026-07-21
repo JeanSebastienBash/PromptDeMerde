@@ -21,6 +21,27 @@ function emptyBundle() {
     return { profileId: '', langs: [], prompts: {} };
 }
 
+/** Canonique : même normalisation que Storage.ensureCustomProfileId (minuscules). */
+function normProfileId(id) {
+    id = String(id || '').trim();
+    if (!id) return '';
+    if (S && typeof S.ensureCustomProfileId === 'function') {
+        return S.ensureCustomProfileId(id);
+    }
+    return id.toLowerCase();
+}
+
+function idsMatch(a, b) {
+    a = String(a || '').trim();
+    b = String(b || '').trim();
+    if (!a || !b) return !a && !b;
+    if (a === b) return true;
+    var na = normProfileId(a);
+    var nb = normProfileId(b);
+    if (na && nb && na === nb) return true;
+    return false;
+}
+
 function readGenFromSession() {
     var gen = {};
     if (!PB || !PB.GEN_PROMPT_SPECS) return gen;
@@ -87,10 +108,10 @@ PBUNDLE.ensureLocaleSlot = function(bundle, locale) {
 
 PBUNDLE.captureFromSession = function(locale, profileId) {
     locale = String(locale || (S.getLanguage ? S.getLanguage() : 'fr'));
-    profileId = String(profileId || (S.getActiveProfile ? S.getActiveProfile() : '') || '');
+    profileId = normProfileId(profileId || (S.getActiveProfile ? S.getActiveProfile() : '') || '');
 
     var bundle = PBUNDLE.getRaw();
-    if (profileId && bundle.profileId && bundle.profileId !== profileId) {
+    if (profileId && bundle.profileId && !idsMatch(bundle.profileId, profileId)) {
         bundle = emptyBundle();
     }
     if (profileId) bundle.profileId = profileId;
@@ -109,7 +130,7 @@ PBUNDLE.getLocaleData = function(profileId, locale) {
     profileId = String(profileId || '');
     locale = String(locale || 'fr');
     var bundle = PBUNDLE.getRaw();
-    if (profileId && bundle.profileId !== profileId) return null;
+    if (profileId && bundle.profileId && !idsMatch(bundle.profileId, profileId)) return null;
     var slot = bundle.prompts[locale];
     if (!slot) return null;
     return {
@@ -143,8 +164,17 @@ PBUNDLE.applyLocaleOverlay = function(config, locale, profileId) {
 PBUNDLE.listLocales = function(profileId) {
     var bundle = PBUNDLE.getRaw();
     profileId = String(profileId || '');
-    if (profileId && bundle.profileId !== profileId) return [];
+    if (profileId && bundle.profileId && !idsMatch(bundle.profileId, profileId)) return [];
     return bundle.langs.slice();
+};
+
+PBUNDLE.rebindProfileId = function(profileId) {
+    profileId = normProfileId(profileId);
+    if (!profileId) return PBUNDLE.getRaw();
+    var bundle = PBUNDLE.getRaw();
+    bundle.profileId = profileId;
+    PBUNDLE.setRaw(bundle);
+    return bundle;
 };
 
 PBUNDLE.getExportLocales = function(profileId, seedLocales) {
@@ -164,7 +194,7 @@ PBUNDLE.getExportLocales = function(profileId, seedLocales) {
 
     var bundle = PBUNDLE.getRaw();
     profileId = String(profileId || '');
-    if (!profileId || bundle.profileId === profileId) {
+    if (!profileId || idsMatch(bundle.profileId, profileId)) {
         for (var j = 0; j < bundle.langs.length; j++) add(bundle.langs[j]);
     }
 
@@ -228,8 +258,8 @@ PBUNDLE.importFromFileMap = function(fileMap, promptsIndex, profileId, genPrompt
 
     var locales = localesIndex.locales.slice();
 
-    profileId = String(profileId || (promptsIndex && promptsIndex.profileId) || '');
-    var bundle = PBUNDLE.getRaw();
+    profileId = normProfileId(profileId || (promptsIndex && promptsIndex.profileId) || '');
+    var bundle = emptyBundle();
     if (profileId) bundle.profileId = profileId;
 
     for (var li = 0; li < locales.length; li++) {

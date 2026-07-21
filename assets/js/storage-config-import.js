@@ -411,11 +411,34 @@ S.importConfigZip = function(arrayBuffer, options) {
         }
 
         var PBun = window.PDM && window.PDM.PromptsBundle;
+        var PS = window.PDM && window.PDM.ProfileSelector;
+        var importProfileId = '';
+        if (options.registerCustomProfile !== false && PS &&
+            typeof PS.inferProfileLabel === 'function' &&
+            typeof PS.resolveCustomProfileId === 'function') {
+            var peekLabel = PS.inferProfileLabel(normalized, options.filename || '', {
+                exportLabel: bundle.manifest && bundle.manifest.label
+                    ? String(bundle.manifest.label).trim()
+                    : ''
+            });
+            importProfileId = PS.resolveCustomProfileId(normalized, peekLabel);
+            if (typeof PS.isBundledProfileId === 'function' &&
+                (PS.isBundledProfileId(importProfileId) ||
+                    PS.isBundledProfileId(String(importProfileId).replace(/^custom-/, '')))) {
+                importProfileId = S.ensureCustomProfileId(PS.labelToProfileId(peekLabel));
+            }
+        }
+        if (!importProfileId) {
+            importProfileId = (normalized && normalized.pdm_active_profile)
+                || (bundle.manifest && bundle.manifest.id)
+                || S.getActiveProfile();
+        }
+        if (typeof S.ensureCustomProfileId === 'function') {
+            importProfileId = S.ensureCustomProfileId(importProfileId);
+        }
+
         if (PBun && bundle.rawFileMap && bundle.promptsIndex &&
             typeof PBun.importFromFileMap === 'function') {
-            var importProfileId = (bundle.manifest && bundle.manifest.id)
-                || normalized.pdm_active_profile
-                || S.getActiveProfile();
             PBun.importFromFileMap(
                 bundle.rawFileMap,
                 bundle.promptsIndex,
@@ -433,8 +456,8 @@ S.importConfigZip = function(arrayBuffer, options) {
         }
 
         if (options.registerCustomProfile !== false &&
-            window.PDM.ProfileSelector &&
-            typeof window.PDM.ProfileSelector.registerImportedConfig === 'function') {
+            PS &&
+            typeof PS.registerImportedConfig === 'function') {
             var regOpts = Object.assign({}, options);
             if (bundle.manifest && bundle.manifest.label) {
                 regOpts.exportLabel = String(bundle.manifest.label).trim();
@@ -442,7 +465,11 @@ S.importConfigZip = function(arrayBuffer, options) {
             if (marketplace && marketplace.synopsis_short) {
                 regOpts.synopsis = marketplace.synopsis_short;
             }
-            window.PDM.ProfileSelector.registerImportedConfig(normalized, regOpts);
+            var registered = PS.registerImportedConfig(normalized, regOpts);
+            if (registered && registered.id && PBun &&
+                typeof PBun.rebindProfileId === 'function') {
+                PBun.rebindProfileId(registered.id);
+            }
         }
 
         if (incomingI18n && incomingI18n.langs.length) {
