@@ -194,14 +194,18 @@ S.syncWorkspaceUiTextsForLocale = function() {
     var current = typeof CS.normalizeWorkspaceUi === 'function'
         ? CS.normalizeWorkspaceUi(S.get(S.KEYS.WORKSPACE_UI))
         : { identity: {}, brand: {}, texts: {} };
-    if (localized && localized.texts) {
+    var changed = false;
+    if (localized && localized.texts && current.texts) {
         for (var k in localized.texts) {
-            if (Object.prototype.hasOwnProperty.call(localized.texts, k) && localized.texts[k] != null) {
-                current.texts[k] = String(localized.texts[k]);
-            }
+            if (!Object.prototype.hasOwnProperty.call(localized.texts, k)) continue;
+            if (localized.texts[k] == null) continue;
+            var cur = current.texts[k];
+            if (cur != null && String(cur).trim() !== '') continue;
+            current.texts[k] = String(localized.texts[k]);
+            changed = true;
         }
     }
-    return S.setWorkspaceUi(current);
+    return changed ? S.setWorkspaceUi(current) : true;
 };
 
 S.getTheme = function() {

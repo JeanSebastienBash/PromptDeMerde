@@ -8,7 +8,7 @@
 
 var CS = {};
 
-CS.VERSION = '1.23.1';
+CS.VERSION = '1.23.2';
 
 CS.CONFIG_TYPE = 'pdm-config';
 CS.DEFAULT_ACTIVE_PROFILE = '';
@@ -480,7 +480,8 @@ CS.PROFILE_ORIGIN_KEYS = [
 CS.PROFILE_ORIGIN_METHODS = ['ai_intent', 'ai_title', 'manual', 'profile_bundle'];
 CS.WORKSPACE_KEYS = [
     'input', 'output', 'thinking', 'savedAt', 'contextPanelOpen',
-    'inputSource', 'audioFileName', 'audioFileSize', 'audioMimeType', 'audioLastModified', 'audioRef', 'audioSegmentCount'
+    'inputSource', 'audioFileName', 'audioFileSize', 'audioMimeType', 'audioLastModified', 'audioRef', 'audioSegmentCount',
+    'compressIncludeSystem', 'compressIncludeContexts', 'compressIncludeInput', 'compressIncludeOutput'
 ];
 CS.WORKSPACE_INPUT_SOURCES = ['manual', 'audio-file', 'audio-dictation', 'image-file'];
 CS.AUDIO_META_KEYS = [

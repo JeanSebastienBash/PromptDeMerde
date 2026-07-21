@@ -473,7 +473,11 @@
         "audioSegmentCount": {
           "type": ["integer", "null"],
           "minimum": 1
-        }
+        },
+        "compressIncludeSystem": { "type": "boolean" },
+        "compressIncludeContexts": { "type": "boolean" },
+        "compressIncludeInput": { "type": "boolean" },
+        "compressIncludeOutput": { "type": "boolean" }
       }
     },
     "pdm_clean_history": {

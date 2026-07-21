@@ -931,12 +931,35 @@ PC.bindUi = function() {
     ];
     checkIds.forEach(function(id) {
         var el = document.getElementById(id);
-        if (el) el.addEventListener('change', updateCompressBadge);
+        if (!el) return;
+        el.addEventListener('change', function() {
+            updateCompressBadge();
+            var A = window.PDM && window.PDM.App;
+            if (A && typeof A.scheduleWorkspaceSave === 'function') {
+                A.scheduleWorkspaceSave();
+            } else if (A && typeof A.saveWorkspaceFromDom === 'function') {
+                A.saveWorkspaceFromDom();
+            }
+        });
     });
     document.addEventListener('pdm:localechange', function() {
         syncChipTooltips();
         updateCompressBadge();
     });
+    if (window.PDM && window.PDM.Storage && typeof window.PDM.Storage.getWorkspace === 'function') {
+        var ws0 = window.PDM.Storage.getWorkspace();
+        var hydrateMap = {
+            'ws-compress-include-system': ws0.compressIncludeSystem === true,
+            'ws-compress-include-contexts': ws0.compressIncludeContexts === true,
+            'ws-compress-include-input': ws0.compressIncludeInput === true,
+            'ws-compress-include-output': ws0.compressIncludeOutput === true
+        };
+        for (var hid in hydrateMap) {
+            if (!Object.prototype.hasOwnProperty.call(hydrateMap, hid)) continue;
+            var hel = document.getElementById(hid);
+            if (hel) hel.checked = hydrateMap[hid];
+        }
+    }
     updateCompressBadge();
 
     function onCancelClick(ev) {

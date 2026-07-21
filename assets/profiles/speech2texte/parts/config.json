@@ -1,7 +1,7 @@
 {
-    "version": "1.23.0",
+    "version": "1.23.2",
     "type": "pdm-config",
-    "exportedAt": "2026-07-17T11:33:26.763Z",
+    "exportedAt": "2026-07-21T06:30:00.000Z",
     "pdm_provider": "ollama",
     "pdm_model": "",
     "pdm_system_prompt_enabled": true,
@@ -21,7 +21,11 @@
         "audioMimeType": null,
         "audioLastModified": null,
         "audioRef": null,
-        "audioSegmentCount": null
+        "audioSegmentCount": null,
+        "compressIncludeSystem": false,
+        "compressIncludeContexts": false,
+        "compressIncludeInput": false,
+        "compressIncludeOutput": false
     },
     "pdm_stt_device_id": "",
     "pdm_stt_engine": "vosk-maxi",

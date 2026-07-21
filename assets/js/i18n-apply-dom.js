@@ -752,11 +752,18 @@ function applyStaticIds(root) {
     applySttPanelLabels(root);
 
     if (window.PDM && window.PDM.WorkspaceUi) {
-        if (typeof window.PDM.WorkspaceUi.applyBrand === 'function') {
-            window.PDM.WorkspaceUi.applyBrand();
-        }
-        if (typeof window.PDM.WorkspaceUi.applyIdentity === 'function') {
-            window.PDM.WorkspaceUi.applyIdentity();
+        if (typeof window.PDM.WorkspaceUi.apply === 'function') {
+            window.PDM.WorkspaceUi.apply();
+        } else {
+            if (typeof window.PDM.WorkspaceUi.applyBrand === 'function') {
+                window.PDM.WorkspaceUi.applyBrand();
+            }
+            if (typeof window.PDM.WorkspaceUi.applyIdentity === 'function') {
+                window.PDM.WorkspaceUi.applyIdentity();
+            }
+            if (typeof window.PDM.WorkspaceUi.applyWorkspaceTexts === 'function') {
+                window.PDM.WorkspaceUi.applyWorkspaceTexts();
+            }
         }
     }
 }

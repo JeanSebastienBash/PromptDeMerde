@@ -85,20 +85,32 @@ A.saveWorkspaceFromDom = function() {
     var plainThink = bak.plainThinking != null
         ? String(bak.plainThinking)
         : (thinkingTa ? thinkingTa.value : '');
+    var compress = {};
+    var compressIds = {
+        compressIncludeSystem: 'ws-compress-include-system',
+        compressIncludeContexts: 'ws-compress-include-contexts',
+        compressIncludeInput: 'ws-compress-include-input',
+        compressIncludeOutput: 'ws-compress-include-output'
+    };
+    for (var ck in compressIds) {
+        if (!Object.prototype.hasOwnProperty.call(compressIds, ck)) continue;
+        var cEl = document.getElementById(compressIds[ck]);
+        if (cEl) compress[ck] = !!cEl.checked;
+    }
     if (!inputVal.trim()) {
-        return window.PDM.Storage.setWorkspace({
+        return window.PDM.Storage.setWorkspace(Object.assign({
             input: inputVal,
             output: '',
             thinking: '',
             contextPanelOpen: panelOpen
-        });
+        }, compress));
     }
-    return window.PDM.Storage.setWorkspace({
+    return window.PDM.Storage.setWorkspace(Object.assign({
         input: inputVal,
         output: plainOut,
         thinking: plainThink,
         contextPanelOpen: panelOpen
-    });
+    }, compress));
 };
 
 A.clearWorkspaceOutput = function(opts) {
@@ -159,6 +171,17 @@ A.restoreWorkspaceFromStorage = function() {
     var ws = window.PDM.Storage.getWorkspace();
     var contextPanel = document.getElementById('context-panel');
     if (contextPanel) contextPanel.open = ws.contextPanelOpen === true;
+    var compressMap = {
+        'ws-compress-include-system': ws.compressIncludeSystem === true,
+        'ws-compress-include-contexts': ws.compressIncludeContexts === true,
+        'ws-compress-include-input': ws.compressIncludeInput === true,
+        'ws-compress-include-output': ws.compressIncludeOutput === true
+    };
+    for (var cid in compressMap) {
+        if (!Object.prototype.hasOwnProperty.call(compressMap, cid)) continue;
+        var cel = document.getElementById(cid);
+        if (cel) cel.checked = compressMap[cid];
+    }
     var inp = document.getElementById('ws-input');
     if (inp) {
         inp.value = ws.input || '';

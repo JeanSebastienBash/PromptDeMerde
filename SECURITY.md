@@ -164,7 +164,7 @@ Victim imports on https://promptdemerde.com
 
 ### ZIP integrity (checksum) vs crypto signature
 
-| Layer | Status (v1.23.1) |
+| Layer | Status (v1.23.2) |
 |-------|------------------|
 | SHA-256 on ZIP bytes | **Yes** — export (`buildZipPackage`), creator (`profile-zip-checksum.mjs`) |
 | Import verification | **Yes** if `options.expectedChecksum` / `checksum_sha256` (otherwise unsigned dialog only) |

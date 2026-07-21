@@ -24,7 +24,11 @@ S.getWorkspace = function() {
     };
     if (!w || typeof w !== 'object') {
         return Object.assign({
-            input: '', output: '', thinking: '', savedAt: null, contextPanelOpen: false
+            input: '', output: '', thinking: '', savedAt: null, contextPanelOpen: false,
+            compressIncludeSystem: false,
+            compressIncludeContexts: false,
+            compressIncludeInput: false,
+            compressIncludeOutput: false
         }, emptyAudio);
     }
     var audio = CS && CS.normalizeAudioMeta ? CS.normalizeAudioMeta(w) : emptyAudio;
@@ -40,7 +44,11 @@ S.getWorkspace = function() {
         audioMimeType: audio.audioMimeType,
         audioLastModified: audio.audioLastModified,
         audioRef: audio.audioRef,
-        audioSegmentCount: audio.audioSegmentCount != null ? audio.audioSegmentCount : null
+        audioSegmentCount: audio.audioSegmentCount != null ? audio.audioSegmentCount : null,
+        compressIncludeSystem: w.compressIncludeSystem === true,
+        compressIncludeContexts: w.compressIncludeContexts === true,
+        compressIncludeInput: w.compressIncludeInput === true,
+        compressIncludeOutput: w.compressIncludeOutput === true
     };
 };
 
@@ -62,7 +70,19 @@ S.setWorkspace = function(data) {
         audioMimeType: audio.audioMimeType,
         audioLastModified: audio.audioLastModified,
         audioRef: audio.audioRef,
-        audioSegmentCount: audio.audioSegmentCount != null ? audio.audioSegmentCount : null
+        audioSegmentCount: audio.audioSegmentCount != null ? audio.audioSegmentCount : null,
+        compressIncludeSystem: 'compressIncludeSystem' in data
+            ? data.compressIncludeSystem === true
+            : (prevRaw.compressIncludeSystem === true),
+        compressIncludeContexts: 'compressIncludeContexts' in data
+            ? data.compressIncludeContexts === true
+            : (prevRaw.compressIncludeContexts === true),
+        compressIncludeInput: 'compressIncludeInput' in data
+            ? data.compressIncludeInput === true
+            : (prevRaw.compressIncludeInput === true),
+        compressIncludeOutput: 'compressIncludeOutput' in data
+            ? data.compressIncludeOutput === true
+            : (prevRaw.compressIncludeOutput === true)
     };
     return S.set(S.KEYS.WORKSPACE, ws);
 };

@@ -103,6 +103,20 @@ CS.normalizeLegacyConfig = function(data) {
     if (CS.isPlainObject(copy.pdm_workspace) && copy.pdm_workspace.contextPanelOpen === undefined) {
         copy.pdm_workspace.contextPanelOpen = false;
     }
+    if (CS.isPlainObject(copy.pdm_workspace)) {
+        var compressDefaults = {
+            compressIncludeSystem: false,
+            compressIncludeContexts: false,
+            compressIncludeInput: false,
+            compressIncludeOutput: false
+        };
+        for (var cdk in compressDefaults) {
+            if (!Object.prototype.hasOwnProperty.call(compressDefaults, cdk)) continue;
+            if (!CS.isStrictBoolean(copy.pdm_workspace[cdk])) {
+                copy.pdm_workspace[cdk] = compressDefaults[cdk];
+            }
+        }
+    }
 
     if (copy.pdm_context_gen_system === undefined || !String(copy.pdm_context_gen_system).trim()) {
         copy.pdm_context_gen_system = csLocale('DEFAULT_CONTEXT_GEN_SYSTEM');
@@ -263,7 +277,11 @@ CS.buildDefaultConfig = function() {
         pdm_history_count: 0,
         pdm_clean_history: history,
         pdm_workspace: Object.assign({
-            input: '', output: '', thinking: '', savedAt: null, contextPanelOpen: false
+            input: '', output: '', thinking: '', savedAt: null, contextPanelOpen: false,
+            compressIncludeSystem: false,
+            compressIncludeContexts: false,
+            compressIncludeInput: false,
+            compressIncludeOutput: false
         }, CS.emptyAudioMeta()),
         pdm_stt_device_id: '',
         pdm_stt_engine: 'vosk-maxi',

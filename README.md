@@ -6,7 +6,7 @@
 
 <p align="center">
   <a href="LICENSE"><img src="https://img.shields.io/badge/License-MIT-yellow.svg" alt="License: MIT"></a>
-  <a href="https://github.com/JeanSebastienBash/promptdemerde/tags" target="_blank" rel="noopener noreferrer"><img src="https://img.shields.io/badge/version-1.23.1--RC-blue.svg" alt="Version 1.23.1 RC"></a>
+  <a href="https://github.com/JeanSebastienBash/promptdemerde/tags" target="_blank" rel="noopener noreferrer"><img src="https://img.shields.io/badge/version-1.23.2--RC-blue.svg" alt="Version 1.23.2 RC"></a>
   <a href="https://github.com/JeanSebastienBash/promptdemerde/actions/workflows/ci.yml" target="_blank" rel="noopener noreferrer"><img src="https://github.com/JeanSebastienBash/promptdemerde/actions/workflows/ci.yml/badge.svg" alt="CI"></a>
 </p>
 
@@ -73,6 +73,16 @@ More videos will follow on the <a href="https://www.youtube.com/@DreamprojectAI/
 <a id="menu-whats-new"></a>
 
 ## 🆕 What’s new
+
+### Version 1.23.2 (RC)
+
+*Release candidate — not yet stable.*
+
+- **Workspace UI texts**: custom pack strings (e.g. Reformulate button label) survive locale sync and round-trip export/import — empty keys only are filled from i18n defaults.
+- **Token compression checkboxes**: the four targets are stored in `pdm_workspace` (`compressInclude*`), restored on load, and travel with the profile ZIP (reset to off in a clean archive).
+- Shipped `speech2texte` profile aligned to v1.23.2; still **51** top-level `pdm_*` keys.
+
+[Technical documentation](docs/Documentation.md) · [Tag notes](.github/RELEASE_v1.23.2.md)
 
 ### Version 1.23.1 (RC)
 
@@ -755,7 +765,7 @@ Inside a card, expandable **zones** hold the full **trace** of that run: Input, 
 
 Optional **token compression** lives in a collapsible panel on the Workspace **Input** column — under the **voice-dictation** strip and the Input field, just above Context prompts. Four checkboxes choose what to shorten: the **system prompt**, active **`#Tag` context prompts**, the **Input** area, and the displayed **Output**. All start **off**, and there is no separate Compress button: checked targets run when **Reformulate** runs. System, contexts and Input (if checked) are compressed **before** the Ollama call to free context window; Output (if checked) is shortened **after** a successful run, for display only.
 
-The built-in target keeps about **55%** of the original character length (`rate: 0.55`). That rate is fixed in the product, not shown in the UI and not stored in a `pdm_*` preference. After a pass, green marks on the chips show which targets were already compressed in the session until the text changes; history can keep Original / Compressed pairs when a target was checked (see **5.4.1**).
+Checkbox state is persisted in the browser session under `pdm_workspace` (`compressIncludeSystem`, `compressIncludeContexts`, `compressIncludeInput`, `compressIncludeOutput`) and is included in a full profile ZIP export; a clean archive resets those four flags to off without clearing the live session. The built-in target keeps about **55%** of the original character length (`rate: 0.55`). That rate is fixed in the product, not shown in the UI and not stored in a `pdm_*` preference. After a pass, green marks on the chips show which targets were already compressed in the session until the text changes; history can keep Original / Compressed pairs when a target was checked (see **5.4.1**).
 
 [Technical documentation](docs/Documentation.md#feat-5-4-2)
 
@@ -867,7 +877,7 @@ A JSON profile does more than carry prompts: it can **rebrand the whole shell**.
 
 **Header identity.** The terminal-style prompt in the header uses a primary username, an alternate username used by the inversion animation, and a hostname suffix in the `@host:~#` style. Changing those values retargets the “who / where” line without touching the rest of the SPA.
 
-**Workspace chrome copy.** The profile can replace the product-facing strings on the workbench: Input / Output / thinking placeholders and aria labels; the main Reformulate (submit) label and its “running” state; Stop / Reset labels and Reset tooltip; the empty-history line and history purge tooltip; the LLM-options button titles (open / closed); the guard banner that points to Prompts when nothing is enabled; plus the broader family of Workspace status, confirmation, compression-panel, and media-import messages that ship with the pack. The result is a consistent voice for buttons, empty states, and blocking feedback — not only a logo swap.
+**Workspace chrome copy.** The profile can replace the product-facing strings on the workbench: Input / Output / thinking placeholders and aria labels; the main Reformulate (submit) label and its “running” state; Stop / Reset labels and Reset tooltip; the empty-history line and history purge tooltip; the LLM-options button titles (open / closed); the guard banner that points to Prompts when nothing is enabled; plus the broader family of Workspace status, confirmation, compression-panel, and media-import messages that ship with the pack. Non-empty custom texts are kept across locale changes and ZIP round-trips; only empty keys are filled from the active UI locale defaults. The result is a consistent voice for buttons, empty states, and blocking feedback — not only a logo swap.
 
 **Theme.** The chosen theme travels with the profile, so surfaces, accents, and logo fallback colours switch with the pack. Theme can still be changed later in Options; what the archive carried becomes the starting skin after import.
 

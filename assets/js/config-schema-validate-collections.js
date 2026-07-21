@@ -89,6 +89,16 @@ CS._validateWorkspaceAndHistory = function(data, errors) {
         if (!CS.isStrictBoolean(ws.contextPanelOpen)) {
             errors.push('pdm_workspace.contextPanelOpen doit être un booléen.');
         }
+        var compressKeys = [
+            'compressIncludeSystem', 'compressIncludeContexts',
+            'compressIncludeInput', 'compressIncludeOutput'
+        ];
+        for (var ci = 0; ci < compressKeys.length; ci++) {
+            var ck = compressKeys[ci];
+            if (ws[ck] !== undefined && !CS.isStrictBoolean(ws[ck])) {
+                errors.push('pdm_workspace.' + ck + ' doit être un booléen.');
+            }
+        }
         CS.validateAudioMetaFields(ws, 'pdm_workspace', errors);
     }
 

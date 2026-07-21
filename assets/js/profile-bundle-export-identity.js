@@ -36,7 +36,13 @@ PBE.neutralizeCleanSession = function(session) {
     out.pdm_clean_history = [];
     out.pdm_history_count = 0;
     out.pdm_workspace = Object.assign(
-        { input: '', output: '', thinking: '', savedAt: null, contextPanelOpen: false },
+        {
+            input: '', output: '', thinking: '', savedAt: null, contextPanelOpen: false,
+            compressIncludeSystem: false,
+            compressIncludeContexts: false,
+            compressIncludeInput: false,
+            compressIncludeOutput: false
+        },
         CS && typeof CS.emptyAudioMeta === 'function' ? CS.emptyAudioMeta() : {}
     );
     out.pdm_audio_blobs = {};
