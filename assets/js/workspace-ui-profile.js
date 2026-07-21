@@ -28,10 +28,6 @@ function wsCharCount(n) {
     return I ? I.t('workspace.charCount', { count: n }) : (n + ' / 50000');
 }
 
-function customProfileSynopsis(label) {
-    return WU.text('customProfileSynopsis', { label: label }).slice(0, 100);
-}
-
 function interpolate(template, vars) {
     var out = String(template == null ? '' : template);
     if (!vars || typeof vars !== 'object') return out;
@@ -39,7 +35,6 @@ function interpolate(template, vars) {
         if (!Object.prototype.hasOwnProperty.call(vars, key)) continue;
         out = out.split('{{' + key + '}}').join(String(vars[key] == null ? '' : vars[key]));
     }
-    // Anti-fuite : aucun {{placeholder}} visible en UI
     return out.replace(/\{\{\w+\}\}/g, '');
 }
 
@@ -118,7 +113,6 @@ WU.getNavBrandParts = function() {
         ? String(brand.secondWord)
         : def.secondWord;
 
-    // Sans WorkspaceUi session chargé : fallback i18n pour les mots plateforme.
     if (!hasSessionBrand && I && typeof I.t === 'function') {
         firstWord = I.t('nav.brandFirst') || firstWord;
         secondWord = I.t('nav.brandSecond') || secondWord;
@@ -165,13 +159,6 @@ WU.applyBrand = function() {
     var gtHtml = '<span class="logo-gt">' + escapeHtml(gtText) + '</span>';
     logo.innerHTML = gtHtml + ' ' + WU.renderNavLogoHtml();
 };
-
-function getAssembleLang() {
-    if (window.PDM && window.PDM.I18n && typeof window.PDM.I18n.getProfileLang === 'function') {
-        return window.PDM.I18n.getProfileLang();
-    }
-    return 'fr';
-}
 
 WU.applyIdentity = function() {
     var identity = WU.get().identity || {};
@@ -307,223 +294,6 @@ WU.apply = function() {
     WU.applyBrand();
     WU.applyIdentity();
     WU.applyWorkspaceTexts();
-};
-
-function getProfileJsonUrl(profileId) {
-    var PS = window.PDM && window.PDM.ProfileSelector;
-    if (PS && typeof PS.profileJsonUrl === 'function') {
-        return PS.profileJsonUrl(profileId);
-    }
-    return 'assets/profiles/' + encodeURIComponent(profileId) + '/parts/config.json';
-}
-
-function getBundledSynopsis(profileId) {
-    var SR = window.PDM && window.PDM.SynopsisResolve;
-    if (SR && typeof SR.resolveBundledProfileSynopsis === 'function') {
-        return SR.resolveBundledProfileSynopsis(profileId, getAssembleLang());
-    }
-    var PS = window.PDM && window.PDM.ProfileSelector;
-    if (PS && typeof PS.getBundledSynopsisRaw === 'function') {
-        var fromPs = PS.getBundledSynopsisRaw(profileId);
-        if (fromPs) return fromPs;
-    }
-    var I = window.PDM && window.PDM.I18n;
-    if (I && typeof I.getBootManifest === 'function') {
-        var manifest = I.getBootManifest();
-        if (manifest && Array.isArray(manifest.profiles)) {
-            for (var i = 0; i < manifest.profiles.length; i++) {
-                var p = manifest.profiles[i];
-                if (p && p.id === profileId && p.synopsis) return String(p.synopsis);
-            }
-        }
-    }
-    return '';
-}
-
-function resolveOfficialProfileId(requestedId) {
-    if (window.PDM.Storage && typeof window.PDM.Storage.isCustomProfileId === 'function' &&
-        window.PDM.Storage.isCustomProfileId(requestedId)) {
-        return requestedId;
-    }
-    var I = window.PDM && window.PDM.I18n;
-    if (I && typeof I.isBundledProfileId === 'function' && I.isBundledProfileId(requestedId)) {
-        return requestedId;
-    }
-    if (I && typeof I.getBootProfileId === 'function') {
-        var bootId = I.getBootProfileId();
-        if (bootId) return bootId;
-    }
-    return requestedId;
-}
-
-function readJsonResponse(res) {
-    return res.text().then(function(text) {
-        var payload = null;
-        if (text) {
-            try { payload = JSON.parse(text); } catch (e) { payload = null; }
-        }
-        if (!res.ok) {
-            throw new Error((payload && payload.error) ? payload.error : 'HTTP ' + res.status);
-        }
-        return payload;
-    });
-}
-
-WU.ensureProfileSynopsis = function() {
-    if (!window.PDM || !window.PDM.Storage) return Promise.resolve();
-    var synLang = getAssembleLang();
-    var storedLang = window.PDM.Storage.get('pdm_profile_synopsis_lang');
-    if (window.PDM.Storage.getProfileSynopsis() && storedLang === synLang) {
-        return Promise.resolve();
-    }
-
-    if (!window.PDM.Env || typeof window.PDM.Env.hasProfileSelector !== 'function' ||
-        !window.PDM.Env.hasProfileSelector()) {
-        return Promise.resolve();
-    }
-
-    var activeId = resolveOfficialProfileId(window.PDM.Storage.getActiveProfile());
-    if (!activeId) return Promise.resolve();
-
-    if (window.PDM.Storage.isCustomProfileId(activeId)) {
-        var cp = window.PDM.Storage.getCustomProfile(activeId);
-        if (cp && cp.synopsis) {
-            window.PDM.Storage.setProfileSynopsis(cp.synopsis);
-            window.PDM.Storage.set('pdm_profile_synopsis_lang', synLang);
-        } else if (cp && cp.label) {
-            window.PDM.Storage.setProfileSynopsis(customProfileSynopsis(cp.label));
-            window.PDM.Storage.set('pdm_profile_synopsis_lang', synLang);
-        }
-        return Promise.resolve();
-    }
-
-    var synopsis = getBundledSynopsis(activeId);
-    if (synopsis) {
-        window.PDM.Storage.setProfileSynopsis(synopsis);
-        window.PDM.Storage.set('pdm_profile_synopsis_lang', synLang);
-        return Promise.resolve();
-    }
-
-    return fetch(getProfileJsonUrl(activeId), { cache: 'no-store' })
-        .then(readJsonResponse)
-        .then(function() {
-            var fallbackSynopsis = getBundledSynopsis(activeId);
-            if (fallbackSynopsis) {
-                window.PDM.Storage.setProfileSynopsis(fallbackSynopsis);
-                window.PDM.Storage.set('pdm_profile_synopsis_lang', synLang);
-            }
-        })
-        .catch(function(err) {
-            console.warn('[PDM.WorkspaceUi] ensureProfileSynopsis', err && err.message ? err.message : err);
-        });
-};
-
-WU.syncFromActiveProfile = function() {
-    if (!window.PDM || !window.PDM.Storage || !window.PDM.Env ||
-        typeof window.PDM.Env.hasProfileSelector !== 'function' ||
-        !window.PDM.Env.hasProfileSelector()) {
-        return Promise.resolve(false);
-    }
-
-    var activeId = resolveOfficialProfileId(window.PDM.Storage.getActiveProfile());
-    if (!activeId) return Promise.resolve(false);
-
-    if (window.PDM.Storage.isCustomProfileId(activeId)) {
-        var cp = window.PDM.Storage.getCustomProfile(activeId);
-        if (!cp || !cp.config) return Promise.resolve(false);
-        if (cp.synopsis) {
-            window.PDM.Storage.setProfileSynopsis(cp.synopsis);
-        } else if (cp.label) {
-            window.PDM.Storage.setProfileSynopsis(customProfileSynopsis(cp.label));
-        }
-        var customConfig = cp.config;
-        var cfp = window.PDM.Storage.computeProfileBundleFingerprint(customConfig);
-        var storedFp = window.PDM.Storage.getProfileBundleFingerprint();
-        var storedPrompt = window.PDM.Storage.getSystemPrompt();
-        var needsCustomSync = storedFp !== cfp;
-        if (!needsCustomSync && customConfig.pdm_system_prompt) {
-            needsCustomSync = !String(storedPrompt || '').trim() ||
-                String(storedPrompt) !== String(customConfig.pdm_system_prompt);
-        }
-        if (!needsCustomSync) return Promise.resolve(false);
-        window.PDM.Storage.applyProfileBundle(customConfig);
-        return Promise.resolve(true);
-    }
-
-    return (function() {
-        var PB = window.PDM && window.PDM.ProfileBundle;
-        var locale = getAssembleLang();
-        if (PB && typeof PB.loadFromUrl === 'function') {
-            return PB.loadFromUrl(activeId, locale).then(function(bundle) {
-                var config = bundle && bundle.assembled;
-                if (!config || typeof config !== 'object') return false;
-                var PBun = window.PDM && window.PDM.PromptsBundle;
-                if (PBun && typeof PBun.mergeLoadedConfig === 'function') {
-                    config = PBun.mergeLoadedConfig(config, bundle, activeId);
-                }
-                var synopsis = getBundledSynopsis(activeId);
-                if (synopsis && !String(window.PDM.Storage.getProfileSynopsis() || '').trim()) {
-                    window.PDM.Storage.setProfileSynopsis(synopsis);
-                    window.PDM.Storage.set('pdm_profile_synopsis_lang', locale);
-                }
-                var fp = window.PDM.Storage.computeProfileBundleFingerprint(config);
-                var storedFp = window.PDM.Storage.getProfileBundleFingerprint();
-                var storedPrompt = window.PDM.Storage.getSystemPrompt();
-                var needsSync = storedFp !== fp;
-                if (!needsSync && config.pdm_system_prompt) {
-                    needsSync = !String(storedPrompt || '').trim() ||
-                        String(storedPrompt) !== String(config.pdm_system_prompt);
-                }
-                if (!needsSync) return false;
-                window.PDM.Storage.applyProfileBundle(config, { preserveSessionChrome: true });
-                return true;
-            });
-        }
-        return fetch(getProfileJsonUrl(activeId), { cache: 'no-store' })
-            .then(readJsonResponse)
-            .then(function(config) {
-                if (!config || typeof config !== 'object') {
-                    return false;
-                }
-                var synopsis = getBundledSynopsis(activeId);
-                if (synopsis && !String(window.PDM.Storage.getProfileSynopsis() || '').trim()) {
-                    window.PDM.Storage.setProfileSynopsis(synopsis);
-                    window.PDM.Storage.set('pdm_profile_synopsis_lang', getAssembleLang());
-                }
-                var fp = window.PDM.Storage.computeProfileBundleFingerprint(config);
-                var storedFp = window.PDM.Storage.getProfileBundleFingerprint();
-                var storedPrompt = window.PDM.Storage.getSystemPrompt();
-                var needsSync = storedFp !== fp;
-                if (!needsSync && config.pdm_system_prompt) {
-                    needsSync = !String(storedPrompt || '').trim() ||
-                        String(storedPrompt) !== String(config.pdm_system_prompt);
-                }
-                if (!needsSync) {
-                    return false;
-                }
-                if (typeof window.PDM.Storage.applyProfileBundle !== 'function') {
-                    return false;
-                }
-                window.PDM.Storage.applyProfileBundle(config, { preserveSessionChrome: true });
-                return true;
-            });
-    })()
-        .catch(function(err) {
-            console.warn('[PDM.WorkspaceUi] syncFromActiveProfile', err && err.message ? err.message : err);
-            return false;
-        });
-};
-
-WU.boot = function() {
-    return WU.syncFromActiveProfile()
-        .then(function() { return WU.ensureProfileSynopsis(); })
-        .then(function() {
-        WU.apply();
-        if (window.PDM.AnimationSynopsis && typeof window.PDM.AnimationSynopsis.bootFromStorage === 'function') {
-            window.PDM.AnimationSynopsis.bootFromStorage();
-        }
-        return true;
-    });
 };
 
 window.PDM = window.PDM || {};

@@ -1992,7 +1992,7 @@ All zone documents link back to this file and to each other via the **Documentat
 
 ### JavaScript inventory
 
-The total is **131** versioned `assets/js/*.js` files (excluding vendor). Roles below reuse each module’s source synopsis (not the filename alone).
+The total is **147** versioned `assets/js/*.js` files (excluding vendor). Roles below reuse each module’s source synopsis (not the filename alone).
 
 <details>
 <summary><strong>JavaScript inventory (131 files)</strong> — click to expand</summary>
@@ -2045,6 +2045,8 @@ The total is **131** versioned `assets/js/*.js` files (excluding vendor). Roles 
 | [`workspace-thinking.js`](../assets/js/workspace-thinking.js) | Thinking (réflexion) panel UI during Clean. |
 | [`workspace-tts-download.js`](../assets/js/workspace-tts-download.js) | TTS export placeholder (download hook). |
 | [`workspace-ui-profile.js`](../assets/js/workspace-ui-profile.js) | Applies pdm_workspace_ui brand/texts to Workspace chrome. |
+| [`workspace-ui-profile-sync.js`](../assets/js/workspace-ui-profile-sync.js) | Syncs active profile prompts into session with locale overlay. |
+| [`workspace-ui-profile-boot.js`](../assets/js/workspace-ui-profile-boot.js) | Boots WorkspaceUi (sync → synopsis → apply). |
 
 ### 15.4 storage
 
@@ -2057,7 +2059,9 @@ The total is **131** versioned `assets/js/*.js` files (excluding vendor). Roles 
 | [`storage-core.js`](../assets/js/storage-core.js) | localStorage primitives and pdm_ key constants. |
 | [`storage-history.js`](../assets/js/storage-history.js) | Clean history, session migration, and data purge. |
 | [`storage-llm-settings.js`](../assets/js/storage-llm-settings.js) | Ollama settings: thinking, temperature, tokens, timeout. |
-| [`storage-profile-meta.js`](../assets/js/storage-profile-meta.js) | Active profile, project, synopsis, workspace UI, language, theme. |
+| [`storage-profile-meta.js`](../assets/js/storage-profile-meta.js) | Active profile, project, synopsis, language, theme. |
+| [`storage-workspace-ui.js`](../assets/js/storage-workspace-ui.js) | Workspace UI persistence and locale text sync. |
+| [`storage-config-defaults.js`](../assets/js/storage-config-defaults.js) | Bootstrap missing Storage config defaults. |
 | [`storage-prompt-fields.js`](../assets/js/storage-prompt-fields.js) | Context-gen prompt fields and JSON output fields. |
 | [`storage-prompts-bundle.js`](../assets/js/storage-prompts-bundle.js) | Local storage of system prompts + context prompts per locale and profile. |
 | [`storage-settings.js`](../assets/js/storage-settings.js) | Storage settings entry point (wipe/prompts/meta/llm modules). |

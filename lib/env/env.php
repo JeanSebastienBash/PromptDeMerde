@@ -76,6 +76,8 @@ $coreScripts = [
     'assets/js/stt-options-panel.js',
     'assets/js/stt-dictation-recorder.js',
     'assets/js/workspace-ui-profile.js',
+    'assets/js/workspace-ui-profile-sync.js',
+    'assets/js/workspace-ui-profile-boot.js',
     'assets/js/workspace-input-tools.js',
     'assets/js/workspace-dictation-audio.js',
     'assets/js/workspace-dictation-audio-export.js',
