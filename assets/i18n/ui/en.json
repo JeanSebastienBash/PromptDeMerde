@@ -753,7 +753,8 @@
         "configureVitrineUrl": "Showcase URL",
         "configureSynopsisLabel": "Profile synopsis",
         "configureTextsFilter": "Filter texts…",
-        "configureTextsHint": "Workspace labels (buttons, placeholders, messages)."
+        "configureTextsHint": "Workspace labels (buttons, placeholders, messages).",
+        "configureLocaleLimitHint": "Configure profile only covers the current UI display language. For other pack languages: unzip the ZIP, edit the JSON / Markdown files, re-zip, then import again."
     },
     "footer": {
         "brandHeading": "PromptDeMerde",

@@ -753,7 +753,8 @@
         "configureVitrineUrl": "URL vitrine",
         "configureSynopsisLabel": "Synopsis profil",
         "configureTextsFilter": "Filtrer les textes…",
-        "configureTextsHint": "Libellés Workspace (boutons, placeholders, messages)."
+        "configureTextsHint": "Libellés Workspace (boutons, placeholders, messages).",
+        "configureLocaleLimitHint": "Configurer le profil ne couvre que la langue d'affichage UI courante. Pour les autres langues de l'archive : dézipper le ZIP, éditer les JSON / Markdown, rezipper, puis réimporter."
     },
     "footer": {
         "brandHeading": "PromptDeMerde",

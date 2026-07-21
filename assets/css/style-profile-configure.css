@@ -5,6 +5,7 @@
  */
 body.configure-profile-modal-open { overflow: hidden; }
 .configure-profile-shell { max-width: 560px; width: min(96vw, 560px); max-height: 90vh; display: flex; flex-direction: column; }
+.configure-locale-limit-hint { margin: 0 0 10px; line-height: 1.35; opacity: 0.92; }
 .configure-profile-tabs {
     display: flex; flex-wrap: wrap; gap: 4px; margin: 0 0 12px; padding: 0;
 }

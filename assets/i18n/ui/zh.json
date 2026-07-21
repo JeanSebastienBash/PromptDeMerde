@@ -753,7 +753,8 @@
         "configureVitrineUrl": "Showcase URL",
         "configureSynopsisLabel": "Profile synopsis",
         "configureTextsFilter": "Filter texts…",
-        "configureTextsHint": "Workspace labels (buttons, placeholders, messages)."
+        "configureTextsHint": "Workspace labels (buttons, placeholders, messages).",
+        "configureLocaleLimitHint": "「配置配置文件」仅覆盖当前界面显示语言。归档中的其他语言：解压 ZIP，编辑 JSON / Markdown，重新打包后再导入。"
     },
     "footer": {
         "brandHeading": "PromptDeMerde",

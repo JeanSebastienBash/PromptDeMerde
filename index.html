@@ -1208,6 +1208,7 @@ Objectif : Déclarer la structure des écrans, charger bootstrap et servir de sh
     <div class="export-config-backdrop" data-configure-modal-close="1"></div>
     <div class="export-config-shell configure-profile-shell" role="document">
         <h2 id="configure-profile-modal-title" class="export-config-title" data-i18n="settings.configureModalTitle">Configurer le profil</h2>
+        <p class="export-config-field-hint configure-locale-limit-hint" data-i18n="settings.configureLocaleLimitHint">Configurer le profil ne couvre que la langue d'affichage UI courante. Pour les autres langues de l'archive : d&#233;zipper le ZIP, &#233;diter les JSON / Markdown, rezipper, puis r&#233;importer.</p>
         <div class="configure-profile-tabs" role="tablist">
             <button type="button" class="configure-profile-tab is-active" role="tab" aria-selected="true" data-configure-tab="logo" data-i18n="settings.configureTabLogo">Logo</button>
             <button type="button" class="configure-profile-tab" role="tab" aria-selected="false" data-configure-tab="identity" data-i18n="settings.configureTabIdentity">Identity</button>
@@ -1270,6 +1271,7 @@ Objectif : Déclarer la structure des écrans, charger bootstrap et servir de sh
         <h2 id="configure-profile-help-title" class="export-config-title" data-i18n="settings.configureHelpTitle">Régler le reste en session</h2>
         <div class="export-config-body">
             <p id="configure-profile-help-body" data-i18n="settings.configureHelpBody">Thème, langue, LLM, dictée vocale, prompts système et contextes se règlent dans l'application avant l'export. L'archive emporte l'état courant. Sinon, réexporter après modification, ou éditer les JSON de l'archive ZIP.</p>
+            <p class="export-config-field-hint" data-i18n="settings.configureLocaleLimitHint">Configurer le profil ne couvre que la langue d'affichage UI courante. Pour les autres langues de l'archive : dézipper le ZIP, éditer les JSON / Markdown, rezipper, puis réimporter.</p>
         </div>
         <div class="export-config-actions">
             <button type="button" class="btn btn-sm" data-configure-help-close="1" data-i18n="settings.configureHelpClose">Compris</button>

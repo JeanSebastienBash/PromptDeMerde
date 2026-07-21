@@ -753,7 +753,8 @@
         "configureVitrineUrl": "Showcase URL",
         "configureSynopsisLabel": "Profile synopsis",
         "configureTextsFilter": "Filter texts…",
-        "configureTextsHint": "Workspace labels (buttons, placeholders, messages)."
+        "configureTextsHint": "Workspace labels (buttons, placeholders, messages).",
+        "configureLocaleLimitHint": "Agordi la profilon kovras nur la nunan UI-lingvon. Por aliaj lingvoj de la arkivo: malzipu la ZIP-on, redaktu la JSON / Markdown, rezipu, poste reimportu."
     },
     "footer": {
         "brandHeading": "PromptDeMerde",

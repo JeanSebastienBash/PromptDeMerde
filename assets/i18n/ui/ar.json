@@ -753,7 +753,8 @@
         "configureVitrineUrl": "Showcase URL",
         "configureSynopsisLabel": "Profile synopsis",
         "configureTextsFilter": "Filter texts…",
-        "configureTextsHint": "Workspace labels (buttons, placeholders, messages)."
+        "configureTextsHint": "Workspace labels (buttons, placeholders, messages).",
+        "configureLocaleLimitHint": "إعداد الملف يغطي لغة واجهة العرض الحالية فقط. للغات الأخرى في الأرشيف: فك ضغط الـ ZIP، عدّل ملفات JSON / Markdown، أعد الضغط، ثم استورد من جديد."
     },
     "footer": {
         "brandHeading": "PromptDeMerde",

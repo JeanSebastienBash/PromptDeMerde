@@ -753,7 +753,8 @@
         "configureVitrineUrl": "Showcase URL",
         "configureSynopsisLabel": "Profile synopsis",
         "configureTextsFilter": "Filter texts…",
-        "configureTextsHint": "Workspace labels (buttons, placeholders, messages)."
+        "configureTextsHint": "Workspace labels (buttons, placeholders, messages).",
+        "configureLocaleLimitHint": "Configura profilo copre solo la lingua UI corrente. Per le altre lingue dell’archivio: decomprimere lo ZIP, modificare JSON / Markdown, ricomprimere e importare di nuovo."
     },
     "footer": {
         "brandHeading": "PromptDeMerde",

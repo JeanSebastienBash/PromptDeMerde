@@ -1048,6 +1048,8 @@ Context Markdown in the ZIP must match `parts/prompts.json` for every listed loc
 <a id="75-personnalisation-par-édition-zip"></a>
 ### 12.5 Customization by ZIP editing
 
+**When this path is required.** In-app **Configure profile** only covers the **current UI language**. For every other locale in the pack (prompts, embedded UI dictionaries on a maximal export, …), use ZIP hand-edit — that is the supported limit of the base product today.
+
 Power-user workflow:
 
 1. Export the profile with the **maximal** preset.
@@ -1113,9 +1115,11 @@ Mitigations include sanitization, size limits, token stripping, and a confirmati
 
 **Primary path:** Options → **Configure profile** — tabbed editor for `pdm_workspace_ui.brand` / `identity` / `texts`, `pdm_project`, and synopsis. Saves to the live session (and the active personal pack snapshot). Theme, LLM, STT, and Prompts remain live UI settings before export; an info panel documents that.
 
+**Scope — one UI language.** Configure profile only edits chrome for the **current UI display language**. The product does not provide an in-app multi-locale pack editor. Other languages in the ZIP (prompt Markdown per locale, maximal `i18n/ui/` dictionaries, …) are maintained by unzipping the archive, editing files, re-zipping, and importing again. A Marketplace **extension** may cover richer multi-locale editing later; until then this ZIP hand-edit path is the supported limit.
+
 **Power-user path (ZIP hand-edit):**
 
-1. Export the profile with the **maximal** preset.
+1. Export the profile with the **maximal** preset (recommended when embedding several UI dictionaries).
 2. Unzip the archive, then edit the Markdown and JSON (an LLM is recommended for consistency).
 3. Re-zip the archive, then import it: validation runs on the client.
 

@@ -753,7 +753,8 @@
         "configureVitrineUrl": "Showcase URL",
         "configureSynopsisLabel": "Profile synopsis",
         "configureTextsFilter": "Filter texts…",
-        "configureTextsHint": "Workspace labels (buttons, placeholders, messages)."
+        "configureTextsHint": "Workspace labels (buttons, placeholders, messages).",
+        "configureLocaleLimitHint": "프로필 구성은 현재 UI 표시 언어만 다룹니다. 아카이브의 다른 언어는 ZIP을 풀고 JSON / Markdown을 편집한 뒤 다시 압축해 가져옵니다."
     },
     "footer": {
         "brandHeading": "PromptDeMerde",

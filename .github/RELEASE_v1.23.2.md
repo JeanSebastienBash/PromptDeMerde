@@ -8,6 +8,7 @@
 - **Workspace UI texts** : les chaînes pack non vides (ex. libellé bouton reformuler) ne sont plus écrasées par `syncWorkspaceUiTextsForLocale` ; i18n re-applique `WorkspaceUi.apply()` après changement de langue.
 - **Compression tokens** : les 4 cases (`compressInclude*`) vivent dans `pdm_workspace`, sont hydratées au restore, exportées dans le ZIP complet, remises à `false` en archive propre ; **import** via `_importConfigKeys` (plus de drop des bools).
 - **Header hostname** : `applyIdentity` utilise `identity.hostname` ; resync bundlé préserve le chrome session (`preserveSessionChrome`).
+- **Limite locale** : Configurer le profil = **1** langue UI ; autres langues du ZIP = édition manuelle archive (doc + hint `configureLocaleLimitHint`).
 - Profil livré `speech2texte` aligné **v1.23.2** ; toujours **51** clés top-level `pdm_*`.
 
 ## Smoke

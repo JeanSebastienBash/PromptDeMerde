@@ -9,6 +9,8 @@
 
 Each profile **bundled at boot** lives in its own folder. The **translated UI** (12 languages) is **shared**: [`assets/i18n/ui/`](../assets/i18n/ui/).
 
+**Authoring limit (product):** Options → **Configure profile** edits pack chrome for the **current UI language** only. Other locales in a portable ZIP are maintained by unzip → edit JSON/Markdown → re-zip → import ([Documentation 5.5.2](Documentation.md#feat-5-5-2)).
+
 ## GitHub repository policy (canon)
 
 | Layer | Path | On public GitHub |
