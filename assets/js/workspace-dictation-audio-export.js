@@ -251,7 +251,8 @@ function wuText(key) {
     return window.PDM && window.PDM.WorkspaceUi ? window.PDM.WorkspaceUi.text(key) : '';
 }
 
-WDA.clearCurrentAudio = function() {
+WDA.clearCurrentAudio = function(opts) {
+    opts = opts || {};
     if (!WDA._state.currentAudioRef) {
         return Promise.resolve();
     }
@@ -270,7 +271,7 @@ WDA.clearCurrentAudio = function() {
         WDA.clearWorkspaceAudioMeta();
         WDA.updateDownloadButtonState();
 
-        if (window.PDM && window.PDM.UI && window.PDM.UI.notif) {
+        if (!opts.silent && window.PDM && window.PDM.UI && window.PDM.UI.notif) {
             window.PDM.UI.notif(wuText('audioRecordingDeleted'), 'info');
         }
     }).catch(function(error) {

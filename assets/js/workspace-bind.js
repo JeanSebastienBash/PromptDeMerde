@@ -120,11 +120,12 @@ A.bindWorkspace = function() {
         if (!confirm(confirmMsg)) return;
         var inpEl = document.getElementById('ws-input');
         if (inpEl) inpEl.value = '';
-        var cc = document.getElementById('char-count');
-        if (cc) cc.textContent = wsCharCount(0);
         A.clearWorkspaceOutput();
-        if (inpEl) inpEl.focus();
         document.dispatchEvent(new CustomEvent('pdm:workspace-reset'));
+        if (inpEl) {
+            inpEl.dispatchEvent(new Event('input', { bubbles: true }));
+            inpEl.focus();
+        }
     }
     for (var ri = 0; ri < resetBtns.length; ri++) {
         resetBtns[ri].addEventListener('click', onWorkspaceResetClick);

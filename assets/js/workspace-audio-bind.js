@@ -247,7 +247,9 @@ A.bindWorkspaceAudio = function() {
         A._wsAudioEventsBound = true;
         document.addEventListener('pdm:workspace-reset', function() {
             audioJobGen++;
-            toManual();
+            deleteWorkspaceAudioBlob().finally(function() {
+                toManual();
+            });
         });
         document.addEventListener('pdm:workspace-input-clear', function() {
             var audio = window.PDM.Storage.getWorkspaceAudio && window.PDM.Storage.getWorkspaceAudio();

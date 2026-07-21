@@ -395,7 +395,9 @@ Format applies to the Output pane rendering helpers after inference. Changing fo
 
 - **Control:** `.ws-reset-btn` in `workspace-bind.js`
 - **Blocked when:** inference running (`inferenceRunningReset`) or STT active (`dictationRunningReset`)
-- **Confirm:** `confirm(resetConfirm)` then clears `#ws-input`, `#char-count`, `A.clearWorkspaceOutput()`, dispatches `pdm:workspace-reset`
+- **Confirm:** `confirm(resetConfirm)` then clears `#ws-input`, `A.clearWorkspaceOutput()`, dispatches `pdm:workspace-reset`, then an `input` event on `#ws-input` so the character bar, STT text session, and Input tools resync
+- **`pdm:workspace-reset` listeners:** cancel any image job; exit audio-file provenance (delete IndexedDB blob + clear meta + `syncSttAfterFileImport`, same outcome as trash for audio); clear dictation WebM segments / recorder session (no toast)
+- **Does not clear:** LLM history, active contexts, LLM options / temperature, STT engine selection
 
 ### Trash / New input
 

@@ -147,10 +147,11 @@ WDA.onDictationStart = function(audioRef) {
     }
 };
 
-WDA.onWorkspaceClear = function() {
+WDA.onWorkspaceClear = function(opts) {
+    opts = opts || {};
     WDA.resetHybridState();
     if (WDA._state.currentAudioRef) {
-        WDA.clearCurrentAudio().catch(function(error) {
+        WDA.clearCurrentAudio({ silent: !!opts.silent }).catch(function(error) {
             console.error('[workspace-dictation-audio] Erreur lors du reset :', error);
         });
     }
@@ -209,7 +210,7 @@ WDA.bindEvents = function() {
     if (!WDA._eventsBound) {
         WDA._eventsBound = true;
         document.addEventListener('pdm:workspace-reset', function() {
-            WDA.onWorkspaceClear();
+            WDA.onWorkspaceClear({ silent: true });
         });
         document.addEventListener('pdm:workspace-input-clear', function() {
             if (WDA._state.currentAudioRef) {
