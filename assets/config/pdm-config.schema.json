@@ -34,6 +34,7 @@
     "pdm_llm_thinking_max_chars",
     "pdm_llm_temperature",
     "pdm_llm_max_tokens",
+    "pdm_llm_input_char_budget",
     "pdm_llm_timeout_sec",
     "pdm_token_ollama",
     "pdm_context_gen_system",
@@ -121,6 +122,11 @@
       "type": "integer",
       "minimum": 0,
       "maximum": 32768
+    },
+    "pdm_llm_input_char_budget": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 100000
     },
     "pdm_llm_timeout_sec": {
       "type": "integer",

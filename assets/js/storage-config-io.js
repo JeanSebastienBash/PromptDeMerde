@@ -61,6 +61,7 @@ S._exportValueForKey = function(key) {
     if (key === S.KEYS.LLM_THINKING_MAX_CHARS) return S.getLlmThinkingMaxChars();
     if (key === S.KEYS.LLM_TEMPERATURE) return S.getLlmTemperature();
     if (key === S.KEYS.LLM_MAX_TOKENS) return S.getLlmMaxTokens();
+    if (key === S.KEYS.LLM_INPUT_CHAR_BUDGET) return S.getLlmInputCharBudget();
     if (key === S.KEYS.LLM_TIMEOUT_SEC) return S.getLlmTimeoutSec();
     if (key === S.KEYS.TOKEN_OLLAMA) return S.getToken('ollama');
     if (key === S.KEYS.CONTEXT_GEN_SYSTEM) return S.getContextGenSystemEffective();

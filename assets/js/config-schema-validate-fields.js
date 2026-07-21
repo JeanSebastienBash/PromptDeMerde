@@ -69,6 +69,14 @@ CS._validateScalarFields = function(data, errors) {
         }
     }
 
+    if (data.pdm_llm_input_char_budget !== null && data.pdm_llm_input_char_budget !== undefined) {
+        if (typeof data.pdm_llm_input_char_budget !== 'number' || !Number.isInteger(data.pdm_llm_input_char_budget)) {
+            errors.push('pdm_llm_input_char_budget doit être un entier (0 = illimité).');
+        } else if (data.pdm_llm_input_char_budget < 0 || data.pdm_llm_input_char_budget > 100000) {
+            errors.push('pdm_llm_input_char_budget doit être entre 0 et 100000 (0 = illimité).');
+        }
+    }
+
     if (typeof data.pdm_llm_timeout_sec !== 'number' || !Number.isInteger(data.pdm_llm_timeout_sec)) {
         errors.push('pdm_llm_timeout_sec doit être un entier.');
     } else if (data.pdm_llm_timeout_sec < 0 || data.pdm_llm_timeout_sec > 86400) {

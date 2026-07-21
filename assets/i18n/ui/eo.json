@@ -130,7 +130,10 @@
         "outputFormatYaml": "YAML",
         "outputFormatCsv": "CSV",
         "outputFormatSoon": "Baldaŭ disponebla",
-        "copyOutput": "Kopii la reformulitan prompton"
+        "copyOutput": "Kopii la reformulitan prompton",
+        "thinkingMaxAria": "Maksimumaj pensaj signoj (0 = senlima)",
+        "inputCharBudget": "Eniga signobudĝeto",
+        "inputCharBudgetAria": "Eniga signobudĝeto por plurpaŝa inferenco (0 = senlima)"
     },
     "stt": {
         "blockAria": "Voĉa diktado",

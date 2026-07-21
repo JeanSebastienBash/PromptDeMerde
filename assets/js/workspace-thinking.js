@@ -46,16 +46,7 @@ A.refreshModelThinkingCapability = function(modelId) {
     });
 };
 
-A.syncWorkspaceThinkingMaxHint = function(value) {
-    var hint = document.getElementById('ws-thinking-max-hint');
-    if (!hint) return;
-    var val = value;
-    if (val === undefined || val === null) {
-        val = window.PDM.Storage.getLlmThinkingMaxChars();
-    }
-    hint.textContent = val === 0
-        ? wuText('thinkingMaxUnlimited')
-        : wuText('thinkingMaxHintValue', { max: String(val) });
+A.syncWorkspaceThinkingMaxHint = function() {
 };
 
 A.restartInferenceIfActive = function() {

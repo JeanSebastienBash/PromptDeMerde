@@ -130,7 +130,10 @@
         "outputFormatYaml": "YAML",
         "outputFormatCsv": "CSV",
         "outputFormatSoon": "近日公開",
-        "copyOutput": "言い換えたプロンプトをコピー"
+        "copyOutput": "言い換えたプロンプトをコピー",
+        "thinkingMaxAria": "思考の最大文字数（0 = 無制限）",
+        "inputCharBudget": "Input文字予算",
+        "inputCharBudgetAria": "マルチパス用のInput文字予算（0 = 無制限）"
     },
     "stt": {
         "blockAria": "音声ディクテーション",

@@ -130,7 +130,10 @@
         "outputFormatYaml": "YAML",
         "outputFormatCsv": "CSV",
         "outputFormatSoon": "Скоро",
-        "copyOutput": "Копировать переформулированный промпт"
+        "copyOutput": "Копировать переформулированный промпт",
+        "thinkingMaxAria": "Макс. символов размышления (0 = без лимита)",
+        "inputCharBudget": "Бюджет символов Input",
+        "inputCharBudgetAria": "Бюджет символов Input для многопроходной обработки (0 = без лимита)"
     },
     "stt": {
         "blockAria": "Голосовой диктант",

@@ -8,7 +8,7 @@
 
 var CS = {};
 
-CS.VERSION = '1.23.2';
+CS.VERSION = '1.24.0';
 
 CS.CONFIG_TYPE = 'pdm-config';
 CS.DEFAULT_ACTIVE_PROFILE = '';
@@ -139,6 +139,7 @@ CS.PDM_KEYS = [
     'pdm_llm_thinking_max_chars',
     'pdm_llm_temperature',
     'pdm_llm_max_tokens',
+    'pdm_llm_input_char_budget',
     'pdm_llm_timeout_sec',
     'pdm_token_ollama',
     'pdm_context_gen_system',

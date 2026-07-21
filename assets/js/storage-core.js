@@ -35,6 +35,7 @@ S.KEYS = {
     LLM_THINKING_MAX_CHARS: 'pdm_llm_thinking_max_chars',
     LLM_TEMPERATURE: 'pdm_llm_temperature',
     LLM_MAX_TOKENS: 'pdm_llm_max_tokens',
+    LLM_INPUT_CHAR_BUDGET: 'pdm_llm_input_char_budget',
     LLM_TIMEOUT_SEC: 'pdm_llm_timeout_sec',
     TOKEN_OLLAMA: 'pdm_token_ollama',
     TOKEN_PROXY: 'pdm_token_proxy',
@@ -71,7 +72,7 @@ S.LEGACY_KEYS = ['pdm_badge', 'pdm_tier', 'pdm_badge_expires'];
 S.I18N_BUNDLE_KEY = 'pdm_i18n_bundle';
 S.EXTRA_KEYS = ['_pending', 'pdm_profile_bundle_fp', 'pdm_profile_synopsis', 'pdm_profile_synopsis_lang'];
 var _schemaVersion = window.PDM && window.PDM.ConfigSchema && window.PDM.ConfigSchema.VERSION;
-S.VERSION = _schemaVersion ? String(_schemaVersion) : '1.23.2';
+S.VERSION = _schemaVersion ? String(_schemaVersion) : '1.24.0';
 S.MAX_CLEAN_HISTORY = 100;
 S._LEGACY_IMAGE_KEYS = ['pdm_image_history', 'pdm_image_options', 'pdm_image_ollama_config', 'pdm_workspace_mode'];
 S._LEGACY_CONFIG_KEYS = ['pdm_endpoint', 'pdm_stt_model', 'pdm_version'];
@@ -81,6 +82,8 @@ S.MAX_LLM_THINKING_MAX_CHARS = 100000;
 S.DEFAULT_LLM_TEMPERATURE_MANUAL = 0.8;
 S.DEFAULT_LLM_MAX_TOKENS_MANUAL = 2048;
 S.MAX_LLM_MAX_TOKENS = 32768;
+S.DEFAULT_LLM_INPUT_CHAR_BUDGET = 10000;
+S.MAX_LLM_INPUT_CHAR_BUDGET = 100000;
 S.DEFAULT_LLM_TIMEOUT_SEC = 1000; // 1er install seulement — 0 stocké = illimité
 S.MIN_LLM_TIMEOUT_SEC = 0; // 0 = illimité
 S.MAX_LLM_TIMEOUT_SEC = 86400; // 24 h
@@ -97,7 +100,7 @@ S._CONFIG_KEYS = [
     S.KEYS.STT_DELETE_WORD_ENABLED, S.KEYS.STT_DELETE_WORD_SHORTCUT, S.KEYS.STT_DELETE_WORD_TARGET,
     S.KEYS.CONTEXT_POSITION, S.KEYS.OLLAMA_URL, S.KEYS.LLM_THINKING_ENABLED,
     S.KEYS.LLM_THINKING_MAX_CHARS, S.KEYS.LLM_TEMPERATURE, S.KEYS.LLM_MAX_TOKENS,
-    S.KEYS.LLM_TIMEOUT_SEC,
+    S.KEYS.LLM_INPUT_CHAR_BUDGET, S.KEYS.LLM_TIMEOUT_SEC,
     S.KEYS.TOKEN_OLLAMA,
     S.KEYS.CONTEXT_GEN_SYSTEM,
     S.KEYS.CONTEXT_GEN_USER_INTENT,

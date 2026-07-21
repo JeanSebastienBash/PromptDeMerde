@@ -6,10 +6,10 @@
 
 <p align="center">
   <a href="../LICENSE"><img src="https://img.shields.io/badge/License-MIT-yellow.svg" alt="License: MIT"></a>
-  <a href="../README.md"><img src="https://img.shields.io/badge/version-1.23.2-blue.svg" alt="Version 1.23.2"></a>
+  <a href="../README.md"><img src="https://img.shields.io/badge/version-1.24.0-blue.svg" alt="Version 1.24.0"></a>
 </p>
 
-> **Application version** : 1.23.2 (`CS.VERSION`)  
+> **Application version** : 1.24.0 (`CS.VERSION`)  
 > **Audience** : developers, code auditors, self-hosting operators, power users  
 > **Language** : English  
 > **Related** : [`README.md`](../README.md) · [`CONTRIBUTING.md`](../CONTRIBUTING.md) · [`SECURITY.md`](../SECURITY.md)
@@ -117,9 +117,9 @@ Technically it is an HTML/CSS/JavaScript **SPA** (IIFE modules under `window.PDM
 
 ### Contracts and versions
 
-- **Version:** `CS.VERSION` = `1.23.2` ([`config-schema-core.js`](../assets/js/config-schema-core.js))
+- **Version:** `CS.VERSION` = `1.24.0` ([`config-schema-core.js`](../assets/js/config-schema-core.js))
 - **Default theme:** `CS.DEFAULT_THEME_ID` (`marron-day`)
-- **Exportable prefs:** `CS.PDM_KEYS` — **51** `pdm_*` keys (full catalogue under [11. Further reading](#menu-further-reading)); schema [`pdm-config.schema.json`](../assets/config/pdm-config.schema.json)
+- **Exportable prefs:** `CS.PDM_KEYS` — **52** `pdm_*` keys (full catalogue under [11. Further reading](#menu-further-reading)); schema [`pdm-config.schema.json`](../assets/config/pdm-config.schema.json)
 - **Bump rule:** `CS.VERSION` changes when the `pdm_*` / session contract evolves; the shipped `assets/profiles/speech2texte/` pack is recompiled in the same pass
 - **Script order:** fixed in `lib/env/env.php`, fallback `assets/js/env.js`; required static scripts also listed in `index.html`
 
@@ -167,7 +167,7 @@ There is no separate “team mode” or “solo mode” in the codebase — pers
 
 ```
 [Browser]
-  ├─ localStorage : 51 pdm_* keys + session
+  ├─ localStorage : 52 pdm_* keys + session
   ├─ sessionStorage : operator proxy token (excluded from ZIP export)
   ├─ IndexedDB : audio blobs (optional)
   ├─ STT : local WASM/ONNX (Vosk, Whisper, Parakeet)
@@ -239,6 +239,7 @@ Reformulate & Workspace: Ollama Reformulate, Input→Output workbench, LLM optio
 | `workspace-inference.js` | Clean orchestration |
 | `workspace-stream.js` | Stream + thinking panel |
 | `workspace-input-chunk.js` | Long Input multi-pass |
+| `workspace-input-chunk-split.js` | Transcript / free-text Input splits |
 | `workspace-output-format.js` | Output display format |
 | `prompt-compress.js` | Token compression |
 | `history-ui.js` / `history-ui-list.js` / `history-ui-modal.js` / `history-trace.js` | History |
@@ -325,7 +326,8 @@ Layout uses `.ws-grid`: two columns from 1024 px width ([`assets/css/style-works
 | `pdm_llm_max_tokens` | Output cap |
 | `pdm_llm_timeout_sec` | Inference timeout (default 1000 s) |
 | `pdm_llm_thinking_enabled` | Show model thinking |
-| `pdm_llm_thinking_max_chars` | Thinking character cap |
+| `pdm_llm_thinking_max_chars` | Thinking character cap (slider; `0` = unlimited) |
+| `pdm_llm_input_char_budget` | Input multi-pass character budget (slider; `0` = unlimited / single pass) |
 | `pdm_output_display_format` | OUTPUT display: `text` \| `json` \| `html` (default `text`) |
 
 ### Options → LLM connection (overlap with 5.7.6)
@@ -357,9 +359,10 @@ Under **Options → LLM**:
 | `pdm_token_ollama`           | Ollama Bearer if configured       | exported in clear — UI confirmation   |
 | `pdm_llm_temperature`        | Temperature                       | `0` = default                         |
 | `pdm_llm_max_tokens`         | Output token cap                  | `0` = default                         |
+| `pdm_llm_input_char_budget`  | Input multi-pass char budget      | default `10000`; `0` = unlimited      |
 | `pdm_llm_timeout_sec`        | Timeout in seconds                | default 1000                          |
 | `pdm_llm_thinking_enabled`   | Show thinking                     | bool                                  |
-| `pdm_llm_thinking_max_chars` | Thinking cap                      | `0` = unlimited                       |
+| `pdm_llm_thinking_max_chars` | Thinking cap (range slider)       | `0` = unlimited                       |
 | `pdm_output_display_format`  | OUTPUT display format             | `text`, `json`, `html` (default `text`) |
 
 
@@ -511,7 +514,7 @@ Pack the current Workspace turn into Input so the next Reformulate continues a d
 
 - Clears Output after packing (Input change would clear it via `syncWorkspaceOutputWithInput` anyway)
 - Autosaves `pdm_workspace`; does **not** append `pdm_clean_history`
-- Long transcripts may hit Input multi-pass (`InputChunk`); do not compress Input while it holds a transcript
+- Long transcripts may hit Input multi-pass (`InputChunk`) when `pdm_llm_input_char_budget` > 0 and the budget is exceeded; do not compress Input while it holds a transcript
 
 ---
 
@@ -919,29 +922,25 @@ The **Token compression** dropdown sits just above “Context prompts”:
 > [!NOTE]
 > Applies to text **already in the Input area** (pasted or from voice dictation). This is **not** a change to the STT engine (Whisper, Vosk, Parakeet).
 
-There is **no hard limit** on the inference side: a very long text is split into several passes. For **ZIP export**, `pdm_workspace.input` is capped at **50,000** characters. There is **no session preference** to disable automatic multi-pass when Input is long — the thresholds below always apply when **Reformulate** runs.
+There is **no hard limit** on the inference side: a very long text can be split into several passes. For **ZIP export**, `pdm_workspace.input` is capped at **50,000** characters. Multi-pass is controlled by the session key **`pdm_llm_input_char_budget`** (Options LLM slider **Input character budget**):
 
-The following constants are expressed in characters (not tokens):
+| Value | Effect |
+|-------|--------|
+| `0` | Unlimited — **single pass** (entire Input sent as one user message) |
+| `N` (default **10,000**, max **100,000**) | Multi-pass when `system + active contexts + Input` exceeds `N` |
 
-| Threshold | Value | Effect |
-|-------|--------|-------|
-| `CHUNK_FORCE_CHARS` | **2,800** | Beyond this → multi-pass required |
-| `PROMPT_CHAR_BUDGET` | **10,000** | If system+contexts+Input exceeds → multi-pass |
-| `CHUNK_MAX_CHARS` | **3,200** | Max chunk size |
-| `CHUNK_MIN_CHARS` | **1,200** | Min chunk size (large overhead) |
-
-Chunk size follows `min(3200, max(1200, 10000 − overhead − 600))`, where `overhead = system + active contexts + 200`.
+The former hard rule “Input longer than 2,800 characters always forces multi-pass” is **removed**. Chunk size still follows `min(3200, max(1200, budget − overhead − 600))` when `budget > 0`.
 
 Chunking and inference behaviour:
 
-1. Split on paragraphs, lines, sentence endings, then spaces.
-2. Single-pass user message = Input as-is; multi-pass adds a neutral `Partie i/n` label (no hard-coded clean task).
-3. Final OUTPUT is the **concatenation** of all passes (`\n\n` between chunks) — oriented toward reformulation of long text.
-4. During the stream, the indicator shows `pass: i/n`.
-5. Narrow meta-drift warn (sniper / “ambitious request” signatures) — **no** automatic strict retry.
+1. **Transcript mode** (Input contains `#USER:` / `#SYSTEM:` from the ↪ iterate button): prefer cuts at turn boundaries; never split between a marker and its body; fall back to paragraph/punctuation inside an oversized single turn.
+2. **Free text**: split on paragraphs, lines, sentence endings, then spaces.
+3. Single-pass user message = Input as-is; multi-pass free text adds a neutral `Partie i/n` label; transcript multi-pass uses a neutral `Segment i/n` label.
+4. Final OUTPUT is the **concatenation** of all passes (`\n\n` between chunks).
+5. During the stream, the indicator shows `pass: i/n`.
+6. Narrow meta-drift warn (sniper / “ambitious request” signatures) — **no** automatic strict retry.
 
-
-The modules involved are `workspace-input-chunk.js` and `workspace-inference.js`.
+The modules involved are `workspace-input-chunk.js`, `workspace-input-chunk-split.js`, and `workspace-inference.js`.
 
 <a id="322-format-daffichage-output"></a>
 
@@ -1035,7 +1034,7 @@ Zone detail: [`Profiles.md`](Profiles.md) · vendor ZIP I/O: [`Vendor.md`](Vendo
 
 See also [`Profiles.md`](Profiles.md) (tree layout) · [5.5.4 Options entry](Documentation.md#feat-5-5-4).
 
-The **Export** action downloads a **ZIP archive**; a standalone JSON file is not produced. The **Import** action accepts **only** the `.zip` extension — a lone `.json` / raw JSON file is **never** accepted. The archive contains JSON under `parts/`, Markdown files (system prompt and context prompts), and a manifest. The assembled logical object is `pdm-config` (51 keys). Available presets are **minimal** and **maximal**. Proxy tokens and flow A/B preferences stay in sessionStorage and are **excluded from export**.
+The **Export** action downloads a **ZIP archive**; a standalone JSON file is not produced. The **Import** action accepts **only** the `.zip` extension — a lone `.json` / raw JSON file is **never** accepted. The archive contains JSON under `parts/`, Markdown files (system prompt and context prompts), and a manifest. The assembled logical object is `pdm-config` (52 keys). Available presets are **minimal** and **maximal**. Proxy tokens and flow A/B preferences stay in sessionStorage and are **excluded from export**.
 
 ### 12.1 Filename
 
@@ -1043,7 +1042,7 @@ The **Export** action downloads a **ZIP archive**; a standalone JSON file is not
 {slug}-promptdemerde-profile-v{CS.VERSION}.zip
 ```
 
-Example filename: `speech2texte-promptdemerde-profile-v1.23.2.zip`
+Example filename: `speech2texte-promptdemerde-profile-v1.24.0.zip`
 
 The filename is built by `buildZipFilename()` in [`assets/js/profile-bundle-export.js`](../assets/js/profile-bundle-export.js).
 
@@ -1126,12 +1125,13 @@ Without hex colors in the profile, the theme sets `--nav-logo-word1` (text) and 
 
 ### 12.7 Profile archives produced outside the UI
 
-Any ZIP archive that conforms to the schema (§7.2, **51** `pdm_*` keys) can be imported via Options. Any research materials used to **build** an archive stay outside the user archive.
+Any ZIP archive that conforms to the schema (§7.2, **52** `pdm_*` keys) can be imported via Options. Any research materials used to **build** an archive stay outside the user archive.
 
 Successive deliveries of the same profile listing **keep** earlier versions (distinct files / numbered iterations): a new archive **does not overwrite** previous ones. The filename carries the application version (`…-profile-vX.Y.Z.zip`). After an app version bump, re-import an up-to-date archive if the old one refuses import (schema contract).
 
 ---
 
+<a id="13-the-52-pdm-keys"></a>
 <a id="13-the-51-pdm-keys"></a>
 
 ### At a glance
@@ -1673,7 +1673,7 @@ A JSON profile is a portable ZIP: prompts, LLM settings, UI/brand, language, the
 
 | Key          | Type         | Role                      |
 | ------------ | ------------ | ------------------------- |
-| `version`    | string       | app semver e.g. `1.23.2`  |
+| `version`    | string       | app semver e.g. `1.24.0`  |
 | `type`       | const        | always `pdm-config`       |
 | `exportedAt` | ISO datetime | export timestamp          |
 
@@ -1689,7 +1689,7 @@ These keys are generated by `json-profile-creator.sh` (phase 10) when `parts/out
 
 ---
 
-### 13.0 Index of the 51 keys (`CS.PDM_KEYS`)
+### 13.0 Index of the 52 keys (`CS.PDM_KEYS`)
 
 
 | # | Key |
@@ -1720,31 +1720,32 @@ These keys are generated by `json-profile-creator.sh` (phase 10) when `parts/out
 | 24 | `pdm_llm_thinking_max_chars` |
 | 25 | `pdm_llm_temperature` |
 | 26 | `pdm_llm_max_tokens` |
-| 27 | `pdm_llm_timeout_sec` |
-| 28 | `pdm_token_ollama` |
-| 29 | `pdm_context_gen_system` |
-| 30 | `pdm_context_gen_user_intent` |
-| 31 | `pdm_context_gen_user_title` |
-| 32 | `pdm_context_inject_header` |
-| 33 | `pdm_context_gen_tag_intent_suffix` |
-| 34 | `pdm_context_gen_forced_tag_system_suffix` |
-| 35 | `pdm_context_gen_retry_system_suffix` |
-| 36 | `pdm_context_gen_retry_user_suffix` |
-| 37 | `pdm_active_profile` |
-| 38 | `pdm_project` |
-| 39 | `pdm_context_profile_line_template` |
-| 40 | `pdm_context_gen_max_tokens` |
-| 41 | `pdm_context_gen_temperature` |
-| 42 | `pdm_context_gen_retry_temperature` |
-| 43 | `pdm_context_gen_max_retries` |
-| 44 | `pdm_context_gen_json_schema` |
-| 45 | `pdm_output_json_enabled` |
-| 46 | `pdm_output_json_schema` |
-| 47 | `pdm_output_json_key_pattern` |
-| 48 | `pdm_output_json_value_schema` |
-| 49 | `pdm_output_display_format` |
-| 50 | `pdm_audio_blobs` |
-| 51 | `pdm_workspace_ui` |
+| 27 | `pdm_llm_input_char_budget` |
+| 28 | `pdm_llm_timeout_sec` |
+| 29 | `pdm_token_ollama` |
+| 30 | `pdm_context_gen_system` |
+| 31 | `pdm_context_gen_user_intent` |
+| 32 | `pdm_context_gen_user_title` |
+| 33 | `pdm_context_inject_header` |
+| 34 | `pdm_context_gen_tag_intent_suffix` |
+| 35 | `pdm_context_gen_forced_tag_system_suffix` |
+| 36 | `pdm_context_gen_retry_system_suffix` |
+| 37 | `pdm_context_gen_retry_user_suffix` |
+| 38 | `pdm_active_profile` |
+| 39 | `pdm_project` |
+| 40 | `pdm_context_profile_line_template` |
+| 41 | `pdm_context_gen_max_tokens` |
+| 42 | `pdm_context_gen_temperature` |
+| 43 | `pdm_context_gen_retry_temperature` |
+| 44 | `pdm_context_gen_max_retries` |
+| 45 | `pdm_context_gen_json_schema` |
+| 46 | `pdm_output_json_enabled` |
+| 47 | `pdm_output_json_schema` |
+| 48 | `pdm_output_json_key_pattern` |
+| 49 | `pdm_output_json_value_schema` |
+| 50 | `pdm_output_display_format` |
+| 51 | `pdm_audio_blobs` |
+| 52 | `pdm_workspace_ui` |
 
 ---
 
@@ -1975,7 +1976,7 @@ Local fonts (Fira Code, Inconsolata, Space Grotesk, Archivo Black, Anton, OFL li
 <a id="14-pdm-namespaces"></a>
 <a id="15-javascript-inventory"></a>
 <a id="16-css-inventory"></a>
-<a id="13-the-51-pdm-keys"></a>
+<a id="13-the-52-pdm-keys"></a>
 
 **Documentation navigation** · [STT models](Stt.md) · [Vosk catalogue](Stt-vosk.md) · [Profiles](Profiles.md) · [Vendor JS](Vendor.md) · [README](../README.md) · [Security](../SECURITY.md)
 
@@ -1988,7 +1989,7 @@ Local fonts (Fira Code, Inconsolata, Space Grotesk, Archivo Black, Anton, OFL li
 | Context prompt generator | Spec + UI that builds `#Tag` entries |
 | Flow A | Browser → Ollama localhost |
 | Flow B | Browser → `olama.php` → Ollama |
-| `pdm-config` | Object of the 51 keys + export metadata |
+| `pdm-config` | Object of the 52 keys + export metadata |
 
 ### Related documents (full set)
 
@@ -2078,7 +2079,8 @@ The total is **147** versioned `assets/js/*.js` files (excluding vendor). Roles 
 | [`workspace-image-bind.js`](../assets/js/workspace-image-bind.js) | Image import → vision description (file picker, Ollama). |
 | [`workspace-image-encode.js`](../assets/js/workspace-image-encode.js) | Client-side image resize/encode before vision request. |
 | [`workspace-inference.js`](../assets/js/workspace-inference.js) | Clean orchestration: assemble prompts, multi-pass, stream. |
-| [`workspace-input-chunk.js`](../assets/js/workspace-input-chunk.js) | Long Input multi-pass chunking for inference. |
+| [`workspace-input-chunk.js`](../assets/js/workspace-input-chunk.js) | Long Input multi-pass budget / wrap for inference. |
+| [`workspace-input-chunk-split.js`](../assets/js/workspace-input-chunk-split.js) | Transcript-aware and free-text Input splitting. |
 | [`workspace-input-tools.js`](../assets/js/workspace-input-tools.js) | Mutual exclusion of Input tools (voice dictation / audio / image). |
 | [`workspace-llm-config.js`](../assets/js/workspace-llm-config.js) | Reads Workspace LLM options from Storage / DOM. |
 | [`workspace-llm-options.js`](../assets/js/workspace-llm-options.js) | Workspace LLM Options panel (temperature, tokens, thinking…). |
@@ -2307,14 +2309,14 @@ The total is **147** versioned `assets/js/*.js` files (excluding vendor). Roles 
 
 ### At a glance
 
-All exportable preferences live in the `pdm-config` object. This object has **51** mandatory `pdm_*` keys, plus `version`, `type`, and `exportedAt` metadata. In the maximal preset, the root may also carry `i18n` and `langs` together. Keys are grouped below by domain. The machine schema [`pdm-config.schema.json`](../assets/config/pdm-config.schema.json) declares the **same list** as `CS.PDM_KEYS` in `config-schema-core.js`.
+All exportable preferences live in the `pdm-config` object. This object has **52** mandatory `pdm_*` keys, plus `version`, `type`, and `exportedAt` metadata. In the maximal preset, the root may also carry `i18n` and `langs` together. Keys are grouped below by domain. The machine schema [`pdm-config.schema.json`](../assets/config/pdm-config.schema.json) declares the **same list** as `CS.PDM_KEYS` in `config-schema-core.js`.
 
 ### 13.1 Export metadata
 
 
 | Key          | Type         | Role                      |
 | ------------ | ------------ | ------------------------- |
-| `version`    | string       | app semver e.g. `1.23.2`  |
+| `version`    | string       | app semver e.g. `1.24.0`  |
 | `type`       | const        | always `pdm-config`       |
 | `exportedAt` | ISO datetime | export timestamp          |
 
@@ -2332,9 +2334,10 @@ All exportable preferences live in the `pdm-config` object. This object has **51
 | `pdm_token_ollama`           | Ollama Bearer if configured       | exported in clear — UI confirmation   |
 | `pdm_llm_temperature`        | Temperature                       | `0` = default                         |
 | `pdm_llm_max_tokens`         | Output token cap                  | `0` = default                         |
+| `pdm_llm_input_char_budget`  | Input multi-pass char budget      | default `10000`; `0` = unlimited      |
 | `pdm_llm_timeout_sec`        | Timeout in seconds                | default 1000                          |
 | `pdm_llm_thinking_enabled`   | Show thinking                     | bool                                  |
-| `pdm_llm_thinking_max_chars` | Thinking cap                      | `0` = unlimited                       |
+| `pdm_llm_thinking_max_chars` | Thinking cap (range slider)       | `0` = unlimited                       |
 | `pdm_output_display_format`  | OUTPUT display format             | `text`, `json`, `html` (default `text`) |
 
 
@@ -2449,7 +2452,7 @@ These keys are generated by `json-profile-creator.sh` (phase 10) when `parts/out
 
 ---
 
-### 13.0 Index of the 51 keys (`CS.PDM_KEYS`)
+### 13.0 Index of the 52 keys (`CS.PDM_KEYS`)
 
 
 | # | Key |
@@ -2480,31 +2483,32 @@ These keys are generated by `json-profile-creator.sh` (phase 10) when `parts/out
 | 24 | `pdm_llm_thinking_max_chars` |
 | 25 | `pdm_llm_temperature` |
 | 26 | `pdm_llm_max_tokens` |
-| 27 | `pdm_llm_timeout_sec` |
-| 28 | `pdm_token_ollama` |
-| 29 | `pdm_context_gen_system` |
-| 30 | `pdm_context_gen_user_intent` |
-| 31 | `pdm_context_gen_user_title` |
-| 32 | `pdm_context_inject_header` |
-| 33 | `pdm_context_gen_tag_intent_suffix` |
-| 34 | `pdm_context_gen_forced_tag_system_suffix` |
-| 35 | `pdm_context_gen_retry_system_suffix` |
-| 36 | `pdm_context_gen_retry_user_suffix` |
-| 37 | `pdm_active_profile` |
-| 38 | `pdm_project` |
-| 39 | `pdm_context_profile_line_template` |
-| 40 | `pdm_context_gen_max_tokens` |
-| 41 | `pdm_context_gen_temperature` |
-| 42 | `pdm_context_gen_retry_temperature` |
-| 43 | `pdm_context_gen_max_retries` |
-| 44 | `pdm_context_gen_json_schema` |
-| 45 | `pdm_output_json_enabled` |
-| 46 | `pdm_output_json_schema` |
-| 47 | `pdm_output_json_key_pattern` |
-| 48 | `pdm_output_json_value_schema` |
-| 49 | `pdm_output_display_format` |
-| 50 | `pdm_audio_blobs` |
-| 51 | `pdm_workspace_ui` |
+| 27 | `pdm_llm_input_char_budget` |
+| 28 | `pdm_llm_timeout_sec` |
+| 29 | `pdm_token_ollama` |
+| 30 | `pdm_context_gen_system` |
+| 31 | `pdm_context_gen_user_intent` |
+| 32 | `pdm_context_gen_user_title` |
+| 33 | `pdm_context_inject_header` |
+| 34 | `pdm_context_gen_tag_intent_suffix` |
+| 35 | `pdm_context_gen_forced_tag_system_suffix` |
+| 36 | `pdm_context_gen_retry_system_suffix` |
+| 37 | `pdm_context_gen_retry_user_suffix` |
+| 38 | `pdm_active_profile` |
+| 39 | `pdm_project` |
+| 40 | `pdm_context_profile_line_template` |
+| 41 | `pdm_context_gen_max_tokens` |
+| 42 | `pdm_context_gen_temperature` |
+| 43 | `pdm_context_gen_retry_temperature` |
+| 44 | `pdm_context_gen_max_retries` |
+| 45 | `pdm_context_gen_json_schema` |
+| 46 | `pdm_output_json_enabled` |
+| 47 | `pdm_output_json_schema` |
+| 48 | `pdm_output_json_key_pattern` |
+| 49 | `pdm_output_json_value_schema` |
+| 50 | `pdm_output_display_format` |
+| 51 | `pdm_audio_blobs` |
+| 52 | `pdm_workspace_ui` |
 
 ---
 
@@ -2524,6 +2528,6 @@ These keys are generated by `json-profile-creator.sh` (phase 10) when `parts/out
 
 ---
 
-*Technical documentation — application version 1.23.2.*
+*Technical documentation — application version 1.24.0.*
 
 ---

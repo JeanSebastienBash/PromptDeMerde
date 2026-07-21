@@ -14,7 +14,7 @@ if (!function_exists('mb_strlen')) {
     }
 }
 
-const PDM_PROFILES_VERSION = '1.23.2';
+const PDM_PROFILES_VERSION = '1.24.0';
 const PDM_PROFILES_ROOT = __DIR__ . '/../../assets/profiles';
 const PDM_I18N_ROOT = __DIR__ . '/../../assets/i18n';
 

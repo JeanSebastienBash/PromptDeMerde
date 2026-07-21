@@ -130,7 +130,10 @@
         "outputFormatYaml": "YAML",
         "outputFormatCsv": "CSV",
         "outputFormatSoon": "即将推出",
-        "copyOutput": "复制已改写的提示词"
+        "copyOutput": "复制已改写的提示词",
+        "thinkingMaxAria": "思考最大字符数（0 = 无限制）",
+        "inputCharBudget": "输入字符预算",
+        "inputCharBudgetAria": "多轮推理的输入字符预算（0 = 无限制）"
     },
     "stt": {
         "blockAria": "语音听写",

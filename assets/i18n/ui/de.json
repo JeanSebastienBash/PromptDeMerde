@@ -130,7 +130,10 @@
         "outputFormatYaml": "YAML",
         "outputFormatCsv": "CSV",
         "outputFormatSoon": "Demnächst verfügbar",
-        "copyOutput": "Reformulierten Prompt kopieren"
+        "copyOutput": "Reformulierten Prompt kopieren",
+        "thinkingMaxAria": "Max. Zeichen für Nachdenken (0 = unbegrenzt)",
+        "inputCharBudget": "Zeichenbudget Input",
+        "inputCharBudgetAria": "Zeichenbudget Input für Mehrfachdurchläufe (0 = unbegrenzt)"
     },
     "stt": {
         "blockAria": "Sprachdiktat",

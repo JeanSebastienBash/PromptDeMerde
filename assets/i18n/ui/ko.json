@@ -130,7 +130,10 @@
         "outputFormatYaml": "YAML",
         "outputFormatCsv": "CSV",
         "outputFormatSoon": "곧 제공",
-        "copyOutput": "재작성된 프롬프트 복사"
+        "copyOutput": "재작성된 프롬프트 복사",
+        "thinkingMaxAria": "사고 최대 문자 수(0 = 무제한)",
+        "inputCharBudget": "Input 문자 예산",
+        "inputCharBudgetAria": "멀티패스용 Input 문자 예산(0 = 무제한)"
     },
     "stt": {
         "blockAria": "음성 받아쓰기",

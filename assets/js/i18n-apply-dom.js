@@ -677,12 +677,13 @@ function applyStaticIds(root) {
     if (thinkTitle) setText(thinkTitle, I18n.t('workspace.thinkingTitle'));
     var thinkToggle = root.getElementById('ws-thinking-toggle');
     if (thinkToggle) thinkToggle.setAttribute('title', I18n.t('workspace.thinkingToggleTitle'));
-    var thinkMaxLbl = root.querySelector('label[for="ws-thinking-max-chars"]');
+    var thinkMaxLbl = root.querySelector('.llm-opt-row[data-llm-opt="thinkingMaxChars"] .llm-opt-label');
     if (thinkMaxLbl) setText(thinkMaxLbl, I18n.t('workspace.thinkingMaxLabel'));
-    var thinkMaxInp = root.getElementById('ws-thinking-max-chars');
-    if (thinkMaxInp) thinkMaxInp.setAttribute('title', I18n.t('workspace.thinkingMaxTitle'));
-    var thinkMaxHint = root.getElementById('ws-thinking-max-hint');
-    if (thinkMaxHint) setText(thinkMaxHint, I18n.t('workspace.thinkingMaxHint'));
+    var thinkMaxSlider = root.getElementById('ws-llm-thinking-max-slider');
+    if (thinkMaxSlider) {
+        thinkMaxSlider.setAttribute('aria-label', I18n.t('workspace.thinkingMaxAria'));
+        thinkMaxSlider.setAttribute('title', I18n.t('workspace.thinkingMaxTitle'));
+    }
 
     root.querySelectorAll('.llm-opt-row[data-llm-opt="thinking"] .llm-opt-label').forEach(function(el) {
         setText(el, I18n.t('workspace.thinkingLabel'));
@@ -696,12 +697,17 @@ function applyStaticIds(root) {
     root.querySelectorAll('.llm-opt-row[data-llm-opt="timeout"] .llm-opt-label').forEach(function(el) {
         setText(el, I18n.t('workspace.timeout'));
     });
+    root.querySelectorAll('.llm-opt-row[data-llm-opt="inputCharBudget"] .llm-opt-label').forEach(function(el) {
+        setText(el, I18n.t('workspace.inputCharBudget'));
+    });
     var tempSlider = root.getElementById('ws-llm-temperature-slider');
     if (tempSlider) tempSlider.setAttribute('aria-label', I18n.t('workspace.temperatureAria'));
     var tokSlider = root.getElementById('ws-llm-max-tokens-slider');
     if (tokSlider) tokSlider.setAttribute('aria-label', I18n.t('workspace.maxTokensAria'));
     var timeoutSlider = root.getElementById('ws-llm-timeout-slider');
     if (timeoutSlider) timeoutSlider.setAttribute('aria-label', I18n.t('workspace.timeoutAria'));
+    var budgetSlider = root.getElementById('ws-llm-input-char-budget-slider');
+    if (budgetSlider) budgetSlider.setAttribute('aria-label', I18n.t('workspace.inputCharBudgetAria'));
 
     var audioBtn = root.getElementById('ws-audio-file-btn');
     if (audioBtn) {

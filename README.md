@@ -6,7 +6,7 @@
 
 <p align="center">
   <a href="LICENSE"><img src="https://img.shields.io/badge/License-MIT-yellow.svg" alt="License: MIT"></a>
-  <a href="https://github.com/JeanSebastienBash/promptdemerde/tags" target="_blank" rel="noopener noreferrer"><img src="https://img.shields.io/badge/version-1.23.2--RC-blue.svg" alt="Version 1.23.2 RC"></a>
+  <a href="https://github.com/JeanSebastienBash/promptdemerde/tags" target="_blank" rel="noopener noreferrer"><img src="https://img.shields.io/badge/version-1.24.0--RC-blue.svg" alt="Version 1.24.0 RC"></a>
   <a href="https://github.com/JeanSebastienBash/promptdemerde/actions/workflows/ci.yml" target="_blank" rel="noopener noreferrer"><img src="https://github.com/JeanSebastienBash/promptdemerde/actions/workflows/ci.yml/badge.svg" alt="CI"></a>
 </p>
 
@@ -74,6 +74,17 @@ More videos will follow on the <a href="https://www.youtube.com/@DreamprojectAI/
 
 ## 🆕 What’s new
 
+### Version 1.24.0 (RC)
+
+*Release candidate — not yet stable.*
+
+- **Input character budget** (Options LLM slider): `pdm_llm_input_char_budget` — default **10,000**, max **100,000**, **0 = unlimited** (single-pass Reformulate). The old “always split above 2,800 characters” rule is removed.
+- **Smarter multi-pass cuts** for `#USER:` / `#SYSTEM:` transcripts (↪ iterate) and free text (paragraphs / punctuation).
+- **Thinking max characters** control is a **range slider** (same key and semantics: `0` = unlimited).
+- Profile contract: **52** top-level `pdm_*` keys; shipped `speech2texte` aligned to v1.24.0.
+
+[Technical documentation](docs/Documentation.md) · [Tag notes](.github/RELEASE_v1.24.0.md)
+
 ### Version 1.23.2 (RC)
 
 *Release candidate — not yet stable.*
@@ -131,7 +142,7 @@ More videos will follow on the <a href="https://www.youtube.com/@DreamprojectAI/
   - ✦ [5.1. Reformulate & Workspace](#feat-5-1)
     - 🪄 [5.1.1. Reformulate with Ollama](#feat-5-1-1) — local model + system prompt + enabled `#Tag` → Output
     - ↔️ [5.1.2. Workspace Input → Output](#feat-5-1-2) — the workbench: prompt reformulation · voice dictation · audio transcription · image to text recognition
-    - 🎛 [5.1.3. Workspace LLM options](#feat-5-1-3) — model choice · temperature control · token limit · custom timeout · thinking toggle
+    - 🎛 [5.1.3. Workspace LLM options](#feat-5-1-3) — model choice · temperature · tokens · timeout · Input character budget · thinking toggle
     - 📄 [5.1.4. Output display formats](#feat-5-1-4) — plain text · JSON · HTML
     - 🔢 [5.1.5. Input counter, Reset and trash](#feat-5-1-5) — live count · Reset clears both panes · trash clears Input
     - 💾 [5.1.6. Workspace session autosave](#feat-5-1-6) — Input · Output · thinking · panel state kept in the browser
@@ -153,7 +164,7 @@ More videos will follow on the <a href="https://www.youtube.com/@DreamprojectAI/
   - ✷ [5.4. History, compression & long Input](#feat-5-4)
     - 📜 [5.4.1. Local history with traces](#feat-5-4-1) — Input / system / `#Tag` / Output cards; Original · Compressed pairs
     - 🗜 [5.4.2. Optional token compression](#feat-5-4-2) — four checkboxes on Reformulate; keep ~55% length; panel under Input
-    - ∞ [5.4.3. Long Input, multi-pass](#feat-5-4-3) — character budget; automatic Ollama passes; no session off-switch
+    - ∞ [5.4.3. Long Input, multi-pass](#feat-5-4-3) — Input character budget slider (`0` = unlimited); transcript-aware cuts; Ollama passes
     - ⏸ [5.4.4. Compression panel, overlay and Stop](#feat-5-4-4) — Output locked while compressing; Stop; green session marks
     - 📤 [5.4.5. History: restore, modal and JSON export](#feat-5-4-5) — restore, modal and JSON export; ~100 entries; per-block copy; optional source audio
   - ✸ [5.5. JSON profile ZIP & Marketplace](#feat-5-5)
@@ -370,13 +381,14 @@ On the Output strip: **model choice** (dropdown of local Ollama models). Open **
 - **Temperature control** — slider (creativity / determinism)
 - **Token limit** — max output tokens
 - **Custom timeout** — inference deadline (0 = unlimited)
-- **Thinking toggle** — ON/OFF for model thinking when the model supports it (optional max thinking characters)
+- **Thinking toggle** — ON/OFF for model thinking when the model supports it (optional max thinking characters via range slider; `0` = unlimited)
+- **Input character budget** — range slider for multi-pass Reformulate (`pdm_llm_input_char_budget`; default 10,000; `0` = send the whole Input in one pass)
 
 <p align="center">
   <img src="assets/images/screenshots/readme-s513-workspace-llm-options.webp" alt="Workspace Output: open LLM Options, adjust temperature tokens timeout and thinking, then start Reformulate" width="70%" style="border:1px solid #d0d7de;border-radius:8px;box-shadow:0 1px 2px rgba(0,0,0,.08);">
   <br>
   <strong>Workspace — Output LLM options</strong><br>
-  <em>Model strip with Options open: temperature, token limit, timeout (0 = unlimited), thinking toggle; Reformulate starts at the end of the clip.</em>
+  <em>Model strip with Options open: temperature, token limit, timeout, Input character budget, thinking (0 = unlimited where applicable); Reformulate starts at the end of the clip.</em>
 </p>
 
 URL and connection test: Options → LLM. Public path: leave **“I don’t have a token”** checked and use local Ollama. Display format radios in the same panel are covered in **5.1.4**.
@@ -794,9 +806,9 @@ Checkbox state is persisted in the browser session under `pdm_workspace` (`compr
 
 ### ∞ 5.4.3. Long Input, multi-pass
 
-When **Reformulate** runs on a long **Input**, PromptDeMerde can split that Input into successive **Ollama** passes instead of sending everything in one call. The decision uses **characters** (JavaScript string length), not model tokens: a conservative proxy so the same rules work across models without depending on each tokenizer. There is **no** Workspace or Options control today to turn this automatic splitting off — if the thresholds below are met, multi-pass always runs. (Voice-dictation / Whisper audio chunking is a different pipeline; this feature only concerns text already in the Input box.)
+When **Reformulate** runs on a long **Input**, PromptDeMerde can split that Input into successive **Ollama** passes instead of sending everything in one call. The decision uses **characters** (JavaScript string length), not model tokens. The Options LLM slider **Input character budget** (`pdm_llm_input_char_budget`, default **10,000**, max **100,000**) sets the threshold: multi-pass starts when system prompt + active `#Tag` contexts + Input exceed that budget. Set the slider to **0** for **unlimited** — a single pass with the whole Input. The old rule that forced multi-pass whenever Input alone exceeded about **2,800** characters is gone. (Voice-dictation / Whisper audio chunking is a different pipeline; this feature only concerns text already in the Input box.)
 
-In practice: if Input alone is longer than about **2,800** characters, multi-pass is **mandatory**. If Input is shorter, multi-pass still starts when system prompt + active `#Tag` context prompts + Input together exceed a **10,000**-character budget (with a small fixed overhead for framing). Each pass then carries a slice of Input sized between about **1,200** and **3,200** characters, chosen from the remaining room after overhead. Cuts prefer paragraph breaks, then lines, sentence endings, then spaces, so meaning stays intact; empty slices are dropped and nothing is discarded. A toast announces how many passes and how many Input characters are involved; during the stream the UI shows `pass: i/n`. Each slice is sent as its own user message (with a neutral `Partie i/n` label when there is more than one slice), then the Output pieces are **concatenated** (blank line between them) into one final result. Optional **token compression** on system / contexts (see **5.4.2**) shrinks overhead first, which can enlarge each slice and reduce the number of passes. Multi-pass is oriented toward **reformulation** of long text; a chatbot-style or single-shot code answer works best when Input stays in one pass.
+Each pass carries a slice of Input sized between about **1,200** and **3,200** characters when a budget is set. For free text, cuts prefer paragraph breaks, then lines, sentence endings, then spaces. When Input holds a `#USER:` / `#SYSTEM:` transcript from the ↪ button, cuts prefer **turn boundaries** first. A toast announces how many passes and how many Input characters are involved; during the stream the UI shows `pass: i/n`. Free-text multi-pass uses a neutral `Partie i/n` label; transcript multi-pass uses `Segment i/n`. Output pieces are **concatenated** (blank line between them) into one final result. Optional **token compression** on system / contexts (see **5.4.2**) shrinks overhead first, which can enlarge each slice and reduce the number of passes. Multi-pass is oriented toward **reformulation** of long text; a chatbot-style or single-shot code answer works best when Input stays in one pass (or budget is set to 0).
 
 [Technical documentation](docs/Documentation.md#feat-5-4-3)
 

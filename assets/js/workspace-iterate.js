@@ -24,9 +24,12 @@ function flattenBlock(text) {
         .join('\n');
 }
 
+var WI = window.PDM.Iterate = window.PDM.Iterate || {};
+
 function hasTranscriptMarks(text) {
     return /(?:^|\n)#(?:USER|SYSTEM):/m.test(String(text || ''));
 }
+WI.hasTranscriptMarks = hasTranscriptMarks;
 
 function buildIterateInput(input, outputPlain) {
     var flatOut = flattenBlock(outputPlain);

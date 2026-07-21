@@ -1,5 +1,5 @@
 {
-    "version": "1.23.2",
+    "version": "1.24.0",
     "type": "pdm-config",
     "exportedAt": "2026-07-21T06:30:00.000Z",
     "pdm_provider": "ollama",
@@ -41,6 +41,7 @@
     "pdm_llm_thinking_max_chars": 5000,
     "pdm_llm_temperature": 0,
     "pdm_llm_max_tokens": 0,
+    "pdm_llm_input_char_budget": 10000,
     "pdm_llm_timeout_sec": 1000,
     "pdm_token_ollama": "",
     "pdm_active_profile": "speech2texte",

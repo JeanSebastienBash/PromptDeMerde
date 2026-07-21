@@ -164,7 +164,7 @@ Victim imports on https://promptdemerde.com
 
 ### ZIP integrity (checksum) vs crypto signature
 
-| Layer | Status (v1.23.2) |
+| Layer | Status (v1.24.0) |
 |-------|------------------|
 | SHA-256 on ZIP bytes | **Yes** — export (`buildZipPackage`), creator (`profile-zip-checksum.mjs`) |
 | Import verification | **Yes** if `options.expectedChecksum` / `checksum_sha256` (otherwise unsigned dialog only) |
@@ -193,7 +193,7 @@ ZIP checksums: verify client-side integrity on import (profile bundle modules) �
 
 ## Profile ZIP archive export/import and tokens
 
-Export produces a **ZIP archive** (`{slug}-promptdemerde-profile-v{version}.zip`) containing a `pdm-config` object (**51** `pdm_*` keys + metadata), Markdown prompts, and — in **maximal** preset — UI dictionaries. The machine schema [`assets/config/pdm-config.schema.json`](assets/config/pdm-config.schema.json) declares the **same 51** keys as `CS.PDM_KEYS` (plus optional `i18n`/`langs`).
+Export produces a **ZIP archive** (`{slug}-promptdemerde-profile-v{version}.zip`) containing a `pdm-config` object (**52** `pdm_*` keys + metadata), Markdown prompts, and — in **maximal** preset — UI dictionaries. The machine schema [`assets/config/pdm-config.schema.json`](assets/config/pdm-config.schema.json) declares the **same 52** keys as `CS.PDM_KEYS` (plus optional `i18n`/`langs`).
 
 Export includes `pdm_token_ollama` **in plain text** if present. User confirmation is requested before export. Never share an archive containing tokens.
 

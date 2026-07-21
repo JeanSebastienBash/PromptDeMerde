@@ -130,7 +130,10 @@
         "outputFormatYaml": "YAML",
         "outputFormatCsv": "CSV",
         "outputFormatSoon": "Presto disponibile",
-        "copyOutput": "Copia il prompt riformulato"
+        "copyOutput": "Copia il prompt riformulato",
+        "thinkingMaxAria": "Caratteri massimi di riflessione (0 = illimitato)",
+        "inputCharBudget": "Budget caratteri Input",
+        "inputCharBudgetAria": "Budget caratteri Input per multipass (0 = illimitato)"
     },
     "stt": {
         "blockAria": "Dettatura vocale",

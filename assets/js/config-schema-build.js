@@ -72,6 +72,17 @@ CS.normalizeLegacyConfig = function(data) {
         }
     }
 
+    if (copy.pdm_llm_input_char_budget === undefined || copy.pdm_llm_input_char_budget === null) {
+        copy.pdm_llm_input_char_budget = 10000;
+    } else {
+        var icb = parseInt(copy.pdm_llm_input_char_budget, 10);
+        if (!Number.isFinite(icb) || icb < 0) {
+            copy.pdm_llm_input_char_budget = 0;
+        } else {
+            copy.pdm_llm_input_char_budget = Math.min(100000, icb);
+        }
+    }
+
     if (copy.pdm_llm_timeout_sec === undefined || copy.pdm_llm_timeout_sec === null) {
         copy.pdm_llm_timeout_sec = 1000;
     } else {
@@ -297,6 +308,7 @@ CS.buildDefaultConfig = function() {
         pdm_llm_thinking_max_chars: 5000,
         pdm_llm_temperature: 0,
         pdm_llm_max_tokens: 0,
+        pdm_llm_input_char_budget: 10000,
         pdm_llm_timeout_sec: 1000,
         pdm_token_ollama: '',
         pdm_context_gen_system: csLocale('DEFAULT_CONTEXT_GEN_SYSTEM'),

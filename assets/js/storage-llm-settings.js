@@ -166,6 +166,25 @@ S.setLlmMaxTokens = function(value) {
     return S.set(S.KEYS.LLM_MAX_TOKENS, n);
 };
 
+S.getLlmInputCharBudget = function() {
+    var v = S.get(S.KEYS.LLM_INPUT_CHAR_BUDGET);
+    if (v === null || v === undefined || v === '') return S.DEFAULT_LLM_INPUT_CHAR_BUDGET;
+    var n = parseInt(v, 10);
+    if (!Number.isFinite(n) || n < 0) return 0;
+    if (n > S.MAX_LLM_INPUT_CHAR_BUDGET) n = S.MAX_LLM_INPUT_CHAR_BUDGET;
+    return n;
+};
+
+S.setLlmInputCharBudget = function(value) {
+    if (value === null || value === undefined || value === '') {
+        return S.set(S.KEYS.LLM_INPUT_CHAR_BUDGET, S.DEFAULT_LLM_INPUT_CHAR_BUDGET);
+    }
+    var n = parseInt(value, 10);
+    if (!Number.isFinite(n) || n < 0) n = 0;
+    if (n > S.MAX_LLM_INPUT_CHAR_BUDGET) n = S.MAX_LLM_INPUT_CHAR_BUDGET;
+    return S.set(S.KEYS.LLM_INPUT_CHAR_BUDGET, n);
+};
+
 S.getLlmTimeoutSec = function() {
     var v = S.get(S.KEYS.LLM_TIMEOUT_SEC);
     if (v === null || v === undefined || v === '') return S.DEFAULT_LLM_TIMEOUT_SEC;

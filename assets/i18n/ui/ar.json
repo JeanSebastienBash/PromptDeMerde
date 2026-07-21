@@ -130,7 +130,10 @@
         "outputFormatYaml": "YAML",
         "outputFormatCsv": "CSV",
         "outputFormatSoon": "قريبًا",
-        "copyOutput": "نسخ الموجه المعاد صياغته"
+        "copyOutput": "نسخ الموجه المعاد صياغته",
+        "thinkingMaxAria": "الحد الأقصى لأحرف التفكير (0 = بلا حد)",
+        "inputCharBudget": "ميزانية أحرف الإدخال",
+        "inputCharBudgetAria": "ميزانية أحرف الإدخال للتمرير المتعدد (0 = بلا حد)"
     },
     "stt": {
         "blockAria": "الإملاء الصوتي",

@@ -183,6 +183,9 @@ S._importConfigKeys = function(data) {
     if (data[S.KEYS.LLM_MAX_TOKENS] !== undefined) {
         S.setLlmMaxTokens(data[S.KEYS.LLM_MAX_TOKENS]);
     }
+    if (data[S.KEYS.LLM_INPUT_CHAR_BUDGET] !== undefined) {
+        S.setLlmInputCharBudget(data[S.KEYS.LLM_INPUT_CHAR_BUDGET]);
+    }
     if (data[S.KEYS.LLM_TIMEOUT_SEC] !== undefined) {
         S.setLlmTimeoutSec(data[S.KEYS.LLM_TIMEOUT_SEC]);
     }

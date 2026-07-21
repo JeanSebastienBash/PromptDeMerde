@@ -370,6 +370,7 @@ A._doSniperiseAfterCompress = function() {
     // Découpe zone INPUT uniquement (jamais le pipeline dictée / Whisper / Vosk / Parakeet)
     var IC = window.PDM && window.PDM.InputChunk;
     var inputChunks = [prompt];
+    var inputIsTranscript = !!(IC && typeof IC.hasTranscriptMarks === 'function' && IC.hasTranscriptMarks(prompt));
     if (IC && typeof IC.shouldChunk === 'function' && IC.shouldChunk(prompt, sys, profiles)) {
         var sz = IC.chunkSizeFor(sys, profiles);
         inputChunks = IC.splitText(prompt, sz);
@@ -407,7 +408,8 @@ A._doSniperiseAfterCompress = function() {
         var userPayload = IC && typeof IC.wrapUserChunk === 'function'
             ? IC.wrapUserChunk(rawChunk, {
                 index: index,
-                total: inputChunks.length
+                total: inputChunks.length,
+                transcript: inputIsTranscript
             })
             : rawChunk;
 

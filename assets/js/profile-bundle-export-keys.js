@@ -14,7 +14,7 @@ var CS = window.PDM && window.PDM.ConfigSchema;
 PBE.SESSION_KEYS = [
     'pdm_provider', 'pdm_model', 'pdm_image_model', 'pdm_ollama_url', 'pdm_token_ollama',
     'pdm_llm_thinking_enabled', 'pdm_llm_thinking_max_chars', 'pdm_llm_temperature',
-    'pdm_llm_max_tokens', 'pdm_llm_timeout_sec', 'pdm_language',
+    'pdm_llm_max_tokens', 'pdm_llm_input_char_budget', 'pdm_llm_timeout_sec', 'pdm_language',
     'pdm_history_count', 'pdm_clean_history', 'pdm_workspace', 'pdm_audio_blobs'
 ];
 
