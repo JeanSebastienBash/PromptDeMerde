@@ -163,10 +163,11 @@ STT.warnAndStop = function(opts) {
     if (S && S.playDictationWarnBeep) S.playDictationWarnBeep();
     else if (S && S.playDictationBeep) S.playDictationBeep('warn');
     STT.stop({ silent: true });
-    if (STT.clearEngageMsg) STT.clearEngageMsg();
     if (STT.updateDictationButton) STT.updateDictationButton();
+    if (STT.clearEngageMsg) STT.clearEngageMsg();
     if (STT.refresh) STT.refresh();
     else if (STT.renderUi) STT.renderUi();
+    if (STT.clearEngageMsg) STT.clearEngageMsg();
     if (opts.notify !== false && window.PDM && window.PDM.UI && window.PDM.UI.notif) {
         var msg = opts.notifyMessage || T('disruptiveStoppedNotif');
         if (msg) window.PDM.UI.notif(msg, opts.notifyType || 'info');

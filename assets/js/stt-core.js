@@ -593,8 +593,20 @@ STT.clearEngageMsg = function() {
 };
 
 STT.syncEngageMsgFromState = function() {
-    if (!STT.isActive()) return;
+    if (!STT.isActive()) {
+        STT.clearEngageMsg();
+        return;
+    }
     var state = STT.getState();
+    if (state !== S.STATE_LOADING && state !== S.STATE_PERMISSION && state !== S.STATE_LISTENING) {
+        for (var k in engines) {
+            if (!engines.hasOwnProperty(k) || !engines[k].isActive || !engines[k].isActive()) continue;
+            if (engines[k].getState) {
+                state = engines[k].getState();
+                break;
+            }
+        }
+    }
     if (state === S.STATE_LOADING) {
         STT.setEngageMsg(T('engageLoadingEngine'));
     } else if (state === S.STATE_PERMISSION) {
@@ -603,8 +615,6 @@ STT.syncEngageMsgFromState = function() {
         STT.setEngageMsg(T('engageRunning'));
     } else if (state === S.STATE_ERROR) {
         /* message déjà posé par notifyStt */
-    } else {
-        STT.setEngageMsg(T('engageStarting'));
     }
 };
 
@@ -712,19 +722,25 @@ STT.toggle = function() {
 };
 
 STT.stop = function(opts) {
+    opts = opts || {};
+    var stopped = false;
     for (var k in engines) {
         if (engines.hasOwnProperty(k) && engines[k].isActive && engines[k].isActive()) {
             engines[k].stop(makeCtx(), opts);
-            S.hideLoadProgress(STT._state.els);
-            if (!opts || !opts.silent) {
-                STT.clearEngageMsg();
-                STT.updateDictationButton();
-                STT.refresh();
-            }
-            return;
+            stopped = true;
         }
     }
-    STT._reset();
+    if (!stopped) {
+        STT._reset();
+        return;
+    }
+    S.hideLoadProgress(STT._state.els);
+    STT.clearEngageMsg();
+    if (!opts.silent) {
+        STT.updateDictationButton();
+        if (STT.refresh) STT.refresh();
+        else if (STT.renderUi) STT.renderUi();
+    }
 };
 
 STT._reset = function() {

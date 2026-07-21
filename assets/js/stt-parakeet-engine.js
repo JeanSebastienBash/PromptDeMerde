@@ -64,6 +64,7 @@ function createParakeetEngine(engineId) {
 
         isActive: function() {
             var st = getPool(engineId);
+            if (st.stopping) return false;
             return st.state === S.STATE_LISTENING || st.state === S.STATE_PERMISSION || st.state === S.STATE_LOADING;
         },
 
@@ -174,6 +175,14 @@ function createParakeetEngine(engineId) {
             if (wasListening) S.playDictationStopBeep(st, opts);
             S.clearDictationBeepSession(st);
             var producedText = st.gotAnyText;
+            /* Idle immédiat : isActive/engage ne restent pas bloqués pendant le flush async. */
+            st.state = S.isSupported() ? S.STATE_IDLE : S.STATE_UNSUPPORTED;
+            S.setState(els, st.state);
+            S.updateButton(els, false);
+            S.setBusy(els, false, false);
+            st.stopping = false;
+            if (c.facade && c.facade.updateDictationButton) c.facade.updateDictationButton();
+            else if (c.facade && c.facade.renderUi) c.facade.renderUi();
             flushRemaining(engineId, els).then(function() {
                 if (st.streamer && st.streamer.finalize) {
                     var fin = st.streamer.finalize();
@@ -197,11 +206,6 @@ function createParakeetEngine(engineId) {
                 if (!opts.silent) S.setStatus(els, T('dictationDone'), 'ok');
                 teardownAll(engineId, els);
                 teardownStream(engineId);
-                st.state = S.isSupported() ? S.STATE_IDLE : S.STATE_UNSUPPORTED;
-                S.setState(els, st.state);
-                S.updateButton(els, false);
-                S.setBusy(els, false, false);
-                st.stopping = false;
                 if (c.facade && c.facade.updateDictationButton) c.facade.updateDictationButton();
                 else if (c.facade && c.facade.renderUi) c.facade.renderUi();
             });

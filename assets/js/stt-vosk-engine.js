@@ -64,6 +64,7 @@ function createVoskEngine(engineId) {
 
         isActive: function() {
             var st = V.getPool(engineId);
+            if (st.stopping) return false;
             return st.state === S.STATE_LISTENING || st.state === S.STATE_PERMISSION || st.state === S.STATE_LOADING;
         },
 
