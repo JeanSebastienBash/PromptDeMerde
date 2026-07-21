@@ -101,7 +101,7 @@
         "temperature": "Temperatura",
         "temperatureAria": "Temperatura LLM",
         "maxTokens": "Tokens de salida",
-        "maxTokensAria": "Tokens de salida máx.",
+        "maxTokensAria": "Tokens de salida máximos",
         "timeout": "Tiempo de espera de inferencia",
         "timeoutAria": "Tiempo de espera de inferencia en segundos",
         "toggleOn": "OFF",
@@ -129,7 +129,8 @@
         "outputFormatXml": "XML",
         "outputFormatYaml": "YAML",
         "outputFormatCsv": "CSV",
-        "outputFormatSoon": "Próximamente"
+        "outputFormatSoon": "Próximamente",
+        "copyOutput": "Copiar el prompt reformulado"
     },
     "stt": {
         "blockAria": "Dictado por voz",
@@ -570,7 +571,10 @@
         "blockContexts": "Prompts de contexto ({{count}})",
         "blockOutput": "Zona de salida",
         "contextsEmpty": "Ningún prompt de contexto activo en esta entrada.",
-        "contextUntitled": "Contexto"
+        "contextUntitled": "Contexto",
+        "previewIn": "In",
+        "previewOut": "Out",
+        "badgeAudioShort": "Audio"
     },
     "contextGen": {
         "system": "Eres un generador JSON para PromptDeMerde (reformulación de prompts).\nNo conversas: sin frase introductoria, sin preguntas, sin markdown, sin explicación.\nSalida OBLIGATORIA: un único objeto JSON con exactamente las claves \"tag\" y \"prompt\".\nEjemplo (inventa tu propia etiqueta, no copies): {\"tag\":\"UpperCase\",\"prompt\":\"Reformula siempre el texto en mayúsculas.\"}\nReglas de etiqueta: una palabra PascalCase (ej. FormalTone), solo letras/dígitos, sin almohadilla.",
@@ -1007,7 +1011,8 @@
         "imageOllamaUnreachable": "Ollama inalcanzable. Arranca Ollama y revisa Opciones → LLM (URL / proxy).",
         "imageAnalyzeTimeout": "Tiempo de análisis agotado. Reintenta o usa un modelo más ligero (Prompts → Prompts imagen).",
         "inferenceMetaDriftWarn": "Salida desviada de las consignas del sistema (meta / sniper). Reducir contextos activos o comprimir tokens.",
-        "inferenceMetaRetry": "Deriva meta detectada — consignas no respetadas."
+        "inferenceMetaRetry": "Deriva meta detectada — consignas no respetadas.",
+        "inferenceLengthLimit": "Salida detenida — límite de tokens alcanzado. Subir Tokens de salida (Opciones LLM) o comprobar num_predict."
     },
     "themes": {
         "families": {

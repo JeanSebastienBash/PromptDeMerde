@@ -100,14 +100,14 @@
         "thinkingMaxHint": "{{max}} caratt. consentiti · 0 = illimitato",
         "temperature": "Temperatura",
         "temperatureAria": "Temperatura LLM",
-        "maxTokens": "Gettoni di uscita",
-        "maxTokensAria": "Token di output massimi",
+        "maxTokens": "Token di uscita",
+        "maxTokensAria": "Token di uscita massimi",
         "timeout": "Inferenza sul timeout",
         "timeoutAria": "Timeout dell'inferenza in secondi",
-        "toggleOn": "SPENTO",
-        "toggleOff": "SU",
+        "toggleOn": "OFF",
+        "toggleOff": "ON",
         "outputMetaModel": "Modello:",
-        "outputMetaTokens": "Gettoni:",
+        "outputMetaTokens": "Token:",
         "outputMetaTime": "Tempo:",
         "tagInvitePrefix": "OSPITE :",
         "compressPanelTitle": "Compressione dei token",
@@ -129,7 +129,8 @@
         "outputFormatXml": "XML",
         "outputFormatYaml": "YAML",
         "outputFormatCsv": "CSV",
-        "outputFormatSoon": "Presto disponibile"
+        "outputFormatSoon": "Presto disponibile",
+        "copyOutput": "Copia il prompt riformulato"
     },
     "stt": {
         "blockAria": "Dettatura vocale",
@@ -570,7 +571,10 @@
         "blockContexts": "Prompt di contesto ({{count}})",
         "blockOutput": "Zona Output",
         "contextsEmpty": "Nessun prompt di contesto attivo in questa voce.",
-        "contextUntitled": "Contesto"
+        "contextUntitled": "Contesto",
+        "previewIn": "In",
+        "previewOut": "Out",
+        "badgeAudioShort": "Audio"
     },
     "contextGen": {
         "system": "Sei un generatore JSON per PromptDeMerde (riformulazione di prompt).\nNon conversi: nessuna frase introduttiva, nessuna domanda, nessun markdown, nessuna spiegazione.\nOutput OBBLIGATORIO: un solo oggetto JSON con esattamente le chiavi \"tag\" e \"prompt\".\nEsempio (inventa il tuo tag, non copiare): {\"tag\":\"UpperCase\",\"prompt\":\"Riformula sempre il testo in maiuscolo.\"}\nRegole tag: una parola PascalCase (es. FormalTone), solo lettere/cifre, senza cancelletto.",
@@ -970,7 +974,7 @@
         "streamSpeed": "Velocità:",
         "streamSpeedThinking": "Velocità ragionamento:",
         "streamSpeedAvg": "Velocità media:",
-        "streamTokens": "Tokens:",
+        "streamTokens": "Token:",
         "streamChars": "Caratteri:",
         "streamLimitReached": "Limite raggiunto",
         "streamThinkingLimitReached": "Limite di ragionamento raggiunto",
@@ -1007,7 +1011,8 @@
         "imageOllamaUnreachable": "Ollama non raggiungibile. Avvia Ollama e controlla Opzioni → LLM (URL / proxy).",
         "imageAnalyzeTimeout": "Timeout sull’analisi. Riprova o usa un modello più leggero (Prompt → Prompt immagine).",
         "inferenceMetaDriftWarn": "Uscita fuori dalle istruzioni di sistema (meta / sniper). Ridurre i contesti attivi o comprimere i token.",
-        "inferenceMetaRetry": "Deriva meta rilevata — istruzioni non rispettate."
+        "inferenceMetaRetry": "Deriva meta rilevata — istruzioni non rispettate.",
+        "inferenceLengthLimit": "Uscita interrotta — limite di token raggiunto. Aumentare Tokens di uscita (Opzioni LLM) o verificare num_predict."
     },
     "themes": {
         "families": {

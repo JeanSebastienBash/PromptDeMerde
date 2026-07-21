@@ -129,7 +129,8 @@
         "outputFormatXml": "XML",
         "outputFormatYaml": "YAML",
         "outputFormatCsv": "CSV",
-        "outputFormatSoon": "Bientôt disponible"
+        "outputFormatSoon": "Bientôt disponible",
+        "copyOutput": "Copier le prompt reformulé"
     },
     "stt": {
         "blockAria": "Dictée vocale",
@@ -570,7 +571,10 @@
         "blockContexts": "Prompts de contexte ({{count}})",
         "blockOutput": "Zone Output",
         "contextsEmpty": "Aucun prompt de contexte actif à cette entrée.",
-        "contextUntitled": "Contexte"
+        "contextUntitled": "Contexte",
+        "previewIn": "In",
+        "previewOut": "Out",
+        "badgeAudioShort": "Audio"
     },
     "contextGen": {
         "system": "Tu es un générateur JSON pour PromptDeMerde (reformulation de prompts).\nTu ne converses pas : aucune phrase introductive, aucune question, aucun markdown, aucune explication.\nSortie OBLIGATOIRE : un seul objet JSON avec exactement les clés \"tag\" et \"prompt\".\nExemple (invente ton propre tag, ne recopie pas) : {\"tag\":\"UpperCase\",\"prompt\":\"Reformule toujours le texte en majuscules.\"}\nRègles tag : un mot PascalCase (ex. TonFormel), lettres/chiffres uniquement, sans dièse.",
@@ -1007,7 +1011,8 @@
         "imageOllamaUnreachable": "Ollama injoignable. Lancez Ollama, puis vérifiez Options → LLM (URL / proxy).",
         "imageAnalyzeTimeout": "Délai dépassé sur l’analyse. Réessayez ou prenez un modèle plus léger (Prompts → Prompts image).",
         "inferenceMetaDriftWarn": "Sortie hors consignes système détectée (méta / sniper). Réduire les contextes actifs ou compresser les tokens.",
-        "inferenceMetaRetry": "Dérive méta détectée — consigne non respectée."
+        "inferenceMetaRetry": "Dérive méta détectée — consigne non respectée.",
+        "inferenceLengthLimit": "Sortie arrêtée — plafond de tokens atteint. Augmenter Tokens de sortie (Options LLM) ou vérifier num_predict."
     },
     "themes": {
         "families": {

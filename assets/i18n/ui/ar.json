@@ -85,7 +85,7 @@
         "reset": "إعادة ضبط",
         "historyTitle": "التاريخ LLM",
         "historyPurge": "تطهير",
-        "historyEmpty": "ممنوع الدخول.",
+        "historyEmpty": "لا توجد إدخالات.",
         "thinkingTitle": "🧠 تفكير النموذج",
         "modelLabel": "نموذج",
         "modelTitle": "تغيير النموذج LLM",
@@ -104,8 +104,8 @@
         "maxTokensAria": "الحد الأقصى لرموز الإخراج",
         "timeout": "استنتاج المهلة",
         "timeoutAria": "مهلة الاستدلال بالثواني",
-        "toggleOn": "عن",
-        "toggleOff": "على",
+        "toggleOn": "OFF",
+        "toggleOff": "ON",
         "outputMetaModel": "نموذج:",
         "outputMetaTokens": "الرموز:",
         "outputMetaTime": "وقت:",
@@ -129,7 +129,8 @@
         "outputFormatXml": "XML",
         "outputFormatYaml": "YAML",
         "outputFormatCsv": "CSV",
-        "outputFormatSoon": "قريبًا"
+        "outputFormatSoon": "قريبًا",
+        "copyOutput": "نسخ الموجه المعاد صياغته"
     },
     "stt": {
         "blockAria": "الإملاء الصوتي",
@@ -570,7 +571,10 @@
         "blockContexts": "موجهات السياق ({{count}})",
         "blockOutput": "منطقة الإخراج",
         "contextsEmpty": "لا يوجد موجه سياق نشط في هذا الإدخال.",
-        "contextUntitled": "سياق"
+        "contextUntitled": "سياق",
+        "previewIn": "إدخال",
+        "previewOut": "خرج",
+        "badgeAudioShort": "صوت"
     },
     "contextGen": {
         "system": "أنت مولّد JSON لـ PromptDeMerde (إعادة صياغة المطالبات).\nلا تتحاور: لا جملة تمهيدية، لا سؤال، لا markdown، لا شرح.\nالمخرجات إلزامية: كائن JSON واحد بالمفتاحين \"tag\" و\"prompt\" فقط.\nمثال (اختر وسمك الخاص، لا تنسخ): {\"tag\":\"UpperCase\",\"prompt\":\"أعد صياغة النص دائمًا بأحرف كبيرة.\"}\nقواعد الوسم: كلمة PascalCase واحدة (مثال FormalTone)، حروف/أرقام فقط، بدون علامة #.",
@@ -945,7 +949,7 @@
         "llmOptionsBadgeCustom": "{{count}} الإعداد (الإعدادات)",
         "llmOptionsBadgeRefused": "رفض",
         "historySaveFail": "غير قادر على حفظ سجل التنظيف.",
-        "historyEmpty": "ممنوع الدخول.",
+        "historyEmpty": "لا توجد إدخالات.",
         "historyPurgeTitle": "تطهير كل التاريخ المحلي",
         "dictationStoppedForClean": "توقف الإملاء — تنظيف النص الحالي.",
         "customProfileSynopsis": "ملف {{label}} — إعداد PromptDeMerde المخصص.",
@@ -971,7 +975,7 @@
         "streamSpeedThinking": "سرعة التفكير:",
         "streamSpeedAvg": "متوسط ​​السرعة:",
         "streamTokens": "الرموز:",
-        "streamChars": "الشخصيات:",
+        "streamChars": "الأحرف:",
         "streamLimitReached": "تم الوصول إلى الحد",
         "streamThinkingLimitReached": "تم بلوغ حد التفكير",
         "streamInProgressBrain": "🧠 قيد التقدم",
@@ -1007,7 +1011,8 @@
         "imageOllamaUnreachable": "تعذّر الوصول إلى Ollama. شغّله ثم راجع خيارات → LLM (الرابط / الوكيل).",
         "imageAnalyzeTimeout": "انتهت مهلة التحليل. أعد المحاولة أو استخدم نموذجًا أخف (المطالبات → مطالبات الصورة).",
         "inferenceMetaDriftWarn": "انحراف المخرجات عن تعليمات النظام (ميتا / قناص). تقليل السياقات النشطة أو ضغط الرموز.",
-        "inferenceMetaRetry": "انحراف ميتا مُكتشف — التعليمات غير مُتبعة."
+        "inferenceMetaRetry": "انحراف ميتا مُكتشف — التعليمات غير مُتبعة.",
+        "inferenceLengthLimit": "توقف الإخراج — تم بلوغ حد الرموز. رفع رموز الإخراج (خيارات LLM) أو التحقق من num_predict."
     },
     "themes": {
         "families": {

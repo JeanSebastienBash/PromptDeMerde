@@ -85,7 +85,7 @@
         "reset": "重置",
         "historyTitle": "历史 LLM",
         "historyPurge": "清除",
-        "historyEmpty": "禁止驶入。",
+        "historyEmpty": "暂无记录。",
         "thinkingTitle": "🧠 模型思考",
         "modelLabel": "模型",
         "modelTitle": "更改模型 LLM",
@@ -100,14 +100,14 @@
         "thinkingMaxHint": "允许 {{max}} 字符 · 0 = 无限制",
         "temperature": "温度",
         "temperatureAria": "温度LLM",
-        "maxTokens": "输出代币",
-        "maxTokensAria": "最大输出令牌",
+        "maxTokens": "输出 token",
+        "maxTokensAria": "最大输出 token",
         "timeout": "超时推断",
         "timeoutAria": "推理超时（以秒为单位）",
-        "toggleOn": "离开",
-        "toggleOff": "在",
+        "toggleOn": "OFF",
+        "toggleOff": "ON",
         "outputMetaModel": "模型：",
-        "outputMetaTokens": "代币：",
+        "outputMetaTokens": "Token：",
         "outputMetaTime": "时间：",
         "tagInvitePrefix": "客人 ：",
         "compressPanelTitle": "Token 压缩",
@@ -129,7 +129,8 @@
         "outputFormatXml": "XML",
         "outputFormatYaml": "YAML",
         "outputFormatCsv": "CSV",
-        "outputFormatSoon": "即将推出"
+        "outputFormatSoon": "即将推出",
+        "copyOutput": "复制已改写的提示词"
     },
     "stt": {
         "blockAria": "语音听写",
@@ -570,7 +571,10 @@
         "blockContexts": "上下文提示（{{count}}）",
         "blockOutput": "输出区",
         "contextsEmpty": "此条目没有活动的上下文提示。",
-        "contextUntitled": "上下文"
+        "contextUntitled": "上下文",
+        "previewIn": "输入",
+        "previewOut": "输出",
+        "badgeAudioShort": "音频"
     },
     "contextGen": {
         "system": "你是 PromptDeMerde（提示词改写）的 JSON 生成器。\n不要对话：不要开场白、不要提问、不要 markdown、不要解释。\n强制输出：仅一个 JSON 对象，且必须恰好包含 \"tag\" 和 \"prompt\" 两个键。\n示例（自行发明 tag，勿复制）：{\"tag\":\"UpperCase\",\"prompt\":\"始终将文本改写为大写。\"}\nTag 规则：一个 PascalCase 单词（如 FormalTone），仅字母/数字，不含 # 号。",
@@ -945,7 +949,7 @@
         "llmOptionsBadgeCustom": "{{count}} 设置",
         "llmOptionsBadgeRefused": "被拒绝",
         "historySaveFail": "无法保存清洁历史记录。",
-        "historyEmpty": "禁止驶入。",
+        "historyEmpty": "暂无记录。",
         "historyPurgeTitle": "清除所有本地历史记录",
         "dictationStoppedForClean": "听写停止——清理当前文本。",
         "customProfileSynopsis": "配置文件 {{label}} — PromptDeMerde 个性化设置。",
@@ -970,8 +974,8 @@
         "streamSpeed": "速度：",
         "streamSpeedThinking": "思考速度：",
         "streamSpeedAvg": "平均速度：",
-        "streamTokens": "代币：",
-        "streamChars": "人物：",
+        "streamTokens": "Token：",
+        "streamChars": "字符：",
         "streamLimitReached": "达到限制",
         "streamThinkingLimitReached": "已达到思考上限",
         "streamInProgressBrain": "🧠 进行中",
@@ -1007,7 +1011,8 @@
         "imageOllamaUnreachable": "无法连接 Ollama。请启动 Ollama，并检查选项 → LLM（URL / 代理）。",
         "imageAnalyzeTimeout": "分析超时。请重试或使用更轻量的模型（提示词 → 图片提示词）。",
         "inferenceMetaDriftWarn": "输出偏离系统指令（元信息/狙击式）。请减少活动上下文或压缩 token。",
-        "inferenceMetaRetry": "检测到元信息偏离 — 未遵循指令。"
+        "inferenceMetaRetry": "检测到元信息偏离 — 未遵循指令。",
+        "inferenceLengthLimit": "输出已停止 — 已达 token 上限。请提高输出 token（LLM 选项）或检查 num_predict。"
     },
     "themes": {
         "families": {

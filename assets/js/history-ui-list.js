@@ -34,7 +34,10 @@ function histT(key, vars) {
             seeMore: 'Voir tout',
             seeLess: 'Réduire',
             copyLabel: 'Copier {{label}}',
-            thinking: 'Réflexion'
+            thinking: 'Réflexion',
+            previewIn: 'In',
+            previewOut: 'Out',
+            badgeAudioShort: 'Audio'
         })[key];
         raw = fb || key;
         if (vars && typeof vars === 'object') {
@@ -66,7 +69,7 @@ A._historyAudioBadge = function(entry) {
         badge.classList.add('history-audio-badge-dictation');
     } else {
         var audioName = entry.audioFileName ? esc(entry.audioFileName) : histT('badgeAudioDefault');
-        badge.innerHTML = '<span>Audio</span><span class="history-audio-badge-name">' + audioName + '</span>';
+        badge.innerHTML = '<span>' + esc(histT('badgeAudioShort')) + '</span><span class="history-audio-badge-name">' + audioName + '</span>';
     }
 
     return badge;
@@ -353,14 +356,14 @@ A.renderTextHistory = function(listId, emptyId) {
             var inTxt = textOrEmpty(entry.input)
                 || (tracePrev && tracePrev.input ? textOrEmpty(tracePrev.input.original) : '')
                 || (tracePrev && tracePrev.input ? textOrEmpty(tracePrev.input.compressed) : '');
-            prevIn.innerHTML = '<span class="history-card-preview-k">In</span> ';
+            prevIn.innerHTML = '<span class="history-card-preview-k">' + esc(histT('previewIn')) + '</span> ';
             prevIn.appendChild(document.createTextNode(inTxt ? inTxt.slice(0, 160) + (inTxt.length > 160 ? '…' : '') : histT('emptyText')));
             var prevOut = document.createElement('div');
             prevOut.className = 'history-card-preview-line';
             var outTxt = textOrEmpty(entry.output)
                 || (tracePrev && tracePrev.output ? textOrEmpty(tracePrev.output.original) : '')
                 || (tracePrev && tracePrev.output ? textOrEmpty(tracePrev.output.compressed) : '');
-            prevOut.innerHTML = '<span class="history-card-preview-k">Out</span> ';
+            prevOut.innerHTML = '<span class="history-card-preview-k">' + esc(histT('previewOut')) + '</span> ';
             prevOut.appendChild(document.createTextNode(outTxt ? outTxt.slice(0, 160) + (outTxt.length > 160 ? '…' : '') : histT('emptyText')));
             preview.appendChild(prevIn);
             preview.appendChild(prevOut);

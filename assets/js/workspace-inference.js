@@ -504,10 +504,9 @@ A._doSniperiseAfterCompress = function() {
             chunkTotal: activeChunkTotal
         });
         if (data && data.done_reason === 'length' && window.PDM.UI && window.PDM.UI.notif) {
-            window.PDM.UI.notif(
-                'Sortie arrêtée (done_reason=length) — plafond tokens atteint. Monte Tokens de sortie ou vérifie num_predict.',
-                'info'
-            );
+            var lengthMsg = wuText('inferenceLengthLimit')
+                || 'Sortie arrêtée — plafond de tokens atteint. Augmenter Tokens de sortie (Options LLM) ou vérifier num_predict.';
+            window.PDM.UI.notif(lengthMsg, 'info');
         }
 
         function finalizeClean() {

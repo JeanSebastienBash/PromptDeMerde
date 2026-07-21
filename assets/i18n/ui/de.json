@@ -85,7 +85,7 @@
         "reset": "Zurücksetzen",
         "historyTitle": "Geschichte LLM",
         "historyPurge": "Säubern",
-        "historyEmpty": "Kein Einlass.",
+        "historyEmpty": "Keine Einträge.",
         "thinkingTitle": "🧠 Modell-Denken",
         "modelLabel": "Modell",
         "modelTitle": "Modell ändern LLM",
@@ -100,14 +100,14 @@
         "thinkingMaxHint": "{{max}} Zeichen erlaubt · 0 = unbegrenzt",
         "temperature": "Temperatur",
         "temperatureAria": "Temperatur LLM",
-        "maxTokens": "Ausgabetoken",
-        "maxTokensAria": "Maximale Anzahl ausgegebener Token",
+        "maxTokens": "Ausgabe-Tokens",
+        "maxTokensAria": "Max. Ausgabe-Tokens",
         "timeout": "Timeout-Schlussfolgerung",
         "timeoutAria": "Inferenz-Timeout in Sekunden",
         "toggleOn": "AUS",
         "toggleOff": "AN",
         "outputMetaModel": "Modell:",
-        "outputMetaTokens": "Token:",
+        "outputMetaTokens": "Tokens:",
         "outputMetaTime": "Zeit:",
         "tagInvitePrefix": "GAST:",
         "compressPanelTitle": "Token-Komprimierung",
@@ -129,7 +129,8 @@
         "outputFormatXml": "XML",
         "outputFormatYaml": "YAML",
         "outputFormatCsv": "CSV",
-        "outputFormatSoon": "Demnächst verfügbar"
+        "outputFormatSoon": "Demnächst verfügbar",
+        "copyOutput": "Reformulierten Prompt kopieren"
     },
     "stt": {
         "blockAria": "Sprachdiktat",
@@ -570,7 +571,10 @@
         "blockContexts": "Kontext-Prompts ({{count}})",
         "blockOutput": "Ausgabezone",
         "contextsEmpty": "Kein aktiver Kontext-Prompt bei diesem Eintrag.",
-        "contextUntitled": "Kontext"
+        "contextUntitled": "Kontext",
+        "previewIn": "In",
+        "previewOut": "Out",
+        "badgeAudioShort": "Audio"
     },
     "contextGen": {
         "system": "Du bist ein JSON-Generator für PromptDeMerde (Prompt-Umformulierung).\nDu unterhältst dich nicht: kein Einleitungssatz, keine Frage, kein Markdown, keine Erklärung.\nPFLICHT-Ausgabe: ein einziges JSON-Objekt mit genau den Schlüsseln \"tag\" und \"prompt\".\nBeispiel (eigenes Tag erfinden, nicht kopieren): {\"tag\":\"UpperCase\",\"prompt\":\"Formuliere den Text immer in Großbuchstaben um.\"}\nTag-Regeln: ein PascalCase-Wort (z. B. FormalTone), nur Buchstaben/Ziffern, kein #-Zeichen.",
@@ -945,7 +949,7 @@
         "llmOptionsBadgeCustom": "{{count}} Einstellung(en)",
         "llmOptionsBadgeRefused": "BESTRITTEN",
         "historySaveFail": "Der Reinigungsverlauf konnte nicht gespeichert werden.",
-        "historyEmpty": "Kein Einlass.",
+        "historyEmpty": "Keine Einträge.",
         "historyPurgeTitle": "Löschen Sie die gesamte lokale Geschichte",
         "dictationStoppedForClean": "Sprachdiktat gestoppt – Bereinigen des aktuellen Textes.",
         "customProfileSynopsis": "Profil {{label}} — benutzerdefinierte PromptDeMerde-Konfiguration.",
@@ -970,8 +974,8 @@
         "streamSpeed": "Geschwindigkeit:",
         "streamSpeedThinking": "Denkgeschwindigkeit:",
         "streamSpeedAvg": "Durchschnittsgeschwindigkeit:",
-        "streamTokens": "Token:",
-        "streamChars": "Charaktere:",
+        "streamTokens": "Tokens:",
+        "streamChars": "Zeichen:",
         "streamLimitReached": "Limit erreicht",
         "streamThinkingLimitReached": "Denk-Limit erreicht",
         "streamInProgressBrain": "🧠 IN BEARBEITUNG",
@@ -1007,7 +1011,8 @@
         "imageOllamaUnreachable": "Ollama nicht erreichbar. Ollama starten, dann Optionen → LLM (URL / Proxy) prüfen.",
         "imageAnalyzeTimeout": "Zeitlimit der Analyse überschritten. Erneut versuchen oder leichteres Modell (Prompts → Bild-Prompts).",
         "inferenceMetaDriftWarn": "Ausgabe weicht von den Systemvorgaben ab (Meta / Sniper). Aktive Kontexte reduzieren oder Tokens komprimieren.",
-        "inferenceMetaRetry": "Meta-Abweichung erkannt — Vorgaben nicht eingehalten."
+        "inferenceMetaRetry": "Meta-Abweichung erkannt — Vorgaben nicht eingehalten.",
+        "inferenceLengthLimit": "Ausgabe gestoppt — Token-Limit erreicht. Ausgabe-Tokens erhöhen (LLM-Optionen) oder num_predict prüfen."
     },
     "themes": {
         "families": {

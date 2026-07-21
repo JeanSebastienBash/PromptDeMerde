@@ -85,7 +85,7 @@
         "reset": "Restarigi",
         "historyTitle": "Historio LLM",
         "historyPurge": "Elpurigi",
-        "historyEmpty": "Neniu eniro.",
+        "historyEmpty": "Neniu eroj.",
         "thinkingTitle": "🧠 Modela pensado",
         "modelLabel": "Modelo",
         "modelTitle": "Ŝanĝi modelon LLM",
@@ -100,14 +100,14 @@
         "thinkingMaxHint": "{{max}} signoj permesitaj · 0 = senlima",
         "temperature": "Temperaturo",
         "temperatureAria": "Temperaturo LLM",
-        "maxTokens": "Eligi ĵetonojn",
-        "maxTokensAria": "Maksimuma eligo-ĵetonoj",
+        "maxTokens": "Eligaj ĵetonoj",
+        "maxTokensAria": "Maks. eligaj ĵetonoj",
         "timeout": "Inferenco de tempodaŭro",
         "timeoutAria": "Inferenca tempodaŭro en sekundoj",
         "toggleOn": "OFF",
         "toggleOff": "ON",
         "outputMetaModel": "Modelo:",
-        "outputMetaTokens": "ĵetonoj:",
+        "outputMetaTokens": "Ĵetonoj:",
         "outputMetaTime": "Tempo:",
         "tagInvitePrefix": "GASTO:",
         "compressPanelTitle": "Kunpremado de tokenoj",
@@ -129,7 +129,8 @@
         "outputFormatXml": "XML",
         "outputFormatYaml": "YAML",
         "outputFormatCsv": "CSV",
-        "outputFormatSoon": "Baldaŭ disponebla"
+        "outputFormatSoon": "Baldaŭ disponebla",
+        "copyOutput": "Kopii la reformulitan prompton"
     },
     "stt": {
         "blockAria": "Voĉa diktado",
@@ -570,7 +571,10 @@
         "blockContexts": "Kuntekstaj promptoj ({{count}})",
         "blockOutput": "Elira zono",
         "contextsEmpty": "Neniu aktiva kunteksta prompto ĉe ĉi tiu ero.",
-        "contextUntitled": "Kunteksto"
+        "contextUntitled": "Kunteksto",
+        "previewIn": "En",
+        "previewOut": "El",
+        "badgeAudioShort": "Aŭdio"
     },
     "contextGen": {
         "system": "Vi estas JSON-generilo por PromptDeMerde (prompt-reformado).\nVi ne konversas: neniu enkonduka frazo, neniu demando, neniu markdown, neniu klarigo.\nDEVIGA eligo: unu sola JSON-objekto kun precize la ŝlosiloj \"tag\" kaj \"prompt\".\nEkzemplo (pripensu propran etikedon, ne kopiu): {\"tag\":\"UpperCase\",\"prompt\":\"Ĉiam reformu la tekston per majuskloj.\"}\nEtiked-reguloj: unu vorto PascalCase (ekz. FormalTone), nur literoj/ciferoj, sen #.",
@@ -945,7 +949,7 @@
         "llmOptionsBadgeCustom": "{{count}} agordo(j)",
         "llmOptionsBadgeRefused": "NEGITA",
         "historySaveFail": "Ne eblas konservi purigadhistorion.",
-        "historyEmpty": "Neniu eniro.",
+        "historyEmpty": "Neniu eroj.",
         "historyPurgeTitle": "Purigu la tutan lokan historion",
         "dictationStoppedForClean": "Voĉa voĉa diktado ĉesis — purigado de la nuna teksto.",
         "customProfileSynopsis": "Profilo {{label}} — personecigita PromptDeMerde-agordo.",
@@ -970,8 +974,8 @@
         "streamSpeed": "Rapido:",
         "streamSpeedThinking": "Pensad-rapido:",
         "streamSpeedAvg": "Meza rapido:",
-        "streamTokens": "ĵetonoj:",
-        "streamChars": "Karakteroj:",
+        "streamTokens": "Ĵetonoj:",
+        "streamChars": "Signoj:",
         "streamLimitReached": "Limo atingita",
         "streamThinkingLimitReached": "Pensad-limo atingita",
         "streamInProgressBrain": "🧠 EN PROGRESO",
@@ -1007,7 +1011,8 @@
         "imageOllamaUnreachable": "Ollama nestingebla. Lanĉu Ollama, poste kontrolu Opcioj → LLM (URL / prokurilo).",
         "imageAnalyzeTimeout": "Tempolimo de la analizo. Reprovu aŭ uzu pli malpezan modelon (Promptoj → Bildaj promptoj).",
         "inferenceMetaDriftWarn": "Eligo foriris de la sistemaj instrukcioj (meta / snajpero). Reduktu aktivajn kuntekstojn aŭ densigu ĵetonojn.",
-        "inferenceMetaRetry": "Meta-derivo detektita — instrukcioj ne sekvitaj."
+        "inferenceMetaRetry": "Meta-derivo detektita — instrukcioj ne sekvitaj.",
+        "inferenceLengthLimit": "Elsendo haltis — limo de ĵetonoj atingita. Altigi elirajn ĵetonojn (LLM-opcioj) aŭ kontroli num_predict."
     },
     "themes": {
         "families": {

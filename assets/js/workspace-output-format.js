@@ -66,7 +66,10 @@ A.wrapOutputForDisplay = function(plain, formatId, kind) {
         return JSON.stringify(obj, null, 2);
     }
     if (fmt === 'html') {
-        var title = kind === 'thinking' ? 'Réflexion' : 'Output';
+        var I = window.PDM && window.PDM.I18n;
+        var title = kind === 'thinking'
+            ? (I ? I.t('history.thinking') : 'Réflexion')
+            : (I ? I.t('workspace.output') : 'Output');
         return '<!DOCTYPE html>\n<html lang="' + escapeHtml(lang) + '">\n' +
             '<head>\n<meta charset="utf-8">\n<meta name="viewport" content="width=device-width, initial-scale=1">\n' +
             '<title>' + escapeHtml(title) + ' — PromptDeMerde</title>\n' +

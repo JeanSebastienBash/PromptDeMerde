@@ -26,7 +26,7 @@ function formatTemp(n) {
 function formatTimeoutSec(n) {
     var v = parseInt(n, 10);
     if (!Number.isFinite(v) || v < 0) return '0';
-    if (v === 0) return wuText('timeoutUnlimited') || 'Illimité (0)';
+    if (v === 0) return wuText('thinkingMaxUnlimited') || 'Illimité (0)';
     return String(v) + ' s';
 }
 
@@ -81,7 +81,7 @@ function syncRangeRow(optId) {
             slider.value = String(stored);
         }
         display = stored === 0
-            ? (wuText('maxTokensUnlimited') || 'Illimité (0)')
+            ? (wuText('thinkingMaxUnlimited') || 'Illimité (0)')
             : String(stored);
         slider.setAttribute('aria-valuenow', String(stored));
     } else if (optId === 'timeout') {
@@ -122,7 +122,10 @@ A.syncThinkingOptionRow = function() {
         toggle.classList.toggle('is-on', enabled);
         toggle.setAttribute('aria-pressed', enabled ? 'true' : 'false');
         toggle.title = enabled ? wuText('thinkingToggleOn') : wuText('thinkingToggleOff');
-        toggle.textContent = enabled ? 'ON' : 'OFF';
+        var I = window.PDM && window.PDM.I18n;
+        toggle.textContent = enabled
+            ? (I ? I.t('workspace.toggleOff') : 'ON')
+            : (I ? I.t('workspace.toggleOn') : 'OFF');
     }
     if (maxRow) {
         maxRow.hidden = !(enabled && !unsupported);
@@ -227,7 +230,7 @@ A.bindLlmOptions = function() {
         S.setLlmMaxTokens(v);
     }, function(v) {
         var n = parseInt(v, 10);
-        if (!Number.isFinite(n) || n <= 0) return wuText('maxTokensUnlimited') || 'Illimité (0)';
+        if (!Number.isFinite(n) || n <= 0) return wuText('thinkingMaxUnlimited') || 'Illimité (0)';
         return String(n);
     });
 

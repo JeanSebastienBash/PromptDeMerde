@@ -85,7 +85,7 @@
         "reset": "リセット",
         "historyTitle": "歴史 LLM",
         "historyPurge": "パージ",
-        "historyEmpty": "立入り禁止。",
+        "historyEmpty": "履歴はありません。",
         "thinkingTitle": "🧠 モデルの思考",
         "modelLabel": "モデル",
         "modelTitle": "モデルを変更 LLM",
@@ -104,10 +104,10 @@
         "maxTokensAria": "最大出力トークン",
         "timeout": "タイムアウト推論",
         "timeoutAria": "推論タイムアウト (秒単位)",
-        "toggleOn": "オフ",
-        "toggleOff": "の上",
+        "toggleOn": "OFF",
+        "toggleOff": "ON",
         "outputMetaModel": "モデル：",
-        "outputMetaTokens": "トークン:",
+        "outputMetaTokens": "トークン：",
         "outputMetaTime": "時間：",
         "tagInvitePrefix": "ゲスト：",
         "compressPanelTitle": "トークン圧縮",
@@ -129,7 +129,8 @@
         "outputFormatXml": "XML",
         "outputFormatYaml": "YAML",
         "outputFormatCsv": "CSV",
-        "outputFormatSoon": "近日公開"
+        "outputFormatSoon": "近日公開",
+        "copyOutput": "言い換えたプロンプトをコピー"
     },
     "stt": {
         "blockAria": "音声ディクテーション",
@@ -570,7 +571,10 @@
         "blockContexts": "コンテキストプロンプト（{{count}}）",
         "blockOutput": "出力ゾーン",
         "contextsEmpty": "このエントリに有効なコンテキストプロンプトはありません。",
-        "contextUntitled": "コンテキスト"
+        "contextUntitled": "コンテキスト",
+        "previewIn": "入力",
+        "previewOut": "出力",
+        "badgeAudioShort": "音声"
     },
     "contextGen": {
         "system": "あなたは PromptDeMerde（プロンプト言い換え）用の JSON 生成器です。\n会話はしません：導入文、質問、markdown、説明は一切不要です。\n必須出力：\"tag\" と \"prompt\" の 2 キーのみを持つ JSON オブジェクト 1 つ。\n例（独自の tag を考え、コピーしない）：{\"tag\":\"UpperCase\",\"prompt\":\"常にテキストを大文字で言い換える。\"}\nTag 規則：PascalCase の 1 語（例 FormalTone）、英数字のみ、# 記号なし。",
@@ -945,7 +949,7 @@
         "llmOptionsBadgeCustom": "{{count}} 設定",
         "llmOptionsBadgeRefused": "拒否されました",
         "historySaveFail": "クリーンアップ履歴を保存できませんでした。",
-        "historyEmpty": "立入り禁止。",
+        "historyEmpty": "履歴はありません。",
         "historyPurgeTitle": "すべてのローカル履歴を消去する",
         "dictationStoppedForClean": "音声入力を停止 — 現在のテキストをクリーンアップ中。",
         "customProfileSynopsis": "プロファイル {{label}} — PromptDeMerde カスタム設定。",
@@ -970,8 +974,8 @@
         "streamSpeed": "速度:",
         "streamSpeedThinking": "思考速度:",
         "streamSpeedAvg": "平均速度:",
-        "streamTokens": "Tokens:",
-        "streamChars": "文字数:",
+        "streamTokens": "トークン：",
+        "streamChars": "文字：",
         "streamLimitReached": "上限に達しました",
         "streamThinkingLimitReached": "思考の上限に達しました",
         "streamInProgressBrain": "🧠 進行中",
@@ -1007,7 +1011,8 @@
         "imageOllamaUnreachable": "Ollama に接続できません。Ollama を起動し、オプション → LLM（URL / プロキシ）を確認してください。",
         "imageAnalyzeTimeout": "解析がタイムアウトしました。再試行するか、より軽いモデルを使ってください（プロンプト → 画像プロンプト）。",
         "inferenceMetaDriftWarn": "出力がシステム指示から逸脱（メタ／スナイパー）。有効なコンテキストを減らすかトークンを圧縮する。",
-        "inferenceMetaRetry": "メタ逸脱を検出 — 指示未遵守。"
+        "inferenceMetaRetry": "メタ逸脱を検出 — 指示未遵守。",
+        "inferenceLengthLimit": "出力停止 — トークン上限に達しました。出力トークン（LLMオプション）を上げるか num_predict を確認。"
     },
     "themes": {
         "families": {

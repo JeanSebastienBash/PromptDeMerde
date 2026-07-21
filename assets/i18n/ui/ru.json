@@ -85,7 +85,7 @@
         "reset": "Перезагрузить",
         "historyTitle": "История LLM",
         "historyPurge": "Удалять",
-        "historyEmpty": "Въезд запрещен.",
+        "historyEmpty": "Нет записей.",
         "thinkingTitle": "🧠 Размышление модели",
         "modelLabel": "Модель",
         "modelTitle": "Изменить модель LLM",
@@ -100,12 +100,12 @@
         "thinkingMaxHint": "{{max}} символов разрешено · 0 = без ограничения",
         "temperature": "Температура",
         "temperatureAria": "Температура LLM",
-        "maxTokens": "Выходные токены",
-        "maxTokensAria": "Максимальное количество выходных токенов",
+        "maxTokens": "Токены вывода",
+        "maxTokensAria": "Макс. токены вывода",
         "timeout": "Вывод тайм-аута",
         "timeoutAria": "Тайм-аут вывода в секундах",
-        "toggleOn": "ВЫКЛЮЧЕННЫЙ",
-        "toggleOff": "НА",
+        "toggleOn": "OFF",
+        "toggleOff": "ON",
         "outputMetaModel": "Модель:",
         "outputMetaTokens": "Токены:",
         "outputMetaTime": "Время:",
@@ -129,7 +129,8 @@
         "outputFormatXml": "XML",
         "outputFormatYaml": "YAML",
         "outputFormatCsv": "CSV",
-        "outputFormatSoon": "Скоро"
+        "outputFormatSoon": "Скоро",
+        "copyOutput": "Копировать переформулированный промпт"
     },
     "stt": {
         "blockAria": "Голосовой диктант",
@@ -570,7 +571,10 @@
         "blockContexts": "Контекстные промпты ({{count}})",
         "blockOutput": "Зона вывода",
         "contextsEmpty": "Нет активного контекстного промпта в этой записи.",
-        "contextUntitled": "Контекст"
+        "contextUntitled": "Контекст",
+        "previewIn": "Вход",
+        "previewOut": "Выход",
+        "badgeAudioShort": "Аудио"
     },
     "contextGen": {
         "system": "Ты — генератор JSON для PromptDeMerde (переформулировка промптов).\nТы не ведёшь беседу: никаких вступлений, вопросов, markdown или пояснений.\nОБЯЗАТЕЛЬНЫЙ вывод: один JSON-объект ровно с ключами \"tag\" и \"prompt\".\nПример (придумай свой тег, не копируй): {\"tag\":\"UpperCase\",\"prompt\":\"Всегда переформулируй текст заглавными буквами.\"}\nПравила тега: одно слово PascalCase (напр. FormalTone), только буквы/цифры, без #.",
@@ -945,7 +949,7 @@
         "llmOptionsBadgeCustom": "{{count}} настроек",
         "llmOptionsBadgeRefused": "ОТКЛОНЕН",
         "historySaveFail": "Не удалось сохранить историю очисток.",
-        "historyEmpty": "Въезд запрещен.",
+        "historyEmpty": "Нет записей.",
         "historyPurgeTitle": "Очистить всю местную историю",
         "dictationStoppedForClean": "Диктовка остановлена — очистка текущего текста.",
         "customProfileSynopsis": "Профиль {{label}} — пользовательская конфигурация PromptDeMerde.",
@@ -970,7 +974,7 @@
         "streamSpeed": "Скорость:",
         "streamSpeedThinking": "Скорость размышления:",
         "streamSpeedAvg": "Средняя скорость:",
-        "streamTokens": "Tokens:",
+        "streamTokens": "Токены:",
         "streamChars": "Символы:",
         "streamLimitReached": "Лимит достигнут",
         "streamThinkingLimitReached": "Достигнут лимит размышления",
@@ -1007,7 +1011,8 @@
         "imageOllamaUnreachable": "Ollama недоступен. Запустите Ollama и проверьте Параметры → LLM (URL / proxy).",
         "imageAnalyzeTimeout": "Таймаут анализа. Повторите или возьмите более лёгкую модель (Промпты → Промпты изображения).",
         "inferenceMetaDriftWarn": "Вывод отклонился от системных инструкций (мета / снайпер). Сократить активные контексты или сжать токены.",
-        "inferenceMetaRetry": "Обнаружен мета-дрейф — инструкции не соблюдены."
+        "inferenceMetaRetry": "Обнаружен мета-дрейф — инструкции не соблюдены.",
+        "inferenceLengthLimit": "Вывод остановлен — достигнут лимит токенов. Увеличить токены вывода (параметры LLM) или проверить num_predict."
     },
     "themes": {
         "families": {

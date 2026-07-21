@@ -101,7 +101,7 @@
         "temperature": "Temperature",
         "temperatureAria": "Temperature LLM",
         "maxTokens": "Output tokens",
-        "maxTokensAria": "Output tokens max",
+        "maxTokensAria": "Max output tokens",
         "timeout": "Inference timeout",
         "timeoutAria": "Inference timeout in seconds",
         "toggleOn": "OFF",
@@ -129,7 +129,8 @@
         "outputFormatXml": "XML",
         "outputFormatYaml": "YAML",
         "outputFormatCsv": "CSV",
-        "outputFormatSoon": "Coming soon"
+        "outputFormatSoon": "Coming soon",
+        "copyOutput": "Copy reformulated prompt"
     },
     "stt": {
         "blockAria": "Voice dictation",
@@ -570,7 +571,10 @@
         "blockContexts": "Context prompts ({{count}})",
         "blockOutput": "Output zone",
         "contextsEmpty": "No active context prompt on this entry.",
-        "contextUntitled": "Context"
+        "contextUntitled": "Context",
+        "previewIn": "In",
+        "previewOut": "Out",
+        "badgeAudioShort": "Audio"
     },
     "contextGen": {
         "system": "You are a JSON generator for PromptDeMerde (prompt reformulation).\nYou do not converse: no introductory sentence, no question, no markdown, no explanation.\nMANDATORY output: a single JSON object with exactly the keys \"tag\" and \"prompt\".\nExample (invent your own tag, do not copy): {\"tag\":\"UpperCase\",\"prompt\":\"Always reformulate the text in uppercase.\"}\nTag rules: one PascalCase word (e.g. FormalTone), letters/digits only, no hash sign.",
@@ -1007,7 +1011,8 @@
         "imageOllamaUnreachable": "Ollama unreachable. Start Ollama, then check Options → LLM (URL / proxy).",
         "imageAnalyzeTimeout": "Image analysis timed out. Retry or use a lighter model (Prompts → Image prompts).",
         "inferenceMetaDriftWarn": "Output drifted from system instructions (meta / sniper). Reduce active contexts or compress tokens.",
-        "inferenceMetaRetry": "Meta drift detected — instructions not followed."
+        "inferenceMetaRetry": "Meta drift detected — instructions not followed.",
+        "inferenceLengthLimit": "Output stopped — token limit reached. Raise Output tokens (LLM Options) or check num_predict."
     },
     "themes": {
         "families": {

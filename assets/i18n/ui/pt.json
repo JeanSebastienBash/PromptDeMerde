@@ -85,7 +85,7 @@
         "reset": "Reiniciar",
         "historyTitle": "História LLM",
         "historyPurge": "Purga",
-        "historyEmpty": "Entrada proibida.",
+        "historyEmpty": "Nenhuma entrada.",
         "thinkingTitle": "🧠 Reflexão do modelo",
         "modelLabel": "Modelo",
         "modelTitle": "Alterar modelo LLM",
@@ -101,13 +101,13 @@
         "temperature": "Temperatura",
         "temperatureAria": "Temperatura LLM",
         "maxTokens": "Tokens de saída",
-        "maxTokensAria": "Máximo de tokens de saída",
+        "maxTokensAria": "Tokens de saída máximos",
         "timeout": "Inferência de tempo limite",
         "timeoutAria": "Tempo limite de inferência em segundos",
-        "toggleOn": "DESLIGADO",
-        "toggleOff": "SOBRE",
+        "toggleOn": "OFF",
+        "toggleOff": "ON",
         "outputMetaModel": "Modelo:",
-        "outputMetaTokens": "Fichas:",
+        "outputMetaTokens": "Tokens:",
         "outputMetaTime": "Tempo:",
         "tagInvitePrefix": "CONVIDADO :",
         "compressPanelTitle": "Compressão de tokens",
@@ -129,7 +129,8 @@
         "outputFormatXml": "XML",
         "outputFormatYaml": "YAML",
         "outputFormatCsv": "CSV",
-        "outputFormatSoon": "Em breve"
+        "outputFormatSoon": "Em breve",
+        "copyOutput": "Copiar o prompt reformulado"
     },
     "stt": {
         "blockAria": "Ditado por voz de voz",
@@ -570,7 +571,10 @@
         "blockContexts": "Prompts de contexto ({{count}})",
         "blockOutput": "Zona de saída",
         "contextsEmpty": "Nenhum prompt de contexto ativo nesta entrada.",
-        "contextUntitled": "Contexto"
+        "contextUntitled": "Contexto",
+        "previewIn": "In",
+        "previewOut": "Out",
+        "badgeAudioShort": "Áudio"
     },
     "contextGen": {
         "system": "Você é um gerador JSON para PromptDeMerde (reformulação de prompts).\nVocê não conversa: sem frase introdutória, sem pergunta, sem markdown, sem explicação.\nSaída OBRIGATÓRIA: um único objeto JSON com exatamente as chaves \"tag\" e \"prompt\".\nExemplo (invente sua própria tag, não copie): {\"tag\":\"UpperCase\",\"prompt\":\"Reformule sempre o texto em maiúsculas.\"}\nRegras da tag: uma palavra PascalCase (ex. FormalTone), apenas letras/dígitos, sem cerquilha.",
@@ -945,7 +949,7 @@
         "llmOptionsBadgeCustom": "{{count}} configurações",
         "llmOptionsBadgeRefused": "NEGADO",
         "historySaveFail": "Não foi possível guardar o histórico de limpezas.",
-        "historyEmpty": "Entrada proibida.",
+        "historyEmpty": "Nenhuma entrada.",
         "historyPurgeTitle": "Limpe toda a história local",
         "dictationStoppedForClean": "Ditado por voz parado — a limpar o texto atual.",
         "customProfileSynopsis": "Perfil {{label}} — configuração personalizada PromptDeMerde.",
@@ -1007,7 +1011,8 @@
         "imageOllamaUnreachable": "Ollama inacessível. Inicia o Ollama e verifica Opções → LLM (URL / proxy).",
         "imageAnalyzeTimeout": "Tempo esgotado na análise. Tenta de novo ou um modelo mais leve (Prompts → Prompts de imagem).",
         "inferenceMetaDriftWarn": "Saída desviou das instruções do sistema (meta / sniper). Reduzir contextos ativos ou comprimir tokens.",
-        "inferenceMetaRetry": "Desvio meta detetado — instruções não seguidas."
+        "inferenceMetaRetry": "Desvio meta detetado — instruções não seguidas.",
+        "inferenceLengthLimit": "Saída interrompida — limite de tokens atingido. Aumentar Tokens de saída (Opções LLM) ou verificar num_predict."
     },
     "themes": {
         "families": {

@@ -85,7 +85,7 @@
         "reset": "다시 놓기",
         "historyTitle": "역사 LLM",
         "historyPurge": "숙청",
-        "historyEmpty": "출입이 불가능합니다.",
+        "historyEmpty": "항목이 없습니다.",
         "thinkingTitle": "🧠 모델 사고",
         "modelLabel": "모델",
         "modelTitle": "모델 변경 LLM",
@@ -104,8 +104,8 @@
         "maxTokensAria": "최대 출력 토큰",
         "timeout": "시간 초과 추론",
         "timeoutAria": "추론 시간 초과(초)",
-        "toggleOn": "끄다",
-        "toggleOff": "에",
+        "toggleOn": "OFF",
+        "toggleOff": "ON",
         "outputMetaModel": "모델:",
         "outputMetaTokens": "토큰:",
         "outputMetaTime": "시간:",
@@ -129,7 +129,8 @@
         "outputFormatXml": "XML",
         "outputFormatYaml": "YAML",
         "outputFormatCsv": "CSV",
-        "outputFormatSoon": "곧 제공"
+        "outputFormatSoon": "곧 제공",
+        "copyOutput": "재작성된 프롬프트 복사"
     },
     "stt": {
         "blockAria": "음성 받아쓰기",
@@ -570,7 +571,10 @@
         "blockContexts": "컨텍스트 프롬프트 ({{count}})",
         "blockOutput": "출력 영역",
         "contextsEmpty": "이 항목에 활성 컨텍스트 프롬프트가 없습니다.",
-        "contextUntitled": "컨텍스트"
+        "contextUntitled": "컨텍스트",
+        "previewIn": "입력",
+        "previewOut": "출력",
+        "badgeAudioShort": "오디오"
     },
     "contextGen": {
         "system": "당신은 PromptDeMerde(프롬프트 재작성)용 JSON 생성기입니다.\n대화하지 않습니다: 도입 문장, 질문, markdown, 설명 금지.\n필수 출력: \"tag\"와 \"prompt\" 키만 정확히 포함한 JSON 객체 하나.\n예시(직접 tag를 만들고 복사하지 말 것): {\"tag\":\"UpperCase\",\"prompt\":\"항상 텍스트를 대문자로 재작성한다.\"}\nTag 규칙: PascalCase 단어 하나(예 FormalTone), 문자/숫자만, # 기호 없음.",
@@ -945,7 +949,7 @@
         "llmOptionsBadgeCustom": "{{count}} 설정",
         "llmOptionsBadgeRefused": "거부됨",
         "historySaveFail": "정리 기록을 저장할 수 없습니다.",
-        "historyEmpty": "출입이 불가능합니다.",
+        "historyEmpty": "항목이 없습니다.",
         "historyPurgeTitle": "모든 로컬 기록 삭제",
         "dictationStoppedForClean": "받아쓰기 정지 — 현재 텍스트 정리 중.",
         "customProfileSynopsis": "프로필 {{label}} — PromptDeMerde 맞춤 설정.",
@@ -970,8 +974,8 @@
         "streamSpeed": "속도:",
         "streamSpeedThinking": "사고 속도:",
         "streamSpeedAvg": "평균 속도:",
-        "streamTokens": "Tokens:",
-        "streamChars": "문자 수:",
+        "streamTokens": "토큰:",
+        "streamChars": "문자:",
         "streamLimitReached": "한도 도달",
         "streamThinkingLimitReached": "사고 한도 도달",
         "streamInProgressBrain": "🧠 진행 중",
@@ -1007,7 +1011,8 @@
         "imageOllamaUnreachable": "Ollama에 연결할 수 없습니다. Ollama를 실행한 뒤 옵션 → LLM(URL / 프록시)을 확인하세요.",
         "imageAnalyzeTimeout": "분석 시간이 초과되었습니다. 다시 시도하거나 더 가벼운 모델을 쓰세요(프롬프트 → 이미지 프롬프트).",
         "inferenceMetaDriftWarn": "출력이 시스템 지시에서 벗어남(메타/스나이퍼). 활성 컨텍스트를 줄이거나 토큰을 압축할 것.",
-        "inferenceMetaRetry": "메타 이탈 감지 — 지시 미준수."
+        "inferenceMetaRetry": "메타 이탈 감지 — 지시 미준수.",
+        "inferenceLengthLimit": "출력 중단 — 토큰 한도 도달. 출력 토큰(LLM 옵션)을 높이거나 num_predict를 확인."
     },
     "themes": {
         "families": {
