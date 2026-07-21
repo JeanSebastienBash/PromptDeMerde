@@ -202,7 +202,11 @@ S.exportConfigForNewProfile = function() {
         audioMimeType: null,
         audioLastModified: null,
         audioRef: null,
-        audioSegmentCount: null
+        audioSegmentCount: null,
+        compressIncludeSystem: false,
+        compressIncludeContexts: false,
+        compressIncludeInput: false,
+        compressIncludeOutput: false
     };
     data.pdm_token_ollama = '';
     return data;
@@ -290,7 +294,11 @@ S.snapshotConfigForCustomProfile = function(config) {
         audioMimeType: null,
         audioLastModified: null,
         audioRef: null,
-        audioSegmentCount: null
+        audioSegmentCount: null,
+        compressIncludeSystem: false,
+        compressIncludeContexts: false,
+        compressIncludeInput: false,
+        compressIncludeOutput: false
     };
     snap.pdm_token_ollama = '';
     delete snap.pdm_audio_blobs;

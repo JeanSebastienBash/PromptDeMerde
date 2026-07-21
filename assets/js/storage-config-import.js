@@ -154,7 +154,11 @@ S._importConfigKeys = function(data) {
         audioMimeType: wsIn.audioMimeType != null ? String(wsIn.audioMimeType) : null,
         audioLastModified: wsIn.audioLastModified != null ? wsIn.audioLastModified : null,
         audioRef: wsIn.audioRef != null ? String(wsIn.audioRef) : null,
-        audioSegmentCount: wsIn.audioSegmentCount != null ? wsIn.audioSegmentCount : null
+        audioSegmentCount: wsIn.audioSegmentCount != null ? wsIn.audioSegmentCount : null,
+        compressIncludeSystem: wsIn.compressIncludeSystem === true,
+        compressIncludeContexts: wsIn.compressIncludeContexts === true,
+        compressIncludeInput: wsIn.compressIncludeInput === true,
+        compressIncludeOutput: wsIn.compressIncludeOutput === true
     });
     S.setSttDeviceId(data[S.KEYS.STT_DEVICE_ID]);
     S.setSttEngine(data[S.KEYS.STT_ENGINE]);
