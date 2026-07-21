@@ -93,6 +93,7 @@ var FALLBACK = {
             'assets/js/app.js',
             'assets/js/workspace-persistence.js',
             'assets/js/workspace-bind.js',
+            'assets/js/workspace-iterate.js',
             'assets/js/workspace-stream.js',
             'assets/js/workspace-refresh.js',
             'assets/js/profile-output-json.js',

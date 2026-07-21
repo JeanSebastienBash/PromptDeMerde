@@ -137,6 +137,7 @@ More videos will follow on the <a href="https://www.youtube.com/@DreamprojectAI/
     - 💾 [5.1.6. Workspace session autosave](#feat-5-1-6) — Input · Output · thinking · panel state kept in the browser
     - ⛔ [5.1.7. One Input mode at a time](#feat-5-1-7) — voice dictation · media · image · Reformulate do not run together
     - ⏱ [5.1.8. Thinking, Stop and stream metadata](#feat-5-1-8) — cancel mid-run; time · tokens · throughput · multipass index
+    - ↪ [5.1.9. Iterate conversation (↪)](#feat-5-1-9) — pack Output into Input as `#USER:` / `#SYSTEM:` transcript; edit; Reformulate again
   - ✧ [5.2. System prompt, `#Tag` contexts & generators](#feat-5-2)
     - #️⃣ [5.2.1. System prompt and context prompts (#Tag)](#feat-5-2-1) — system prompt plus stackable context prompts for Reformulate
     - 🧠 [5.2.2. Context prompt generators](#feat-5-2-2) — intention or title → new context prompt (`#Tag`) via Ollama
@@ -467,6 +468,18 @@ When the model supports it, thinking can be enabled with a character cap (0 = un
 </td>
 </tr>
 </table>
+
+---
+
+
+
+<a id="feat-5-1-9"></a>
+
+### ↪ 5.1.9. Iterate conversation (↪)
+
+After a Reformulate run, the **↪** button next to Reformulate rewrites **Input only**: it builds a `#USER:` / `#SYSTEM:` transcript from the current Input and Output (plain Output text; thinking is omitted). Blank lines inside each block are removed; blocks are separated by a single empty line. The last block is an empty `#USER:` ready for the next message. Edit Input, then click Reformulate again. The button does not call the model. Markers live inside the user message sent to Ollama; the Prompts system prompt and `#Tag` contexts still form the API `system` role. Long transcripts may trigger multi-pass Input chunking. Avoid compressing the Input while it holds a transcript.
+
+[Technical documentation](docs/Documentation.md#feat-5-1-9)
 
 ---
 

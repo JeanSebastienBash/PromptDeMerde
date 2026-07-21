@@ -856,6 +856,7 @@
         "resetLabel": "Reset",
         "resetTitle": "Reset input and result",
         "emptyPromptError": "No text in Input. Paste a prompt before cleaning.",
+        "iterateEmptyOutput": "No text in Output. Run inference before iterating.",
         "noContextError": "Enable the system prompt or at least one context prompt in Prompts.",
         "promptGuardHtml": "Enable the <a href=\"#prompts\">system prompt</a> or a <a href=\"#prompts\">context</a> to run the LLM.",
         "guardNoContextTitle": "Enable the system prompt or at least one context prompt in Prompts.",

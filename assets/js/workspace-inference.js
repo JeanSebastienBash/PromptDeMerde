@@ -357,6 +357,8 @@ A._doSniperiseAfterCompress = function() {
     if (cancelBtn) cancelBtn.style.display = 'inline-block';
     var sniperBtn = document.getElementById('sniperise-btn');
     if (sniperBtn) { sniperBtn.disabled = true; sniperBtn.textContent = wu() ? wu().submitLabelRunning() : wuText('submitLabelRunning'); }
+    var iterateBtn = document.getElementById('ws-iterate-btn');
+    if (iterateBtn) iterateBtn.disabled = true;
     var sttBtn = document.getElementById('stt-btn');
     if (sttBtn) sttBtn.disabled = true;
     var resetBtnsStart = document.querySelectorAll('.ws-reset-btn');
@@ -626,6 +628,8 @@ A._doSniperiseAfterCompress = function() {
             sniperBtnEnd.disabled = false;
             sniperBtnEnd.textContent = wu() ? wu().submitLabel() : SNIPERISE_BTN_LABEL;
         }
+        var iterateBtnEnd = document.getElementById('ws-iterate-btn');
+        if (iterateBtnEnd) iterateBtnEnd.disabled = false;
         var resetBtnsEnd = document.querySelectorAll('.ws-reset-btn');
         for (var rei = 0; rei < resetBtnsEnd.length; rei++) {
             resetBtnsEnd[rei].disabled = false;

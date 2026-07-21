@@ -856,6 +856,7 @@
         "resetLabel": "Zurücksetzen",
         "resetTitle": "Eingabe und Ergebnis zurücksetzen",
         "emptyPromptError": "Kein Text in Input. Vor dem Bereinigen einen Prompt einfügen.",
+        "iterateEmptyOutput": "Kein Text in Output. Vor dem Iterieren eine Inferenz starten.",
         "noContextError": "Systemprompt oder mindestens einen Kontext-Prompt unter Prompts aktivieren.",
         "promptGuardHtml": "<a href=\"#prompts\">Systemprompt</a> oder einen <a href=\"#prompts\">Kontext</a> aktivieren, um das LLM zu starten.",
         "guardNoContextTitle": "Systemprompt oder mindestens einen Kontext-Prompt unter Prompts aktivieren.",

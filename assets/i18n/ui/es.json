@@ -856,6 +856,7 @@
         "resetLabel": "Restablecer",
         "resetTitle": "Restablecer entrada y resultado",
         "emptyPromptError": "No hay texto en Input. Pegar un prompt antes de limpiar.",
+        "iterateEmptyOutput": "Ningún texto en Output. Lanzar una inferencia antes de iterar.",
         "noContextError": "Activar el prompt del sistema o al menos un prompt de contexto en Prompts.",
         "promptGuardHtml": "Activar el <a href=\"#prompts\">prompt del sistema</a> o un <a href=\"#prompts\">contexto</a> para lanzar el LLM.",
         "guardNoContextTitle": "Activar el prompt del sistema o al menos un prompt de contexto en Prompts.",

@@ -856,6 +856,7 @@
         "resetLabel": "リセット",
         "resetTitle": "入力と結果をリセット",
         "emptyPromptError": "Inputにテキストがありません。クリーニング前にプロンプトを貼り付けてください。",
+        "iterateEmptyOutput": "Output にテキストがありません。反復の前に推論を実行してください。",
         "noContextError": "Promptsでシステムプロンプトまたは少なくとも1つのコンテキストプロンプトを有効にしてください。",
         "promptGuardHtml": "LLMを実行するには<a href=\"#prompts\">システムプロンプト</a>または<a href=\"#prompts\">コンテキスト</a>を有効にしてください。",
         "guardNoContextTitle": "Promptsでシステムプロンプトまたは少なくとも1つのコンテキストプロンプトを有効にしてください。",

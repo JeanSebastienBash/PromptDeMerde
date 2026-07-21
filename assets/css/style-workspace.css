@@ -2268,6 +2268,20 @@ body.history-modal-open {
     color:var(--text-on-accent);
     border-color:var(--role-error-text, var(--error));
 }
+.ws-iterate-btn {
+    flex-shrink:0;
+    min-width:48px;
+    padding:10px 14px;
+    font-size:1.25rem;
+    line-height:1;
+    background:color-mix(in srgb, var(--role-options, var(--accent)) 55%, var(--role-stream, var(--surface-2, #333)) 45%);
+    color:var(--role-options-text, var(--text-white));
+    border-color:color-mix(in srgb, var(--role-options, var(--accent)) 70%, var(--border) 30%);
+}
+.ws-iterate-btn:disabled {
+    opacity:.45;
+    cursor:not-allowed;
+}
 .output-field-wrap {
     position:relative;
 }

@@ -176,7 +176,7 @@ CS.WORKSPACE_UI_BRAND_WORD_MAX = 32;
 CS.WORKSPACE_UI_TEXT_KEYS = [
     'inputPlaceholder', 'inputAriaLabel', 'outputPlaceholder', 'outputPendingPlaceholder', 'thinkingPlaceholder',
     'submitLabel', 'submitLabelRunning', 'cancelLabel', 'resetLabel', 'resetTitle', 'resetConfirm',
-    'emptyPromptError', 'noContextError', 'promptGuardHtml', 'guardNoContextTitle',
+    'emptyPromptError', 'iterateEmptyOutput', 'noContextError', 'promptGuardHtml', 'guardNoContextTitle',
     'inferenceCancelNotif', 'copyThinkingEmpty', 'inferenceRunningReset',
     'dictationRunningReset', 'dictationRunningClear', 'inferenceRunningDictation',
     'inferenceConnecting', 'inferenceRunningPlaceholder', 'inferenceFinalizing',
@@ -267,6 +267,7 @@ CS.DEFAULT_WORKSPACE_UI = {
         resetTitle: 'R\u00e9initialiser saisie et r\u00e9sultat',
         resetConfirm: 'R\u00e9initialiser la saisie et le r\u00e9sultat\u00a0? Cette action est irr\u00e9versible.',
         emptyPromptError: 'Aucun texte dans Input. Coller un prompt avant de nettoyer.',
+        iterateEmptyOutput: 'Aucun texte dans Output. Lancer une inf\u00e9rence avant d\u2019it\u00e9rer.',
         noContextError: 'Activer le prompt syst\u00e8me ou au moins un prompt de contexte dans Prompts.',
         promptGuardHtml: 'Activer le <a href="#prompts">prompt syst\u00e8me</a> ou un <a href="#prompts">contexte</a> pour lancer le LLM.',
         guardNoContextTitle: 'Activer le prompt syst\u00e8me ou au moins un prompt de contexte dans Prompts.',

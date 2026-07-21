@@ -856,6 +856,7 @@
         "resetLabel": "Reimposta",
         "resetTitle": "Reimposta input e risultato",
         "emptyPromptError": "Nessun testo in Input. Incollare un prompt prima di pulire.",
+        "iterateEmptyOutput": "Nessun testo in Output. Avviare un'inferenza prima di iterare.",
         "noContextError": "Attivare il prompt di sistema o almeno un prompt di contesto in Prompts.",
         "promptGuardHtml": "Attivare il <a href=\"#prompts\">prompt di sistema</a> o un <a href=\"#prompts\">contesto</a> per avviare l’LLM.",
         "guardNoContextTitle": "Attivare il prompt di sistema o almeno un prompt di contesto in Prompts.",

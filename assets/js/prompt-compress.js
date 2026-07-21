@@ -578,6 +578,7 @@ function restoreWorkspaceChromeAfterCompress() {
     var A = window.PDM.App;
     var cancelBtn = document.getElementById('cancel-btn');
     var sniper = document.getElementById('sniperise-btn');
+    var iterateBtn = document.getElementById('ws-iterate-btn');
     var resetBtns = document.querySelectorAll('.ws-reset-btn');
     var inferActive = A && A.isInferenceActive ? A.isInferenceActive() : false;
 
@@ -590,6 +591,7 @@ function restoreWorkspaceChromeAfterCompress() {
             }
             sniper.title = '';
         }
+        if (iterateBtn) iterateBtn.disabled = false;
         for (var ri = 0; ri < resetBtns.length; ri++) {
             resetBtns[ri].disabled = false;
             resetBtns[ri].title = wuText('resetTitle');
@@ -611,6 +613,7 @@ function setCompressUiBusy(busy) {
     var lock = document.getElementById('ws-output-compress-lock');
     var status = document.getElementById('ws-compress-status');
     var sniper = document.getElementById('sniperise-btn');
+    var iterateBtn = document.getElementById('ws-iterate-btn');
     var chips = document.querySelectorAll('#ws-prompt-compress .ws-compress-chip:not(.is-disabled) input');
 
     if (cancelLock) {
@@ -635,6 +638,9 @@ function setCompressUiBusy(busy) {
     if (sniper && busy) {
         sniper.disabled = true;
         sniper.title = wuText('compressLockOutput');
+    }
+    if (iterateBtn && busy) {
+        iterateBtn.disabled = true;
     }
     for (var c = 0; c < chips.length; c++) {
         chips[c].disabled = !!busy;

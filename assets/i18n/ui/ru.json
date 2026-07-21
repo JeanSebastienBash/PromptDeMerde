@@ -856,6 +856,7 @@
         "resetLabel": "Перезагрузить",
         "resetTitle": "Сбросить ввод и результат",
         "emptyPromptError": "В Input нет текста. Вставьте промпт перед очисткой.",
+        "iterateEmptyOutput": "Нет текста в Output. Запустить вывод модели перед итерацией.",
         "noContextError": "Включите системный промпт или хотя бы один контекстный промпт в Prompts.",
         "promptGuardHtml": "Включите <a href=\"#prompts\">системный промпт</a> или <a href=\"#prompts\">контекст</a>, чтобы запустить LLM.",
         "guardNoContextTitle": "Включите системный промпт или хотя бы один контекстный промпт в Prompts.",

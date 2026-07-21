@@ -856,6 +856,7 @@
         "resetLabel": "Reset",
         "resetTitle": "Réinitialiser saisie et résultat",
         "emptyPromptError": "Aucun texte dans Input. Coller un prompt avant de nettoyer.",
+        "iterateEmptyOutput": "Aucun texte dans Output. Lancer une inférence avant d’itérer.",
         "noContextError": "Activer le prompt système ou au moins un prompt de contexte dans Prompts.",
         "promptGuardHtml": "Activer le <a href=\"#prompts\">prompt système</a> ou un <a href=\"#prompts\">contexte</a> pour lancer le LLM.",
         "guardNoContextTitle": "Activer le prompt système ou au moins un prompt de contexte dans Prompts.",

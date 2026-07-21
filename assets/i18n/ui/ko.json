@@ -856,6 +856,7 @@
         "resetLabel": "다시 놓기",
         "resetTitle": "입력 및 결과 재설정",
         "emptyPromptError": "Input에 텍스트가 없습니다. 정리 전에 프롬프트를 붙여넣으세요.",
+        "iterateEmptyOutput": "Output에 텍스트가 없습니다. 반복 전에 추론을 실행하십시오.",
         "noContextError": "Prompts에서 시스템 프롬프트 또는 컨텍스트 프롬프트를 하나 이상 사용하세요.",
         "promptGuardHtml": "LLM을 실행하려면 <a href=\"#prompts\">시스템 프롬프트</a> 또는 <a href=\"#prompts\">컨텍스트</a>를 사용하세요.",
         "guardNoContextTitle": "Prompts에서 시스템 프롬프트 또는 컨텍스트 프롬프트를 하나 이상 사용하세요.",

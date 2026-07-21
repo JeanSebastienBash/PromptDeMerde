@@ -856,6 +856,7 @@
         "resetLabel": "Restarigi",
         "resetTitle": "Restarigi enigon kaj rezulton",
         "emptyPromptError": "Neniu teksto en Input. Algluu prompton antaŭ purigado.",
+        "iterateEmptyOutput": "Neniu teksto en Output. Lanĉi inferencon antaŭ ol iteracii.",
         "noContextError": "Aktivigu la sisteman prompton aŭ almenaŭ unu kuntekstan prompton en Prompts.",
         "promptGuardHtml": "Aktivigu la <a href=\"#prompts\">sisteman prompton</a> aŭ <a href=\"#prompts\">kuntekston</a> por lanĉi la LLM.",
         "guardNoContextTitle": "Aktivigu la sisteman prompton aŭ almenaŭ unu kuntekstan prompton en Prompts.",

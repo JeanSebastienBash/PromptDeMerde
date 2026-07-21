@@ -114,6 +114,7 @@ A._boot = function() {
             bootChain.then(function() {
             A.router();
             A.bindWorkspace();
+            if (A.bindWorkspaceIterate) A.bindWorkspaceIterate();
             A.bindHistory();
             A.bindLlmOptions();
             A.bindWorkspaceLlmConfig();

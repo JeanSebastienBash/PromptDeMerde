@@ -36,6 +36,7 @@ This document is the **long-form technical counterpart** of [`README.md`](../REA
     - 💾 [5.1.6. Workspace session autosave](#feat-5-1-6)
     - ⛔ [5.1.7. One Input mode at a time](#feat-5-1-7)
     - ⏱ [5.1.8. Thinking, Stop and stream metadata](#feat-5-1-8)
+    - ↪ [5.1.9. Iterate conversation (↪)](#feat-5-1-9)
   - ✧ [5.2. System prompt, `#Tag` contexts & generators](#feat-5-2)
     - #️⃣ [5.2.1. System prompt and context prompts (#Tag)](#feat-5-2-1)
     - 🧠 [5.2.2. Context prompt generators](#feat-5-2-2)
@@ -108,7 +109,8 @@ Technically it is an HTML/CSS/JavaScript **SPA** (IIFE modules under `window.PDM
 
 | Present in the repository | Absent from the shipped application runtime |
 |---------------------------|---------------------------------------------|
-| Reformulation via Ollama (raw-prompt clean-up / structuring) | Autonomous multi-turn chatbot |
+| Reformulation via Ollama (raw-prompt clean-up / structuring) | Autonomous multi-turn chatbot (API chat roles) |
+| Manual iterate button (`#ws-iterate-btn` ↪) packing `#USER:` / `#SYSTEM:` into Input | Native Ollama multi-message `assistant` turns |
 | Browser STT (Vosk, Whisper, Parakeet) | Mandated cloud transcription service |
 | Optional PHP proxy toward Ollama | Server database of user raw prompts / session state |
 | Bundled `speech2texte` profile | Requirement for a user account |
@@ -470,6 +472,46 @@ Flags: `inferActive`, `dictationActive`, `audioMode`, `audioProcessing`, `imageP
 ### Metadata / limits (i18n `workspace.*`)
 
 `streamTime`, `streamTokens`, `streamThinking*`, `streamSpeed*`, multipass `pass: i/n`, thinking-limit notifs (`inferenceThinkingLimitDone`), meta-drift warnings (`inferenceMetaDriftWarn` / `inferenceMetaRetry`).
+
+---
+
+<a id="feat-5-1-9"></a>
+### ↪ 5.1.9. Iterate conversation (↪)
+
+### Intent
+
+Pack the current Workspace turn into Input so the next Reformulate continues a discussion. **No LLM call** on click.
+
+### DOM / files
+
+- **Button:** `#ws-iterate-btn` (label `↪`, no tooltip / no `data-i18n`) in `.ws-output-actions-primary` after `#sniperise-btn`
+- **Module:** `assets/js/workspace-iterate.js` (`A.doIterateConversation`, `A.bindWorkspaceIterate`)
+- **CSS:** `.ws-iterate-btn` in `style-workspace.css` (theme tokens `--role-options` / `--role-stream`)
+- **Busy:** disabled while inference or token compression is active (same gates as Reformulate)
+
+### Protocol (in Input text)
+
+- `#USER:` — human turns (prior Input)
+- `#SYSTEM:` — model turns (plain Output via `extractPlainOutput`; thinking omitted)
+- No blank lines inside a block; one empty line between blocks
+- First click wraps unstructured Input + Output and appends an empty `#USER:`
+- Later clicks append `#SYSTEM:` + empty `#USER:` onto an existing transcript
+- Homonym: in-band `#SYSTEM:` ≠ Ollama API `system` role (`buildSystemWithProfiles` unchanged)
+
+### Gates / notifs (`workspaceUi`)
+
+| Condition | Key / behaviour |
+|-----------|-----------------|
+| Empty Output | `iterateEmptyOutput` |
+| Inference running | `inferenceRunningReset` |
+| Voice dictation active | `dictationRunningClear` |
+| Compression lock | `compressLockOutput` |
+
+### Side effects
+
+- Clears Output after packing (Input change would clear it via `syncWorkspaceOutputWithInput` anyway)
+- Autosaves `pdm_workspace`; does **not** append `pdm_clean_history`
+- Long transcripts may hit Input multi-pass (`InputChunk`); do not compress Input while it holds a transcript
 
 ---
 
@@ -919,7 +961,7 @@ The modules involved are `workspace-input-chunk.js` and `workspace-inference.js`
   - Status `#ws-compress-status`
   - Output lock overlay `#ws-output-compress-lock` on `.ws-panel.ws-output` (`.ws-compress-locked`, `aria-busy`)
   - Stop `#ws-compress-cancel-btn-lock` → `PC.cancel` / `cancelCompress()`
-  - `#cancel-btn` also shown while busy; `#sniperise-btn` disabled with title `workspace.compressLockOutput`
+  - `#cancel-btn` also shown while busy; `#sniperise-btn` and `#ws-iterate-btn` disabled (sniperise title `workspace.compressLockOutput`)
 - **Session marks:** `sessionStorage` key `pdm_ws_compress_marks`; chips can show `is-compressed` / `data-compressed`
 - **Inference gate:** `PC.maybeRunBeforeInference` / `maybeRunAfterInference`; while busy, Reformulate is refused (`compressBusyInference` / early return in `workspace-inference.js` when `_compressActive`)
 - **Notifs (i18n `workspace.*`):** `compressCancelled`, `compressDoneNotif`, `compressError`, `compressNoActiveContexts`, …

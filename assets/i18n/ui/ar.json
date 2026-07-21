@@ -856,6 +856,7 @@
         "resetLabel": "إعادة ضبط",
         "resetTitle": "إعادة تعيين المدخلات والنتيجة",
         "emptyPromptError": "لا يوجد نص في Input. الصق مطالبة قبل التنظيف.",
+        "iterateEmptyOutput": "لا نص في Output. تشغيل الاستدلال قبل التكرار.",
         "noContextError": "فعّل موجه النظام أو مطالبة سياق واحدة على الأقل في Prompts.",
         "promptGuardHtml": "فعّل <a href=\"#prompts\">موجه النظام</a> أو <a href=\"#prompts\">سياقًا</a> لتشغيل LLM.",
         "guardNoContextTitle": "فعّل موجه النظام أو مطالبة سياق واحدة على الأقل في Prompts.",

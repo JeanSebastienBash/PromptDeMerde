@@ -856,6 +856,7 @@
         "resetLabel": "重置",
         "resetTitle": "重置输入和结果",
         "emptyPromptError": "Input 中没有文本。清理前请粘贴提示。",
+        "iterateEmptyOutput": "Output 中无文本。请先运行推理再迭代。",
         "noContextError": "在 Prompts 中启用系统提示或至少一个上下文提示。",
         "promptGuardHtml": "启用<a href=\"#prompts\">系统提示</a>或<a href=\"#prompts\">上下文</a>以启动 LLM。",
         "guardNoContextTitle": "在 Prompts 中启用系统提示或至少一个上下文提示。",
