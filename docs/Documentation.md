@@ -1542,7 +1542,7 @@ Without `PDM_ENV` on a test vhost, **SELF-HOSTED** behaviour is the expected beh
 - **File:** `workspace-ui-profile.js`
 - **Storage:** `pdm_workspace_ui.brand` — `firstWord`, `secondWord`, `extension`, `showExtension`, colour/class fields
 - **Apply:** `WU.applyBrand()` → `#nav-logo-link` (`.logo-gt`, `.logo-word1` / `.logo-word2`, …)
-- **Identity:** `.prompt-username-inverted` / `.prompt-suffix`
+- **Identity:** `.prompt-username-inverted` / `.prompt-suffix` from `pdm_workspace_ui.identity` (`applyIdentity` — hostname live, not `nav.promptSuffix`)
 - **Feature flag:** `features.brandNavExtension` (`env.js` / `data-pdm-brand-nav-ext`) — when rebranded away from default, trailing `.com` can be hidden
 
 ### Synopsis

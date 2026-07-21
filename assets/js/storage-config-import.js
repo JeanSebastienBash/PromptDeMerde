@@ -38,8 +38,10 @@ S.setProfileBundleFingerprint = function(fp) {
     return S.set(S.PROFILE_BUNDLE_FP_KEY, fp != null ? String(fp) : '');
 };
 
-S.applyProfileBundle = function(config) {
+S.applyProfileBundle = function(config, options) {
     if (!config || typeof config !== 'object') return false;
+    options = options || {};
+    var preserveChrome = options.preserveSessionChrome === true;
 
     if (config[S.KEYS.SYSTEM_PROMPT]) {
         S.set(S.KEYS.SYSTEM_PROMPT, config[S.KEYS.SYSTEM_PROMPT]);
@@ -74,13 +76,19 @@ S.applyProfileBundle = function(config) {
     }
 
     if (config[S.KEYS.WORKSPACE_UI]) {
-        S.setWorkspaceUi(config[S.KEYS.WORKSPACE_UI]);
+        var hasLocalUi = !!S.get(S.KEYS.WORKSPACE_UI);
+        if (!preserveChrome || !hasLocalUi) {
+            S.setWorkspaceUi(config[S.KEYS.WORKSPACE_UI]);
+        }
     }
     if (config[S.KEYS.ACTIVE_PROFILE]) {
         S.setActiveProfile(config[S.KEYS.ACTIVE_PROFILE]);
     }
     if (config[S.KEYS.PROJECT]) {
-        S.setProject(config[S.KEYS.PROJECT]);
+        var hasLocalProject = !!S.getProject();
+        if (!preserveChrome || !hasLocalProject) {
+            S.setProject(config[S.KEYS.PROJECT]);
+        }
     }
 
     S.applyProfileGenPrompts(config);

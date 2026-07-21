@@ -189,13 +189,7 @@ WU.applyIdentity = function() {
 
     var suffixEl = document.querySelector('.prompt-suffix');
     if (suffixEl) {
-        var I = window.PDM && window.PDM.I18n;
-        var localized = (I && typeof I.t === 'function') ? I.t('nav.promptSuffix') : '';
-        if (localized && localized !== 'nav.promptSuffix') {
-            suffixEl.textContent = localized;
-        } else {
-            suffixEl.textContent = '@' + hostname + ':~# ';
-        }
+        suffixEl.textContent = '@' + hostname + ':~# ';
     }
 
     if (window.PDM && window.PDM.AnimationInversion && typeof window.PDM.AnimationInversion.refreshIdentity === 'function') {
@@ -468,7 +462,7 @@ WU.syncFromActiveProfile = function() {
                     config = PBun.mergeLoadedConfig(config, bundle, activeId);
                 }
                 var synopsis = getBundledSynopsis(activeId);
-                if (synopsis) {
+                if (synopsis && !String(window.PDM.Storage.getProfileSynopsis() || '').trim()) {
                     window.PDM.Storage.setProfileSynopsis(synopsis);
                     window.PDM.Storage.set('pdm_profile_synopsis_lang', locale);
                 }
@@ -481,7 +475,7 @@ WU.syncFromActiveProfile = function() {
                         String(storedPrompt) !== String(config.pdm_system_prompt);
                 }
                 if (!needsSync) return false;
-                window.PDM.Storage.applyProfileBundle(config);
+                window.PDM.Storage.applyProfileBundle(config, { preserveSessionChrome: true });
                 return true;
             });
         }
@@ -492,7 +486,7 @@ WU.syncFromActiveProfile = function() {
                     return false;
                 }
                 var synopsis = getBundledSynopsis(activeId);
-                if (synopsis) {
+                if (synopsis && !String(window.PDM.Storage.getProfileSynopsis() || '').trim()) {
                     window.PDM.Storage.setProfileSynopsis(synopsis);
                     window.PDM.Storage.set('pdm_profile_synopsis_lang', getAssembleLang());
                 }
@@ -510,7 +504,7 @@ WU.syncFromActiveProfile = function() {
                 if (typeof window.PDM.Storage.applyProfileBundle !== 'function') {
                     return false;
                 }
-                window.PDM.Storage.applyProfileBundle(config);
+                window.PDM.Storage.applyProfileBundle(config, { preserveSessionChrome: true });
                 return true;
             });
     })()

@@ -805,9 +805,10 @@ function reconcileBootProfile(manifest, loadedId, config) {
     }
     if (!mustApply) return;
 
-    S.applyProfileBundle(cfg);
+    S.applyProfileBundle(cfg, { preserveSessionChrome: true });
     var syn = manifestSynopsisForId(manifest, loadedId);
-    if (syn && typeof S.setProfileSynopsis === 'function') {
+    if (syn && typeof S.setProfileSynopsis === 'function' &&
+        !String(S.getProfileSynopsis() || '').trim()) {
         S.setProfileSynopsis(syn);
         if (typeof I18n.getProfileLang === 'function') {
             S.set('pdm_profile_synopsis_lang', I18n.getProfileLang());
