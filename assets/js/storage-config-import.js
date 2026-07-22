@@ -465,8 +465,16 @@ S.importConfigZip = function(arrayBuffer, options) {
             if (bundle.manifest && bundle.manifest.label) {
                 regOpts.exportLabel = String(bundle.manifest.label).trim();
             }
+            /* Synopsis header : marketplace.synopsis_short OU manifest.synopsis (Creator).
+               Sans ça → fallback i18n « Profil X — configuration importée… » (pas le slogan). */
+            var importSyn = '';
             if (marketplace && marketplace.synopsis_short) {
-                regOpts.synopsis = marketplace.synopsis_short;
+                importSyn = String(marketplace.synopsis_short).trim();
+            } else if (bundle.manifest && bundle.manifest.synopsis) {
+                importSyn = String(bundle.manifest.synopsis).trim();
+            }
+            if (importSyn) {
+                regOpts.synopsis = importSyn.slice(0, 100);
             }
             var registered = PS.registerImportedConfig(normalized, regOpts);
             if (registered && registered.id && PBun &&
@@ -486,9 +494,14 @@ S.importConfigZip = function(arrayBuffer, options) {
 
         S._importConfigKeys(normalized);
 
-        if (marketplace && marketplace.synopsis_short &&
-            typeof S.setProfileSynopsis === 'function') {
-            S.setProfileSynopsis(marketplace.synopsis_short);
+        var synToStore = '';
+        if (marketplace && marketplace.synopsis_short) {
+            synToStore = String(marketplace.synopsis_short).trim();
+        } else if (bundle.manifest && bundle.manifest.synopsis) {
+            synToStore = String(bundle.manifest.synopsis).trim();
+        }
+        if (synToStore && typeof S.setProfileSynopsis === 'function') {
+            S.setProfileSynopsis(synToStore.slice(0, 100));
             S.set('pdm_profile_synopsis_lang',
                 String(S.getLanguage ? S.getLanguage() : locale).trim() || 'fr');
         }
@@ -496,6 +509,11 @@ S.importConfigZip = function(arrayBuffer, options) {
         if (window.PDM && window.PDM.I18n &&
             typeof window.PDM.I18n.rehydrateUserBundleFromStorage === 'function') {
             window.PDM.I18n.rehydrateUserBundleFromStorage();
+        }
+
+        if (window.PDM && window.PDM.UI &&
+            typeof window.PDM.UI.setUntrustedProfileDisplay === 'function') {
+            window.PDM.UI.setUntrustedProfileDisplay(true);
         }
 
         return { ok: true, format: 'pdm-profile-zip' };
