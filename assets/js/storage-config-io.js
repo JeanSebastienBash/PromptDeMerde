@@ -2,7 +2,7 @@
  * PromptDeMerde.com — storage-config-io.js
  *
  * Synopsis : Export/import JSON pdm-config (cœur) et profils personnels.
- * Objectif : Étendre PDM.Storage avec exportConfig et le CRUD profils perso ; blobs audio dans storage-config-audio.js, import/bundle dans storage-config-import.js.
+ * Objectif : Étendre PDM.Storage avec exportConfig et le CRUD profils perso ; blobs audio dans storage-config-audio.js ; import dans storage-config-import-*.js.
  */
 (function(){
 

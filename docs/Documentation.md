@@ -1086,7 +1086,7 @@ i18n/               # MAXIMAL preset only
 5. Unknown source dialog; strip `pdm_token_ollama` if third-party.
 6. `wipeAllUserData()` then apply.
 
-The files involved are `profile-bundle-loader.js`, `storage-config-import.js`, and `settings-ui.js`.
+The files involved are `profile-bundle-loader.js`, `storage-config-import-*.js`, and `settings-ui.js`.
 
 Export fills each `pdm_*` key through Storage getters (`Storage._exportValueForKey`), not raw `localStorage` nulls. On import, `ConfigSchema.normalizeLegacyConfig` coerces a non-boolean `pdm_output_json_enabled` to `false` and an invalid `pdm_output_display_format` to `text` before `validatePdmConfig` (strict boolean / enum). The key set and schema types stay unchanged.
 
@@ -2116,7 +2116,7 @@ The total is **147** versioned `assets/js/*.js` files (excluding vendor). Roles 
 |---|---|
 | [`storage-audio-blobs.js`](../assets/js/storage-audio-blobs.js) | Local storage of imported audio files (IndexedDB). |
 | [`storage-config-audio.js`](../assets/js/storage-config-audio.js) | Async export/import of voice-dictation audio blobs into pdm-config. |
-| [`storage-config-import.js`](../assets/js/storage-config-import.js) | pdm-config import (validation, wipe, apply) and profile bundle. |
+| [`storage-config-import-*.js`](../assets/js/storage-config-import-zip.js) | pdm-config / ZIP import (fp, apply, keys, synopsis, json, zip). |
 | [`storage-config-io.js`](../assets/js/storage-config-io.js) | pdm-config JSON export/import (core) and personal profiles. |
 | [`storage-core.js`](../assets/js/storage-core.js) | localStorage primitives and pdm_ key constants. |
 | [`storage-history.js`](../assets/js/storage-history.js) | Clean history, session migration, and data purge. |

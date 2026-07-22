@@ -13,7 +13,7 @@
 
 | Path under `assets/js/vendor/` | Role | Consumer module |
 |--------|------|---------------------|
-| `jszip.min.js` | Browser ZIP | `profile-bundle-export.js`, `storage-config-import.js` |
+| `jszip.min.js` | Browser ZIP | `profile-bundle-export.js`, `storage-config-import-zip.js` |
 | `vosk/vosk.js` | Vosk WASM API | `stt-vosk-engine.js`, `stt-vosk-model.js` |
 | `parakeet/parakeet-lib.js` | Parakeet ONNX | `stt-parakeet.js`, `stt-parakeet-engine.js` |
 | `transformers/transformers-lib.js` | HuggingFace Transformers (minified) | `stt-whisper-worker.js` |
