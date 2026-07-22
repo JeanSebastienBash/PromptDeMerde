@@ -26,6 +26,16 @@ The runtime default profile is `manifest.defaultProfileId` (API `lib/api/manifes
 
 The public tree ships **ready-to-import** free archives under [`zip/free-profile/`](../zip/free-profile/) (at least **Speech2Texte** and **PromptListStructurator**, matching `CS.VERSION`). Operators may add any valid profile `.zip` there — **renaming is allowed**; the Options selector reads **label and version from inside the archive** after client validation (filename is only a light hint / safety filter). Recommended factory names (`{Pascal}-JsonProfile-v…` or legacy `*-promptdemerde-profile-v…`) remain useful for humans, not a listing gate. The app lists candidates via `lib/api/zip-profiles.php` (light metadata + ETag) and shows **validated** packs in **Options → JSON profile**.
 
+### Selector order (canon)
+
+Options → JSON profile lists packs in this order:
+
+1. **Native** (`(native)`) — alphabetical by label  
+2. **Free** (zip drop + imports free) — alphabetical by label  
+3. **Premium** — alphabetical by label  
+
+Within each group, sorting uses the UI locale (`localeCompare`, base sensitivity).
+
 ### Selector badges (canon)
 
 | Origin | Badges |

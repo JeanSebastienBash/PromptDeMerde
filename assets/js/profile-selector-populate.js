@@ -1,8 +1,6 @@
 /**
  * PromptDeMerde.com — profile-selector-populate.js
- *
- * Synopsis : Remplissage du sélecteur Profil JSON (native, zip drop, import).
- * Objectif : Une option par pack ; suffixes via formatProfileOptionLabel.
+ * Remplissage sélecteur Profil JSON — ordre native → free → premium, puis A–Z.
  */
 (function() {
 
@@ -18,6 +16,27 @@ function verOf(extra) {
     if (typeof PS.resolveEntryVersion !== 'function') return '';
     return PS.resolveEntryVersion(extra || {});
 }
+
+/** 0 = native, 1 = free, 2 = premium */
+PS._selectorGroupRank = function(entry) {
+    var src = typeof PS._normalizeSource === 'function'
+        ? PS._normalizeSource(entry && entry.source)
+        : String((entry && entry.source) || '').trim().toLowerCase();
+    if (src === 'native') return 0;
+    var tier = typeof PS._normalizeTier === 'function'
+        ? PS._normalizeTier(entry && entry.tier)
+        : String((entry && entry.tier) || 'free').trim().toLowerCase();
+    return tier === 'premium' ? 2 : 1;
+};
+
+PS._compareSelectorEntries = function(a, b) {
+    var ra = PS._selectorGroupRank(a);
+    var rb = PS._selectorGroupRank(b);
+    if (ra !== rb) return ra - rb;
+    var la = String((a && a.label) || (a && a.id) || '').toLowerCase();
+    var lb = String((b && b.label) || (b && b.id) || '').toLowerCase();
+    return la.localeCompare(lb, sortLocale(), { sensitivity: 'base' });
+};
 
 PS._entryExists = function(entries, id) {
     for (var i = 0; i < entries.length; i++) {
@@ -62,7 +81,7 @@ PS.populateSelector = function() {
             id: bp.id,
             label: bp.label || bp.id,
             source: 'native',
-            tier: 'free',
+            tier: PS._normalizeTier(bp.tier || 'free'),
             version: verOf(bp) || appVer
         });
     }
@@ -112,13 +131,7 @@ PS.populateSelector = function() {
         entries.push(orphan);
     }
 
-    entries.sort(function(a, b) {
-        return String(a.label).toLowerCase().localeCompare(
-            String(b.label).toLowerCase(),
-            sortLocale(),
-            { sensitivity: 'base' }
-        );
-    });
+    entries.sort(PS._compareSelectorEntries);
 
     sel.innerHTML = '';
     for (i = 0; i < entries.length; i++) {
