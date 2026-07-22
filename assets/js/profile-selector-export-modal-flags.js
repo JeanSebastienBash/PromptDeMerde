@@ -158,6 +158,9 @@ PS._exportModalState = function(els) {
         }
     }
     var label = els.labelInput ? String(els.labelInput.value || '').trim() : '';
+    if (typeof PS.normalizeProfileLabel === 'function') {
+        label = PS.normalizeProfileLabel(label);
+    }
     var cleanArchive = !!(els.cleanPure && els.cleanPure.checked);
     return {
         preset: preset,

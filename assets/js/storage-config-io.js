@@ -216,10 +216,12 @@ S.exportConfigForNewProfile = function() {
 S.CUSTOM_PROFILE_PREFIX = 'custom-';
 
 S.ensureCustomProfileId = function(id) {
-    var s = String(id || '').trim().toLowerCase();
-    s = s.replace(/[^a-z0-9-]+/g, '-').replace(/^-+|-+$/g, '');
+    var s = String(id || '').trim();
+    if (s.indexOf(S.CUSTOM_PROFILE_PREFIX) === 0) {
+        s = s.slice(S.CUSTOM_PROFILE_PREFIX.length);
+    }
+    s = s.replace(/[^a-zA-Z0-9]+/g, '').toLowerCase();
     if (!s) s = 'profile';
-    if (s.indexOf(S.CUSTOM_PROFILE_PREFIX) === 0) return s;
     return S.CUSTOM_PROFILE_PREFIX + s;
 };
 
@@ -244,14 +246,43 @@ S.saveCustomProfile = function(id, label, config, options) {
     var list = S.getCustomProfiles();
     var CS = window.PDM && window.PDM.ConfigSchema;
     var maxSyn = CS && CS.MAX_PROFILE_SYNOPSIS_LEN ? CS.MAX_PROFILE_SYNOPSIS_LEN : 100;
+    var prev = null;
+    for (var pi = 0; pi < list.length; pi++) {
+        if (list[pi] && list[pi].id === pid) {
+            prev = list[pi];
+            break;
+        }
+    }
     var entry = {
         id: pid,
-        label: String(label || pid),
+        label: (function() {
+            var PS = window.PDM && window.PDM.ProfileSelector;
+            var raw = String(label || pid);
+            if (PS && typeof PS.normalizeProfileLabel === 'function') {
+                return PS.normalizeProfileLabel(raw) || PS.toPascalProfileName(raw) || raw;
+            }
+            return raw;
+        })(),
         config: JSON.parse(JSON.stringify(config)),
         updatedAt: new Date().toISOString()
     };
     if (options.synopsis) {
         entry.synopsis = String(options.synopsis).trim().slice(0, maxSyn);
+    } else if (prev && prev.synopsis) {
+        entry.synopsis = prev.synopsis;
+    }
+    var source = options.source != null
+        ? String(options.source).trim().toLowerCase()
+        : (prev && prev.source ? String(prev.source).trim().toLowerCase() : '');
+    if (source === 'native' || source === 'zip') entry.source = source;
+    var tier = options.tier != null
+        ? String(options.tier).trim().toLowerCase()
+        : (prev && prev.tier ? String(prev.tier).trim().toLowerCase() : 'free');
+    entry.tier = tier === 'premium' ? 'premium' : 'free';
+    if (options.dropFilename != null && String(options.dropFilename).trim() !== '') {
+        entry.dropFilename = String(options.dropFilename).trim();
+    } else if (prev && prev.dropFilename) {
+        entry.dropFilename = prev.dropFilename;
     }
     var found = false;
     for (var i = 0; i < list.length; i++) {

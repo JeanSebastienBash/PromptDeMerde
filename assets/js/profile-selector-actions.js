@@ -171,7 +171,10 @@ PS.registerImportedConfig = function(config, options) {
         ? String(options.synopsis).trim()
         : profileSynopsis('imported', label);
     window.PDM.Storage.saveCustomProfile(id, label, snapshot, {
-        synopsis: synopsis
+        synopsis: synopsis,
+        source: options.source || '',
+        tier: options.tier || 'free',
+        dropFilename: options.dropFilename || ''
     });
     if (typeof window.PDM.Storage.setProfileSynopsis === 'function') {
         window.PDM.Storage.setProfileSynopsis(synopsis);
@@ -228,7 +231,9 @@ PS.createNewProfileJson = function() {
 
         var snapshot = window.PDM.Storage.snapshotConfigForCustomProfile(config);
         window.PDM.Storage.saveCustomProfile(id, label, snapshot, {
-            synopsis: profileSynopsis('custom', label)
+            synopsis: profileSynopsis('custom', label),
+            source: '',
+            tier: 'free'
         });
 
         PS._busy = true;

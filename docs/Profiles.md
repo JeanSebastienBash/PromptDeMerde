@@ -16,11 +16,43 @@ Each profile **bundled at boot** lives in its own folder. The **translated UI** 
 | Layer | Path | On public GitHub |
 |--------|--------|-------------------|
 | **Default profile** | `speech2texte/` + [`index.json`](../assets/profiles/index.json) | **Yes** — only profile served at boot |
-| **Other profiles** | user ZIP import | **No** — never a second folder under `assets/profiles/` |
+| **Other profiles** | user ZIP import **or** shared free ZIP drop | **No** second folder under `assets/profiles/` |
 
-> **Rule**: `assets/profiles/index.json` lists **only** `speech2texte`. Extensions come from **ZIP import** (localStorage `pdm_custom_profiles`) — not as a versioned folder here.
+> **Rule**: `assets/profiles/index.json` lists **only** `speech2texte`. Extensions come from **ZIP import** (localStorage `pdm_custom_profiles`) or from operator drop [`zip/free-profile/`](../zip/free-profile/) — not as a second versioned tree under `assets/profiles/`.
 
 The runtime default profile is `manifest.defaultProfileId` (API `lib/api/manifest.php`), computed from `"default": true` in `manifest.json` or the first valid profile. Current index: platform URL + profile id `speech2texte` only.
+
+## Shared free ZIP drop (`zip/free-profile/`)
+
+The public tree ships **ready-to-import** free archives under [`zip/free-profile/`](../zip/free-profile/) (at least **Speech2Texte** and **PromptListStructurator**, matching `CS.VERSION`). Filenames use **PascalCase** stems (`Speech2Texte-promptdemerde-profile-v….zip`) — no hyphens inside the profile name. Clones and operators can add more conforming `.zip` files there. The app lists them via `lib/api/zip-profiles.php` (light metadata + ETag) and shows them in **Options → JSON profile** — useful if the bundled tree under `assets/profiles/` was altered and a clean archive re-download is needed.
+
+### Selector badges (canon)
+
+| Origin | Badges |
+|--------|--------|
+| Bundled pack under `assets/profiles/` (folder listed in `index.json`, e.g. Speech2Texte) | `(native) (Free) (x.y.z)` — or `(Premium)` if the pack tier is premium |
+| Shared drop under `zip/free-profile/` | `(zip) (Free) (x.y.z)` / `(zip) (Premium) (x.y.z)` |
+| Manual ZIP import or in-app create | `(Free) (x.y.z)` / `(Premium) (x.y.z)` — **no** `(zip)`, **no** `(perso)` |
+
+The **last** parenthesis is always the archive / contract version (`config.version`, or the `-promptdemerde-profile-v…` stem for drop ZIPs).
+
+**(native)** means the pack is part of the application tree in the repository (`assets/profiles/…`). It is the first-boot default when marked as such. Options does **not** remove that folder from disk: switching or importing another pack changes the active session, but the native entry stays available in the selector because it ships with the install.
+
+### Selector dedupe (no double Speech2Texte)
+
+When the same pack exists both as a **native** bundle and as a ZIP under `zip/free-profile/` (same PascalCase label / stem, e.g. Speech2Texte), the selector keeps **only the native** option. The ZIP file remains in the tree for HTTP download and for **Options → Import** if a clean archive is needed after local edits; it is not listed a second time next to `(native)`.
+
+After a drop ZIP is imported into a personal pack, the matching `(zip)` row is also hidden (same rule as before). Rescan is event-driven (boot idle, Options hash, tab focus / visibility) — not a permanent poll.
+
+During scan, the Options selector is disabled while each free-profile archive is checked in order (server metadata first, then client validation without importing). Invalid archives are skipped and never appear in the selector. A permanent status line under the control reports either that all archives are valid, or how many were rejected, with **Show more** / **Show less** to list rejected filenames.
+
+| Layer | Role |
+|--------|------|
+| `zip/free-profile/*.zip` | **Versioned** free packs for clones + operator drop (GET + list API) |
+| `lib/api/zip-profiles.php` | Bounded list for the selector |
+| `profile-zip-drop.js` | Fetch list + activate via `Storage.importConfigZip` |
+
+This is complementary to the Marketplace UI (`#market`): drop = instance sharing; market = catalogue vitrine when the feature flag is on.
 
 ## Tree per bundled profile
 
@@ -51,8 +83,8 @@ assets/profiles/<profile-id>/
 
 | Layer | Files | Role |
 |--------|----------|------|
-| Thin PHP | `lib/api/manifest.php`, `lib/api/lib.php` | `runtimeOk`, profile list **from index.json**, `defaultProfileId` |
-| Browser | `profile-bundle-loader.js`, etc. | static fetch of `.md`, `pdm-config` assembly |
+| Thin PHP | `lib/api/manifest.php`, `lib/api/zip-profiles.php`, `lib/api/lib.php` | `runtimeOk`, bundled list from `index.json`, free ZIP drop list |
+| Browser | `profile-bundle-*.js`, `profile-zip-drop.js`, etc. | static fetch of `.md` / ZIP, `pdm-config` assembly |
 
 PHP **does not load** MD prompts; it validates that the deployment contains coherent bundles.
 

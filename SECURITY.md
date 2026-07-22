@@ -164,7 +164,7 @@ Victim imports on https://promptdemerde.com
 
 ### ZIP integrity (checksum) vs crypto signature
 
-| Layer | Status (v1.24.0) |
+| Layer | Status (v1.24.1) |
 |-------|------------------|
 | SHA-256 on ZIP bytes | **Yes** — export (`buildZipPackage`), creator (`profile-zip-checksum.mjs`) |
 | Import verification | **Yes** if `options.expectedChecksum` / `checksum_sha256` (otherwise unsigned dialog only) |
@@ -179,7 +179,8 @@ ZIP checksums: verify client-side integrity on import (profile bundle modules) �
 - `Permissions-Policy`: `microphone=(self)` (dictation); camera and geolocation denied
 - `X-Content-Type-Options: nosniff`
 - `Referrer-Policy: strict-origin-when-cross-origin`
-- Under `assets/profiles/`, only `speech2texte/` and `index.json` are served (zone doc: [`docs/Profiles.md`](docs/Profiles.md)) — everything else returns **403** (server HTTP rule)
+- Under `assets/profiles/`, only `speech2texte/` and `index.json` are served (zone doc: [`docs/Profiles.md`](docs/Profiles.md)) — everything else returns **403** (server HTTP rule in the **single** deploy-root Apache config)
+- Under `zip/`, only `free-profile/` ZIP archives are intended for public GET (the repository ships Speech2Texte and PromptListStructurator packs there); other paths under `zip/` are denied by the same root server rewrite. Free-drop activation validates the archive **in the browser** (same limits as manual ZIP import) — the list API does not unzip server-side. Deployments must not scatter Apache rules across nested config files: one root server config only
 
 ### Residual risks (~5%)
 

@@ -6,7 +6,7 @@
 
 <p align="center">
   <a href="LICENSE"><img src="https://img.shields.io/badge/License-MIT-yellow.svg" alt="License: MIT"></a>
-  <a href="https://github.com/JeanSebastienBash/promptdemerde/tags" target="_blank" rel="noopener noreferrer"><img src="https://img.shields.io/badge/version-1.24.0--RC-blue.svg" alt="Version 1.24.0 RC"></a>
+  <a href="https://github.com/JeanSebastienBash/promptdemerde/tags" target="_blank" rel="noopener noreferrer"><img src="https://img.shields.io/badge/version-1.24.1--RC-blue.svg" alt="Version 1.24.1 RC"></a>
   <a href="https://github.com/JeanSebastienBash/promptdemerde/actions/workflows/ci.yml" target="_blank" rel="noopener noreferrer"><img src="https://github.com/JeanSebastienBash/promptdemerde/actions/workflows/ci.yml/badge.svg" alt="CI"></a>
 </p>
 
@@ -73,6 +73,18 @@ More videos will follow on the <a href="https://www.youtube.com/@DreamprojectAI/
 <a id="menu-whats-new"></a>
 
 ## 🆕 What’s new
+
+### Version 1.24.1 (RC)
+
+*Release candidate — not yet stable.*
+
+- **Shared free ZIP drop** (`zip/free-profile/`): shipped **Speech2Texte** + **PromptListStructurator** archives; Options lists validated packs with `(zip) (Free) (x.y.z)` badges.
+- **Selector scan**: sequential validation (invalid archives skipped); permanent status under the control — all valid, or rejected count with **Show more** / **Show less**.
+- **PascalCase** profile names (ZIP stems, selector labels, create/export).
+- **Native vs zip dedupe**: keep `(native)` when both exist; last parenthesis = archive / contract version.
+- Profile contract unchanged (**52** `pdm_*` keys); shipped `speech2texte` + free ZIPs aligned to **v1.24.1**.
+
+[Technical documentation](docs/Documentation.md) · [Tag notes](.github/RELEASE_v1.24.1.md)
 
 ### Version 1.24.0 (RC)
 
@@ -173,6 +185,7 @@ More videos will follow on the <a href="https://www.youtube.com/@DreamprojectAI/
     - 🏪 [5.5.3. Marketplace of JSON profiles](#feat-5-5-3) — ready-made packs on the official site (clone falls back to `#market`)
     - 🔀 [5.5.4. Profiles: create, switch, export modal](#feat-5-5-4) — create a personal pack, switch with confirm, export ZIP via guided modal
     - 🔎 [5.5.5. Marketplace: search, filters and detail card](#feat-5-5-5) — when a local catalogue is present
+    - 📂 [5.5.6. Shared free ZIP drop](#feat-5-5-6) — public `zip/free-profile/` (Speech2Texte + PromptListStructurator archives + operator drops) → Options (`(zip) (Free)`; bundled `(native) (Free)`)
   - ✹ [5.6. Languages, themes & same code everywhere](#feat-5-6)
     - 🗣 [5.6.1. Twelve UI languages & 25 themes](#feat-5-6-1) — twelve locales; twenty-five themes each with light and dark
     - ≡ [5.6.2. Same code everywhere](#feat-5-6-2) — official site ≡ clone; same privacy; proxy token only for locked prod relay
@@ -976,6 +989,20 @@ When a local catalogue is present, Marketplace provides search, filters (price, 
 
 
 
+<a id="feat-5-5-6"></a>
+
+### 📂 5.5.6. Shared free ZIP drop
+
+The public repository includes `zip/free-profile/` with free profile archives (at least **Speech2Texte** and **PromptListStructurator** for the current app version). Archive stems are **PascalCase** (no hyphens inside the profile name). On a self-hosted or official deploy, operators can add more conforming ZIP files there.
+
+Those packs appear in **Options → JSON profile** after an event-driven rescan (boot, opening Options, or returning to the tab), with one exception: if the same pack is already present as a **native** bundle under `assets/profiles/` (badge `(native)` — shipped in the repo and still on disk for that install), the matching free ZIP is **not** listed again. The ZIP file stays available for download or **Import** when a clean archive is needed. During rescan each free ZIP is validated in order; invalid archives are skipped and never appear in the selector. Selector labels end with the archive version in parentheses (e.g. `(1.24.1)`, `(1.15.0)`). A permanent status line under the control reports that all archives are valid, or how many were rejected, with **Show more** / **Show less** to list rejected filenames. Choosing a listed ZIP runs the same client-side import as a manual ZIP import. The bundled `speech2texte` tree remains the default first-boot profile; Options does not delete that folder from the install.
+
+[Technical documentation](docs/Documentation.md#feat-5-5-6) · [`docs/Profiles.md`](docs/Profiles.md)
+
+---
+
+
+
 <a id="feat-5-6"></a>
 
 ### ✹ 5.6. Languages, themes & same code everywhere
@@ -1386,7 +1413,7 @@ That script **concatenates** the parts, checks SHA-256 fingerprints, and writes 
 
 **3 — Ollama on the clone.** Install Ollama and pull a model the same way as in **7.1**. Point *Options → LLM* at `http://localhost:11434` or a LAN URL, then use **Test**. When the app and Ollama share the same machine via a local URL, CORS is usually simpler than on the official HTTPS site; if the browser origin is not localhost (or Ollama is on another host), set `OLLAMA_ORIGINS` to **that site origin** and use the same **two launch methods** as in **7.1** (one-shot `ollama serve` vs persistent service).
 
-**4 — Optional operator knobs.** `PDM_ENV` only labels the footer badge. A proxy token is needed only when the server relay is locked (`PDM_PROXY_TOKEN` — **5.7.3** / **5.7.6**). Day-to-day self-hosters keep **“I don’t have a token”** checked.
+**4 — Optional operator knobs.** `PDM_ENV` only labels the footer badge. A proxy token is needed only when the server relay is locked (`PDM_PROXY_TOKEN` — **5.7.3** / **5.7.6**). Day-to-day self-hosters keep **“I don’t have a token”** checked. Extra free profile packs ship under `zip/free-profile/` (**5.5.6**) — including Speech2Texte and PromptListStructurator ZIP archives for re-import. Operators may drop additional ZIP files into that folder on any install.
 
 Reformulation quality depends on the chosen Ollama model. STT runs as ONNX / WASM in the browser; a dedicated GPU helps Whisper / Parakeet but is optional for Vosk.
 

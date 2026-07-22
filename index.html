@@ -592,6 +592,8 @@ Objectif : Déclarer la structure des écrans, charger bootstrap et servir de sh
             <button id="config-export-btn" type="button" class="btn secondary btn-sm stg-profile-btn" data-i18n="settings.export">Exporter</button>
             <input type="file" id="config-import-file" accept=".zip,application/zip,application/x-zip-compressed" style="display:none">
         </div>
+        <p id="profile-scan-status" class="conn-status stg-conn-status stg-profile-scan-status" aria-live="polite"></p>
+        <div id="profile-scan-rejected-detail" class="stg-profile-scan-rejected" hidden></div>
     </div>
 </div>
 
@@ -1044,7 +1046,7 @@ Objectif : Déclarer la structure des écrans, charger bootstrap et servir de sh
                             &#169; 2026 <a href="#landing" id="footer-home-link" hidden>#PromptDeMerde</a><a href="#workspace" id="footer-app-link">#PromptDeMerde</a> &#10084;&#65039; <a href="https://www.dreamproject.online" target="_blank" rel="noopener">#DreamprojectAI</a>
                         </p>
                         <p class="footer-bottom">
-                            <a id="footer-version" href="https://github.com/JeanSebastienBash/promptdemerde" target="_blank" rel="noopener">v1.24.0</a><span id="footer-env-badge" class="footer-env-badge" hidden></span>
+                            <a id="footer-version" href="https://github.com/JeanSebastienBash/promptdemerde" target="_blank" rel="noopener">v1.24.1</a><span id="footer-env-badge" class="footer-env-badge" hidden></span>
                         </p>
                     </div>
                     <ul class="footer-meta-badges" role="list" aria-label="Engagements produit PromptDeMerde" data-i18n-attr="aria-label:footer.badgesAria">
@@ -1339,6 +1341,7 @@ Objectif : Déclarer la structure des écrans, charger bootstrap et servir de sh
 <script src="assets/js/storage-config-audio.js"></script>
 <script src="assets/js/storage-prompts-bundle.js"></script>
 <script src="assets/js/storage-config-import.js"></script>
+<script src="assets/js/storage-config-validate-zip.js"></script>
 <script src="assets/js/i18n-locales.js"></script>
 <script src="assets/js/seo-meta.js"></script>
 <script src="assets/js/i18n.js"></script>

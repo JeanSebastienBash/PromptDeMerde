@@ -9,6 +9,11 @@
 var PS = window.PDM && window.PDM.ProfileSelector;
 if (!PS) { console.warn('[profile-selector-export-modal.js] PDM.ProfileSelector not found.'); return; }
 
+function psT(key, vars, fallback) {
+    if (typeof PS.t === 'function') return PS.t(key, vars, fallback);
+    return fallback != null ? fallback : '';
+}
+
 PS._closeExportModal = function() {
     var els = PS._getExportModalEls();
     if (!els || !els.modal) return;
@@ -29,7 +34,15 @@ PS._openExportModal = function(options) {
     PS._applyExportPreset(els, defaultPreset);
     var defaultLabel = options.label != null ? String(options.label).trim() : PS.getActiveLabel();
     if (els.labelInput) {
-        els.labelInput.value = defaultLabel || psT('profileDefaultLabel', null, 'MonProfil');
+        var norm = typeof PS.normalizeProfileLabel === 'function'
+            ? (PS.normalizeProfileLabel(defaultLabel) || PS.toPascalProfileName(defaultLabel))
+            : defaultLabel;
+        els.labelInput.value = norm || psT('profileDefaultLabel', null, 'MonProfil');
+        els.labelInput.setAttribute('spellcheck', 'false');
+        els.labelInput.setAttribute('autocomplete', 'off');
+        els.labelInput.setAttribute('pattern', '[A-Z][A-Za-z0-9]*');
+        els.labelInput.setAttribute('title', psT('profileNamePascalHint', null,
+            'PascalCase obligatoire : majuscule en t\u00eate de chaque mot, sans tiret ni espace (ex. PromptListStructurator, Speech2Texte).'));
     }
     if (window.PDM.I18n && typeof window.PDM.I18n.apply === 'function') {
         window.PDM.I18n.apply(els.modal);
@@ -103,6 +116,18 @@ PS._bindExportModalOnce = function() {
     }
     if (els.labelInput) {
         els.labelInput.addEventListener('input', function() {
+            var caret = els.labelInput.selectionStart;
+            var before = els.labelInput.value;
+            var norm = typeof PS.toPascalProfileName === 'function'
+                ? PS.toPascalProfileName(before)
+                : before;
+            if (norm !== before) {
+                els.labelInput.value = norm;
+                try {
+                    var pos = Math.min(norm.length, caret || 0);
+                    els.labelInput.setSelectionRange(pos, pos);
+                } catch (e) { /* ignore */ }
+            }
             PS._updateExportSizeHint(els);
         });
     }
@@ -111,7 +136,8 @@ PS._bindExportModalOnce = function() {
             var state = PS._exportModalState(els);
             if (!state.label) {
                 if (window.PDM.UI && window.PDM.UI.notif) {
-                    window.PDM.UI.notif(psT('exportCancelledEmpty', null, 'Export annul\u00e9 : nom vide.'), 'err');
+                    window.PDM.UI.notif(psT('profileNamePascalInvalid', null,
+                        'Nom de profil invalide. Utiliser PascalCase sans tiret ni espace (ex. PromptListStructurator).'), 'err');
                 }
                 if (els.labelInput) els.labelInput.focus();
                 return;

@@ -15,22 +15,34 @@ function psT(key, vars, fallback) {
 }
 
 PS.sanitizeFileSlug = function(label) {
-    var s = String(label || '').trim();
+    var PN = window.PDM && window.PDM.ProfileName;
     var fallback = psT('profileDefaultSlug', null, 'Profil');
-    if (!s) return fallback;
-    s = s.replace(/[^\w\u00C0-\u024F.-]+/g, '-').replace(/-+/g, '-').replace(/^-+|-+$/g, '');
-    return s || fallback;
+    if (PN && typeof PN.sanitizeFileSlug === 'function') {
+        return PN.sanitizeFileSlug(label, fallback);
+    }
+    return fallback;
+};
+
+PS.toPascalProfileName = function(label) {
+    var PN = window.PDM && window.PDM.ProfileName;
+    if (PN && typeof PN.toPascalProfileName === 'function') {
+        return PN.toPascalProfileName(label);
+    }
+    return String(label || '').trim();
+};
+
+PS.normalizeProfileLabel = function(label) {
+    var PN = window.PDM && window.PDM.ProfileName;
+    if (PN && typeof PN.normalizeOrEmpty === 'function') {
+        return PN.normalizeOrEmpty(label);
+    }
+    return String(label || '').trim();
 };
 
 PS.labelToProfileId = function(label) {
-    var s = String(label || '').trim();
-    if (!s) return 'custom-profile';
-    s = s
-        .replace(/([a-z0-9])([A-Z])/g, '$1-$2')
-        .replace(/([A-Z]+)([A-Z][a-z])/g, '$1-$2')
-        .toLowerCase();
-    s = s.replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
-    return s || 'custom-profile';
+    var pascal = PS.normalizeProfileLabel(label) || PS.toPascalProfileName(label);
+    if (!pascal) return 'profile';
+    return pascal.toLowerCase();
 };
 
 PS.resolveCustomProfileId = function(config, label) {
@@ -51,11 +63,7 @@ PS.getActiveLabel = function() {
     } else {
         raw = String(PS._getActiveId() || '').trim();
     }
-    var suffix = psT('profilePersonalSuffix', null, ' (perso)');
-    if (suffix && raw.slice(-suffix.length) === suffix) {
-        raw = raw.slice(0, -suffix.length).trim();
-    }
-    return raw;
+    return PS.stripProfileOptionSuffixes(raw);
 };
 
 PS.buildExportFilename = function(profileLabel, version) {
@@ -78,16 +86,18 @@ PS.isCustomProfileId = function(id) {
 };
 
 PS.promptExportLabel = function(defaultLabel) {
-    var fallback = String(defaultLabel || '').trim() || psT('profileDefaultLabel', null, 'MonProfil');
+    var fallback = PS.normalizeProfileLabel(defaultLabel) ||
+        psT('profileDefaultLabel', null, 'MonProfil');
     var label = window.prompt(
-        psT('profileExportPrompt', null, 'Nom du profil pour le fichier export\u00e9 (libell\u00e9 Profil JSON) :'),
+        psT('profileExportPrompt', null, 'Nom du profil (PascalCase, sans tiret ni espace) :'),
         fallback
     );
     if (label === null) return null;
-    label = String(label).trim();
+    label = PS.normalizeProfileLabel(label);
     if (!label) {
         if (window.PDM.UI && window.PDM.UI.notif) {
-            window.PDM.UI.notif(psT('exportCancelledEmpty', null, 'Export annul\u00e9 : nom vide.'), 'err');
+            window.PDM.UI.notif(psT('profileNamePascalInvalid', null,
+                'Nom de profil invalide. Utiliser PascalCase sans tiret ni espace (ex. PromptListStructurator).'), 'err');
         }
         return null;
     }
@@ -95,16 +105,20 @@ PS.promptExportLabel = function(defaultLabel) {
 };
 
 PS.promptNewProfileLabel = function() {
-    var label = window.prompt(psT('profileCreatePrompt', null, 'Nom du nouveau profil JSON :'), '');
+    var label = window.prompt(
+        psT('profileCreatePrompt', null, 'Nom du nouveau profil (PascalCase, sans tiret ni espace) :'),
+        ''
+    );
     if (label === null) return null;
-    label = String(label).trim();
+    label = PS.normalizeProfileLabel(label);
     if (!label) {
         if (window.PDM.UI && window.PDM.UI.notif) {
-            window.PDM.UI.notif(psT('createCancelledEmpty', null, 'Cr\u00e9ation annul\u00e9e : nom vide.'), 'err');
+            window.PDM.UI.notif(psT('profileNamePascalInvalid', null,
+                'Nom de profil invalide. Utiliser PascalCase sans tiret ni espace (ex. PromptListStructurator).'), 'err');
         }
         return null;
     }
-    if (PS.isReservedImportName(label + '.json')) {
+    if (PS.isReservedImportName(label + '.json') || PS.isReservedImportName(label + '.zip')) {
         if (window.PDM.UI && window.PDM.UI.notif) {
             window.PDM.UI.notif(psT('nameReservedOfficial', null, 'Ce nom est r\u00e9serv\u00e9 \u00e0 un profil officiel.'), 'err');
         }
@@ -116,23 +130,27 @@ PS.promptNewProfileLabel = function() {
 PS.inferProfileLabel = function(config, filename, options) {
     options = options || {};
     var exportLabel = options.exportLabel != null ? String(options.exportLabel).trim() : '';
-    if (exportLabel) return exportLabel;
+    if (exportLabel) {
+        return PS.normalizeProfileLabel(exportLabel) || PS.toPascalProfileName(exportLabel) || exportLabel;
+    }
     if (config && config.pdm_project && config.pdm_project.name) {
         var projectName = String(config.pdm_project.name).trim();
-        if (projectName) return projectName;
+        if (projectName) {
+            return PS.normalizeProfileLabel(projectName) || PS.toPascalProfileName(projectName) || projectName;
+        }
     }
     var stem = PS._getFileStem(filename || '');
     stem = stem
         .replace(/-promptdemerde-profile-v[\d.]+$/i, '')
-        .replace(/-promptdemerde-config-v[\d.]+$/i, '')
-        .replace(/-+/g, ' ')
-        .trim();
-    return stem || psT('profileDefaultLabel', null, 'MonProfil');
+        .replace(/-promptdemerde-config-v[\d.]+$/i, '');
+    var pascal = PS.normalizeProfileLabel(stem) || PS.toPascalProfileName(stem);
+    return pascal || psT('profileDefaultLabel', null, 'MonProfil');
 };
 
 PS.applyExportLabelToConfig = function(config, label, options) {
     options = options || {};
     if (!config || !label) return config;
+    label = PS.normalizeProfileLabel(label) || PS.toPascalProfileName(label) || label;
     var id = options.profileId
         ? window.PDM.Storage.ensureCustomProfileId(options.profileId)
         : (options.customProfile

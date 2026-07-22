@@ -38,7 +38,7 @@ When the repository is changed directly, it takes precedence over any external o
 
 ## Structure
 
-**Profile ZIP export (1.24.0)**: **52** `pdm_*` keys in the `pdm-config` object (archive content). Canon: `CS.PDM_KEYS` **≡** `assets/config/pdm-config.schema.json` (same names, including `pdm_output_*`); optional root `i18n` + `langs`. Any new key → core + schema + [`docs/Documentation.md`](docs/Documentation.md#13-the-52-pdm-keys) §13. **Default theme**: `marron-day` (Light Brown) — `CS.DEFAULT_THEME_ID`. **Do not** enumerate keys in `README.md` — point to user documentation and the schema.
+**Profile ZIP export (1.24.1)**: **52** `pdm_*` keys in the `pdm-config` object (archive content). Canon: `CS.PDM_KEYS` **≡** `assets/config/pdm-config.schema.json` (same names, including `pdm_output_*`); optional root `i18n` + `langs`. Any new key → core + schema + [`docs/Documentation.md`](docs/Documentation.md#13-the-52-pdm-keys) §13. **Default theme**: `marron-day` (Light Brown) — `CS.DEFAULT_THEME_ID`. **Do not** enumerate keys in `README.md` — point to user documentation and the schema.
 
 **Privacy**: align `SECURITY.md` with runtime behavior.
 
@@ -142,7 +142,7 @@ The public repository versions the official `speech2texte` profile under `assets
 
 **Responsive** — breakpoints: `assets/css/style-responsive.css` + `polish-responsive.css`. Workspace layout: `assets/css/style-workspace.css` (`.ws-grid` — 2 columns from 1024px, `minmax(0,1fr)`). Test viewports **375, 390, 414, 768, 1024** px: no unintended horizontal scroll; burger nav; Input/Output stacked below 1024px; Prompts in 2 columns from 1024px; Options in 2 columns from 768px.
 
-## Export / Import — profile ZIP archive (v1.24.0)
+## Export / Import — profile ZIP archive (v1.24.1)
 
 - **Portable container**: **ZIP** archive (`{slug}-promptdemerde-profile-v{CS.VERSION}.zip`) — no standalone `.json` at the root.
 - **UI import**: **`.zip` only** — explicit rejection if JSON (`importJsonDeprecated` in `settings-ui.js`).

@@ -403,7 +403,12 @@ A.doImportConfig = function(file) {
     var startImport = function() {
         var reader = new FileReader();
         reader.onload = function(e) {
-            var importOptions = { filename: file.name, stripTokens: true };
+            var importOptions = {
+                filename: file.name,
+                stripTokens: true,
+                source: '',
+                tier: 'free'
+            };
             var finishImport = function(result) {
                 if (!result || !result.ok) {
                     var failMsg = result && result.errors && result.errors.length

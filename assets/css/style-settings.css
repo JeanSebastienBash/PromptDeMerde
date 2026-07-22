@@ -155,6 +155,40 @@
     box-sizing: border-box;
 }
 
+#profile-json-card .stg-profile-select:disabled,
+#profile-json-card .stg-profile-select.stg-profile-select-scanning {
+    opacity: 0.55;
+    cursor: not-allowed;
+    pointer-events: none;
+}
+
+.stg-profile-scan-status {
+    margin: 8px 0 0 !important;
+    min-height: 1.25em;
+    font-size: var(--text-caption);
+    line-height: var(--leading-tight);
+    color: var(--text-muted);
+}
+
+.stg-profile-scan-status .stg-profile-scan-toggle {
+    margin-left: 6px;
+    vertical-align: baseline;
+    min-height: 0;
+    padding: 2px 8px;
+    font-size: inherit;
+}
+
+.stg-profile-scan-rejected {
+    margin-top: 6px;
+    font-size: var(--text-caption);
+    color: var(--text-muted);
+}
+
+.stg-profile-scan-reject-list {
+    margin: 0 0 6px;
+    padding-left: 1.2em;
+}
+
 #profile-json-card .stg-profile-btn {
     flex: 0 0 auto;
     white-space: nowrap;

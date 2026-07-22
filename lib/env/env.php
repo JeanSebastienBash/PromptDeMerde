@@ -39,12 +39,21 @@ $coreScripts = [
     'assets/js/profile-bundle-export-map.js',
     'assets/js/profile-bundle-export.js',
     'assets/js/profile-selector.js',
+    'assets/js/profile-name-pascal.js',
     'assets/js/profile-selector-labels.js',
+    'assets/js/profile-selector-option-label.js',
+    'assets/js/profile-selector-dedupe.js',
+    'assets/js/profile-selector-populate.js',
     'assets/js/profile-selector-export-modal-flags.js',
     'assets/js/profile-selector-export-modal-state.js',
     'assets/js/profile-selector-export-modal.js',
     'assets/js/profile-selector-export.js',
     'assets/js/profile-selector-actions.js',
+    'assets/js/profile-selector-scan-status.js',
+    'assets/js/profile-zip-drop-validate.js',
+    'assets/js/profile-zip-drop.js',
+    'assets/js/profile-zip-drop-activate.js',
+    'assets/js/profile-selector-lifecycle.js',
     'assets/js/profile-configure-help.js',
     'assets/js/profile-configure-texts.js',
     'assets/js/profile-configure-form.js',
@@ -174,6 +183,7 @@ if ($isProd) {
     $server = [
         'ollamaProxy' => 'lib/proxy/ollama/olama.php',
         'profileManifest' => 'lib/api/manifest.php',
+        'zipProfiles' => 'lib/api/zip-profiles.php',
     ];
 } else {
     $llmEnabled = ['ollama'];
@@ -187,6 +197,7 @@ if ($isProd) {
     $server = [
         'ollamaProxy' => 'lib/proxy/ollama/olama.php',
         'profileManifest' => 'lib/api/manifest.php',
+        'zipProfiles' => 'lib/api/zip-profiles.php',
     ];
 }
 

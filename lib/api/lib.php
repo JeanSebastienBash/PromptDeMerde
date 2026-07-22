@@ -14,7 +14,7 @@ if (!function_exists('mb_strlen')) {
     }
 }
 
-const PDM_PROFILES_VERSION = '1.24.0';
+const PDM_PROFILES_VERSION = '1.24.1';
 const PDM_PROFILES_ROOT = __DIR__ . '/../../assets/profiles';
 const PDM_I18N_ROOT = __DIR__ . '/../../assets/i18n';
 
@@ -512,6 +512,17 @@ function pdm_load_profile_manifest_entry(string $id): ?array
     if (!is_array($entry) || empty($entry['id'])) {
         return null;
     }
+    $configPath = pdm_profile_json_path($id);
+    if (is_readable($configPath)) {
+        $cfgRaw = file_get_contents($configPath);
+        $cfg = json_decode($cfgRaw ?: '', true);
+        if (is_array($cfg) && isset($cfg['version']) && is_string($cfg['version'])) {
+            $ver = trim($cfg['version']);
+            if ($ver !== '' && preg_match('/^\d+(?:\.\d+)*$/', $ver)) {
+                $entry['version'] = $ver;
+            }
+        }
+    }
     return $entry;
 }
 
@@ -645,5 +656,178 @@ function pdm_profile_ids(): array
 function pdm_validate_profile_id(string $id): bool
 {
     return $id !== '' && in_array($id, pdm_profile_ids(), true);
+}
+
+const PDM_ZIP_FREE_ROOT = __DIR__ . '/../../zip/free-profile';
+const PDM_ZIP_FREE_MAX_FILES = 64;
+const PDM_ZIP_FREE_MAX_BYTES = 20971520;
+
+function pdm_zip_free_root(): string
+{
+    return PDM_ZIP_FREE_ROOT;
+}
+
+function pdm_to_pascal_profile_name(string $raw): string
+{
+    $s = trim($raw);
+    if ($s === '') {
+        return '';
+    }
+    if (class_exists('Normalizer')) {
+        $n = \Normalizer::normalize($s, \Normalizer::FORM_D);
+        if (is_string($n)) {
+            $s = preg_replace('/\p{Mn}/u', '', $n) ?? $s;
+        }
+    }
+    $s = preg_replace('/([a-z0-9])([A-Z])/u', '$1 $2', $s) ?? $s;
+    $s = preg_replace('/([A-Z]+)([A-Z][a-z])/u', '$1 $2', $s) ?? $s;
+    $s = preg_replace('/([A-Za-z])([0-9])/u', '$1 $2', $s) ?? $s;
+    $s = preg_replace('/([0-9])([A-Za-z])/u', '$1 $2', $s) ?? $s;
+    if (!preg_match_all('/[0-9]+|[A-Za-z]+/u', $s, $m) || empty($m[0])) {
+        return '';
+    }
+    $out = '';
+    foreach ($m[0] as $chunk) {
+        if (preg_match('/^[0-9]+$/', $chunk)) {
+            $out .= $chunk;
+            continue;
+        }
+        $first = substr($chunk, 0, 1);
+        $rest = substr($chunk, 1);
+        $out .= strtoupper($first) . strtolower($rest);
+    }
+    if (strlen($out) > 64) {
+        $out = substr($out, 0, 64);
+    }
+    return $out;
+}
+
+function pdm_zip_free_safe_filename(string $name): bool
+{
+    if ($name === '' || $name === '.' || $name === '..') {
+        return false;
+    }
+    if (strpos($name, '/') !== false || strpos($name, '\\') !== false) {
+        return false;
+    }
+    // Stem PascalCase + suffix fixe versionné (tirets uniquement dans le gabarit PDM)
+    return (bool) preg_match(
+        '/^[A-Z][A-Za-z0-9]{0,80}-promptdemerde-profile-v\d+\.\d+\.\d+\.zip$/',
+        $name
+    );
+}
+
+function pdm_zip_free_entry_id(string $filename): string
+{
+    return 'zipfree-' . substr(hash('sha256', $filename), 0, 16);
+}
+
+function pdm_zip_free_label(string $filename): string
+{
+    $base = preg_replace('/\.zip$/i', '', $filename);
+    $base = preg_replace('/-promptdemerde-profile-v[\d.]+$/i', '', (string) $base);
+    $pascal = pdm_to_pascal_profile_name((string) $base);
+    if ($pascal !== '' && preg_match('/^[A-Z][A-Za-z0-9]*$/', $pascal)) {
+        return $pascal;
+    }
+    return $pascal !== '' ? $pascal : (string) $base;
+}
+
+function pdm_zip_free_version(string $filename): string
+{
+    if (preg_match('/-promptdemerde-profile-v([\d.]+)\.zip$/i', $filename, $m)) {
+        return rtrim((string) $m[1], '.');
+    }
+    return '';
+}
+
+/**
+ * @return array{profiles: list<array<string,mixed>>, rejected: list<array<string,mixed>>, etag: string, available: bool}
+ */
+function pdm_list_free_zip_profiles(): array
+{
+    $dir = pdm_zip_free_root();
+    $profiles = [];
+    $rejected = [];
+    $stampParts = [];
+    if (!is_dir($dir) || !is_readable($dir)) {
+        $etag = hash('sha256', 'empty');
+        return ['profiles' => [], 'rejected' => [], 'etag' => $etag, 'available' => false];
+    }
+    $names = scandir($dir);
+    if (!is_array($names)) {
+        $etag = hash('sha256', 'empty');
+        return ['profiles' => [], 'rejected' => [], 'etag' => $etag, 'available' => false];
+    }
+    sort($names, SORT_STRING);
+    foreach ($names as $name) {
+        if ($name === '.' || $name === '..' || $name === '.gitkeep') {
+            continue;
+        }
+        $full = $dir . '/' . $name;
+        if (!is_file($full)) {
+            continue;
+        }
+        if (!preg_match('/\.zip$/i', $name)) {
+            continue;
+        }
+        if (count($profiles) >= PDM_ZIP_FREE_MAX_FILES) {
+            $rejected[] = [
+                'filename' => $name,
+                'reason' => 'max_files',
+            ];
+            $stampParts[] = 'rej:' . $name . ':max_files';
+            continue;
+        }
+        if (!pdm_zip_free_safe_filename($name)) {
+            $rejected[] = [
+                'filename' => $name,
+                'reason' => 'filename',
+            ];
+            $stampParts[] = 'rej:' . $name . ':filename';
+            continue;
+        }
+        if (!is_readable($full)) {
+            $rejected[] = [
+                'filename' => $name,
+                'reason' => 'unreadable',
+            ];
+            $stampParts[] = 'rej:' . $name . ':unreadable';
+            continue;
+        }
+        $size = filesize($full);
+        if ($size === false || $size < 1 || $size > PDM_ZIP_FREE_MAX_BYTES) {
+            $rejected[] = [
+                'filename' => $name,
+                'reason' => 'size',
+            ];
+            $stampParts[] = 'rej:' . $name . ':size';
+            continue;
+        }
+        $mtime = filemtime($full);
+        if ($mtime === false) {
+            $mtime = 0;
+        }
+        $id = pdm_zip_free_entry_id($name);
+        $ver = pdm_zip_free_version($name);
+        $profiles[] = [
+            'id' => $id,
+            'label' => pdm_zip_free_label($name),
+            'tier' => 'free',
+            'filename' => $name,
+            'version' => $ver,
+            'size' => $size,
+            'mtime' => $mtime,
+            'url' => 'zip/free-profile/' . rawurlencode($name),
+        ];
+        $stampParts[] = $name . ':' . $size . ':' . $mtime;
+    }
+    $etag = hash('sha256', implode('|', $stampParts));
+    return [
+        'profiles' => $profiles,
+        'rejected' => $rejected,
+        'etag' => $etag,
+        'available' => count($profiles) > 0,
+    ];
 }
 

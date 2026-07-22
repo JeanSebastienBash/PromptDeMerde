@@ -6,10 +6,10 @@
 
 <p align="center">
   <a href="../LICENSE"><img src="https://img.shields.io/badge/License-MIT-yellow.svg" alt="License: MIT"></a>
-  <a href="../README.md"><img src="https://img.shields.io/badge/version-1.24.0-blue.svg" alt="Version 1.24.0"></a>
+  <a href="../README.md"><img src="https://img.shields.io/badge/version-1.24.1-blue.svg" alt="Version 1.24.1"></a>
 </p>
 
-> **Application version** : 1.24.0 (`CS.VERSION`)  
+> **Application version** : 1.24.1 (`CS.VERSION`)  
 > **Audience** : developers, code auditors, self-hosting operators, power users  
 > **Language** : English  
 > **Related** : [`README.md`](../README.md) · [`CONTRIBUTING.md`](../CONTRIBUTING.md) · [`SECURITY.md`](../SECURITY.md)
@@ -61,6 +61,7 @@ This document is the **long-form technical counterpart** of [`README.md`](../REA
     - 🏪 [5.5.3. Marketplace of JSON profiles](#feat-5-5-3)
     - 🔀 [5.5.4. Profiles: create, switch, export modal](#feat-5-5-4)
     - 🔎 [5.5.5. Marketplace: search, filters and detail card](#feat-5-5-5)
+    - 📂 [5.5.6. Shared free ZIP drop](#feat-5-5-6)
   - ✹ [5.6. Languages, themes & same code everywhere](#feat-5-6)
     - 🗣 [5.6.1. Twelve UI languages & 25 themes](#feat-5-6-1)
     - ≡ [5.6.2. Same code everywhere](#feat-5-6-2)
@@ -117,7 +118,7 @@ Technically it is an HTML/CSS/JavaScript **SPA** (IIFE modules under `window.PDM
 
 ### Contracts and versions
 
-- **Version:** `CS.VERSION` = `1.24.0` ([`config-schema-core.js`](../assets/js/config-schema-core.js))
+- **Version:** `CS.VERSION` = `1.24.1` ([`config-schema-core.js`](../assets/js/config-schema-core.js))
 - **Default theme:** `CS.DEFAULT_THEME_ID` (`marron-day`)
 - **Exportable prefs:** `CS.PDM_KEYS` — **52** `pdm_*` keys (full catalogue under [11. Further reading](#menu-further-reading)); schema [`pdm-config.schema.json`](../assets/config/pdm-config.schema.json)
 - **Bump rule:** `CS.VERSION` changes when the `pdm_*` / session contract evolves; the shipped `assets/profiles/speech2texte/` pack is recompiled in the same pass
@@ -1017,6 +1018,7 @@ Zone detail: [`Profiles.md`](Profiles.md) · vendor ZIP I/O: [`Vendor.md`](Vendo
 | 5.5.3 | Marketplace existence + clone → official redirect |
 | 5.5.4 | Options profile create / switch / export modal |
 | 5.5.5 | Catalogue search, filters, detail card (flag on) |
+| 5.5.6 | Shared free ZIP drop (`zip/free-profile/`) → Options selector |
 
 ### Hard rules from code
 
@@ -1042,7 +1044,9 @@ The **Export** action downloads a **ZIP archive**; a standalone JSON file is not
 {slug}-promptdemerde-profile-v{CS.VERSION}.zip
 ```
 
-Example filename: `speech2texte-promptdemerde-profile-v1.24.0.zip`
+`slug` is the **PascalCase** profile label (e.g. `Speech2Texte`, `PromptListStructurator`) — no hyphens or spaces inside the stem.
+
+Example filename: `Speech2Texte-promptdemerde-profile-v1.24.1.zip` (PascalCase stem — no hyphens inside the profile name; see Profiles nomenclature).
 
 The filename is built by `buildZipFilename()` in [`assets/js/profile-bundle-export.js`](../assets/js/profile-bundle-export.js).
 
@@ -1243,6 +1247,7 @@ Export before a Danger-zone wipe or a machine change. ZIP structure, presets, se
 |--------|------|
 | `settings-ui.js` | Options UI |
 | `profile-selector.js` and `profile-selector-*.js` | Selector / export modal |
+| `profile-zip-drop.js` | Free ZIP drop list + activation |
 | `profile-bundle-*.js` | ZIP bundle / integrity |
 | `storage-wipe.js` | Erase everything |
 | `proxy-token-session.js` | Proxy token sessionStorage |
@@ -1275,6 +1280,15 @@ Requires `features.marketplace` / `Env.hasMarketplace()` true (official site bui
 ### Public boundary
 
 Document runtime catalogue UI only. Do **not** describe `assets/market/**` factory, market packaging scripts, or unpublished catalogue pipelines in this public technical document.
+
+---
+
+<a id="feat-5-5-6"></a>
+### 📂 5.5.6. Shared free ZIP drop
+
+The clone ships profile archives under [`zip/free-profile/`](../zip/free-profile/) (including **Speech2Texte** and **PromptListStructurator** for the current `CS.VERSION`). Operators may add more `.zip` files there. The SPA lists them through `lib/api/zip-profiles.php` (metadata + ETag + server-side rejects for bad name/size; no server-side unzip of profile content) and shows **only validated** packs in the Options profile selector with badges `(zip) (Free) (x.y.z)` — except when a pack with the same PascalCase label is already listed as **`(native) (Free) (x.y.z)`** from `assets/profiles/` (that native row wins; the ZIP stays on disk for GET / manual Import). The **last** parenthesis is the archive / contract version. During rescan the selector is disabled while each candidate is checked in order (server metadata, then client `validateConfigZip` without importing). Invalid archives are skipped entirely. A permanent status line under the control reports that all archives are valid, or how many were rejected, with **Show more** / **Show less** to list rejected filenames. Manual imports use `(Free) (x.y.z)` / `(Premium) (x.y.z)` only. Selecting a listed ZIP entry fetches that archive and applies the same client import pipeline as a manual import (validation, wipe, reload) **without** adding a duplicate selector option after reload. **`(native)`** means the pack folder ships in the repository and remains part of the install; Options does not remove it from disk. Rescan runs on boot (idle), when Options is opened, and when the tab becomes visible again — never as a permanent timer.
+
+Detail: [`Profiles.md`](Profiles.md) · modules `profile-zip-drop.js`, `profile-selector-option-label.js`, `profile-selector-scan-status.js`, `profile-selector-populate.js`, `profile-selector-dedupe.js`. Distinct from Marketplace (**5.5.3** / **5.5.5**).
 
 ---
 
@@ -1673,7 +1687,7 @@ A JSON profile is a portable ZIP: prompts, LLM settings, UI/brand, language, the
 
 | Key          | Type         | Role                      |
 | ------------ | ------------ | ------------------------- |
-| `version`    | string       | app semver e.g. `1.24.0`  |
+| `version`    | string       | app semver e.g. `1.24.1`  |
 | `type`       | const        | always `pdm-config`       |
 | `exportedAt` | ISO datetime | export timestamp          |
 
@@ -2316,7 +2330,7 @@ All exportable preferences live in the `pdm-config` object. This object has **52
 
 | Key          | Type         | Role                      |
 | ------------ | ------------ | ------------------------- |
-| `version`    | string       | app semver e.g. `1.24.0`  |
+| `version`    | string       | app semver e.g. `1.24.1`  |
 | `type`       | const        | always `pdm-config`       |
 | `exportedAt` | ISO datetime | export timestamp          |
 
@@ -2528,6 +2542,6 @@ These keys are generated by `json-profile-creator.sh` (phase 10) when `parts/out
 
 ---
 
-*Technical documentation — application version 1.24.0.*
+*Technical documentation — application version 1.24.1.*
 
 ---
