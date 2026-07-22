@@ -24,7 +24,9 @@ The runtime default profile is `manifest.defaultProfileId` (API `lib/api/manifes
 
 ## Shared free ZIP drop (`zip/free-profile/`)
 
-The public tree ships **ready-to-import** free archives under [`zip/free-profile/`](../zip/free-profile/) (at least **Speech2Texte** and **PromptListStructurator**, matching `CS.VERSION`). Operators may add any valid profile `.zip` there — **renaming is allowed**; the Options selector reads **label and version from inside the archive** after client validation (filename is only a light hint / safety filter). Recommended factory names (`{Pascal}-JsonProfile-v…` or legacy `*-promptdemerde-profile-v…`) remain useful for humans, not a listing gate. The app lists candidates via `lib/api/zip-profiles.php` (light metadata + ETag) and shows **validated** packs in **Options → JSON profile**.
+**Public distribution for free packs.** Every **free** JSON profile archive published for the marketplace is also versioned under [`zip/free-profile/`](../zip/free-profile/) on the public GitHub mirror. That folder is a first-class download channel: clones and users may grab one or many ZIPs from GitHub **without** opening the Marketplace UI. While Marketplace remains in maintenance, **`zip/free-profile/` is the practical channel** for extra free packs. **Premium** archives are **not** shipped there — when Marketplace leaves maintenance, Premium packs are obtained from the Marketplace (or Support), not from this free drop.
+
+**On a clone or self-host.** Copy free ZIPs into that install’s `zip/free-profile/` (or use **Options → Import**). Do **not** add second profile trees under `assets/profiles/` — only the boot pack (`speech2texte`) lives there. Renaming free ZIPs is allowed; the Options selector reads **label and version from inside the archive** after validation. Recommended factory names (`{Pascal}-JsonProfile-v…`) remain useful for humans, not a listing gate. The app lists candidates via `lib/api/zip-profiles.php` and shows **validated** packs in **Options → JSON profile**.
 
 ### Selector order (canon)
 
