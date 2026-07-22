@@ -13,7 +13,7 @@ PS._profileLabelKey = function(raw) {
     var s = String(raw == null ? '' : raw).trim();
     if (!s) return '';
     s = s.replace(/\.zip$/i, '');
-    s = s.replace(/-promptdemerde-profile-v[\d.]+$/i, '');
+    s = s.replace(/-(?:JsonProfile|promptdemerde-profile)-v[\d.]+$/i, '');
     s = s.replace(/-promptdemerde-config-v[\d.]+$/i, '');
     s = s.replace(/^custom-/i, '');
     var PN = window.PDM && window.PDM.ProfileName;

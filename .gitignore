@@ -11,6 +11,7 @@ Thumbs.db
 .env.*
 
 *-promptdemerde-profile-*.zip
+*-JsonProfile-*.zip
 # Shipped free drop packs (public clone) — exception to the pattern above
 !/zip/free-profile/
 !/zip/free-profile/*.zip

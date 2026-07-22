@@ -24,7 +24,7 @@ The runtime default profile is `manifest.defaultProfileId` (API `lib/api/manifes
 
 ## Shared free ZIP drop (`zip/free-profile/`)
 
-The public tree ships **ready-to-import** free archives under [`zip/free-profile/`](../zip/free-profile/) (at least **Speech2Texte** and **PromptListStructurator**, matching `CS.VERSION`). Filenames use **PascalCase** stems (`Speech2Texte-promptdemerde-profile-v….zip`) — no hyphens inside the profile name. Clones and operators can add more conforming `.zip` files there. The app lists them via `lib/api/zip-profiles.php` (light metadata + ETag) and shows them in **Options → JSON profile** — useful if the bundled tree under `assets/profiles/` was altered and a clean archive re-download is needed.
+The public tree ships **ready-to-import** free archives under [`zip/free-profile/`](../zip/free-profile/) (at least **Speech2Texte** and **PromptListStructurator**, matching `CS.VERSION`). Operators may add any valid profile `.zip` there — **renaming is allowed**; the Options selector reads **label and version from inside the archive** after client validation (filename is only a light hint / safety filter). Recommended factory names (`{Pascal}-JsonProfile-v…` or legacy `*-promptdemerde-profile-v…`) remain useful for humans, not a listing gate. The app lists candidates via `lib/api/zip-profiles.php` (light metadata + ETag) and shows **validated** packs in **Options → JSON profile**.
 
 ### Selector badges (canon)
 
@@ -34,7 +34,7 @@ The public tree ships **ready-to-import** free archives under [`zip/free-profile
 | Shared drop under `zip/free-profile/` | `(zip) (Free) (x.y.z)` / `(zip) (Premium) (x.y.z)` |
 | Manual ZIP import or in-app create | `(Free) (x.y.z)` / `(Premium) (x.y.z)` — **no** `(zip)`, **no** `(perso)` |
 
-The **last** parenthesis is always the archive / contract version (`config.version`, or the `-promptdemerde-profile-v…` stem for drop ZIPs).
+The **last** parenthesis is always the archive / contract version (`config.version` from inside the ZIP; filename stem is a fallback only).
 
 **(native)** means the pack is part of the application tree in the repository (`assets/profiles/…`). It is the first-boot default when marked as such. Options does **not** remove that folder from disk: switching or importing another pack changes the active session, but the native entry stays available in the selector because it ships with the install.
 

@@ -710,11 +710,8 @@ function pdm_zip_free_safe_filename(string $name): bool
     if (strpos($name, '/') !== false || strpos($name, '\\') !== false) {
         return false;
     }
-    // Stem PascalCase + suffix fixe versionné (tirets uniquement dans le gabarit PDM)
-    return (bool) preg_match(
-        '/^[A-Z][A-Za-z0-9]{0,80}-promptdemerde-profile-v\d+\.\d+\.\d+\.zip$/',
-        $name
-    );
+    // Opérateur / utilisateur libre de renommer : seul le contenu ZIP tranche ensuite.
+    return (bool) preg_match('/^[A-Za-z0-9][A-Za-z0-9._-]{0,180}\.zip$/i', $name);
 }
 
 function pdm_zip_free_entry_id(string $filename): string
@@ -725,7 +722,11 @@ function pdm_zip_free_entry_id(string $filename): string
 function pdm_zip_free_label(string $filename): string
 {
     $base = preg_replace('/\.zip$/i', '', $filename);
-    $base = preg_replace('/-promptdemerde-profile-v[\d.]+$/i', '', (string) $base);
+    $base = preg_replace(
+        '/-(?:JsonProfile|promptdemerde-profile)-v[\d.]+$/i',
+        '',
+        (string) $base
+    );
     $pascal = pdm_to_pascal_profile_name((string) $base);
     if ($pascal !== '' && preg_match('/^[A-Z][A-Za-z0-9]*$/', $pascal)) {
         return $pascal;
@@ -735,7 +736,11 @@ function pdm_zip_free_label(string $filename): string
 
 function pdm_zip_free_version(string $filename): string
 {
-    if (preg_match('/-promptdemerde-profile-v([\d.]+)\.zip$/i', $filename, $m)) {
+    if (preg_match(
+        '/-(?:JsonProfile|promptdemerde-profile)-v([\d.]+)\.zip$/i',
+        $filename,
+        $m
+    )) {
         return rtrim((string) $m[1], '.');
     }
     return '';

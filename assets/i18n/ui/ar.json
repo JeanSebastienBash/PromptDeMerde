@@ -779,7 +779,7 @@
         "profileScanArchivesRefused": "تم رفض {{count}} من أرشيفات JSON.",
         "profileScanSeeMore": "عرض المزيد",
         "profileScanSeeLess": "عرض أقل",
-        "profileScanRejectFilename": "اسم ملف غير مطابق.",
+        "profileScanRejectFilename": "اسم ملف غير آمن (أحرف محظورة أو امتداد غير صالح).",
         "profileScanRejectSize": "الحجم خارج الحدود.",
         "profileScanRejectUnreadable": "ملف غير قابل للقراءة على الخادم.",
         "profileScanRejectMaxFiles": "تم تجاوز حصة أرشيفات free-profile.",

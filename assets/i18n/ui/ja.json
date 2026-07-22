@@ -779,7 +779,7 @@
         "profileScanArchivesRefused": "JSONアーカイブ {{count}} 件を拒否しました。",
         "profileScanSeeMore": "もっと見る",
         "profileScanSeeLess": "閉じる",
-        "profileScanRejectFilename": "ファイル名が規約に合いません。",
+        "profileScanRejectFilename": "安全でないファイル名です（禁止文字または無効な拡張子）。",
         "profileScanRejectSize": "サイズが上限外です。",
         "profileScanRejectUnreadable": "サーバー上でファイルを読めません。",
         "profileScanRejectMaxFiles": "free-profile アーカイブの上限を超えました。",

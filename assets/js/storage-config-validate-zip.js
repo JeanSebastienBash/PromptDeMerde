@@ -64,10 +64,18 @@ S.validateConfigZip = function(arrayBuffer, options) {
         var ver = normalized && normalized.version != null
             ? String(normalized.version).trim()
             : '';
+        var label = '';
+        if (bundle.manifest && bundle.manifest.label) {
+            label = String(bundle.manifest.label).trim();
+        }
+        if (!label && normalized && normalized.pdm_project && normalized.pdm_project.name) {
+            label = String(normalized.pdm_project.name).trim();
+        }
         return {
             ok: true,
             format: 'pdm-profile-zip',
-            version: /^\d+(?:\.\d+)*$/.test(ver) ? ver : ''
+            version: /^\d+(?:\.\d+)*$/.test(ver) ? ver : '',
+            label: label
         };
     }).catch(function(err) {
         var msg = err && err.message ? err.message : 'Validation ZIP \u00e9chou\u00e9e.';

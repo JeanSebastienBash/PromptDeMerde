@@ -779,7 +779,7 @@
         "profileScanArchivesRefused": "JSON 아카이브 {{count}}개가 거부되었습니다.",
         "profileScanSeeMore": "더 보기",
         "profileScanSeeLess": "접기",
-        "profileScanRejectFilename": "파일 이름이 규칙에 맞지 않습니다.",
+        "profileScanRejectFilename": "안전하지 않은 파일 이름입니다(금지 문자 또는 잘못된 확장자).",
         "profileScanRejectSize": "크기가 한도를 벗어났습니다.",
         "profileScanRejectUnreadable": "서버에서 파일을 읽을 수 없습니다.",
         "profileScanRejectMaxFiles": "free-profile 아카이브 할당량을 초과했습니다.",

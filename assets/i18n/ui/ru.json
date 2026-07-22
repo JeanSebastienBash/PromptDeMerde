@@ -779,7 +779,7 @@
         "profileScanArchivesRefused": "Отклонено JSON-архивов: {{count}}.",
         "profileScanSeeMore": "Показать больше",
         "profileScanSeeLess": "Свернуть",
-        "profileScanRejectFilename": "Недопустимое имя файла.",
+        "profileScanRejectFilename": "Небезопасное имя файла (запрещённые символы или неверное расширение).",
         "profileScanRejectSize": "Размер вне допустимых пределов.",
         "profileScanRejectUnreadable": "Файл на сервере нечитаем.",
         "profileScanRejectMaxFiles": "Превышена квота архивов free-profile.",

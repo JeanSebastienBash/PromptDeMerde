@@ -779,7 +779,7 @@
         "profileScanArchivesRefused": "{{count}} arquivo(s) JSON recusado(s).",
         "profileScanSeeMore": "Ver mais",
         "profileScanSeeLess": "Ver menos",
-        "profileScanRejectFilename": "Nome de ficheiro não conforme.",
+        "profileScanRejectFilename": "Nome de ficheiro inseguro (caracteres proibidos ou extensão inválida).",
         "profileScanRejectSize": "Tamanho fora dos limites.",
         "profileScanRejectUnreadable": "Ficheiro ilegível no servidor.",
         "profileScanRejectMaxFiles": "Quota de arquivos free-profile excedida.",

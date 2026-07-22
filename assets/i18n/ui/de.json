@@ -779,7 +779,7 @@
         "profileScanArchivesRefused": "{{count}} JSON-Archiv(e) abgelehnt.",
         "profileScanSeeMore": "Mehr anzeigen",
         "profileScanSeeLess": "Weniger anzeigen",
-        "profileScanRejectFilename": "Dateiname nicht konform.",
+        "profileScanRejectFilename": "Unsicherer Dateiname (verbotene Zeichen oder ungültige Endung).",
         "profileScanRejectSize": "Größe außerhalb der Grenzen.",
         "profileScanRejectUnreadable": "Datei auf dem Server unlesbar.",
         "profileScanRejectMaxFiles": "Kontingent freier Profile-Archive überschritten.",

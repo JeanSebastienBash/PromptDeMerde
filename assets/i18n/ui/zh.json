@@ -779,7 +779,7 @@
         "profileScanArchivesRefused": "已拒绝 {{count}} 个 JSON 档案。",
         "profileScanSeeMore": "查看更多",
         "profileScanSeeLess": "收起",
-        "profileScanRejectFilename": "文件名不符合规范。",
+        "profileScanRejectFilename": "文件名不安全（含禁止字符或扩展名无效）。",
         "profileScanRejectSize": "大小超出限制。",
         "profileScanRejectUnreadable": "服务器上无法读取该文件。",
         "profileScanRejectMaxFiles": "已超出 free-profile 档案配额。",

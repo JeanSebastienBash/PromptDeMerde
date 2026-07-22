@@ -61,7 +61,12 @@ PS._validateZipFreeCandidates = function(candidates, rejectedAcc) {
                     return S.validateConfigZip(buf, { filename: entry.filename || '' })
                         .then(function(result) {
                             if (result && result.ok) {
-                                if (result.version) entry.version = result.version;
+                                if (result.label) {
+                                    entry.label = String(result.label).trim();
+                                }
+                                if (result.version) {
+                                    entry.version = result.version;
+                                }
                                 if (!entry.version && entry.filename) {
                                     entry.version = typeof PS.extractArchiveVersion === 'function'
                                         ? PS.extractArchiveVersion(entry.filename)

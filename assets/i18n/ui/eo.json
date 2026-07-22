@@ -779,7 +779,7 @@
         "profileScanArchivesRefused": "{{count}} JSON-arkivo(j) rifuzita(j).",
         "profileScanSeeMore": "Montri pli",
         "profileScanSeeLess": "Montri malpli",
-        "profileScanRejectFilename": "Nekonforma dosiernomo.",
+        "profileScanRejectFilename": "Nesekura dosiernomo (malpermesitaj signoj aŭ nevalida finaĵo).",
         "profileScanRejectSize": "Grandeco ekster limoj.",
         "profileScanRejectUnreadable": "Nelegebla dosiero sur la servilo.",
         "profileScanRejectMaxFiles": "Kvoto de free-profile arkivoj troigita.",

@@ -141,7 +141,7 @@ PS.inferProfileLabel = function(config, filename, options) {
     }
     var stem = PS._getFileStem(filename || '');
     stem = stem
-        .replace(/-promptdemerde-profile-v[\d.]+$/i, '')
+        .replace(/-(?:JsonProfile|promptdemerde-profile)-v[\d.]+$/i, '')
         .replace(/-promptdemerde-config-v[\d.]+$/i, '');
     var pascal = PS.normalizeProfileLabel(stem) || PS.toPascalProfileName(stem);
     return pascal || psT('profileDefaultLabel', null, 'MonProfil');

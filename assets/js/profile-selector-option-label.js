@@ -28,7 +28,7 @@ PS._normalizeSource = function(source) {
 PS.extractArchiveVersion = function(raw) {
     var s = String(raw || '').trim();
     if (!s) return '';
-    var m = s.match(/-promptdemerde-profile-v([\d.]+)(?:\.zip)?$/i)
+    var m = s.match(/-(?:JsonProfile|promptdemerde-profile)-v([\d.]+)(?:\.zip)?$/i)
         || s.match(/-promptdemerde-config-v([\d.]+)(?:\.json)?$/i);
     if (m && m[1]) return String(m[1]).replace(/\.$/, '');
     if (/^\d+(?:\.\d+)*$/.test(s)) return s;
