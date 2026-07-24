@@ -1,33 +1,78 @@
 /**
  * PromptDeMerde.com — style-profile-configure.css
  * Synopsis : Onglets / listes de la modale Configurer le profil.
- * Objectif : Layout simple, réutilise coque export-config-modal.
+ * Objectif : Coque large (~880) + typo confort ; réutilise coque export-config-modal.
  */
 body.configure-profile-modal-open { overflow: hidden; }
-.configure-profile-shell { max-width: 560px; width: min(96vw, 560px); max-height: 90vh; display: flex; flex-direction: column; }
-.configure-locale-limit-hint { margin: 0 0 10px; line-height: 1.35; opacity: 0.92; }
+.configure-profile-shell {
+    max-width: 880px;
+    width: min(94vw, 880px);
+    max-height: 92vh;
+    display: flex;
+    flex-direction: column;
+    padding: 22px 26px;
+    box-sizing: border-box;
+}
+.configure-profile-shell .export-config-title { font-size: 1.55rem; margin-bottom: 16px; }
+.configure-profile-shell .export-config-field-label,
+.configure-profile-shell .export-config-radio {
+    font-size: 1.12rem;
+}
+.configure-profile-shell .export-config-field-hint,
+.configure-locale-limit-hint {
+    font-size: 1rem;
+    line-height: 1.45;
+}
+.configure-locale-limit-hint { margin: 0 0 12px; opacity: 0.92; }
 .configure-profile-tabs {
-    display: flex; flex-wrap: wrap; gap: 4px; margin: 0 0 12px; padding: 0;
+    display: flex; flex-wrap: wrap; gap: 6px; margin: 0 0 14px; padding: 0;
 }
 .configure-profile-tab {
     border: 1px solid var(--border); background: transparent; color: var(--text-muted);
-    padding: 6px 10px; border-radius: 6px; cursor: pointer; font-size: var(--text-small);
+    padding: 10px 14px; border-radius: 6px; cursor: pointer; font-size: 1.05rem;
 }
 .configure-profile-tab.is-active {
-    color: var(--text); border-color: var(--accent, var(--border)); background: var(--surface-2, rgba(255,255,255,.04));
+    color: var(--text); border-color: var(--accent, var(--border));
+    background: var(--surface-2, rgba(255,255,255,.04));
 }
-.configure-profile-body { overflow: auto; min-height: 0; flex: 1; }
-.configure-profile-panel { display: flex; flex-direction: column; gap: 8px; }
+.configure-profile-body { overflow: auto; min-height: 0; flex: 1; gap: 16px; }
+.configure-profile-panel { display: flex; flex-direction: column; gap: 10px; }
 .configure-profile-panel[hidden] { display: none !important; }
-.configure-brand-preview {
-    margin-top: 8px; font-size: 1.25rem; font-weight: 700; letter-spacing: 0.02em;
+.configure-profile-shell .stg-input {
+    font-size: 1.1rem;
+    line-height: 1.4;
+    padding: 12px 14px;
+    min-height: 2.75rem;
+    box-sizing: border-box;
 }
-.configure-texts-list { display: flex; flex-direction: column; gap: 10px; max-height: 42vh; overflow: auto; }
-.configure-text-row { display: flex; flex-direction: column; gap: 4px; }
-.configure-text-key { font-size: var(--text-small); color: var(--text-muted); font-family: var(--font-mono, monospace); }
-.configure-text-input { min-height: 2.5rem; resize: vertical; }
-.configure-synopsis { min-height: 6rem; resize: vertical; }
+.configure-brand-preview {
+    margin-top: 10px; font-size: 1.6rem; font-weight: 700; letter-spacing: 0.02em;
+}
+.configure-texts-list { display: flex; flex-direction: column; gap: 12px; max-height: 52vh; overflow: auto; }
+.configure-text-row { display: flex; flex-direction: column; gap: 6px; }
+.configure-text-row[hidden] { display: none !important; }
+.configure-text-key {
+    font-size: 1rem; color: var(--text-muted); font-family: var(--font-mono, monospace);
+}
+.configure-text-input { min-height: 3rem; resize: vertical; }
+.configure-synopsis { min-height: 7.5rem; resize: vertical; }
+.configure-profile-shell .export-config-actions {
+    gap: 10px; margin-top: 18px; flex-wrap: wrap;
+}
+.configure-profile-shell .export-config-actions .btn-sm {
+    padding: 12px 20px;
+    font-size: 1rem;
+    text-transform: none;
+    font-weight: 600;
+}
 @media (max-width: 480px) {
-    .configure-profile-tabs { gap: 3px; }
-    .configure-profile-tab { padding: 5px 8px; }
+    .configure-profile-shell {
+        width: min(100vw - 6px, 880px);
+        max-width: 100%;
+        padding: 14px 12px;
+        max-height: calc(100vh - 12px);
+    }
+    .configure-profile-tabs { gap: 4px; }
+    .configure-profile-tab { padding: 8px 12px; }
+    .configure-texts-list { max-height: 48vh; }
 }

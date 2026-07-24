@@ -9,9 +9,30 @@
 var PS = window.PDM && window.PDM.ProfileSelector;
 if (!PS) { console.warn('[profile-configure-texts.js] PDM.ProfileSelector not found.'); return; }
 
-PS._buildConfigureTextsList = function(texts) {
+PS._applyConfigureTextsFilter = function() {
     var list = document.getElementById('cfg-texts-list');
     var filter = document.getElementById('cfg-texts-filter');
+    if (!list) return;
+    var q = String((filter && filter.value) || '').toLowerCase().trim();
+    var rows = list.querySelectorAll('.configure-text-row');
+    for (var r = 0; r < rows.length; r++) {
+        var k = rows[r].getAttribute('data-text-key') || '';
+        var inp = rows[r].querySelector('[data-cfg-text]');
+        var v = inp ? String(inp.value || '') : '';
+        var hay = (k + '\n' + v).toLowerCase();
+        rows[r].hidden = !!(q && hay.indexOf(q) < 0);
+    }
+};
+
+PS._bindConfigureTextsFilterOnce = function() {
+    var filter = document.getElementById('cfg-texts-filter');
+    if (!filter || filter._cfgBound) return;
+    filter._cfgBound = true;
+    filter.addEventListener('input', function() { PS._applyConfigureTextsFilter(); });
+};
+
+PS._buildConfigureTextsList = function(texts) {
+    var list = document.getElementById('cfg-texts-list');
     if (!list) return;
     var CS = window.PDM && window.PDM.ConfigSchema;
     var keys = CS && CS.WORKSPACE_UI_TEXT_KEYS ? CS.WORKSPACE_UI_TEXT_KEYS.slice() : Object.keys(texts);
@@ -33,17 +54,8 @@ PS._buildConfigureTextsList = function(texts) {
         row.appendChild(inp);
         list.appendChild(row);
     }
-    if (filter && !filter._cfgBound) {
-        filter._cfgBound = true;
-        filter.addEventListener('input', function() {
-            var q = String(filter.value || '').toLowerCase();
-            var rows = list.querySelectorAll('.configure-text-row');
-            for (var r = 0; r < rows.length; r++) {
-                var k = rows[r].getAttribute('data-text-key') || '';
-                rows[r].hidden = !!(q && k.toLowerCase().indexOf(q) < 0);
-            }
-        });
-    }
+    PS._bindConfigureTextsFilterOnce();
+    PS._applyConfigureTextsFilter();
 };
 
 PS._collectConfigureTexts = function() {
