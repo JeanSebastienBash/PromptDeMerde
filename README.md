@@ -1,4 +1,4 @@
-# <img src="assets/images/favicon-poo-glasses-3d.png" alt="" width="36" height="36"> PromptDeMerde
+# <img src="assets/images/favicon-poo-glasses-3d.png" alt="" width="36" height="36"> PromptDeMerde.com
 
 <p align="center">
   <img src="assets/images/flags/en.svg" alt="English" width="28" height="20">
@@ -6,7 +6,7 @@
 
 <p align="center">
   <a href="LICENSE"><img src="https://img.shields.io/badge/License-MIT-yellow.svg" alt="License: MIT"></a>
-  <a href="https://github.com/JeanSebastienBash/promptdemerde/tags" target="_blank" rel="noopener noreferrer"><img src="https://img.shields.io/badge/version-1.24.3--RC-blue.svg" alt="Version 1.24.3 RC"></a>
+  <a href="https://github.com/JeanSebastienBash/promptdemerde/tags" target="_blank" rel="noopener noreferrer"><img src="https://img.shields.io/badge/Version-1.24.3--RC-blue.svg" alt="Version 1.24.3 RC"></a>
   <a href="https://github.com/JeanSebastienBash/promptdemerde/actions/workflows/ci.yml" target="_blank" rel="noopener noreferrer"><img src="https://github.com/JeanSebastienBash/promptdemerde/actions/workflows/ci.yml/badge.svg" alt="CI"></a>
 </p>
 
@@ -23,7 +23,7 @@ PromptDeMerde turns freeform input into structured prompts in the browser: local
 </p>
 
 <p align="center">
-  <a href="https://dreamproject.online/prj/promptdemerde/" target="_blank" rel="noopener noreferrer">DreamprojectAI</a> ·
+  <a href="https://dreamproject.online/prj/promptdemerde/" target="_blank" rel="noopener noreferrer">www.dreamproject.online</a> ·
   <a href="./docs/Documentation.md">Technical documentation</a> ·
   <a href="SECURITY.md">Security</a> ·
   <a href="CONTRIBUTING.md">Contributing</a>
@@ -37,15 +37,19 @@ PromptDeMerde turns freeform input into structured prompts in the browser: local
 
 > **PromptDeMerde V1 — official status**
 >
-> From DreamProjectAI’s point of view, the **V1 branch is done**: the MVP is finished. I treat this build as a **production candidate** because I use it myself in real situations and it covers some of my day-to-day needs. I plan further hardening and bug fixes; patches will ship later, with no public calendar.
+> From DreamProjectAI’s point of view, the **V1 branch is done**: the MVP is finished. This build is treated as a **production candidate** because it is used in real situations and it covers some day-to-day needs. Further hardening and bug fixes are planned; patches will ship later, with no public calendar.
 >
-> **Marketplace V1 is finished** — it demonstrates the catalogue model. Packs listed as **Free** or **Premium** stay **free to download**. This project has no profitability target; **Premium** is a UI label / category, not a paywall. As long as we stay on the **V1 branch**, this software stays **free**, with **no account**, **100% private** (browser session or self-host), and every profile pack downloaded on this branch stays free as well.
+> **Marketplace V1 is finished** — it illustrates the catalogue model to carry into **V2**. Packs listed as **Free** or **Premium** stay **free to download**. This **V1** project has no profitability target; **Premium** is a UI label / category, not a paywall. As long as we stay on the **V1 branch**, this software stays **free**, with **no account**, **100% private** (browser session or self-host), and every profile pack downloaded on this branch stays free as well.
 >
-> PromptDeMerde is a **collaboration tool** for solo users and teams: shared JSON profile archives let everyone speak the same LLM language. I project a **V2** — stronger, pushed as far as the stack and the code will go, with plugins, extensions, and modules. I will **not** start that V2 while I am alone on the project. Alone, there is no V2.
+> PromptDeMerde is a **collaboration tool** for solo users and teams: shared JSON profile archives let everyone speak the same LLM language. A **V2** is projected — stronger, pushed as far as the stack and the code will go, with plugins, extensions, and modules. Without allocated budget, that V2 development will never start.
 >
-> This repository has **no** automated product test suite — my choice. Structural continuous-integration checks still run in **this GitHub repository** on every push (see `.github/workflows/ci.yml` / Actions). I invite you to send bug reports and pull requests for this branch on GitHub; however, I prefer general questions and security reports by email at **dreamproject-ai@proton.me**, so we can talk (see [`SECURITY.md`](SECURITY.md) and [`CONTRIBUTING.md`](CONTRIBUTING.md)).
+> This repository has **no** automated product test suite. However, structural continuous-integration checks still run in **this GitHub repository** on every push (see `.github/workflows/ci.yml` / Actions). Bug reports and pull requests for this branch are welcome on GitHub; and general questions and security reports are preferable by email at **dreamproject-ai@proton.me**, so we can discuss them live (see [`SECURITY.md`](SECURITY.md) and [`CONTRIBUTING.md`](CONTRIBUTING.md)).
 >
-> — **DreamProjectAI**
+> Project sheet, projections, and longer notes live on the DreamProjectAI site: <a href="https://dreamproject.online/prj/promptdemerde/" target="_blank" rel="noopener noreferrer">www.dreamproject.online</a> (PromptDeMerde project page).
+>
+> Thank you to all of you who use PromptDeMerde.
+>
+> — **DreamProjectAI** (<a href="https://dreamproject.online/prj/" target="_blank" rel="noopener noreferrer">www.dreamproject.online</a>)
 
 ---
 
@@ -96,7 +100,7 @@ More videos will follow on the <a href="https://www.youtube.com/@DreamprojectAI/
 
 *Release candidate — production-ready (see [official note](#menu-official-note)).*
 
-- **Official note from DreamProjectAI** (direct voice): V1 branch done; production candidate in real use; Marketplace V1 finished; Free and Premium downloads stay free on V1; no V2 while solo; Issues/PRs invited; security and general questions by email.
+- **Official note from DreamProjectAI** (direct voice): V1 branch done; production candidate in real use; Marketplace V1 finished; Free and Premium downloads stay free on V1; no V2 without allocated budget; Issues/PRs invited; security and general questions by email.
 - Safer display for untrusted profile archive chrome (`PDM.UI.safeText` / untrusted flag).
 - App version bump to **1.24.3** (patch). Profile contract unchanged (**52** `pdm_*` keys).
 - Free ZIP drop filenames remain `*-JsonProfile-v1.24.1.zip` until the next pack rebuild.
@@ -1520,7 +1524,7 @@ After clone, `restore-large-assets.sh` **reassembles** the large voice-dictation
 
 ## © 10. Credits
 
-Published by **<a href="https://dreamproject.online" target="_blank" rel="noopener noreferrer">DreamProjectAI</a>**.
+Published by **<a href="https://dreamproject.online/prj/promptdemerde/" target="_blank" rel="noopener noreferrer">DreamProjectAI</a>** (<a href="https://dreamproject.online/prj/promptdemerde/" target="_blank" rel="noopener noreferrer">www.dreamproject.online</a> — PromptDeMerde project sheet and projections).
 
 Third-party components (full list: [`THIRD_PARTY_NOTICES.md`](THIRD_PARTY_NOTICES.md)):
 
@@ -1561,5 +1565,5 @@ Cross-links for screens, deployment, security, and zone docs — the same Techni
 
 ## ⚖ 12. License
 
-MIT — <a href="https://dreamproject.online" target="_blank" rel="noopener noreferrer">DreamProjectAI</a>
+MIT — <a href="https://dreamproject.online/prj/" target="_blank" rel="noopener noreferrer">DreamProjectAI</a> (<a href="https://dreamproject.online/prj/" target="_blank" rel="noopener noreferrer">www.dreamproject.online</a>)
 
