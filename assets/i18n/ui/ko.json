@@ -60,8 +60,8 @@
         "brandSecond": "똥의",
         "brandExtension": ".com",
         "promptSuffix": "@promptdemerde:~#",
-        "market": "마켓플레이스",
-        "marketExternalTitle": "promptdemerde.com에서 Marketplace 카탈로그를 엽니다",
+        "market": "마켓",
+        "marketExternalTitle": "promptdemerde.com에서 Market 카탈로그를 엽니다",
         "legalExternalTitle": "promptdemerde.com에서 페이지를 엽니다"
     },
     "loader": {
@@ -848,8 +848,7 @@
     "env": {
         "prod": "PROD",
         "preprod": "프리프로덕션",
-        "selfhosted": "셀프 호스팅",
-        "cloudSoon": "클라우드 API (곧 제공)"
+        "selfhosted": "셀프 호스팅"
     },
     "copy": {
         "faq.llm": "예. 모든 기능이 상업적 할당량 없이 열려 있습니다. LLM은 로컬 <strong>Ollama</strong>를 통해서만 동작합니다.",
@@ -981,7 +980,6 @@
         "dictationStoppedForClean": "받아쓰기 정지 — 현재 텍스트 정리 중.",
         "customProfileSynopsis": "프로필 {{label}} — PromptDeMerde 맞춤 설정.",
         "llmModelSavedInfo": "LLM 모델: {{model}}",
-        "providerLater": "이 제공자는 나중에 제공될 예정입니다.",
         "providerSaved": "제공자가 저장되었습니다.",
         "llmModelEmpty": "-- 모델 없음 --",
         "thinkingMaxUnlimited": "무제한 (0)",

@@ -78,7 +78,8 @@ More videos will follow on the <a href="https://www.youtube.com/@DreamprojectAI/
 
 *Release candidate — not yet stable.*
 
-- **Shared free ZIP drop** (`zip/free-profile/`): public GitHub channel for **all free** Creator / marketplace packs (ships **Speech2Texte** + **PromptListStructurator**; more free ZIPs as published). Options lists validated packs with `(zip) (Free) (x.y.z)`. **Premium** stays Marketplace-only when Marketplace is out of maintenance.
+- **Shared free ZIP drop** (`zip/free-profile/`): public GitHub channel for free Creator packs with embedded `market/` metadata. Current drop: **AdsGeneratorPro**, **ContractClauseCleaner**, **MeetingMinutesPro**, **NoConformistLandpage**, **SeoMetaPack** (`*-JsonProfile-v1.24.1.zip`). **Speech2Texte** remains the native boot pack under `assets/profiles/` (not duplicated as a free ZIP). Options lists validated packs with `(zip) (Free) (x.y.z)`. **Premium** stays Marketplace-only.
+- **LLM provider**: **Ollama only** in V1 — no greyed “cloud API coming soon” option in the provider selector.
 - **Selector scan**: sequential validation (invalid archives skipped); permanent status under the control — all valid, or rejected count with **Show more** / **Show less**.
 - **PascalCase** profile names (ZIP stems, selector labels, create/export).
 - **Native vs zip dedupe**: keep `(native)` when both exist; last parenthesis = archive / contract version.
@@ -135,7 +136,7 @@ More videos will follow on the <a href="https://www.youtube.com/@DreamprojectAI/
 - Token **compression**: optional checkboxes applied on **Reformulate** (no separate Compress button).
 - History cards show Original / Compressed traces for Input, the system prompt, context prompts, and Output.
 - Context prompt generators by **intention**: model picker, stream, Stop.
-- On a clone without a local catalogue, **Marketplace** opens <a href="https://promptdemerde.com/#market" target="_blank" rel="noopener noreferrer">promptdemerde.com/#market</a>.
+- On a clone without a local catalogue, **Market** opens <a href="https://promptdemerde.com/#market" target="_blank" rel="noopener noreferrer">promptdemerde.com/#market</a>.
 - Product toasts / status: impersonal register (twelve locales).
 
 [Technical documentation](docs/Documentation.md#feat-5-1) · [Tag notes v1.22.0](.github/RELEASE_v1.22.0.md)
@@ -185,7 +186,7 @@ More videos will follow on the <a href="https://www.youtube.com/@DreamprojectAI/
     - 🏪 [5.5.3. Marketplace of JSON profiles](#feat-5-5-3) — ready-made packs on the official site (clone falls back to `#market`)
     - 🔀 [5.5.4. Profiles: create, switch, export modal](#feat-5-5-4) — create a personal pack, switch with confirm, export ZIP via guided modal
     - 🔎 [5.5.5. Marketplace: search, filters and detail card](#feat-5-5-5) — when a local catalogue is present
-    - 📂 [5.5.6. Shared free ZIP drop](#feat-5-5-6) — GitHub `zip/free-profile/` = all **free** packs (download without Marketplace); Premium via Marketplace when out of maintenance
+    - 📂 [5.5.6. Shared free ZIP drop](#feat-5-5-6) — GitHub `zip/free-profile/` = all **free** packs (download without Marketplace); Premium via Marketplace
   - ✹ [5.6. Languages, themes & same code everywhere](#feat-5-6)
     - 🗣 [5.6.1. Twelve UI languages & 25 themes](#feat-5-6-1) — twelve locales; twenty-five themes each with light and dark
     - ≡ [5.6.2. Same code everywhere](#feat-5-6-2) — official site ≡ clone; same privacy; proxy token only for locked prod relay
@@ -935,11 +936,11 @@ A JSON profile does more than carry prompts: it can **rebrand the whole shell**.
 
 ### 🏪 5.5.3. Marketplace of JSON profiles
 
-A marketplace of ready-to-import JSON profiles is available on the <a href="https://promptdemerde.com/#market" target="_blank" rel="noopener noreferrer">official site</a> (soon / in maintenance on many builds).
+A marketplace of ready-to-import JSON profiles is available on the <a href="https://promptdemerde.com/#market" target="_blank" rel="noopener noreferrer">official site</a>. The catalogue lists archives that ship a complete embedded `market/` folder (listing + preview + screenshots). Older ZIPs without that folder remain importable under **Options**, but they do not appear in Marketplace.
 
-**Free packs** from that catalogue are also published under [`zip/free-profile/`](zip/free-profile/) on the public GitHub repository (**5.5.6**) so clones can download them without using the Marketplace UI. **Premium** packs are Marketplace-only once Marketplace leaves maintenance — they are not mirrored in the free drop folder.
+**Free packs** from that catalogue are also published under [`zip/free-profile/`](zip/free-profile/) on the public GitHub repository (**5.5.6**) so clones can download them without using the Marketplace UI. **Premium** packs are Marketplace-only — they are not mirrored in the free drop folder.
 
-On a public clone without a local catalogue, the Marketplace menu opens that URL.
+On a public clone without a local catalogue, the Market menu opens that URL.
 
 [Technical documentation](docs/Documentation.md#feat-5-5-3)
 
@@ -995,7 +996,7 @@ When a local catalogue is present, Marketplace provides search, filters (price, 
 
 ### 📂 5.5.6. Shared free ZIP drop
 
-The public GitHub repository keeps **all free** marketplace-oriented profile archives under [`zip/free-profile/`](zip/free-profile/) (including shipped **Speech2Texte** and **PromptListStructurator** for the current app version, plus further free Creator packs as they are published). That tree is a **direct download channel**: users may copy one or more ZIPs from GitHub into a self-hosted install’s `zip/free-profile/` folder, or import a ZIP under **Options**, without browsing Marketplace. While Marketplace is in maintenance, this folder is the main way to obtain extra **free** packs. **Premium** packs are not published here — when Marketplace leaves maintenance, Premium downloads go through Marketplace (or Support).
+The public GitHub repository keeps **free** marketplace-oriented profile archives under [`zip/free-profile/`](zip/free-profile/). For **v1.24.1** the drop ships **AdsGeneratorPro**, **ContractClauseCleaner**, **MeetingMinutesPro**, **NoConformistLandpage**, and **SeoMetaPack** (`*-JsonProfile-v1.24.1.zip`), each with an embedded `market/` folder for the official Marketplace catalogue. The boot pack **Speech2Texte** stays under `assets/profiles/` as `(native)` and is **not** duplicated in the free drop. That tree is a **direct download channel**: users may copy one or more ZIPs from GitHub into a self-hosted install’s `zip/free-profile/` folder, or import a ZIP under **Options**, without browsing Marketplace. Marketplace itself only shows packs whose ZIP embeds a valid `market/` folder. **Premium** packs are not published here — they go through Marketplace (or Support).
 
 Archive stems are **PascalCase**. Renaming is allowed. On a self-hosted or official deploy, operators can add more free ZIP files to that folder.
 
@@ -1136,9 +1137,9 @@ Right-to-left locales are handled the same way as any other language switch (**5
 
 ### 🧭 5.7.1. In-app navigation (SPA)
 
-PromptDeMerde is a **SPA**: a **single-page application**. That name is not jargon for its own sake. It means the product lives as **one continuous shell** in the browser. Moving from Workspace to Prompts, from Prompts to Options, or from Options to Marketplace does **not** tear the application down and rebuild it from a blank page. The rooms change; the house stays standing. Session work, open panels, and ongoing actions that the product allows to continue (for example voice dictation started on the Workspace — **5.3.1**) are not thrown away by mere navigation between screens.
+PromptDeMerde is a **SPA**: a **single-page application**. That name is not jargon for its own sake. It means the product lives as **one continuous shell** in the browser. Moving from Workspace to Prompts, from Prompts to Options, or from Options to Market does **not** tear the application down and rebuild it from a blank page. The rooms change; the house stays standing. Session work, open panels, and ongoing actions that the product allows to continue (for example voice dictation started on the Workspace — **5.3.1**) are not thrown away by mere navigation between screens.
 
-In practice, the top navigation (and the equivalent links on small screens) opens **Workspace**, **Prompts**, **Options**, and **Marketplace** inside that same shell. The address bar still updates so a screen can be bookmarked or shared, but the experience remains one application, not a chain of separate websites that reload at every click.
+In practice, the top navigation (and the equivalent links on small screens) opens **Workspace**, **Prompts**, **Options**, and **Market** inside that same shell. The address bar still updates so a screen can be bookmarked or shared, but the experience remains one application, not a chain of separate websites that reload at every click.
 
 On a public clone that does not ship the official site’s in-app legal pages, the footer links for Mentions, Terms, Privacy, and Support open <a href="https://promptdemerde.com" target="_blank" rel="noopener noreferrer">promptdemerde.com</a> (same green-badge pattern as Marketplace). The Documentation control opens the technical docs on GitHub ([Technical documentation](docs/Documentation.md)).
 
@@ -1152,7 +1153,7 @@ On a public clone that does not ship the official site’s in-app legal pages, t
 
 ### ☰ 5.7.2. Burger menu, Escape and loader
 
-On a narrow screen, the top navigation collapses into a **burger** control. One tap opens the menu so Workspace, Prompts, Options, Marketplace and the other shell links stay reachable without crowding the header; another tap closes it. The control’s label and expanded state stay aligned with the open or closed menu for assistive tech.
+On a narrow screen, the top navigation collapses into a **burger** control. One tap opens the menu so Workspace, Prompts, Options, Market and the other shell links stay reachable without crowding the header; another tap closes it. The control’s label and expanded state stay aligned with the open or closed menu for assistive tech.
 
 **Escape** closes that mobile menu when it is open, so leaving the drawer does not require hunting for the burger again. Other overlays in the product (modals, language menus, and similar) follow the same Escape habit where it applies.
 
@@ -1417,7 +1418,7 @@ That script **concatenates** the parts, checks SHA-256 fingerprints, and writes 
 
 **3 — Ollama on the clone.** Install Ollama and pull a model the same way as in **7.1**. Point *Options → LLM* at `http://localhost:11434` or a LAN URL, then use **Test**. When the app and Ollama share the same machine via a local URL, CORS is usually simpler than on the official HTTPS site; if the browser origin is not localhost (or Ollama is on another host), set `OLLAMA_ORIGINS` to **that site origin** and use the same **two launch methods** as in **7.1** (one-shot `ollama serve` vs persistent service).
 
-**4 — Optional operator knobs.** `PDM_ENV` only labels the footer badge. A proxy token is needed only when the server relay is locked (`PDM_PROXY_TOKEN` — **5.7.3** / **5.7.6**). Day-to-day self-hosters keep **“I don’t have a token”** checked. Extra **free** profile packs ship under `zip/free-profile/` on GitHub (**5.5.6**) — download without Marketplace; copy into that folder on any install (or Import). **Premium** packs come from Marketplace when it leaves maintenance.
+**4 — Optional operator knobs.** `PDM_ENV` only labels the footer badge. A proxy token is needed only when the server relay is locked (`PDM_PROXY_TOKEN` — **5.7.3** / **5.7.6**). Day-to-day self-hosters keep **“I don’t have a token”** checked. Extra **free** profile packs ship under `zip/free-profile/` on GitHub (**5.5.6**) — download without Marketplace; copy into that folder on any install (or Import). **Premium** packs come from Marketplace.
 
 Reformulation quality depends on the chosen Ollama model. STT runs as ONNX / WASM in the browser; a dedicated GPU helps Whisper / Parakeet but is optional for Vosk.
 

@@ -1040,15 +1040,23 @@ The **Export** action downloads a **ZIP archive**; a standalone JSON file is not
 
 ### 12.1 Filename
 
+**Options → Export** (browser download):
+
 ```
 {slug}-promptdemerde-profile-v{CS.VERSION}.zip
 ```
 
-`slug` is the **PascalCase** profile label (e.g. `Speech2Texte`, `PromptListStructurator`) — no hyphens or spaces inside the stem.
+**Factory / free drop / Creator** (published packs under `zip/free-profile/`):
 
-Example filename: `Speech2Texte-promptdemerde-profile-v1.24.1.zip` (PascalCase stem — no hyphens inside the profile name; see Profiles nomenclature).
+```
+{slug}-JsonProfile-v{CS.VERSION}.zip
+```
 
-The filename is built by `buildZipFilename()` in [`assets/js/profile-bundle-export.js`](../assets/js/profile-bundle-export.js).
+`slug` is the **PascalCase** profile label (e.g. `Speech2Texte`, `AdsGeneratorPro`) — no hyphens or spaces inside the stem.
+
+Examples: `Speech2Texte-promptdemerde-profile-v1.24.1.zip` (Options export) · `AdsGeneratorPro-JsonProfile-v1.24.1.zip` (free drop). Renaming free-drop files is allowed; listing reads label/version from inside the archive.
+
+The Options export filename is built by `buildZipFilename()` in [`assets/js/profile-bundle-export.js`](../assets/js/profile-bundle-export.js).
 
 ### 12.2 ZIP structure
 
@@ -1199,7 +1207,7 @@ Without hex colors in the profile, the theme sets `--nav-logo-word1` (text) and 
 
 Marketplace is an in-app hash section (`#market`) with local catalogue when the feature flag is on (detail UI: 5.5.5).
 
-**Free vs Premium distribution.** Free packs published for the catalogue are also mirrored under [`zip/free-profile/`](../zip/free-profile/) on the public GitHub repository (**5.5.6**) — download and copy/import without the Marketplace UI. While Marketplace is in maintenance, that folder is the practical free channel. **Premium** packs are not placed in the free drop; when Marketplace leaves maintenance, Premium downloads go through Marketplace (or Support).
+**Free vs Premium distribution.** Free packs published for the catalogue are also mirrored under [`zip/free-profile/`](../zip/free-profile/) on the public GitHub repository (**5.5.6**) — download and copy/import without the Marketplace UI. Marketplace lists packs whose ZIP embeds a valid `market/` folder. **Premium** packs are not placed in the free drop; Premium downloads go through Marketplace (or Support).
 
 ### Clone without catalogue
 
@@ -1288,7 +1296,7 @@ Document runtime catalogue UI only. Do **not** describe `assets/market/**` facto
 <a id="feat-5-5-6"></a>
 ### 📂 5.5.6. Shared free ZIP drop
 
-The clone ships profile archives under [`zip/free-profile/`](../zip/free-profile/). **Every free** marketplace-oriented pack is also versioned there on the public GitHub mirror so users can download ZIPs **without** the Marketplace UI (copy into a self-host’s `zip/free-profile/` or **Options → Import**). While Marketplace is in maintenance, that folder is the practical channel for extra free packs. **Premium** archives are not published in the free drop — when Marketplace leaves maintenance, Premium downloads go through Marketplace (or Support). Operators may add more free `.zip` files and **may rename** them; listing does **not** require a factory filename pattern. The SPA lists candidates through `lib/api/zip-profiles.php` (safe-name + size filter + ETag; no server-side unzip) then keeps **only packs that pass** client `validateConfigZip`. After validation, **label and version come from inside the archive** (`manifest` / `config.version`; filename is a fallback hint only). Valid packs appear in the Options profile selector with badges `(zip) (Free) (x.y.z)` — except when a pack with the same PascalCase label is already listed as **`(native) (Free) (x.y.z)`** from `assets/profiles/` (that native row wins; the ZIP stays on disk for GET / manual Import). Selector order is always **native → free → premium**, each group A–Z by label. The **last** parenthesis is the archive / contract version. During rescan the selector is disabled while each candidate is checked in order. Invalid archives are skipped entirely. A permanent status line under the control reports that all archives are valid, or how many were rejected, with **Show more** / **Show less** to list rejected filenames. Manual imports use `(Free) (x.y.z)` / `(Premium) (x.y.z)` only. Selecting a listed ZIP entry fetches that archive and applies the same client import pipeline as a manual import (validation, wipe, reload) **without** adding a duplicate selector option after reload. **`(native)`** means the pack folder ships in the repository and remains part of the install; Options does not remove it from disk. Rescan runs on boot (idle), when Options is opened, and when the tab becomes visible again — never as a permanent timer.
+The clone ships profile archives under [`zip/free-profile/`](../zip/free-profile/). For **v1.24.1** the public drop includes **AdsGeneratorPro**, **ContractClauseCleaner**, **MeetingMinutesPro**, **NoConformistLandpage**, and **SeoMetaPack** (`*-JsonProfile-v1.24.1.zip` with embedded `market/`). **Speech2Texte** remains the native boot pack under `assets/profiles/` only. Free marketplace-oriented packs are versioned there on the public GitHub mirror so users can download ZIPs **without** the Marketplace UI (copy into a self-host’s `zip/free-profile/` or **Options → Import**). Marketplace lists packs whose ZIP embeds a valid `market/` folder; ZIPs without it stay importable under Options. **Premium** archives are not published in the free drop — Premium downloads go through Marketplace (or Support). Operators may add more free `.zip` files and **may rename** them; listing does **not** require a factory filename pattern. The SPA lists candidates through `lib/api/zip-profiles.php` (safe-name + size filter + ETag; no server-side unzip) then keeps **only packs that pass** client `validateConfigZip`. After validation, **label and version come from inside the archive** (`manifest` / `config.version`; filename is a fallback hint only). Valid packs appear in the Options profile selector with badges `(zip) (Free) (x.y.z)` — except when a pack with the same PascalCase label is already listed as **`(native) (Free) (x.y.z)`** from `assets/profiles/` (that native row wins; the ZIP stays on disk for GET / manual Import). Selector order is always **native → free → premium**, each group A–Z by label. The **last** parenthesis is the archive / contract version. During rescan the selector is disabled while each candidate is checked in order. Invalid archives are skipped entirely. A permanent status line under the control reports that all archives are valid, or how many were rejected, with **Show more** / **Show less** to list rejected filenames. Manual imports use `(Free) (x.y.z)` / `(Premium) (x.y.z)` only. Selecting a listed ZIP entry fetches that archive and applies the same client import pipeline as a manual import (validation, wipe, reload) **without** adding a duplicate selector option after reload. **`(native)`** means the pack folder ships in the repository and remains part of the install; Options does not remove it from disk. Rescan runs on boot (idle), when Options is opened, and when the tab becomes visible again — never as a permanent timer.
 
 Detail: [`Profiles.md`](Profiles.md) · modules `profile-zip-drop.js`, `profile-selector-option-label.js`, `profile-selector-scan-status.js`, `profile-selector-populate.js`, `profile-selector-dedupe.js`. Distinct from Marketplace (**5.5.3** / **5.5.5**).
 
@@ -2254,7 +2262,7 @@ The total is **147** versioned `assets/js/*.js` files (excluding vendor). Roles 
 | [`homepage.js`](../assets/js/homepage.js) | Conditional loader for the marketing landing fragment. |
 | [`llm.js`](../assets/js/llm.js) | Generic PDM.LLM façade independent of the provider. |
 | [`ollama.js`](../assets/js/ollama.js) | Ollama provider adapter (HTTP, streaming, UI). |
-| [`providers.js`](../assets/js/providers.js) | LLM adapter registry (Ollama, future providers). |
+| [`providers.js`](../assets/js/providers.js) | LLM adapter registry (Ollama in V1). |
 | [`proxy-token-session.js`](../assets/js/proxy-token-session.js) | Proxy token in sessionStorage (LLM Options only, no boot modal). |
 | [`seo-meta.js`](../assets/js/seo-meta.js) | SEO meta stack (OG, Twitter, keywords, canonical) synced with i18n + hash routes. |
 | [`settings-ui.js`](../assets/js/settings-ui.js) | Options tab UI (LLM, STT, theme, save). |

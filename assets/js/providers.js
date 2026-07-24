@@ -138,18 +138,6 @@ window.PDM.Providers = {
                 disabled: false
             });
         }
-        var upcoming = window.PDM.Env && window.PDM.Env.getUpcomingProviders
-            ? window.PDM.Env.getUpcomingProviders()
-            : [];
-        for (var j = 0; j < upcoming.length; j++) {
-            if (!this.get(upcoming[j].id)) {
-                opts.push({
-                    value: upcoming[j].id,
-                    label: upcoming[j].label || upcoming[j].id,
-                    disabled: true
-                });
-            }
-        }
         if (!current && opts.length) current = opts[0].value;
         sel.innerHTML = '';
         for (var k = 0; k < opts.length; k++) {

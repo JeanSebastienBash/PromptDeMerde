@@ -61,6 +61,7 @@ $coreScripts = [
     'assets/js/profiles.js',
     'assets/js/themes.js',
     'assets/js/ui.js',
+    'assets/js/ui-safe-display.js',
     'assets/js/footer-projects.js',
     'assets/js/footer-radar-portrait.js',
     'assets/js/stt-shared-core.js',
@@ -149,6 +150,18 @@ if ($hasMarket) {
             }
         }
         sort($marketEarly, SORT_STRING);
+        /* ZIP-first override après market-catalog.js (sinon IIFE no-op). */
+        $zipRel = 'assets/js/market-catalog-zip.js';
+        $earlyNoZip = [];
+        $zipOnly = [];
+        foreach ($marketEarly as $rel) {
+            if ($rel === $zipRel) {
+                $zipOnly[] = $rel;
+            } else {
+                $earlyNoZip[] = $rel;
+            }
+        }
+        $marketEarly = array_merge($earlyNoZip, $zipOnly);
         sort($marketUiBits, SORT_STRING);
         /* cards en dernier parmi market-ui-* : unique propriétaire de _renderResults. */
         $cardsRel = 'assets/js/market-ui-cards.js';
@@ -184,6 +197,8 @@ if ($isProd) {
         'ollamaProxy' => 'lib/proxy/ollama/olama.php',
         'profileManifest' => 'lib/api/manifest.php',
         'zipProfiles' => 'lib/api/zip-profiles.php',
+        'marketZipCatalog' => 'lib/api/market-zip-catalog.php',
+        'marketZipAsset' => 'lib/api/market-zip-asset.php',
     ];
 } else {
     $llmEnabled = ['ollama'];
@@ -198,6 +213,8 @@ if ($isProd) {
         'ollamaProxy' => 'lib/proxy/ollama/olama.php',
         'profileManifest' => 'lib/api/manifest.php',
         'zipProfiles' => 'lib/api/zip-profiles.php',
+        'marketZipCatalog' => 'lib/api/market-zip-catalog.php',
+        'marketZipAsset' => 'lib/api/market-zip-asset.php',
     ];
 }
 
@@ -247,9 +264,7 @@ echo json_encode([
     'llm' => [
         'enabled' => $llmEnabled,
         'default' => $llmDefault,
-        'upcoming' => [
-            ['id' => 'freellm', 'label' => 'API cloud (bientôt disponible)'],
-        ],
+        'upcoming' => [],
     ],
     'assets' => [
         'scripts' => $scriptsWithBust,

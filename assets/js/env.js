@@ -28,7 +28,7 @@ var FALLBACK = {
     llm: {
         enabled: ['ollama'],
         default: 'ollama',
-        upcoming: [{ id: 'freellm', label: 'API cloud (bientôt disponible)' }]
+        upcoming: []
     },
     assets: {
         scripts: [
@@ -68,6 +68,7 @@ var FALLBACK = {
             'assets/js/profiles.js',
             'assets/js/themes.js',
             'assets/js/ui.js',
+            'assets/js/ui-safe-display.js',
             'assets/js/footer-projects.js',
             'assets/js/footer-radar-portrait.js',
             'assets/js/stt-shared-core.js',
@@ -137,6 +138,8 @@ var FALLBACK = {
         ollamaProxy: 'lib/proxy/ollama/olama.php',
         profileManifest: 'lib/api/manifest.php',
         zipProfiles: 'lib/api/zip-profiles.php',
+        marketZipCatalog: 'lib/api/market-zip-catalog.php',
+        marketZipAsset: 'lib/api/market-zip-asset.php',
     },
     security: {
         proxyAuthRequired: false

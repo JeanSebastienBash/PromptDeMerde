@@ -110,7 +110,6 @@ A.bindWorkspaceLlmConfig = function() {
         providerSelect.addEventListener('change', function() {
             if (!window.PDM.Providers.has(providerSelect.value)) {
                 providerSelect.value = A.getActiveProviderId() || A.getDefaultProviderId();
-                window.PDM.UI.notif(wuText('providerLater'), 'info');
                 return;
             }
             window.PDM.Storage.set(window.PDM.Storage.KEYS.PROVIDER, providerSelect.value);

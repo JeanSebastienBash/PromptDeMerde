@@ -60,8 +60,8 @@
         "brandSecond": "DeMerde",
         "brandExtension": ".com",
         "promptSuffix": "@promptdemerde:~# ",
-        "market": "应用市场",
-        "marketExternalTitle": "在 promptdemerde.com 打开 Marketplace 目录",
+        "market": "市场",
+        "marketExternalTitle": "在 promptdemerde.com 打开 Market 目录",
         "legalExternalTitle": "在 promptdemerde.com 打开该页面"
     },
     "loader": {
@@ -848,8 +848,7 @@
     "env": {
         "prod": "PROD",
         "preprod": "预生产",
-        "selfhosted": "自托管",
-        "cloudSoon": "云 API（即将推出）"
+        "selfhosted": "自托管"
     },
     "copy": {
         "faq.llm": "是的。所有功能开放，无商业配额。LLM 仅通过本地 <strong>Ollama</strong> 运行。",
@@ -981,7 +980,6 @@
         "dictationStoppedForClean": "听写停止——清理当前文本。",
         "customProfileSynopsis": "配置文件 {{label}} — PromptDeMerde 个性化设置。",
         "llmModelSavedInfo": "型号 LLM： {{model}}",
-        "providerLater": "该提供程序将在稍后推出。",
         "providerSaved": "提供商已保存。",
         "llmModelEmpty": "-- 没有型号 --",
         "thinkingMaxUnlimited": "无限制 (0)",

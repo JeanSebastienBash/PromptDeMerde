@@ -60,8 +60,8 @@
         "brandSecond": "たわごと",
         "brandExtension": ".com",
         "promptSuffix": "@promptdemerde:~#",
-        "market": "マーケットプレイス",
-        "marketExternalTitle": "promptdemerde.com の Marketplace カタログを開きます",
+        "market": "マーケット",
+        "marketExternalTitle": "promptdemerde.com の Market カタログを開きます",
         "legalExternalTitle": "promptdemerde.com でページを開きます"
     },
     "loader": {
@@ -848,8 +848,7 @@
     "env": {
         "prod": "PROD",
         "preprod": "プレ本番",
-        "selfhosted": "セルフホスト",
-        "cloudSoon": "クラウド API（近日公開）"
+        "selfhosted": "セルフホスト"
     },
     "copy": {
         "faq.llm": "はい。すべての機能が商用クォータなしで利用可能です。LLMはローカルの<strong>Ollama</strong>のみを経由します。",
@@ -981,7 +980,6 @@
         "dictationStoppedForClean": "音声入力を停止 — 現在のテキストをクリーンアップ中。",
         "customProfileSynopsis": "プロファイル {{label}} — PromptDeMerde カスタム設定。",
         "llmModelSavedInfo": "LLM モデル: {{model}}",
-        "providerLater": "このプロバイダーは後日利用可能になります。",
         "providerSaved": "プロバイダーを保存しました。",
         "llmModelEmpty": "-- モデルなし --",
         "thinkingMaxUnlimited": "無制限 (0)",

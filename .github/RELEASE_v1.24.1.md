@@ -5,7 +5,9 @@
 
 ## Highlights
 
-- Shared free ZIP drop `zip/free-profile/` with shipped **Speech2Texte** + **PromptListStructurator** (`*-promptdemerde-profile-v1.24.1.zip`).
+- Shared free ZIP drop `zip/free-profile/` with **AdsGeneratorPro**, **ContractClauseCleaner**, **MeetingMinutesPro**, **NoConformistLandpage**, **SeoMetaPack** (`*-JsonProfile-v1.24.1.zip`, embedded `market/`).
+- **Speech2Texte** remains the native boot pack (`assets/profiles/`) — not duplicated in the free drop.
+- Provider selector: **Ollama only** (no greyed Free LLM / cloud “coming soon” option).
 - Options selector: sequential ZIP validation (invalid archives ignored); permanent scan status + Show more / Show less for rejects.
 - PascalCase profile nomenclature (stems, labels, create/export).
 - Selector badges end with archive version `(x.y.z)`; native vs zip dedupe keeps `(native)`.
@@ -13,9 +15,11 @@
 
 ## Smoke QA
 
-- [ ] Options → JSON profile: Speech2Texte `(native) (Free) (1.24.1)` and PromptListStructurator `(zip) (Free) (1.24.1)`
+- [ ] Options → JSON profile: Speech2Texte `(native) (Free) (1.24.1)` plus the five free ZIPs as `(zip) (Free) (1.24.1)`
+- [ ] Market (official): five free cards; CTA download → real ZIP under `zip/free-profile/`
 - [ ] Drop an invalid ZIP under `zip/free-profile/` → skipped from selector; permanent refused line + Show more
 - [ ] All valid → permanent “all archives valid” line
 - [ ] Create / export profile name enforces PascalCase
 - [ ] Footer app + badge README = **1.24.1-RC**
-- [ ] Import free ZIP Speech2Texte / PromptListStructurator succeeds
+- [ ] Import free ZIP (e.g. AdsGeneratorPro) succeeds → Workspace Reformulate OK
+- [ ] Provider select lists **Ollama** only (no disabled cloud option)

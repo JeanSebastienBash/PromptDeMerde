@@ -61,7 +61,7 @@
         "brandExtension": ".com",
         "promptSuffix": "@promptdemerde:~#",
         "market": "Mercato",
-        "marketExternalTitle": "Apre il catalogo Marketplace su promptdemerde.com",
+        "marketExternalTitle": "Apre il catalogo Market su promptdemerde.com",
         "legalExternalTitle": "Apre la pagina su promptdemerde.com"
     },
     "loader": {
@@ -848,8 +848,7 @@
     "env": {
         "prod": "PROD",
         "preprod": "PRE-PROD",
-        "selfhosted": "AUTO-OSPITATO",
-        "cloudSoon": "API cloud (prossimamente)"
+        "selfhosted": "AUTO-OSPITATO"
     },
     "copy": {
         "faq.llm": "Sì. Tutte le funzionalità sono aperte senza quota commerciale. Il LLM passa esclusivamente tramite <strong>Ollama</strong> in locale.",
@@ -981,7 +980,6 @@
         "dictationStoppedForClean": "Dettatura vocale interrotta — pulizia del testo attuale.",
         "customProfileSynopsis": "Profilo {{label}} — configurazione personalizzata PromptDeMerde.",
         "llmModelSavedInfo": "Modello LLM: {{model}}",
-        "providerLater": "Questo fornitore sarà disponibile più avanti.",
         "providerSaved": "Fornitore salvato.",
         "llmModelEmpty": "-- Nessun modello --",
         "thinkingMaxUnlimited": "Illimitato (0)",

@@ -61,7 +61,7 @@
         "brandExtension": ".com",
         "promptSuffix": "@promptdemerde:~# ",
         "market": "Merkato",
-        "marketExternalTitle": "Malfermas la Marketplace-katalogon ĉe promptdemerde.com",
+        "marketExternalTitle": "Malfermas la Market-katalogon ĉe promptdemerde.com",
         "legalExternalTitle": "Malfermas la paĝon ĉe promptdemerde.com"
     },
     "loader": {
@@ -848,8 +848,7 @@
     "env": {
         "prod": "PROD",
         "preprod": "ANTAŬ-PROD",
-        "selfhosted": "MEM-GASTIGITA",
-        "cloudSoon": "Nuba API (baldaŭ)"
+        "selfhosted": "MEM-GASTIGITA"
     },
     "copy": {
         "faq.llm": "Jes. Ĉiuj funkcioj estas malfermitaj sen komerca kvoto. La LLM funkcias ekskluzive per loka <strong>Ollama</strong>.",
@@ -981,7 +980,6 @@
         "dictationStoppedForClean": "Voĉa voĉa diktado ĉesis — purigado de la nuna teksto.",
         "customProfileSynopsis": "Profilo {{label}} — personecigita PromptDeMerde-agordo.",
         "llmModelSavedInfo": "Modelo LLM: {{model}}",
-        "providerLater": "Ĉi tiu provizanto estos disponebla poste.",
         "providerSaved": "Provizanto konservita.",
         "llmModelEmpty": "-- Neniu modelo --",
         "thinkingMaxUnlimited": "Senlima (0)",
