@@ -60,8 +60,8 @@
         "brandSecond": "Di merda",
         "brandExtension": ".com",
         "promptSuffix": "@promptdemerde:~#",
-        "market": "Mercato",
-        "marketExternalTitle": "Apre il catalogo Market su promptdemerde.com",
+        "market": "Marketplace",
+        "marketExternalTitle": "Apre il catalogo Marketplace su promptdemerde.com",
         "legalExternalTitle": "Apre la pagina su promptdemerde.com"
     },
     "loader": {

@@ -60,8 +60,8 @@
         "brandSecond": "Из Дерьма",
         "brandExtension": ".com",
         "promptSuffix": "@promptdemerde:~#",
-        "market": "Маркет",
-        "marketExternalTitle": "Открывает каталог Market на promptdemerde.com",
+        "market": "Marketplace",
+        "marketExternalTitle": "Открывает каталог Marketplace на promptdemerde.com",
         "legalExternalTitle": "Открывает страницу на promptdemerde.com"
     },
     "loader": {

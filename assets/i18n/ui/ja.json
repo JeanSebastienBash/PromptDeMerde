@@ -60,8 +60,8 @@
         "brandSecond": "たわごと",
         "brandExtension": ".com",
         "promptSuffix": "@promptdemerde:~#",
-        "market": "マーケット",
-        "marketExternalTitle": "promptdemerde.com の Market カタログを開きます",
+        "market": "Marketplace",
+        "marketExternalTitle": "promptdemerde.com の Marketplace カタログを開く",
         "legalExternalTitle": "promptdemerde.com でページを開きます"
     },
     "loader": {

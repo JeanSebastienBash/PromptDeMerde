@@ -78,7 +78,10 @@ More videos will follow on the <a href="https://www.youtube.com/@DreamprojectAI/
 
 *Release candidate — not yet stable.*
 
-- **Shared free ZIP drop** (`zip/free-profile/`): public GitHub channel for free Creator packs with embedded `market/` metadata. Current drop: **AdsGeneratorPro**, **ContractClauseCleaner**, **MeetingMinutesPro**, **NoConformistLandpage**, **SeoMetaPack** (`*-JsonProfile-v1.24.1.zip`). **Speech2Texte** remains the native boot pack under `assets/profiles/` (not duplicated as a free ZIP). Options lists validated packs with `(zip) (Free) (x.y.z)`. **Premium** stays Marketplace-only.
+**Feature freeze (V1).** No new V1 product features from this point. Further work is **bug fixes**, **screen polish**, and **official JSON profile packs** (Creator → `zip/free-profile/`). Marketplace stays **download-free** for every published pack; paid checkout is out of scope for V1.
+
+- **Shared free ZIP drop** (`zip/free-profile/`): public GitHub channel for Creator packs with embedded `market/` metadata. Current drop: **AdsGeneratorPro**, **ContractClauseCleaner**, **MeetingMinutesPro**, **NoConformistLandpage**, **SeoMetaPack** (`*-JsonProfile-v1.24.1.zip`). **Speech2Texte** remains the native boot pack under `assets/profiles/` (not duplicated as a free ZIP). Options lists validated packs with `(zip) (Free) (x.y.z)`.
+- **Marketplace V1**: official **DreamprojectAI** packs only; **every** catalogue download is **free** (no cart, no checkout). Paid Premium commerce is out of scope for V1.
 - **LLM provider**: **Ollama only** in V1 — no greyed “cloud API coming soon” option in the provider selector.
 - **Selector scan**: sequential validation (invalid archives skipped); permanent status under the control — all valid, or rejected count with **Show more** / **Show less**.
 - **PascalCase** profile names (ZIP stems, selector labels, create/export).
@@ -186,7 +189,7 @@ More videos will follow on the <a href="https://www.youtube.com/@DreamprojectAI/
     - 🏪 [5.5.3. Marketplace of JSON profiles](#feat-5-5-3) — ready-made packs on the official site (clone falls back to `#market`)
     - 🔀 [5.5.4. Profiles: create, switch, export modal](#feat-5-5-4) — create a personal pack, switch with confirm, export ZIP via guided modal
     - 🔎 [5.5.5. Marketplace: search, filters and detail card](#feat-5-5-5) — when a local catalogue is present
-    - 📂 [5.5.6. Shared free ZIP drop](#feat-5-5-6) — GitHub `zip/free-profile/` = all **free** packs (download without Marketplace); Premium via Marketplace
+    - 📂 [5.5.6. Shared free ZIP drop](#feat-5-5-6) — GitHub `zip/free-profile/` = official packs (download without Marketplace)
   - ✹ [5.6. Languages, themes & same code everywhere](#feat-5-6)
     - 🗣 [5.6.1. Twelve UI languages & 25 themes](#feat-5-6-1) — twelve locales; twenty-five themes each with light and dark
     - ≡ [5.6.2. Same code everywhere](#feat-5-6-2) — official site ≡ clone; same privacy; proxy token only for locked prod relay
@@ -938,7 +941,7 @@ A JSON profile does more than carry prompts: it can **rebrand the whole shell**.
 
 A marketplace of ready-to-import JSON profiles is available on the <a href="https://promptdemerde.com/#market" target="_blank" rel="noopener noreferrer">official site</a>. The catalogue lists archives that ship a complete embedded `market/` folder (listing + preview + screenshots). Older ZIPs without that folder remain importable under **Options**, but they do not appear in Marketplace.
 
-**Free packs** from that catalogue are also published under [`zip/free-profile/`](zip/free-profile/) on the public GitHub repository (**5.5.6**) so clones can download them without using the Marketplace UI. **Premium** packs are Marketplace-only — they are not mirrored in the free drop folder.
+**V1 scope.** Marketplace is fed by the official **DreamprojectAI** editor only. Every published pack is **downloadable for free** — there is no cart and no paid checkout on PromptDeMerde in V1. Packs from that catalogue are also published under [`zip/free-profile/`](zip/free-profile/) on the public GitHub repository (**5.5.6**) so clones can download them without using the Marketplace UI.
 
 On a public clone without a local catalogue, the Market menu opens that URL.
 
@@ -984,7 +987,7 @@ Large exports may ask for a size confirmation before the download starts.
 
 ### 🔎 5.5.5. Marketplace: search, filters and detail card
 
-When a local catalogue is present, Marketplace provides search, filters (price, domains, languages, publishers), sort, grid or list views and a detail modal with download. On a clone without a catalogue, the menu opens the official site.
+When a local catalogue is present, Marketplace provides search, filters (price label, domains, languages, publishers), sort, grid or list views and a detail modal with **free download**. On a clone without a catalogue, the menu opens the official site.
 
 [Technical documentation](docs/Documentation.md#feat-5-5-5)
 
@@ -996,7 +999,7 @@ When a local catalogue is present, Marketplace provides search, filters (price, 
 
 ### 📂 5.5.6. Shared free ZIP drop
 
-The public GitHub repository keeps **free** marketplace-oriented profile archives under [`zip/free-profile/`](zip/free-profile/). For **v1.24.1** the drop ships **AdsGeneratorPro**, **ContractClauseCleaner**, **MeetingMinutesPro**, **NoConformistLandpage**, and **SeoMetaPack** (`*-JsonProfile-v1.24.1.zip`), each with an embedded `market/` folder for the official Marketplace catalogue. The boot pack **Speech2Texte** stays under `assets/profiles/` as `(native)` and is **not** duplicated in the free drop. That tree is a **direct download channel**: users may copy one or more ZIPs from GitHub into a self-hosted install’s `zip/free-profile/` folder, or import a ZIP under **Options**, without browsing Marketplace. Marketplace itself only shows packs whose ZIP embeds a valid `market/` folder. **Premium** packs are not published here — they go through Marketplace (or Support).
+The public GitHub repository keeps marketplace-oriented profile archives under [`zip/free-profile/`](zip/free-profile/). For **v1.24.1** the drop ships **AdsGeneratorPro**, **ContractClauseCleaner**, **MeetingMinutesPro**, **NoConformistLandpage**, and **SeoMetaPack** (`*-JsonProfile-v1.24.1.zip`), each with an embedded `market/` folder for the official Marketplace catalogue. The boot pack **Speech2Texte** stays under `assets/profiles/` as `(native)` and is **not** duplicated in the free drop. That tree is a **direct download channel**: users may copy one or more ZIPs from GitHub into a self-hosted install’s `zip/free-profile/` folder, or import a ZIP under **Options**, without browsing Marketplace. Marketplace itself only shows packs whose ZIP embeds a valid `market/` folder. In **V1**, every catalogue download is free.
 
 Archive stems are **PascalCase**. Renaming is allowed. On a self-hosted or official deploy, operators can add more free ZIP files to that folder.
 
@@ -1418,7 +1421,7 @@ That script **concatenates** the parts, checks SHA-256 fingerprints, and writes 
 
 **3 — Ollama on the clone.** Install Ollama and pull a model the same way as in **7.1**. Point *Options → LLM* at `http://localhost:11434` or a LAN URL, then use **Test**. When the app and Ollama share the same machine via a local URL, CORS is usually simpler than on the official HTTPS site; if the browser origin is not localhost (or Ollama is on another host), set `OLLAMA_ORIGINS` to **that site origin** and use the same **two launch methods** as in **7.1** (one-shot `ollama serve` vs persistent service).
 
-**4 — Optional operator knobs.** `PDM_ENV` only labels the footer badge. A proxy token is needed only when the server relay is locked (`PDM_PROXY_TOKEN` — **5.7.3** / **5.7.6**). Day-to-day self-hosters keep **“I don’t have a token”** checked. Extra **free** profile packs ship under `zip/free-profile/` on GitHub (**5.5.6**) — download without Marketplace; copy into that folder on any install (or Import). **Premium** packs come from Marketplace.
+**4 — Optional operator knobs.** `PDM_ENV` only labels the footer badge. A proxy token is needed only when the server relay is locked (`PDM_PROXY_TOKEN` — **5.7.3** / **5.7.6**). Day-to-day self-hosters keep **“I don’t have a token”** checked. Extra profile packs ship under `zip/free-profile/` on GitHub (**5.5.6**) — download without Marketplace; copy into that folder on any install (or Import).
 
 Reformulation quality depends on the chosen Ollama model. STT runs as ONNX / WASM in the browser; a dedicated GPU helps Whisper / Parakeet but is optional for Vosk.
 

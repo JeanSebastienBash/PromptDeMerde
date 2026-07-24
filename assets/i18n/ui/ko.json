@@ -60,8 +60,8 @@
         "brandSecond": "똥의",
         "brandExtension": ".com",
         "promptSuffix": "@promptdemerde:~#",
-        "market": "마켓",
-        "marketExternalTitle": "promptdemerde.com에서 Market 카탈로그를 엽니다",
+        "market": "Marketplace",
+        "marketExternalTitle": "promptdemerde.com에서 Marketplace 카탈로그 열기",
         "legalExternalTitle": "promptdemerde.com에서 페이지를 엽니다"
     },
     "loader": {

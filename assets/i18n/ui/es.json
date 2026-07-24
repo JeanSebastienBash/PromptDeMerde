@@ -60,8 +60,8 @@
         "brandSecond": "DeMerde",
         "brandExtension": ".com",
         "promptSuffix": "@promptdemerde:~# ",
-        "market": "Mercado",
-        "marketExternalTitle": "Abre el catálogo Market en promptdemerde.com",
+        "market": "Marketplace",
+        "marketExternalTitle": "Abre el catálogo Marketplace en promptdemerde.com",
         "legalExternalTitle": "Abre la página en promptdemerde.com"
     },
     "loader": {
