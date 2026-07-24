@@ -6,7 +6,7 @@
 
 <p align="center">
   <a href="LICENSE"><img src="https://img.shields.io/badge/License-MIT-yellow.svg" alt="License: MIT"></a>
-  <a href="https://github.com/JeanSebastienBash/promptdemerde/tags" target="_blank" rel="noopener noreferrer"><img src="https://img.shields.io/badge/version-1.24.1--RC-blue.svg" alt="Version 1.24.1 RC"></a>
+  <a href="https://github.com/JeanSebastienBash/promptdemerde/tags" target="_blank" rel="noopener noreferrer"><img src="https://img.shields.io/badge/version-1.24.2--RC-blue.svg" alt="Version 1.24.2 RC"></a>
   <a href="https://github.com/JeanSebastienBash/promptdemerde/actions/workflows/ci.yml" target="_blank" rel="noopener noreferrer"><img src="https://github.com/JeanSebastienBash/promptdemerde/actions/workflows/ci.yml/badge.svg" alt="CI"></a>
 </p>
 
@@ -73,6 +73,16 @@ More videos will follow on the <a href="https://www.youtube.com/@DreamprojectAI/
 <a id="menu-whats-new"></a>
 
 ## 🆕 What’s new
+
+### Version 1.24.2 (RC)
+
+*Release candidate — not yet stable.*
+
+- App version bump to **1.24.2** (patch). Profile contract unchanged (**52** `pdm_*` keys).
+- Public docs scrub: maintainer tooling script names removed from `docs/Documentation.md` (factory boundary).
+- Free ZIP drop filenames remain `*-JsonProfile-v1.24.1.zip` until the next pack rebuild; Options still shows each archive’s internal version.
+
+[Technical documentation](docs/Documentation.md) · [Tag notes](.github/RELEASE_v1.24.2.md)
 
 ### Version 1.24.1 (RC)
 

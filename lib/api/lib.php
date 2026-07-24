@@ -14,7 +14,7 @@ if (!function_exists('mb_strlen')) {
     }
 }
 
-const PDM_PROFILES_VERSION = '1.24.1';
+const PDM_PROFILES_VERSION = '1.24.2';
 const PDM_PROFILES_ROOT = __DIR__ . '/../../assets/profiles';
 const PDM_I18N_ROOT = __DIR__ . '/../../assets/i18n';
 
@@ -835,4 +835,253 @@ function pdm_list_free_zip_profiles(): array
         'available' => count($profiles) > 0,
     ];
 }
+
+const PDM_ZIP_PREMIUM_ROOT = __DIR__ . '/../../zip/premium-profile';
+
+function pdm_zip_premium_root(): string
+{
+    return PDM_ZIP_PREMIUM_ROOT;
+}
+
+/**
+ * @return list<array{tier:string,dir:string,urlPrefix:string}>
+ */
+function pdm_market_zip_drop_roots(): array
+{
+    return [
+        ['tier' => 'free', 'dir' => pdm_zip_free_root(), 'urlPrefix' => 'zip/free-profile/'],
+        ['tier' => 'premium', 'dir' => pdm_zip_premium_root(), 'urlPrefix' => 'zip/premium-profile/'],
+    ];
+}
+
+/**
+ * @return list<string>
+ */
+function pdm_market_zip_required_assets(): array
+{
+    return [
+        'market/listing.json',
+        'market/preview.png',
+        'market/screenshots/input.png',
+        'market/screenshots/output.png',
+    ];
+}
+
+function pdm_market_zip_safe_inner_path(string $path): bool
+{
+    if ($path === '' || strpos($path, '..') !== false) {
+        return false;
+    }
+    if (strpos($path, '\\') !== false) {
+        return false;
+    }
+    if (strncmp($path, 'market/', 7) !== 0) {
+        return false;
+    }
+    return (bool) preg_match('#^market/[A-Za-z0-9._/-]+$#', $path);
+}
+
+/**
+ * @return list<string>|null
+ */
+function pdm_unzip_list_names(string $zipPath): ?array
+{
+    $cmd = 'unzip -Z1 ' . escapeshellarg($zipPath) . ' 2>/dev/null';
+    $out = shell_exec($cmd);
+    if (!is_string($out) || $out === '') {
+        return null;
+    }
+    $names = preg_split("/\r\n|\n|\r/", trim($out));
+    if (!is_array($names)) {
+        return null;
+    }
+    return array_values(array_filter($names, static function ($n) {
+        return is_string($n) && $n !== '';
+    }));
+}
+
+function pdm_unzip_read_entry(string $zipPath, string $inner): ?string
+{
+    $cmd = 'unzip -p ' . escapeshellarg($zipPath) . ' ' . escapeshellarg($inner) . ' 2>/dev/null';
+    $out = shell_exec($cmd);
+    if (!is_string($out) || $out === '') {
+        return null;
+    }
+    return $out;
+}
+
+/**
+ * @return array<string,mixed>|null
+ */
+function pdm_market_zip_read_listing(string $zipPath): ?array
+{
+    $names = null;
+    if (class_exists('ZipArchive')) {
+        $za = new ZipArchive();
+        if ($za->open($zipPath) === true) {
+            $names = [];
+            for ($i = 0; $i < $za->numFiles; $i++) {
+                $n = $za->getNameIndex($i);
+                if (is_string($n)) {
+                    $names[] = $n;
+                }
+            }
+            $za->close();
+        }
+    }
+    if ($names === null) {
+        $names = pdm_unzip_list_names($zipPath);
+    }
+    if ($names === null) {
+        return null;
+    }
+    $set = array_fill_keys($names, true);
+    foreach (pdm_market_zip_required_assets() as $need) {
+        if (!isset($set[$need])) {
+            return null;
+        }
+    }
+    $raw = null;
+    if (class_exists('ZipArchive')) {
+        $za = new ZipArchive();
+        if ($za->open($zipPath) === true) {
+            $got = $za->getFromName('market/listing.json');
+            $za->close();
+            if (is_string($got) && $got !== '') {
+                $raw = $got;
+            }
+        }
+    }
+    if ($raw === null) {
+        $raw = pdm_unzip_read_entry($zipPath, 'market/listing.json');
+    }
+    if (!is_string($raw) || $raw === '') {
+        return null;
+    }
+    $listing = json_decode($raw, true);
+    if (!is_array($listing) || ($listing['type'] ?? '') !== 'pdm-marketplace-listing') {
+        return null;
+    }
+    if (!isset($listing['id'], $listing['label'], $listing['synopsis_short'])) {
+        return null;
+    }
+    return $listing;
+}
+
+/**
+ * @return string|null binary
+ */
+function pdm_market_zip_read_asset(string $tier, string $filename, string $relPath): ?string
+{
+    if (!pdm_zip_free_safe_filename($filename)) {
+        return null;
+    }
+    $inner = 'market/' . ltrim(str_replace('\\', '/', $relPath), '/');
+    if (strncmp($relPath, 'market/', 7) === 0) {
+        $inner = $relPath;
+    }
+    if (!pdm_market_zip_safe_inner_path($inner)) {
+        return null;
+    }
+    $root = $tier === 'premium' ? pdm_zip_premium_root() : pdm_zip_free_root();
+    $full = $root . '/' . $filename;
+    if (!is_file($full) || !is_readable($full)) {
+        return null;
+    }
+    if (class_exists('ZipArchive')) {
+        $za = new ZipArchive();
+        if ($za->open($full) === true) {
+            $bin = $za->getFromName($inner);
+            $za->close();
+            if (is_string($bin) && $bin !== '') {
+                return $bin;
+            }
+        }
+    }
+    return pdm_unzip_read_entry($full, $inner);
+}
+
+/**
+ * @return array{entries:list<array<string,mixed>>,publishers:list<array<string,mixed>>,etag:string,available:bool}
+ */
+function pdm_market_zip_catalog(): array
+{
+    $entries = [];
+    $stamp = [];
+    foreach (pdm_market_zip_drop_roots() as $drop) {
+        $dir = $drop['dir'];
+        if (!is_dir($dir) || !is_readable($dir)) {
+            continue;
+        }
+        $names = scandir($dir);
+        if (!is_array($names)) {
+            continue;
+        }
+        sort($names, SORT_STRING);
+        foreach ($names as $name) {
+            if ($name === '.' || $name === '..' || $name === '.gitkeep') {
+                continue;
+            }
+            if (!preg_match('/\.zip$/i', $name) || !pdm_zip_free_safe_filename($name)) {
+                continue;
+            }
+            $full = $dir . '/' . $name;
+            if (!is_file($full) || !is_readable($full)) {
+                continue;
+            }
+            $size = filesize($full);
+            if ($size === false || $size < 1) {
+                continue;
+            }
+            $listing = pdm_market_zip_read_listing($full);
+            if ($listing === null) {
+                continue;
+            }
+            $mtime = filemtime($full) ?: 0;
+            $listing['_drop'] = [
+                'tier' => $drop['tier'],
+                'filename' => $name,
+                'url' => $drop['urlPrefix'] . rawurlencode($name),
+                'size' => $size,
+                'mtime' => $mtime,
+            ];
+            if (!isset($listing['archive']) || !is_array($listing['archive'])) {
+                $listing['archive'] = [];
+            }
+            if (empty($listing['archive']['size_bytes'])) {
+                $listing['archive']['size_bytes'] = $size;
+            }
+            if (empty($listing['archive']['filename'])) {
+                $listing['archive']['filename'] = $name;
+            }
+            $entries[] = $listing;
+            $stamp[] = $drop['tier'] . ':' . $name . ':' . $size . ':' . $mtime;
+        }
+    }
+    usort($entries, static function ($a, $b) {
+        $sa = (int) ($a['sort_order'] ?? 9999);
+        $sb = (int) ($b['sort_order'] ?? 9999);
+        if ($sa !== $sb) {
+            return $sa <=> $sb;
+        }
+        return strcmp((string) ($a['id'] ?? ''), (string) ($b['id'] ?? ''));
+    });
+    return [
+        'entries' => $entries,
+        'publishers' => [
+            [
+                'id' => 'dreamproject',
+                'name' => 'DreamprojectAI',
+                'official' => true,
+                'url' => 'https://www.dreamproject.online',
+                'avatar' => 'dreamproject.svg',
+                'tagline' => 'Éditeur officiel PromptDeMerde — archives signées',
+                'bio' => 'Archives signées DreamprojectAI — protocole JSON v2.',
+            ],
+        ],
+        'etag' => hash('sha256', implode('|', $stamp) ?: 'empty'),
+        'available' => count($entries) > 0,
+    ];
+}
+
 

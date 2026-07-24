@@ -141,30 +141,44 @@ Victim imports on https://promptdemerde.com
 |--------|---------------------|----------------------|----------------|
 | RCE / disk write via profile import | No | No | Mitigated (client-only import) |
 | Cross-user data theft | No | No | Mitigated (no multi-tenant) |
-| XSS → theft of `pdm_token_*` | Not directly | No | **Mitigated** (sanitize + reject) |
+| XSS → theft of `pdm_token_*` | Not directly | No | **Mitigated** (display escape for archive text + sanitize) |
 | Client DoS (RAM, localStorage) | No | No | **Mitigated** (size limits) |
 | Proxy abuse via victim session | Indirect | No | Depends on `PDM_PROXY_TOKEN` + infra |
-| LLM prompt injection | No | No | By design (not a bug) |
+| LLM prompt injection | No | No | By design (not a bug) — out of scope for display hardening |
+
+### Display doctrine (archive text → DOM)
+
+| Source | Trust at display |
+|--------|------------------|
+| Official site i18n (`assets/i18n/ui`) and native pack chrome without imported user bundle | Trusted — intentional HTML kept |
+| **Any profile ZIP** (manual **Import** or Options selector activation from `zip/free-profile/`) | **Untrusted** — all archive **text** shown via `textContent` / `PDM.UI.safeText` / `setSafeText` |
+
+- Strings stay **raw** in `localStorage` (LLM prompts must not be mutated).
+- Wrapping happens **only at the DOM boundary** (`PDM.UI.isUntrustedProfileDisplay`, sticky after `importConfigZip`, or derived from `custom-*` / `I18n.isUserI18nBundle()`).
+- No content censorship of prompts; minimal type/size checks unchanged.
+- Imported maximal i18n (`data-i18n-html` / `tHtml`) is forced to text when the user bundle is active.
 
 ### Technical measures (code)
 
 | # | Measure | File(s) |
 |---|---------|---------|
-| 1 | HTML allowlist `promptGuardHtml` (`a[href^="#"]`, `strong`, `em`, `span.inject-*`) | `config-schema-sanitize.js` |
-| 2 | Sanitization on import + render (defense in depth) | `config-schema-build.js`, `workspace-ui-profile.js` |
-| 3 | Reject if `<script`, `onerror=`, `javascript:` before normalization | `containsDangerousWorkspaceHtml` |
+| 1 | HTML allowlist `promptGuardHtml` (`a[href^="#"]`, `strong`, `em`, `span.inject-*`) for **trusted** chrome | `config-schema-sanitize.js` |
+| 2 | Archive session override of `promptGuardHtml` → `setSafeText` (no rich HTML) | `workspace-ui-profile.js` |
+| 3 | Reject if `<script`, `onerror=`, `javascript:` before normalization (trusted path) | `containsDangerousWorkspaceHtml` |
 | 4 | Import archive cap **20 MB** (ZIP) | `settings-ui.js`, `config-schema-security.js` |
 | 5 | String length caps + JSON size estimate | `config-schema-security.js` |
 | 6 | Reject keys `__proto__`, `constructor`, `prototype` (recursive) | `config-schema-security.js` |
 | 7 | `pdm_audio_blobs`: segment format, max 50 refs, 50 MB base64 total | validator + `storage-config-audio.js` |
-| 8 | `pdm_token_ollama` cleared by default on import (`stripTokens`) | `storage-config-import.js` |
+| 8 | `pdm_token_ollama` cleared by default on import (`stripTokens`) | `storage-config-import-*.js` |
 | 9 | "Unsigned file / unknown source" dialog — **UX consent**, not crypto | `settings-ui.js` |
-| 10 | **SHA-256 checksum** of ZIP bytes: if `expectedChecksum` provided and mismatch → **reject** | `profile-bundle-integrity.js`, `storage-config-import.js` |
-| 11 | Manual test fixtures | `tests/fixtures/evil-*.json` |
+| 10 | **SHA-256 checksum** of ZIP bytes: if `expectedChecksum` provided and mismatch → **reject** | `profile-bundle-integrity.js`, `storage-config-import-zip.js` |
+| 11 | `PDM.UI.safeText` / `setSafeText` / `isUntrustedProfileDisplay` | `ui-safe-display.js` (après `ui.js`) |
+| 12 | User i18n bundle: no raw `innerHTML` for `data-i18n-html` | `i18n-apply-dom.js`, `i18n.js` |
+| 13 | Manual test fixtures | `tests/fixtures/evil-*.json` |
 
 ### ZIP integrity (checksum) vs crypto signature
 
-| Layer | Status (v1.24.1) |
+| Layer | Status (v1.24.2) |
 |-------|------------------|
 | SHA-256 on ZIP bytes | **Yes** — export (`buildZipPackage`), creator (`profile-zip-checksum.mjs`) |
 | Import verification | **Yes** if `options.expectedChecksum` / `checksum_sha256` (otherwise unsigned dialog only) |
@@ -213,9 +227,13 @@ CORS protects **reading** responses by third-party sites; it does not prevent se
 
 ## Profiles and HTML rendering
 
-`pdm_workspace_ui.texts.promptGuardHtml` may contain intentional HTML (anchor links to the Prompts tab). Only profiles and exports from **trusted sources** should be imported.
+Official UI dictionaries may contain intentional HTML. **`promptGuardHtml` from a trusted source** is the main workspace field rendered via `innerHTML`, with allowlist sanitization.
 
-History rendering, LLM errors, and workspace identity use `textContent` or `PDM.UI.escapeHtml`. `promptGuardHtml` is the only HTML field rendered via `innerHTML`, with allowlist sanitization.
+**Archive-sourced** chrome (`pdm_workspace_ui` overrides, imported maximal i18n, custom profile labels/synopsis) is displayed with **`textContent` / `PDM.UI.safeText`** when `PDM.UI.isUntrustedProfileDisplay()` is true — markup is shown as inert text, not executed.
+
+History rendering, LLM errors, and workspace identity use `textContent` or `PDM.UI.escapeHtml`. Only **trusted** `promptGuardHtml` (no session override from an archive) still uses sanitized `innerHTML`.
+
+LLM prompt injection via system/context Markdown in a ZIP is **out of scope** for this display layer (by design: a profile *is* prompts).
 
 ## Report a vulnerability
 
