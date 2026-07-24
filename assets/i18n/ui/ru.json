@@ -1,9 +1,9 @@
 {
     "meta": {
-        "title": "PromptDeMerde.com — Преврати свой дерьмовый промпт в снайперский",
-        "description": "Преврати любую топорную инструкцию для ИИ в хирургическую команду. Бесплатно, open source, без всякой чуши.",
+        "title": "PromptDeMerde.com — Локальный инструмент prompt engineering на Ollama",
+        "description": "Инструмент prompt engineering: локальный вывод Ollama, системные и контекстные промпты, голосовой ввод, ZIP-экспорт профиля, нулевая телеметрия.",
         "titleSocial": "PromptDeMerde — локальный ИИ-генератор промптов Ollama",
-        "keywords": "générateur prompt ia, ollama prompt local, reformuler prompt, optimiser prompt, prompt engineering gratuit, open source, zéro télémétrie, llm local, speech to text, prompt sniper",
+        "keywords": "prompt engineering, локальный ollama, вывод llm, open source, нулевая телеметрия, речь в текст, zip профиль",
         "routes": {
             "documentation": {
                 "title": "Документация PromptDeMerde — гайд Workspace Ollama STT | PromptDeMerde",
@@ -32,13 +32,13 @@
             },
             "landing": {
                 "title": "PromptDeMerde — превратите дерьмовый промпт в снайперский",
-                "description": "Переформулируйте черновики локально через Ollama. Бесплатно, open source, zero bullshit.",
+                "description": "Запускайте профильный вывод локально через Ollama. Бесплатно, open source, zero bullshit.",
                 "keywords": "главная promptdemerde, снайперский промпт"
             },
             "workspace": {
-                "title": "Workspace PromptDeMerde — очистка промпта Ollama | PromptDeMerde",
-                "description": "Вставьте, надиктуйте и очистите промпт с локальным Ollama.",
-                "keywords": "workspace промпт, очистка ollama"
+                "title": "Workspace PromptDeMerde — вывод Ollama | PromptDeMerde",
+                "description": "Вставьте, надиктуйте и запустите вывод с локальным Ollama.",
+                "keywords": "workspace, вывод ollama, prompt engineering"
             },
             "market": {
                 "title": "Маркетплейс PromptDeMerde — JSON-профили для скачивания | PromptDeMerde",
@@ -830,7 +830,7 @@
         "vosk": "Vosk",
         "whisper": "Whisper",
         "badgesAria": "Продуктовые обязательства PromptDeMerde",
-        "badgePrompt": "Prompt engineering — локальная переформулировка",
+        "badgePrompt": "Prompt engineering — локальный вывод",
         "badgeLlm": "Локальный LLM через Ollama",
         "badgeOllama": "Ollama — локальный движок LLM",
         "badgeVision": "Анализ изображений — описание через Ollama vision",

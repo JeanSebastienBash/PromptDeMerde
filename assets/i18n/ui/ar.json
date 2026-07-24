@@ -1,9 +1,9 @@
 {
     "meta": {
-        "title": "PromptDeMerde.com — حوّل مطالبتك السيئة إلى مطالبة قنّاص",
-        "description": "حوّل أي تعليمات IA فوضوية إلى أمر جراحي دقيق. مجاني، مفتوح المصدر، بلا هراء.",
+        "title": "PromptDeMerde.com — أداة هندسة المطالبات المحلية عبر Ollama",
+        "description": "أداة هندسة مطالبات: استدلال Ollama محلي، مطالبات نظام وسياق، إملاء صوتي، تصدير ملف ZIP للملف الشخصي، بلا تتبع.",
         "titleSocial": "PromptDeMerde — مولّد مطالبات ذكاء اصطناعي محلي Ollama",
-        "keywords": "générateur prompt ia, ollama prompt local, reformuler prompt, optimiser prompt, prompt engineering gratuit, open source, zéro télémétrie, llm local, speech to text, prompt sniper",
+        "keywords": "هندسة المطالبات, ollama محلي, استدلال llm, مفتوح المصدر, بلا تتبع, تحويل كلام لنص, تصدير ملف شخصي",
         "routes": {
             "documentation": {
                 "title": "توثيق PromptDeMerde — دليل Workspace وOllama وSTT | PromptDeMerde",
@@ -32,13 +32,13 @@
             },
             "landing": {
                 "title": "PromptDeMerde — حوّل مطالبتك الرديئة إلى مطالبة قناص",
-                "description": "أعد صياغة المسودات محلياً عبر Ollama. مجاني، مفتوح المصدر، بلا هراء.",
+                "description": "شغّل استدلالاً مُعدّاً بالملف الشخصي محلياً عبر Ollama. مجاني، مفتوح المصدر، بلا هراء.",
                 "keywords": "صفحة promptdemerde، مطالبة قناص"
             },
             "workspace": {
-                "title": "مساحة عمل PromptDeMerde — تنظيف المطالبة مع Ollama | PromptDeMerde",
-                "description": "الصق، أملِ، ونظّف مطالبتك مع Ollama محلياً.",
-                "keywords": "مساحة عمل، تنظيف مطالبة ollama"
+                "title": "مساحة عمل PromptDeMerde — استدلال Ollama | PromptDeMerde",
+                "description": "الصق، أملِ، وشغّل الاستدلال مع Ollama محلياً.",
+                "keywords": "مساحة عمل, استدلال ollama, هندسة المطالبات"
             },
             "market": {
                 "title": "سوق PromptDeMerde — ملفات JSON للتنزيل | PromptDeMerde",
@@ -830,7 +830,7 @@
         "vosk": "Vosk",
         "whisper": "Whisper",
         "badgesAria": "التزامات منتج PromptDeMerde",
-        "badgePrompt": "هندسة المطالبات — إعادة صياغة محلية",
+        "badgePrompt": "هندسة المطالبات — استدلال محلي",
         "badgeLlm": "نموذج لغة كبير محلي عبر Ollama",
         "badgeOllama": "Ollama — محرك LLM محلي",
         "badgeVision": "تحليل الصور — وصف عبر Ollama vision",

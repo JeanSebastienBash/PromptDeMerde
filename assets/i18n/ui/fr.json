@@ -1,9 +1,9 @@
 {
     "meta": {
-        "title": "PromptDeMerde.com — Reformulateur prompt IA local Ollama",
-        "description": "Reformulateur prompts v1.19.0 : brouillon→prompt sniper via Ollama local. Open source, STT navigateur, export ZIP profil, zéro télémétrie.",
+        "title": "PromptDeMerde.com — Outil de prompt engineering local Ollama",
+        "description": "Outil de prompt engineering : inférence Ollama locale, prompts système et contextes, dictée vocale, export ZIP profil, zéro télémétrie.",
         "titleSocial": "PromptDeMerde — Générateur prompt IA local Ollama",
-        "keywords": "générateur prompt ia, ollama prompt local, reformuler prompt, optimiser prompt, prompt engineering gratuit, open source, zéro télémétrie, llm local, speech to text, export zip profil, prompt sniper",
+        "keywords": "prompt engineering, ollama local, inférence llm, générateur prompt ia, open source, zéro télémétrie, speech to text, export zip profil",
         "routes": {
             "documentation": {
                 "title": "Documentation PromptDeMerde — guide Workspace Ollama STT | PromptDeMerde",
@@ -32,13 +32,13 @@
             },
             "landing": {
                 "title": "PromptDeMerde — Transforme ton prompt de merde en prompt de sniper",
-                "description": "Reformule ton prompt brouillon en local via Ollama. Gratuit, open source, zéro bullshit.",
+                "description": "Lance des inférences profilées en local via Ollama. Gratuit, open source, zéro bullshit.",
                 "keywords": "prompt de merde, prompt sniper, accueil promptdemerde"
             },
             "workspace": {
-                "title": "Workspace PromptDeMerde — nettoyer prompt Ollama | PromptDeMerde",
-                "description": "Collez, dictez, nettoyez votre prompt avec Ollama en local.",
-                "keywords": "workspace prompt, nettoyer prompt ollama"
+                "title": "Workspace PromptDeMerde — inférence Ollama | PromptDeMerde",
+                "description": "Coller, dicter, lancer l’inférence avec Ollama en local.",
+                "keywords": "workspace prompt, inférence ollama, prompt engineering"
             },
             "market": {
                 "title": "Market PromptDeMerde — profils JSON à télécharger | PromptDeMerde",
@@ -830,7 +830,7 @@
         "vosk": "Vosk",
         "whisper": "Whisper",
         "badgesAria": "Engagements produit PromptDeMerde",
-        "badgePrompt": "Prompt engineering — reformulation locale",
+        "badgePrompt": "Prompt engineering — inférence locale",
         "badgeLlm": "LLM local via Ollama",
         "badgeOllama": "Ollama — moteur LLM local",
         "badgeVision": "Analyse d’image — description via Ollama vision",

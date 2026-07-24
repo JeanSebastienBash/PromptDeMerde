@@ -1,9 +1,9 @@
 {
     "meta": {
-        "title": "PromptDeMerde.com — Local AI prompt reformulator Ollama",
-        "description": "Prompt reformulator v1.19.0: draft→sniper prompt via local Ollama. Open source, in-browser STT, ZIP profile export, zero telemetry.",
+        "title": "PromptDeMerde.com — Local Ollama prompt engineering tool",
+        "description": "Prompt engineering tool: local Ollama inference, system + context prompts, voice dictation, ZIP profile export, zero telemetry.",
         "titleSocial": "PromptDeMerde — Local AI prompt generator Ollama",
-        "keywords": "local ai prompt generator, ollama prompt, prompt optimizer, open source, zero telemetry, local llm, speech to text, zip profile export",
+        "keywords": "prompt engineering, local ollama, llm inference, local ai prompt tool, open source, zero telemetry, speech to text, zip profile export",
         "routes": {
             "documentation": {
                 "title": "PromptDeMerde Documentation — Workspace Ollama STT guide | PromptDeMerde",
@@ -32,13 +32,13 @@
             },
             "landing": {
                 "title": "PromptDeMerde — Turn your messy prompt into a sniper prompt",
-                "description": "Reformulate drafts locally via Ollama. Free, open source, zero bullshit.",
+                "description": "Run profiled inference locally via Ollama. Free, open source, zero bullshit.",
                 "keywords": "promptdemerde home, sniper prompt"
             },
             "workspace": {
-                "title": "PromptDeMerde Workspace — clean prompts with Ollama | PromptDeMerde",
-                "description": "Paste, dictate, clean your prompt with local Ollama.",
-                "keywords": "promptdemerde workspace"
+                "title": "PromptDeMerde Workspace — Run inference with Ollama | PromptDeMerde",
+                "description": "Paste, dictate, run inference with local Ollama.",
+                "keywords": "promptdemerde workspace, ollama inference, prompt engineering"
             },
             "market": {
                 "title": "PromptDeMerde Market — downloadable JSON profiles | PromptDeMerde",
@@ -830,7 +830,7 @@
         "vosk": "Vosk",
         "whisper": "Whisper",
         "badgesAria": "PromptDeMerde product commitments",
-        "badgePrompt": "Prompt engineering — local rewriting",
+        "badgePrompt": "Prompt engineering — local inference",
         "badgeLlm": "Local LLM via Ollama",
         "badgeOllama": "Ollama — local LLM engine",
         "badgeVision": "Image analysis — description via Ollama vision",

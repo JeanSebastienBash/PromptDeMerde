@@ -1,9 +1,9 @@
 {
     "meta": {
-        "title": "PromptDeMerde.com — 형편없는 프롬프트를 저격 프롬프트로",
-        "description": "엉성한 AI 지시를 정밀한 명령으로 바꾸세요. 무료, 오픈 소스, 헛소리 제로.",
+        "title": "PromptDeMerde.com — 로컬 Ollama 프롬프트 엔지니어링 도구",
+        "description": "프롬프트 엔지니어링 도구: 로컬 Ollama 추론, 시스템·컨텍스트 프롬프트, 음성 받아쓰기, ZIP 프로필보내기, 텔레메트리 없음.",
         "titleSocial": "PromptDeMerde — 로컬 AI 프롬프트 생성기 Ollama",
-        "keywords": "générateur prompt ia, ollama prompt local, reformuler prompt, optimiser prompt, prompt engineering gratuit, open source, zéro télémétrie, llm local, speech to text, prompt sniper",
+        "keywords": "프롬프트 엔지니어링, 로컬 ollama, llm 추론, 오픈 소스, 텔레메트리 없음, 음성 입력, zip 프로필",
         "routes": {
             "documentation": {
                 "title": "PromptDeMerde 문서 — Workspace Ollama STT 가이드 | PromptDeMerde",
@@ -32,13 +32,13 @@
             },
             "landing": {
                 "title": "PromptDeMerde — 엉망 프롬프트를 스나이퍼 프롬프트로",
-                "description": "Ollama로 초안을 로컬에서 다시 쓰기. 무료, 오픈소스, bullshit 제로.",
+                "description": "Ollama로 프로필 기반 추론을 로컬에서 실행. 무료, 오픈소스, bullshit 제로.",
                 "keywords": "promptdemerde 홈, 스나이퍼 프롬프트"
             },
             "workspace": {
-                "title": "PromptDeMerde 워크스페이스 — Ollama로 프롬프트 정리 | PromptDeMerde",
-                "description": "붙여넣고 받아쓰기한 뒤 로컬 Ollama로 프롬프트를 정리하세요.",
-                "keywords": "workspace 프롬프트, ollama 정리"
+                "title": "PromptDeMerde 워크스페이스 — Ollama 추론 | PromptDeMerde",
+                "description": "붙여넣고 받아쓰기한 뒤 로컬 Ollama로 추론을 실행하세요.",
+                "keywords": "워크스페이스, ollama 추론, 프롬프트 엔지니어링"
             },
             "market": {
                 "title": "PromptDeMerde 마켓 — JSON 프로필 다운로드 | PromptDeMerde",
@@ -830,7 +830,7 @@
         "vosk": "Vosk",
         "whisper": "Whisper",
         "badgesAria": "PromptDeMerde 제품 약속",
-        "badgePrompt": "프롬프트 엔지니어링 — 로컬 재작성",
+        "badgePrompt": "프롬프트 엔지니어링 — 로컬 추론",
         "badgeLlm": "Ollama를 통한 로컬 LLM",
         "badgeOllama": "Ollama — 로컬 LLM 엔진",
         "badgeVision": "이미지 분석 — Ollama vision 설명",

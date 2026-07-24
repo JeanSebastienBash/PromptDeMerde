@@ -1,9 +1,9 @@
 {
     "meta": {
-        "title": "PromptDeMerde.com — ひどいプロンプトをスナイパープロンプトに変える",
-        "description": "AI へのいい加減な指示を外科手術のような命令に変換。無料、オープンソース、たわごとゼロ。",
+        "title": "PromptDeMerde.com — ローカル Ollama のプロンプトエンジニアリングツール",
+        "description": "プロンプトエンジニアリングツール：ローカル Ollama 推論、システム／コンテキストプロンプト、音声入力、ZIP プロファイル書き出し、テレメトリなし。",
         "titleSocial": "PromptDeMerde — ローカル AI プロンプト生成 Ollama",
-        "keywords": "générateur prompt ia, ollama prompt local, reformuler prompt, optimiser prompt, prompt engineering gratuit, open source, zéro télémétrie, llm local, speech to text, prompt sniper",
+        "keywords": "プロンプトエンジニアリング, ローカル ollama, llm 推論, オープンソース, テレメトリなし, 音声入力, zip プロファイル",
         "routes": {
             "documentation": {
                 "title": "PromptDeMerde ドキュメント — Workspace Ollama STT ガイド | PromptDeMerde",
@@ -32,13 +32,13 @@
             },
             "landing": {
                 "title": "PromptDeMerde — クソプロンプトをスナイパープロンプトに",
-                "description": "Ollama で下書きをローカルに書き換え。無料、オープンソース、bullshit ゼロ。",
+                "description": "Ollama でプロファイル済み推論をローカル実行。無料、オープンソース、bullshit ゼロ。",
                 "keywords": "promptdemerde ホーム, スナイパープロンプト"
             },
             "workspace": {
-                "title": "PromptDeMerde ワークスペース — Ollama でプロンプト整理 | PromptDeMerde",
-                "description": "貼り付け・音声入力し、ローカル Ollama でプロンプトを整理。",
-                "keywords": "workspace プロンプト, ollama 整理"
+                "title": "PromptDeMerde ワークスペース — Ollama 推論 | PromptDeMerde",
+                "description": "貼り付け・音声入力し、ローカル Ollama で推論を実行。",
+                "keywords": "ワークスペース, ollama 推論, プロンプトエンジニアリング"
             },
             "market": {
                 "title": "PromptDeMerde マーケット — ダウンロード可能な JSON プロファイル | PromptDeMerde",
@@ -830,7 +830,7 @@
         "vosk": "Vosk",
         "whisper": "Whisper",
         "badgesAria": "PromptDeMerde のプロダクト約束",
-        "badgePrompt": "プロンプトエンジニアリング — ローカル書き換え",
+        "badgePrompt": "プロンプトエンジニアリング — ローカル推論",
         "badgeLlm": "Ollama 経由のローカル LLM",
         "badgeOllama": "Ollama — ローカル LLM エンジン",
         "badgeVision": "画像解析 — Ollama vision による説明",

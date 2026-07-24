@@ -27,8 +27,8 @@ This document is the **long-form technical counterpart** of [`README.md`](../REA
 - 🌐 [3. Official site = self-hosted copy · privacy](#menu-official-site)
 - 🔒 [4. Zero telemetry](#menu-zero-telemetry)
 - 🧩 [5. Features](#menu-features)
-  - ✦ [5.1. Reformulate & Workspace](#feat-5-1)
-    - 🪄 [5.1.1. Reformulate with Ollama](#feat-5-1-1)
+  - ✦ [5.1. Run inference & Workspace](#feat-5-1)
+    - 🪄 [5.1.1. Run inference with Ollama](#feat-5-1-1)
     - ↔️ [5.1.2. Workspace Input → Output](#feat-5-1-2)
     - 🎛 [5.1.3. Workspace LLM options](#feat-5-1-3)
     - 📄 [5.1.4. Output display formats](#feat-5-1-4)
@@ -94,7 +94,7 @@ This document is the **long-form technical counterpart** of [`README.md`](../REA
 <a id="2-contracts-and-versions"></a>
 ## ✨ 1. What PromptDeMerde is
 
-PromptDeMerde reformulates a **raw prompt** (typed, voice-dictated, transcribed from audio/video, or described from an image) into a **reformulated prompt** using an optional system prompt, optional enabled `#Tag` context prompts, and a model served by **Ollama** on the machine that opens the browser.
+PromptDeMerde is a **prompt engineering** workbench for **Ollama**: it takes a **raw prompt** (typed, voice-dictated, transcribed from audio/video, or described from an image) and **runs inference** with an optional system prompt, optional enabled `#Tag` context prompts, and a model served by **Ollama** on the machine that opens the browser. Output is the **inference result** — a profiled deliverable, not a cleanup pass and not a chatbot product.
 
 Technically it is an HTML/CSS/JavaScript **SPA** (IIFE modules under `window.PDM`), served by a minimal PHP shell. Session data stays in the **browser** (`localStorage` / `sessionStorage` / IndexedDB for audio). Profile export/import is a client-assembled **ZIP**. No user account is required.
 
@@ -110,7 +110,7 @@ Technically it is an HTML/CSS/JavaScript **SPA** (IIFE modules under `window.PDM
 
 | Present in the repository | Absent from the shipped application runtime |
 |---------------------------|---------------------------------------------|
-| Reformulation via Ollama (raw-prompt clean-up / structuring) | Autonomous multi-turn chatbot (API chat roles) |
+| Profiled **Run inference** via Ollama (system + `#Tag` contexts → deliverable) | Autonomous multi-turn chatbot product (full chat UI / API chat roles) |
 | Manual iterate button (`#ws-iterate-btn` ↪) packing `#USER:` / `#SYSTEM:` into Input | Native Ollama multi-message `assistant` turns |
 | Browser STT (Vosk, Whisper, Parakeet) | Mandated cloud transcription service |
 | Optional PHP proxy toward Ollama | Server database of user raw prompts / session state |
@@ -140,7 +140,7 @@ Audience is defined by **how** the product is used, not by a separate code path.
 
 | Audience | What the product exposes for them |
 |----------|-----------------------------------|
-| **Solo / freelancer** | One JSON profile reused for recurring reformulation work (mail, posts, briefs, image prompts, …). Export/import ZIP under Options (5.5.1 / 5.5.4); no account. |
+| **Solo / freelancer** | One JSON profile reused for recurring prompt-engineering work (mail, posts, briefs, image prompts, …). Export/import ZIP under Options (5.5.1 / 5.5.4); no account. |
 | **Power user** | Local Ollama, editable system prompt and `#Tag` contexts, in-browser STT, vision describe, token compression, long-Input multipass, history traces, thinking/Stop stream controls (Features 5.1–5.4). |
 | **Small team** | Share one profile ZIP so every machine applies the same system prompt, `#Tag` set, LLM prefs, and chrome/brand fields — a file-based configuration, not a multi-user server. |
 | **Official site or private install** | Identical application code and the same client-side data model (see 3 and 4). Clone differences are deployment flags (`PDM_ENV`, optional `PDM_PROXY_TOKEN`) and whether Marketplace/legal pages are local. |
@@ -161,7 +161,7 @@ There is no separate “team mode” or “solo mode” in the codebase — pers
 | Same everywhere | May differ by deployment |
 |-----------------|--------------------------|
 | Front-end bundles, `pdm_*` contract, ZIP format | `PDM_ENV` badge (5.7.3) |
-| Client-side history, STT, vision, Reformulate | Optional `PDM_PROXY_TOKEN` / flow B relay (5.1.1 / 5.7.6) |
+| Client-side history, STT, vision, Run inference | Optional `PDM_PROXY_TOKEN` / flow B relay (5.1.1 / 5.7.6) |
 | No application content DB on the PHP host | Marketplace / legal pages local vs redirect to official site (5.5.3, 5.6.2) |
 
 ### Data flows
@@ -216,7 +216,7 @@ Long-form technical tree matching the README Features menu (**5.1–5.7**). Ever
 
 | Group | Focus |
 |-------|--------|
-| 5.1 | Reformulate & Workspace |
+| 5.1 | Run inference & Workspace |
 | 5.2 | System prompt, `#Tag`, generators |
 | 5.3 | Voice, media, vision → Input |
 | 5.4 | History, compression, long Input |
@@ -229,9 +229,9 @@ Long-form technical tree matching the README Features menu (**5.1–5.7**). Ever
 <a id="feat-5-1"></a>
 <a id="32-workspace"></a>
 <a id="5-workspace"></a>
-### ✦ 5.1. Reformulate & Workspace
+### ✦ 5.1. Run inference & Workspace
 
-Reformulate & Workspace: Ollama Reformulate, Input→Output workbench, LLM options, output formats, counter/Reset, session autosave, mutual exclusion of Input modes, thinking/Stop/stream metadata.
+Run inference & Workspace: Ollama Run inference, Input→Output workbench, LLM options, output formats, counter/Reset, session autosave, mutual exclusion of Input modes, thinking/Stop/stream metadata.
 
 ### 5.4 Workspace modules
 
@@ -254,7 +254,7 @@ Reformulate & Workspace: Ollama Reformulate, Input→Output workbench, LLM optio
 <a id="4-ollama--flux-a-et-flux-b"></a>
 <a id="11-ollama-flow-a-and-flow-b"></a>
 <a id="43-paramètres-llm-workspace-panel"></a>
-### 🪄 5.1.1. Reformulate with Ollama
+### 🪄 5.1.1. Run inference with Ollama
 
 In **flow A** (visitor in production), the browser calls Ollama **directly** on `localhost:11434`, with the “I don't have a token” checkbox checked. In **flow B** (operator), requests go through the PHP relay `olama.php`, with token and IP allowlist. In self-hosting, the path is often same-origin via the local proxy.
 
@@ -342,7 +342,7 @@ URL field, **Test** (`A.doTest` / `PDM.LLM.test`), optional Ollama token, “I d
 
 Under **Options → LLM**:
 
-- **Ollama URL** — points at the instance used for Reformulate (typically `http://localhost:11434` on the machine that opens the browser). Accepts loopback (`127.0.0.1`) or a **LAN IP** when Ollama runs on another host on the local network.
+- **Ollama URL** — points at the instance used for Run inference (typically `http://localhost:11434` on the machine that opens the browser). Accepts loopback (`127.0.0.1`) or a **LAN IP** when Ollama runs on another host on the local network.
 - **Optional Ollama token** and **“I don’t have a token”** checkbox — flow A on the official site; see [§11 Ollama — flow A and flow B](#11-ollama-flow-a-and-flow-b).
 - **Operator proxy token** — stored in **sessionStorage** when the web server sets a relay secret (`PDM_PROXY_TOKEN`); never included in a portable ZIP export.
 
@@ -379,7 +379,7 @@ Under **Options → LLM**:
 
 - **Key:** `pdm_output_display_format` — values `text` | `json` | `html` (default `text`)
 - **Alias:** `#322-format-daffichage-output`
-- **UI:** Workspace Output format chips / controls switch how the reformulated result is shown after streaming completes
+- **UI:** Workspace Output format chips / controls switch how the inference result is shown after streaming completes
 - **Related:** listed with other LLM panel keys under 5.1.3; thinking stream still lands in `#thinking-text` regardless of Output format
 
 ### Behaviour notes (code)
@@ -430,10 +430,10 @@ Workspace session state (Input, Output, thinking panel, layout) persists in brow
 <a id="feat-5-1-7"></a>
 ### ⛔ 5.1.7. One Input mode at a time
 
-### Reformulate gate (`workspace-inference.js` `doSniperise`)
+### Run inference gate (`workspace-inference.js` `doSniperise`)
 
 - Early return if `PDM._compressActive`
-- If STT is active → `STT.warnAndStop({ notifyMessage: dictationStoppedForClean, notifyType: 'info' })` before Clean/Reformulate proceeds
+- If STT is active → `STT.warnAndStop({ notifyMessage: dictationStoppedForClean, notifyType: 'info' })` before Run inference proceeds
 
 ### Button mutex (`workspace-input-tools.js`)
 
@@ -448,7 +448,7 @@ Flags: `inferActive`, `dictationActive`, `audioMode`, `audioProcessing`, `imageP
 | Audio / video import | `workspace-audio-mode.js`, `workspace-audio-bind.js` |
 | Image import | `workspace-image-bind.js` (refuses when audio mode) |
 | Dictation | STT + Workspace dictation binders |
-| Reformulate | `workspace-inference.js` |
+| Run inference | `workspace-inference.js` |
 
 ---
 
@@ -484,14 +484,14 @@ Flags: `inferActive`, `dictationActive`, `audioMode`, `audioProcessing`, `imageP
 
 ### Intent
 
-Pack the current Workspace turn into Input so the next Reformulate continues a discussion. **No LLM call** on click.
+Pack the current Workspace turn into Input so the next Run inference can continue. **No LLM call** on click. This is a mini iteration helper — **not** a chatbot product.
 
 ### DOM / files
 
 - **Button:** `#ws-iterate-btn` (label `↪`, no tooltip / no `data-i18n`) in `.ws-output-actions-primary` after `#sniperise-btn`
 - **Module:** `assets/js/workspace-iterate.js` (`A.doIterateConversation`, `A.bindWorkspaceIterate`)
 - **CSS:** `.ws-iterate-btn` in `style-workspace.css` (theme tokens `--role-options` / `--role-stream`)
-- **Busy:** disabled while inference or token compression is active (same gates as Reformulate)
+- **Busy:** disabled while inference or token compression is active (same gates as Run inference)
 
 ### Protocol (in Input text)
 
@@ -542,7 +542,7 @@ System prompt keys, context prompt lists, and generation settings are under the 
 <a id="feat-5-2-1"></a>
 ### #️⃣ 5.2.1. System prompt and context prompts (#Tag)
 
-The **system prompt** is optional session text. When **enabled** and non-empty, it is sent as the model `system` message (with active `#Tag` contexts stacked before or after it). When **disabled**, it is omitted. When **enabled but empty**, nothing is substituted — there is **no** built-in Nettoyeur / reformulator fallback. Personality (reformulation, chatbot, code, HTML, …) comes from the profile ZIP or from text stored in `pdm_system_prompt`. Empty system is valid in session and in ZIP round-trip (`prompts/{locale}/system.md` may be blank). The Workspace Input is sent as the **user** message without a hard-coded `clean_only` task envelope.
+The **system prompt** is optional session text. When **enabled** and non-empty, it is sent as the model `system` message (with active `#Tag` contexts stacked before or after it). When **disabled**, it is omitted. When **enabled but empty**, nothing is substituted — there is **no** built-in cleaner fallback. Personality (prompt engineering, code, HTML, chat-style roles, …) comes from the profile ZIP or from text stored in `pdm_system_prompt`. Empty system is valid in session and in ZIP round-trip (`prompts/{locale}/system.md` may be blank). The Workspace Input is sent as the **user** message without a hard-coded `clean_only` task envelope.
 
 ```
 after_system:
@@ -622,7 +622,7 @@ Generation specifications are defined in [`gen-prompt-specs.js`](../assets/js/ge
 
 ### Inference
 
-Only tags with `.on` / enabled state are included in the message assembly for Reformulate (5.2.1). Reorder on the Prompts screen (5.2.4) affects injection order.
+Only tags with `.on` / enabled state are included in the message assembly for Run inference (5.2.1). Reorder on the Prompts screen (5.2.4) affects injection order.
 
 ---
 
@@ -645,7 +645,7 @@ Contexts shipped with `speech2texte` (bundle active state):
 | `#DerniereFormulation` | yes | Last version after rephrasing |
 | `#MotsParasites` | yes | Phonetic intruders |
 | `#HesitationsOral` | yes | Uh, um, well… |
-| `#FrancaisNaturel` | yes | Fluency after reformulation |
+| `#FrancaisNaturel` | yes | Fluency after inference |
 | `#Conservateur` | no | Strict mode |
 
 ---
@@ -792,7 +792,7 @@ Workspace exposes download / export controls for the dictation session (includin
 <a id="9-image-import-description-vision"></a>
 ### 🖼 5.3.4. Describe an image (Ollama vision)
 
-Vision is a first-class Workspace Input path: still images become editable description text next to voice dictation and audio/video import. The **Import an image** button opens a file picker (**no** drag-and-drop). Accepted formats are PNG, JPEG, WebP, and GIF. The image is resized in the browser then sent to Ollama (model `pdm_image_model`, instruction `pdm_image_prompt`) via the existing proxy, in **memory transit**, with no server-side storage of the image. The resulting description lands in Input as a **raw prompt** ready for Reformulate.
+Vision is a first-class Workspace Input path: still images become editable description text next to voice dictation and audio/video import. The **Import an image** button opens a file picker (**no** drag-and-drop). Accepted formats are PNG, JPEG, WebP, and GIF. The image is resized in the browser then sent to Ollama (model `pdm_image_model`, instruction `pdm_image_prompt`) via the existing proxy, in **memory transit**, with no server-side storage of the image. The resulting description lands in Input as a **raw prompt** ready for Run inference.
 
 - The image model and instruction are edited on the **Prompts** screen, Image prompts block.
 - Vision models **do not appear** in the text LLM selectors (Workspace and context prompt generation): they appear only in the Image prompts block selector.
@@ -833,7 +833,7 @@ Changing engine may unload the previous model. Secure context (HTTPS or localhos
 
 ### `STT.warnAndStop` (`stt-disruptive.js`)
 
-Stops the microphone session and may show a notif (`disruptiveStoppedNotif` or a caller-supplied message such as `dictationStoppedForClean` from Reformulate).
+Stops the microphone session and may show a notif (`disruptiveStoppedNotif` or a caller-supplied message such as `dictationStoppedForClean` from Run inference).
 
 ### Resume offer
 
@@ -868,7 +868,7 @@ Leaving Workspace via SPA hash does **not** always tear down an active mic sessi
 
 ### Shared lock
 
-While `_compressActive` is true, Reformulate is refused and Output is locked (5.4.4 / 5.1.7). History entries can store both original and compressed sides of system / contexts / input / output in `entry.trace`.
+While `_compressActive` is true, Run inference is refused and Output is locked (5.4.4 / 5.1.7). History entries can store both original and compressed sides of system / contexts / input / output in `entry.trace`.
 
 ---
 
@@ -963,7 +963,7 @@ The modules involved are `workspace-input-chunk.js`, `workspace-input-chunk-spli
   - Stop `#ws-compress-cancel-btn-lock` → `PC.cancel` / `cancelCompress()`
   - `#cancel-btn` also shown while busy; `#sniperise-btn` and `#ws-iterate-btn` disabled (sniperise title `workspace.compressLockOutput`)
 - **Session marks:** `sessionStorage` key `pdm_ws_compress_marks`; chips can show `is-compressed` / `data-compressed`
-- **Inference gate:** `PC.maybeRunBeforeInference` / `maybeRunAfterInference`; while busy, Reformulate is refused (`compressBusyInference` / early return in `workspace-inference.js` when `_compressActive`)
+- **Inference gate:** `PC.maybeRunBeforeInference` / `maybeRunAfterInference`; while busy, Run inference is refused (`compressBusyInference` / early return in `workspace-inference.js` when `_compressActive`)
 - **Notifs (i18n `workspace.*`):** `compressCancelled`, `compressDoneNotif`, `compressError`, `compressNoActiveContexts`, …
 
 ---
@@ -1590,7 +1590,7 @@ Without `PDM_ENV` on a test vhost, **SELF-HOSTED** behaviour is the expected beh
 <a id="feat-5-7-4"></a>
 ### ⌨ 5.7.4. Keyboard shortcuts and on-screen feedback
 
-### Reformulate shortcut
+### Run inference shortcut
 
 - **File:** `polish.js` `initShortcuts`
 - **Binding:** `keydown` where `(ctrlKey || metaKey) && key === 'Enter'` → programmatic click on `#sniperise-btn` if present and not `disabled`
@@ -1635,7 +1635,7 @@ Export with the **maximal** ZIP preset, edit brand/synopsis fields, re-import (5
 
 Under **Options → LLM**:
 
-- **Ollama URL** — points at the instance used for Reformulate (typically `http://localhost:11434` on the machine that opens the browser). Accepts loopback (`127.0.0.1`) or a **LAN IP** when Ollama runs on another host on the local network.
+- **Ollama URL** — points at the instance used for Run inference (typically `http://localhost:11434` on the machine that opens the browser). Accepts loopback (`127.0.0.1`) or a **LAN IP** when Ollama runs on another host on the local network.
 - **Optional Ollama token** and **“I don’t have a token”** checkbox — flow A on the official site; see [§11 Ollama — flow A and flow B](#11-ollama-flow-a-and-flow-b).
 - **Operator proxy token** — stored in **sessionStorage** when the web server sets a relay secret (`PDM_PROXY_TOKEN`); never included in a portable ZIP export.
 
@@ -1853,7 +1853,7 @@ Full deployment notes (badges, token): **5.7.3** and **9. Self-hosting**.
 
 1. Install Ollama and pull a model.
 2. Open the official site or a clone; Options → LLM URL; **Test**.
-3. Paste a raw prompt (or dictate), enable `#Tag` contexts, **Reformulate**.
+3. Paste a raw prompt (or dictate), enable `#Tag` contexts, **Run inference**.
 
 | Problem | Hint |
 |---------|------|

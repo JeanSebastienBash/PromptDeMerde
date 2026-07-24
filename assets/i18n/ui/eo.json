@@ -1,9 +1,9 @@
 {
     "meta": {
-        "title": "PromptDeMerde.com — Transformu vian aĉan prompton en snajper-prompton",
-        "description": "Transformu ajnan fuŝan IA-instrukcion en kiruran komandon. Senpaga, malfermkoda, nula sensaĵo.",
+        "title": "PromptDeMerde.com — Loka Ollama prompt-inĝenierada ilo",
+        "description": "Prompt-inĝenierada ilo: loka Ollama-inferenco, sistemaj kaj kuntekstaj promptoj, voĉa diktado, ZIP-profila eksportado, nula telemetro.",
         "titleSocial": "PromptDeMerde — Loka AI-promptogenerilo Ollama",
-        "keywords": "générateur prompt ia, ollama prompt local, reformuler prompt, optimiser prompt, prompt engineering gratuit, open source, zéro télémétrie, llm local, speech to text, prompt sniper",
+        "keywords": "prompta inĝenierado, loka ollama, llm-inferenco, malferma fonto, nula telemetro, voĉo al teksto, zip-profilo",
         "routes": {
             "documentation": {
                 "title": "Dokumentado PromptDeMerde — gvidilo Workspace Ollama STT | PromptDeMerde",
@@ -32,13 +32,13 @@
             },
             "landing": {
                 "title": "PromptDeMerde — Transformu vian fuŝprompton en snajperprompton",
-                "description": "Reformulu skizojn loke per Ollama. Senpaga, malferma fonto, nula bullshit.",
+                "description": "Rulu profilan inferencon loke per Ollama. Senpaga, malferma fonto, nula bullshit.",
                 "keywords": "hejmo promptdemerde, snajperprompto"
             },
             "workspace": {
-                "title": "Workspace PromptDeMerde — purigi prompton per Ollama | PromptDeMerde",
-                "description": "Algluu, diktadu, purigu vian prompton per loka Ollama.",
-                "keywords": "workspace prompto, purigi ollama"
+                "title": "Workspace PromptDeMerde — Ollama-inferenco | PromptDeMerde",
+                "description": "Algluu, diktadu, rulu inferencon per loka Ollama.",
+                "keywords": "workspace, ollama-inferenco, prompta inĝenierado"
             },
             "market": {
                 "title": "PromptDeMerde Merkato — elŝuteblaj JSON-profiloj | PromptDeMerde",
@@ -830,7 +830,7 @@
         "vosk": "Vosk",
         "whisper": "Whisper",
         "badgesAria": "Produktaj promesoj de PromptDeMerde",
-        "badgePrompt": "Prompta inĝenierado — loka reformulo",
+        "badgePrompt": "Prompta inĝenierado — loka inferenco",
         "badgeLlm": "Loka LLM per Ollama",
         "badgeOllama": "Ollama — loka LLM-motoro",
         "badgeVision": "Bildanalizo — priskribo per Ollama vision",

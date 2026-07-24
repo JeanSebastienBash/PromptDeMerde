@@ -15,11 +15,11 @@
 </p>
 
 <p align="justify">
-PromptDeMerde turns freeform input into structured prompts in the browser: local Ollama reformulation, voice dictation (STT), media transcription, vision image-to-text, system + context prompt stacking, multipass Input, LLM history, and portable JSON profile ZIP export for offline collaboration. Fully private — no account, no product telemetry, data stays in the browser. Official site promptdemerde.com or self-host PHP — same codebase.
+PromptDeMerde is a browser-based <strong>prompt engineering</strong> tool built around local <strong>Ollama</strong>: stack system and context prompts, run profiled inference on a raw prompt, use voice dictation (STT), media transcription, vision image-to-text, multipass Input, LLM history, and portable JSON profile ZIP export for solo work or small-team alignment. Fully private — no account, no product telemetry, data stays in the browser. Official site promptdemerde.com or self-host PHP — same codebase.
 </p>
 
 <p align="center">
-  <strong>Install <a href="https://ollama.com" target="_blank" rel="noopener noreferrer">Ollama</a> locally — without it, reformulation/LLM is off (voice dictation, audio/video transcription, and profile ZIP still work).</strong>
+  <strong>Install <a href="https://ollama.com" target="_blank" rel="noopener noreferrer">Ollama</a> locally — without it, Run inference / LLM is off (voice dictation, audio/video transcription, and profile ZIP still work).</strong>
 </p>
 
 <p align="center">
@@ -139,7 +139,7 @@ More videos will follow on the <a href="https://www.youtube.com/@DreamprojectAI/
 
 *Release candidate — not yet stable.*
 
-- **Input character budget** (Options LLM slider): `pdm_llm_input_char_budget` — default **10,000**, max **100,000**, **0 = unlimited** (single-pass Reformulate). The old “always split above 2,800 characters” rule is removed.
+- **Input character budget** (Options LLM slider): `pdm_llm_input_char_budget` — default **10,000**, max **100,000**, **0 = unlimited** (single-pass Run inference). The old “always split above 2,800 characters” rule is removed.
 - **Smarter multi-pass cuts** for `#USER:` / `#SYSTEM:` transcripts (↪ iterate) and free text (paragraphs / punctuation).
 - **Thinking max characters** control is a **range slider** (same key and semantics: `0` = unlimited).
 - Profile contract: **52** top-level `pdm_*` keys; shipped `speech2texte` aligned to v1.24.0.
@@ -150,7 +150,7 @@ More videos will follow on the <a href="https://www.youtube.com/@DreamprojectAI/
 
 *Release candidate — not yet stable.*
 
-- **Workspace UI texts**: custom pack strings (e.g. Reformulate button label) survive locale sync and round-trip export/import — empty keys only are filled from i18n defaults.
+- **Workspace UI texts**: custom pack strings (e.g. Run inference button label) survive locale sync and round-trip export/import — empty keys only are filled from i18n defaults.
 - **Token compression checkboxes**: the four targets are stored in `pdm_workspace` (`compressInclude*`), restored on load, and travel with the profile ZIP (reset to off in a clean archive).
 - Shipped `speech2texte` profile aligned to v1.23.2; still **51** top-level `pdm_*` keys.
 
@@ -181,7 +181,7 @@ More videos will follow on the <a href="https://www.youtube.com/@DreamprojectAI/
 ### Version 1.22.x
 
 - Audio **or video** import for local transcription; voice dictation available again after Whisper without Reset.
-- Token **compression**: optional checkboxes applied on **Reformulate** (no separate Compress button).
+- Token **compression**: optional checkboxes applied on **Run inference** (no separate Compress button).
 - History cards show Original / Compressed traces for Input, the system prompt, context prompts, and Output.
 - Context prompt generators by **intention**: model picker, stream, Stop.
 - On a clone without a local catalogue, **Market** opens <a href="https://promptdemerde.com/#market" target="_blank" rel="noopener noreferrer">promptdemerde.com/#market</a>.
@@ -200,19 +200,19 @@ More videos will follow on the <a href="https://www.youtube.com/@DreamprojectAI/
 - 👤 [2. Who it is for](#menu-who) — solo · power user · small team · one shared language (JSON profile) for humans and LLMs
 - 🌐 [3. Official site = self-hosted copy · privacy](#menu-official-site) — official site or private install · same SPA, ZIP, and client-side data
 - 🔒 [4. Zero telemetry](#menu-zero-telemetry) — browser session · JSON `pdm_`* keys · no product telemetry · no content DB · media stays local
-- 🧩 [5. Features](#menu-features) — what the app can do: reformulate, voice, media, history, profiles, languages, shell
-  - ✦ [5.1. Reformulate & Workspace](#feat-5-1)
-    - 🪄 [5.1.1. Reformulate with Ollama](#feat-5-1-1) — local model + system prompt + enabled `#Tag` → Output
-    - ↔️ [5.1.2. Workspace Input → Output](#feat-5-1-2) — the workbench: prompt reformulation · voice dictation · audio transcription · image to text recognition
+- 🧩 [5. Features](#menu-features) — what the app can do: run inference, voice, media, history, profiles, languages, shell
+  - ✦ [5.1. Run inference & Workspace](#feat-5-1)
+    - 🪄 [5.1.1. Run inference with Ollama](#feat-5-1-1) — local model + system prompt + enabled `#Tag` → Output
+    - ↔️ [5.1.2. Workspace Input → Output](#feat-5-1-2) — the workbench: Run inference · voice dictation · audio transcription · image to text recognition
     - 🎛 [5.1.3. Workspace LLM options](#feat-5-1-3) — model choice · temperature · tokens · timeout · Input character budget · thinking toggle
     - 📄 [5.1.4. Output display formats](#feat-5-1-4) — plain text · JSON · HTML
     - 🔢 [5.1.5. Input counter, Reset and trash](#feat-5-1-5) — live count · Reset clears both panes · trash clears Input
     - 💾 [5.1.6. Workspace session autosave](#feat-5-1-6) — Input · Output · thinking · panel state kept in the browser
-    - ⛔ [5.1.7. One Input mode at a time](#feat-5-1-7) — voice dictation · media · image · Reformulate do not run together
+    - ⛔ [5.1.7. One Input mode at a time](#feat-5-1-7) — voice dictation · media · image · Run inference do not run together
     - ⏱ [5.1.8. Thinking, Stop and stream metadata](#feat-5-1-8) — cancel mid-run; time · tokens · throughput · multipass index
-    - ↪ [5.1.9. Iterate conversation (↪)](#feat-5-1-9) — pack Output into Input as `#USER:` / `#SYSTEM:` transcript; edit; Reformulate again
+    - ↪ [5.1.9. Iterate conversation (↪)](#feat-5-1-9) — pack Output into Input as `#USER:` / `#SYSTEM:` transcript; edit; Run inference again
   - ✧ [5.2. System prompt, `#Tag` contexts & generators](#feat-5-2)
-    - #️⃣ [5.2.1. System prompt and context prompts (#Tag)](#feat-5-2-1) — system prompt plus stackable context prompts for Reformulate
+    - #️⃣ [5.2.1. System prompt and context prompts (#Tag)](#feat-5-2-1) — system prompt plus stackable context prompts for Run inference
     - 🧠 [5.2.2. Context prompt generators](#feat-5-2-2) — intention or title → new context prompt (`#Tag`) via Ollama
     - 🗂 [5.2.3. Workspace context-prompt panel](#feat-5-2-3) — choose `#Tag` · All/None · Manage → drag-and-drop order
     - ↕ [5.2.4. Prompts screen: order, drag-and-drop and counter](#feat-5-2-4) — reorder `#Tag` · before/after system · how many stored
@@ -225,7 +225,7 @@ More videos will follow on the <a href="https://www.youtube.com/@DreamprojectAI/
     - ↻ [5.3.6. Voice dictation outside Workspace and resume after interrupt](#feat-5-3-6) — continue in Options/docs; start/stop beeps; triple beep before wipe/reload
   - ✷ [5.4. History, compression & long Input](#feat-5-4)
     - 📜 [5.4.1. Local history with traces](#feat-5-4-1) — Input / system / `#Tag` / Output cards; Original · Compressed pairs
-    - 🗜 [5.4.2. Optional token compression](#feat-5-4-2) — four checkboxes on Reformulate; keep ~55% length; panel under Input
+    - 🗜 [5.4.2. Optional token compression](#feat-5-4-2) — four checkboxes on Run inference; keep ~55% length; panel under Input
     - ∞ [5.4.3. Long Input, multi-pass](#feat-5-4-3) — Input character budget slider (`0` = unlimited); transcript-aware cuts; Ollama passes
     - ⏸ [5.4.4. Compression panel, overlay and Stop](#feat-5-4-4) — Output locked while compressing; Stop; green session marks
     - 📤 [5.4.5. History: restore, modal and JSON export](#feat-5-4-5) — restore, modal and JSON export; ~100 entries; per-block copy; optional source audio
@@ -245,8 +245,8 @@ More videos will follow on the <a href="https://www.youtube.com/@DreamprojectAI/
     - 🧭 [5.7.1. In-app navigation (SPA)](#feat-5-7-1) — one continuous shell; Workspace · Prompts · Options · Market without restarting the page
     - ☰ [5.7.2. Burger menu, Escape and loader](#feat-5-7-2) — mobile nav drawer; Escape closes; full-screen startup loader
     - 🏷 [5.7.3. Environment badge and GitHub version](#feat-5-7-3) — clone: set `PDM_ENV` / optional proxy token on the web server; version → GitHub tags
-    - ⌨ [5.7.4. Keyboard shortcuts and on-screen feedback](#feat-5-7-4) — Reformulate Ctrl/Cmd+Enter; delete-last-word during voice dictation; brief toasts
-    - 💫 [5.7.5. Logo, labels, synopsis and shell animation](#feat-5-7-5) — profile configures chrome: rename Reformulate, retitle logo; `.com` drops when rebranded
+    - ⌨ [5.7.4. Keyboard shortcuts and on-screen feedback](#feat-5-7-4) — Run inference Ctrl/Cmd+Enter; delete-last-word during voice dictation; brief toasts
+    - 💫 [5.7.5. Logo, labels, synopsis and shell animation](#feat-5-7-5) — profile configures chrome: rename Run inference, retitle logo; `.com` drops when rebranded
     - 🔌 [5.7.6. LLM Options: Ollama connection test and proxy token](#feat-5-7-6) — Test checks Ollama URL (models found); proxy token fail when relay locked
     - ⚠ [5.7.7. Danger zone Wipe all](#feat-5-7-7) — destroys profiles, tokens, audio IDB, STT caches → fresh install (≠ Ctrl+F5)
     - 📎 [5.7.8. Footer: project carousel and resources](#feat-5-7-8) — 2 GIFs: DreamProjectAI ad zone · footer without ad (clone)
@@ -254,7 +254,7 @@ More videos will follow on the <a href="https://www.youtube.com/@DreamprojectAI/
 - 📋 [7. Prerequisites](#menu-prerequisites) — install Ollama (+ how to launch it) · official site vs clone · STT restore script
   - 🌍 [7.1. Official site](#prereq-7-1) — Ollama on the PC · `OLLAMA_ORIGINS` · two launch methods · Test
   - 🛠 [7.2. Self-host](#prereq-7-2) — PHP + `restore-large-assets.sh` (voice-dictation engines) + Ollama
-- ▶ [8. Try it in three steps](#menu-try-it) — pull an Ollama model · open the official site or a clone · Reformulate
+- ▶ [8. Try it in three steps](#menu-try-it) — pull an Ollama model · open the official site or a clone · Run inference
 - 🖥 [9. Self-hosting (optional)](#menu-self-hosting) — clone from GitHub · reassemble voice-dictation models from local parts · run with PHP · open your local URL
 - © [10. Credits](#menu-credits) — DreamProjectAI · Ollama · STT engines · fonts
 - 📚 [11. Further reading](#menu-further-reading) — advanced docs, security, contributing, zone docs
@@ -277,13 +277,13 @@ More videos will follow on the <a href="https://www.youtube.com/@DreamprojectAI/
 </td>
 <td width="46%" valign="top">
 
-PromptDeMerde reformulates a **raw prompt** (typed, entered via voice dictation, transcribed from audio/video, or described from an image) into a **reformulated prompt** using:
+PromptDeMerde is a **prompt engineering** workbench for **Ollama**: it takes a **raw prompt** (typed, entered via voice dictation, transcribed from audio/video, or described from an image) and **runs inference** with:
 
 - an optional **system prompt**;
 - optional **context prompts (`#Tag`)** enabled in the Workspace;
 - a model served by **Ollama** on the user’s machine.
 
-Session data (raw prompt / Workspace state, history, settings, profiles) is stored in the **browser** (`localStorage`; IndexedDB for voice-dictation audio). No signup required. User session state stays outside any server-side application database.
+The **inference result** lands in Output as a deliverable shaped by that profile — not a “cleanup” pass and not a chatbot product. Session data (raw prompt / Workspace state, history, settings, profiles) is stored in the **browser** (`localStorage`; IndexedDB for voice-dictation audio). No signup required. User session state stays outside any server-side application database.
 
 [Technical documentation](docs/Documentation.md#menu-what-is)
 
@@ -301,9 +301,9 @@ Session data (raw prompt / Workspace state, history, settings, profiles) is stor
 <tr>
 <td width="62%" valign="top">
 
-- **Solo / freelancer** — one JSON profile reused for recurring prompt work (mail, posts, briefs, image prompts, etc.).
+- **Solo / freelancer** — one JSON profile reused so recurring work (mail, posts, briefs, image prompts, etc.) speaks the same LLM language every time.
 - **Power user** — local Ollama, editable system prompt and context prompts, in-browser STT, vision model, compression, multipass Input.
-- **Small team** — same JSON profile ZIP shared so everyone uses the same reformulation rules (shared file configuration).
+- **Small team** — same JSON profile ZIP shared so everyone runs the same inference profile (shared file configuration).
 - **Anyone using the official site or a private install** — same application code and the same client-side data model (see privacy below).
 
 </td>
@@ -377,7 +377,7 @@ Same client-side model on the official site and on a self-hosted copy.
 
 ## 🧩 5. Features
 
-What PromptDeMerde can do today: reformulate a raw prompt, stack system and `#Tag` instructions, speak or import media into Input, keep a local history, carry a JSON profile ZIP, switch language and theme, and move around the app without losing the session. The list below is the map — each entry is shipped, often with a screenshot, and links into the advanced documentation when more depth helps.
+What PromptDeMerde can do today: **Run inference** on a raw prompt with stacked system and `#Tag` instructions, speak or import media into Input, keep a local history, carry a JSON profile ZIP, switch language and theme, and move around the app without losing the session. The list below is the map — each entry is shipped, often with a screenshot, and links into the advanced documentation when more depth helps.
 
 ---
 
@@ -385,7 +385,7 @@ What PromptDeMerde can do today: reformulate a raw prompt, stack system and `#Ta
 
 <a id="feat-5-1"></a>
 
-### ✦ 5.1. Reformulate & Workspace
+### ✦ 5.1. Run inference & Workspace
 
 
 [Technical documentation](docs/Documentation.md#feat-5-1)
@@ -396,15 +396,15 @@ What PromptDeMerde can do today: reformulate a raw prompt, stack system and `#Ta
 
 <a id="feat-5-1-1"></a>
 
-### 🪄 5.1.1. Reformulate with Ollama
+### 🪄 5.1.1. Run inference with Ollama
 
 <p align="center">
-  <img src="assets/images/screenshots/readme-s511a-clean-prompts.webp" height="120" alt="Reformulate from Prompts and Workspace">
+  <img src="assets/images/screenshots/readme-s511a-clean-prompts.webp" height="120" alt="Run inference from Prompts and Workspace">
   <img src="assets/images/screenshots/readme-s511b-ollama-site.webp" height="120" alt="Open Ollama from the desktop">
   <img src="assets/images/screenshots/readme-s511c-install-open.webp" height="120" alt="ollama pull then open PromptDeMerde">
 </p>
 
-**Reformulate** sends Input to a local Ollama model with the active system prompt and the enabled context prompts (`#Tag`). Output is the **reformulated prompt**, ready to copy. The model is the one configured in the app (pulled with `ollama pull`). Connection errors surface in the UI with a path back to Options → LLM.
+**Run inference** sends Input to a local Ollama model with the active system prompt and the enabled context prompts (`#Tag`). Output is the **inference result**, ready to copy. The model is the one configured in the app (pulled with `ollama pull`). Connection errors surface in the UI with a path back to Options → LLM.
 
 [Technical documentation](docs/Documentation.md#feat-5-1-1) · <a href="https://ollama.com/download" target="_blank" rel="noopener noreferrer">Install Ollama</a>
 
@@ -419,11 +419,11 @@ What PromptDeMerde can do today: reformulate a raw prompt, stack system and `#Ta
 Workspace layout:
 
 - **Input** — raw prompt (type, voice dictation, import media, image description)
-- **Output** — reformulated prompt
-- Actions — Reformulate, copy, Reset (confirmation required)
+- **Output** — inference result
+- Actions — Run inference, copy, Reset (confirmation required)
 
 <p align="center">
-  <img src="assets/images/screenshots/readme-s512-workspace-input.webp" alt="Workspace Input: voice dictation streaming, video import transcript, Reformulate, then Reset clearing Input and Output" width="70%" style="border:1px solid #d0d7de;border-radius:8px;box-shadow:0 1px 2px rgba(0,0,0,.08);">
+  <img src="assets/images/screenshots/readme-s512-workspace-input.webp" alt="Workspace Input: voice dictation streaming, video import transcript, Run inference, then Reset clearing Input and Output" width="70%" style="border:1px solid #d0d7de;border-radius:8px;box-shadow:0 1px 2px rgba(0,0,0,.08);">
   <br>
   <strong>Workspace — Input panel</strong><br>
   <em>Raw prompt text is visible in Input, with voice dictation controls and Reset at the top. Below, Context prompts shows 2 active.</em>
@@ -445,13 +445,13 @@ On the Output strip: **model choice** (dropdown of local Ollama models). Open **
 - **Token limit** — max output tokens
 - **Custom timeout** — inference deadline (0 = unlimited)
 - **Thinking toggle** — ON/OFF for model thinking when the model supports it (optional max thinking characters via range slider; `0` = unlimited)
-- **Input character budget** — range slider for multi-pass Reformulate (`pdm_llm_input_char_budget`; default 10,000; `0` = send the whole Input in one pass)
+- **Input character budget** — range slider for multi-pass Run inference (`pdm_llm_input_char_budget`; default 10,000; `0` = send the whole Input in one pass)
 
 <p align="center">
-  <img src="assets/images/screenshots/readme-s513-workspace-llm-options.webp" alt="Workspace Output: open LLM Options, adjust temperature tokens timeout and thinking, then start Reformulate" width="70%" style="border:1px solid #d0d7de;border-radius:8px;box-shadow:0 1px 2px rgba(0,0,0,.08);">
+  <img src="assets/images/screenshots/readme-s513-workspace-llm-options.webp" alt="Workspace Output: open LLM Options, adjust temperature tokens timeout and thinking, then start Run inference" width="70%" style="border:1px solid #d0d7de;border-radius:8px;box-shadow:0 1px 2px rgba(0,0,0,.08);">
   <br>
   <strong>Workspace — Output LLM options</strong><br>
-  <em>Model strip with Options open: temperature, token limit, timeout, Input character budget, thinking (0 = unlimited where applicable); Reformulate starts at the end of the clip.</em>
+  <em>Model strip with Options open: temperature, token limit, timeout, Input character budget, thinking (0 = unlimited where applicable); Run inference starts at the end of the clip.</em>
 </p>
 
 URL and connection test: Options → LLM. Public path: leave **“I don’t have a token”** checked and use local Ollama. Display format radios in the same panel are covered in **5.1.4**.
@@ -491,7 +491,7 @@ Output can be shown as plain text, JSON, or HTML.
 
 ### 🔢 5.1.5. Input counter, Reset and trash
 
-Input shows a live character count and stops at **50,000** characters. **Reset** asks for confirmation, then clears **Input and Output** together. **Trash** (under Input) clears Input only — or Output too if Input is already empty — without a confirm dialog; both actions wait if voice dictation or Reformulate is running.
+Input shows a live character count and stops at **50,000** characters. **Reset** asks for confirmation, then clears **Input and Output** together. **Trash** (under Input) clears Input only — or Output too if Input is already empty — without a confirm dialog; both actions wait if voice dictation or Run inference is running.
 
 [Technical documentation](docs/Documentation.md#feat-5-1-5)
 
@@ -515,7 +515,7 @@ The Workspace keeps a **browser session**: Input, Output, thinking text, and the
 
 ### ⛔ 5.1.7. One Input mode at a time
 
-Only one Input path runs at once. Voice dictation, audio/video import, and image description cannot start on top of each other. **Reformulate** (and other long Workspace jobs) also blocks those tools until it finishes. When something is busy, the inline status and toasts say what is running and what to do next — for example stop voice dictation, or wait for Reformulate to end.
+Only one Input path runs at once. Voice dictation, audio/video import, and image description cannot start on top of each other. **Run inference** (and other long Workspace jobs) also blocks those tools until it finishes. When something is busy, the inline status and toasts say what is running and what to do next — for example stop voice dictation, or wait for Run inference to end.
 
 [Technical documentation](docs/Documentation.md#feat-5-1-7)
 
@@ -552,7 +552,7 @@ When the model supports it, thinking can be enabled with a character cap (0 = un
 
 ### ↪ 5.1.9. Iterate conversation (↪)
 
-After a Reformulate run, the **↪** button next to Reformulate rewrites **Input only**: it builds a `#USER:` / `#SYSTEM:` transcript from the current Input and Output (plain Output text; thinking is omitted). Blank lines inside each block are removed; blocks are separated by a single empty line. The last block is an empty `#USER:` ready for the next message. Edit Input, then click Reformulate again. The button does not call the model. Markers live inside the user message sent to Ollama; the Prompts system prompt and `#Tag` contexts still form the API `system` role. Long transcripts may trigger multi-pass Input chunking. Avoid compressing the Input while it holds a transcript.
+After a Run inference run, the **↪** button next to Run inference rewrites **Input only**: it builds a `#USER:` / `#SYSTEM:` transcript from the current Input and Output (plain Output text; thinking is omitted). Blank lines inside each block are removed; blocks are separated by a single empty line. The last block is an empty `#USER:` ready for the next message. Edit Input, then click Run inference again. The button does **not** call the model and does **not** turn PromptDeMerde into a chatbot — it is a small iteration helper so the next inference can continue from the previous Output. Markers live inside the user message sent to Ollama; the Prompts system prompt and `#Tag` contexts still form the API `system` role. Long transcripts may trigger multi-pass Input chunking. Avoid compressing the Input while it holds a transcript.
 
 [Technical documentation](docs/Documentation.md#feat-5-1-9)
 
@@ -584,7 +584,7 @@ After a Reformulate run, the **↪** button next to Reformulate rewrites **Input
 </td>
 <td width="68%" valign="top">
 
-Every Reformulate run is shaped by one **system prompt**: that is the session personality sent to the model (reformulation, chatbot, code, HTML — whatever the text says). It can be turned on or off. When its text is **empty**, nothing is injected in its place (no built-in Nettoyeur fallback). Reformulation behaviour comes from a **JSON profile** (for example the bundled `speech2texte` pack) or from text the user pastes into that field. Next to it sit the **context prompts** — reusable `#Tag` blocks that stack on top of (or under) the system prompt. Each context prompt can be enabled or disabled for the next run, and the injection order is configurable so active `#Tag` blocks arrive either **before** or **after** the system prompt. The Workspace **Input** (the **raw prompt**) is always sent last, as the user message — without a hard-coded “clean only” envelope.
+Every Run inference run is shaped by one **system prompt**: that is the session personality sent to the model (prompt engineering, code, HTML, chat-style roles — whatever the text says). It can be turned on or off. When its text is **empty**, nothing is injected in its place (no built-in cleaner fallback). Inference behaviour comes from a **JSON profile** (for example the bundled `speech2texte` pack) or from text the user pastes into that field. Next to it sit the **context prompts** — reusable `#Tag` blocks that stack on top of (or under) the system prompt. Each context prompt can be enabled or disabled for the next run, and the injection order is configurable so active `#Tag` blocks arrive either **before** or **after** the system prompt. The Workspace **Input** (the **raw prompt**) is always sent last, as the user message — without a hard-coded cleaner-only envelope.
 
 [Technical documentation](docs/Documentation.md#feat-5-2-1)
 
@@ -604,7 +604,7 @@ Every Reformulate run is shaped by one **system prompt**: that is the session pe
 <tr>
 <td width="68%" valign="top">
 
-On the **Prompts** screen, **context prompt generators** help build new **context prompts** (`#Tag`) with the local Ollama model — from a short **intention** or from a **title**. The result is a stackable `#Tag` block that can later ride with the **system prompt** on Reformulate (enabled or disabled per run). Model choice, Options, streaming and **Stop** stay on that same screen, so creating a context prompt stays separate from editing the system prompt itself.
+On the **Prompts** screen, **context prompt generators** help build new **context prompts** (`#Tag`) with the local Ollama model — from a short **intention** or from a **title**. The result is a stackable `#Tag` block that can later ride with the **system prompt** on Run inference (enabled or disabled per run). Model choice, Options, streaming and **Stop** stay on that same screen, so creating a context prompt stays separate from editing the system prompt itself.
 
 </td>
 <td width="32%" valign="top" align="center">
@@ -634,7 +634,7 @@ On the **Prompts** screen, **context prompt generators** help build new **contex
 </td>
 <td width="68%" valign="top">
 
-Under Input, the **Context prompts** panel lists every **context prompt** (`#Tag`) and lets one choose which ones join the **system prompt** on the next Reformulate. The panel starts collapsed; open or closed state is remembered in the Workspace session. An **active count** badge shows how many `#Tag` blocks are currently on. **All** and **None** toggle every context prompt at once. **Manage →** opens the Prompts screen to create or edit those context prompts, and to **drag-and-drop** (or use the arrows) so their display order matches the **injection order** among active `#Tag` blocks — the stack that rides with the system prompt before the Workspace Input (see also **5.2.4**).
+Under Input, the **Context prompts** panel lists every **context prompt** (`#Tag`) and lets one choose which ones join the **system prompt** on the next Run inference. The panel starts collapsed; open or closed state is remembered in the Workspace session. An **active count** badge shows how many `#Tag` blocks are currently on. **All** and **None** toggle every context prompt at once. **Manage →** opens the Prompts screen to create or edit those context prompts, and to **drag-and-drop** (or use the arrows) so their display order matches the **injection order** among active `#Tag` blocks — the stack that rides with the system prompt before the Workspace Input (see also **5.2.4**).
 
 [Technical documentation](docs/Documentation.md#feat-5-2-3)
 
@@ -752,9 +752,9 @@ This export is the recorded **voice-dictation** session itself — not the separ
 
 ### 🖼 5.3.4. Describe an image (Ollama vision)
 
-Vision lands in PromptDeMerde as a first-class way to fill **Input** from a still image, right on the **Workspace** screen — next to voice dictation and audio/video import. The **Import an image** control opens a **file picker only** (PNG, JPEG, WebP, or GIF; no drag-and-drop). The browser resizes and encodes the file locally, then sends it through the usual Ollama path with the configured **vision** model and instruction (`pdm_image_model` / `pdm_image_prompt`, defaults centred on `moondream` and a mapping prompt meant to help **reproduce** the image). The resulting description is written into Input as editable text — a **raw prompt** ready for Reformulate, stacking with system and `#Tag` context prompts like any other Workspace input. The image itself is **not** stored on the application server: transit stays in memory for the Ollama call.
+Vision lands in PromptDeMerde as a first-class way to fill **Input** from a still image, right on the **Workspace** screen — next to voice dictation and audio/video import. The **Import an image** control opens a **file picker only** (PNG, JPEG, WebP, or GIF; no drag-and-drop). The browser resizes and encodes the file locally, then sends it through the usual Ollama path with the configured **vision** model and instruction (`pdm_image_model` / `pdm_image_prompt`, defaults centred on `moondream` and a mapping prompt meant to help **reproduce** the image). The resulting description is written into Input as editable text — a **raw prompt** ready for Run inference, stacking with system and `#Tag` context prompts like any other Workspace input. The image itself is **not** stored on the application server: transit stays in memory for the Ollama call.
 
-Vision models are chosen and instructed under **Prompts → Image prompts**, and they **do not appear** in the text LLM selectors used for Reformulate or context-prompt generation. The app does not install models: if the vision model is missing, a toast points to `ollama pull <model>` and that Prompts block. On failure, feedback stays specific (cause + next step: Options → LLM when Ollama is unreachable, Prompts → Image prompts when the model or instruction needs a change). Image import stays mutually exclusive with an active voice dictation or audio-file mode on the same Input strip.
+Vision models are chosen and instructed under **Prompts → Image prompts**, and they **do not appear** in the text LLM selectors used for Run inference or context-prompt generation. The app does not install models: if the vision model is missing, a toast points to `ollama pull <model>` and that Prompts block. On failure, feedback stays specific (cause + next step: Options → LLM when Ollama is unreachable, Prompts → Image prompts when the model or instruction needs a change). Image import stays mutually exclusive with an active voice dictation or audio-file mode on the same Input strip.
 
   
 **Image → Ollama vision → Input**  
@@ -816,7 +816,7 @@ A **voice dictation** started on the Workspace **does not stop** when Options, i
 <tr>
 <td width="68%" valign="top">
 
-Every **Reformulate** run lands in a local **LLM history** on the Workspace — roughly **100** entries kept in the browser, newest on top. Open the panel under Input / Output and the list reads as a stack of cards: date, provider, duration, model, a compression badge when that pass used token compression, and a short **In** / **Out** preview so earlier runs stay scannable without unfolding anything. Along the side of each card, compact icon buttons open a full-screen detail view, copy the entry as JSON, **restore** Input and Output into the live Workspace fields, or delete that single card; the panel header also offers **Purge** to clear the whole list after confirmation.
+Every **Run inference** run lands in a local **LLM history** on the Workspace — roughly **100** entries kept in the browser, newest on top. Open the panel under Input / Output and the list reads as a stack of cards: date, provider, duration, model, a compression badge when that pass used token compression, and a short **In** / **Out** preview so earlier runs stay scannable without unfolding anything. Along the side of each card, compact icon buttons open a full-screen detail view, copy the entry as JSON, **restore** Input and Output into the live Workspace fields, or delete that single card; the panel header also offers **Purge** to clear the whole list after confirmation.
 
 Inside a card, expandable **zones** hold the full **trace** of that run: Input, system prompt, active `#Tag` context prompts, Output, and thinking when it was recorded. Expand a zone to read the text in place; when compression ran, the same zone shows **Original** and **Compressed** as a pair, each with its own copy control and a “see more” expand for long blocks. Nothing here leaves the machine unless a maximal JSON profile ZIP is built with history included.
 
@@ -846,12 +846,12 @@ Inside a card, expandable **zones** hold the full **trace** of that run: Input, 
 <tr>
 <td width="32%" valign="top" align="center">
 
-<img src="assets/images/screenshots/readme-s542-token-compression.gif" alt="Workspace token compression: open panel under Input, check system context Input Output targets, Reformulate shortens text, Output shows compressed result" width="100%" style="border:1px solid #d0d7de;border-radius:8px;box-shadow:0 1px 2px rgba(0,0,0,.08);">
+<img src="assets/images/screenshots/readme-s542-token-compression.gif" alt="Workspace token compression: open panel under Input, check system context Input Output targets, Run inference shortens text, Output shows compressed result" width="100%" style="border:1px solid #d0d7de;border-radius:8px;box-shadow:0 1px 2px rgba(0,0,0,.08);">
 
 </td>
 <td width="68%" valign="top">
 
-Optional **token compression** lives in a collapsible panel on the Workspace **Input** column — under the **voice-dictation** strip and the Input field, just above Context prompts. Four checkboxes choose what to shorten: the **system prompt**, active **`#Tag` context prompts**, the **Input** area, and the displayed **Output**. All start **off**, and there is no separate Compress button: checked targets run when **Reformulate** runs. System, contexts and Input (if checked) are compressed **before** the Ollama call to free context window; Output (if checked) is shortened **after** a successful run, for display only.
+Optional **token compression** lives in a collapsible panel on the Workspace **Input** column — under the **voice-dictation** strip and the Input field, just above Context prompts. Four checkboxes choose what to shorten: the **system prompt**, active **`#Tag` context prompts**, the **Input** area, and the displayed **Output**. All start **off**, and there is no separate Compress button: checked targets run when **Run inference** runs. System, contexts and Input (if checked) are compressed **before** the Ollama call to free context window; Output (if checked) is shortened **after** a successful run, for display only.
 
 Checkbox state is persisted in the browser session under `pdm_workspace` (`compressIncludeSystem`, `compressIncludeContexts`, `compressIncludeInput`, `compressIncludeOutput`) and is included in a full profile ZIP export; a clean archive resets those four flags to off without clearing the live session. The built-in target keeps about **55%** of the original character length (`rate: 0.55`). That rate is fixed in the product, not shown in the UI and not stored in a `pdm_*` preference. After a pass, green marks on the chips show which targets were already compressed in the session until the text changes; history can keep Original / Compressed pairs when a target was checked (see **5.4.1**).
 
@@ -869,9 +869,9 @@ Checkbox state is persisted in the browser session under `pdm_workspace` (`compr
 
 ### ∞ 5.4.3. Long Input, multi-pass
 
-When **Reformulate** runs on a long **Input**, PromptDeMerde can split that Input into successive **Ollama** passes instead of sending everything in one call. The decision uses **characters** (JavaScript string length), not model tokens. The Options LLM slider **Input character budget** (`pdm_llm_input_char_budget`, default **10,000**, max **100,000**) sets the threshold: multi-pass starts when system prompt + active `#Tag` contexts + Input exceed that budget. Set the slider to **0** for **unlimited** — a single pass with the whole Input. The old rule that forced multi-pass whenever Input alone exceeded about **2,800** characters is gone. (Voice-dictation / Whisper audio chunking is a different pipeline; this feature only concerns text already in the Input box.)
+When **Run inference** runs on a long **Input**, PromptDeMerde can split that Input into successive **Ollama** passes instead of sending everything in one call. The decision uses **characters** (JavaScript string length), not model tokens. The Options LLM slider **Input character budget** (`pdm_llm_input_char_budget`, default **10,000**, max **100,000**) sets the threshold: multi-pass starts when system prompt + active `#Tag` contexts + Input exceed that budget. Set the slider to **0** for **unlimited** — a single pass with the whole Input. The old rule that forced multi-pass whenever Input alone exceeded about **2,800** characters is gone. (Voice-dictation / Whisper audio chunking is a different pipeline; this feature only concerns text already in the Input box.)
 
-Each pass carries a slice of Input sized between about **1,200** and **3,200** characters when a budget is set. For free text, cuts prefer paragraph breaks, then lines, sentence endings, then spaces. When Input holds a `#USER:` / `#SYSTEM:` transcript from the ↪ button, cuts prefer **turn boundaries** first. A toast announces how many passes and how many Input characters are involved; during the stream the UI shows `pass: i/n`. Free-text multi-pass uses a neutral `Partie i/n` label; transcript multi-pass uses `Segment i/n`. Output pieces are **concatenated** (blank line between them) into one final result. Optional **token compression** on system / contexts (see **5.4.2**) shrinks overhead first, which can enlarge each slice and reduce the number of passes. Multi-pass is oriented toward **reformulation** of long text; a chatbot-style or single-shot code answer works best when Input stays in one pass (or budget is set to 0).
+Each pass carries a slice of Input sized between about **1,200** and **3,200** characters when a budget is set. For free text, cuts prefer paragraph breaks, then lines, sentence endings, then spaces. When Input holds a `#USER:` / `#SYSTEM:` transcript from the ↪ button, cuts prefer **turn boundaries** first. A toast announces how many passes and how many Input characters are involved; during the stream the UI shows `pass: i/n`. Free-text multi-pass uses a neutral `Partie i/n` label; transcript multi-pass uses `Segment i/n`. Output pieces are **concatenated** (blank line between them) into one final result. Optional **token compression** on system / contexts (see **5.4.2**) shrinks overhead first, which can enlarge each slice and reduce the number of passes. Multi-pass is oriented toward long-text **inference** passes; a single-shot chat-style or code answer works best when Input stays in one pass (or budget is set to 0).
 
 [Technical documentation](docs/Documentation.md#feat-5-4-3)
 
@@ -883,9 +883,9 @@ Each pass carries a slice of Input sized between about **1,200** and **3,200** c
 
 ### ⏸ 5.4.4. Compression panel, overlay and Stop
 
-Section **5.4.2** is about *what* can be compressed and *when*. This section is about *what the Workspace shows* while that work runs. The **Token compression** panel on the Input column stays open with its checkboxes; while a compression pass is active those checkboxes are temporarily disabled so targets cannot change mid-run. On the **Output** side, a full-panel overlay appears: Output cannot be edited or copied through as usual, a short status line names the current step, and a **Stop** control cancels the compression (distinct from stopping a Reformulate stream). Reformulate itself is also blocked until compression finishes or is stopped.
+Section **5.4.2** is about *what* can be compressed and *when*. This section is about *what the Workspace shows* while that work runs. The **Token compression** panel on the Input column stays open with its checkboxes; while a compression pass is active those checkboxes are temporarily disabled so targets cannot change mid-run. On the **Output** side, a full-panel overlay appears: Output cannot be edited or copied through as usual, a short status line names the current step, and a **Stop** control cancels the compression (distinct from stopping a Run inference stream). Run inference itself is also blocked until compression finishes or is stopped.
 
-When a target finishes successfully, its chip in the compression panel gets a **green mark** for the rest of the browser session — a reminder that this block was already shortened. The mark clears if that text changes again (new Input, edited system prompt, different active `#Tag` set, or a fresh Output). Nothing here replaces the checkboxes in **5.4.2**: the panel, overlay and marks are only the live feedback around the same Reformulate-triggered compression.
+When a target finishes successfully, its chip in the compression panel gets a **green mark** for the rest of the browser session — a reminder that this block was already shortened. The mark clears if that text changes again (new Input, edited system prompt, different active `#Tag` set, or a fresh Output). Nothing here replaces the checkboxes in **5.4.2**: the panel, overlay and marks are only the live feedback around the same Run inference-triggered compression.
 
 [Technical documentation](docs/Documentation.md#feat-5-4-4)
 
@@ -920,7 +920,7 @@ Local history (about 100 entries) can restore Input, Output and thinking. Entrie
 
 ### 📦 5.5.1. Import / export JSON profile (ZIP)
 
-A **JSON profile archive** is a **ZIP** file that packages the portable configuration of PromptDeMerde: JSON parts (`config`, session, prompts index, locales, and more), Markdown system and `#Tag` context prompts, and optional UI i18n when the **maximal** export preset is chosen. That archive is the user’s offline pack — all the keys that personalise reformulation, branding, language, theme, Workspace state and history when included. Because nothing is stored as a server-side account database, the browser session keeps updating locally as work continues; **exporting** the ZIP at the right moment is how that session becomes a reusable file.
+A **JSON profile archive** is a **ZIP** file that packages the portable configuration of PromptDeMerde: JSON parts (`config`, session, prompts index, locales, and more), Markdown system and `#Tag` context prompts, and optional UI i18n when the **maximal** export preset is chosen. That archive is the user’s offline pack — all the keys that personalise inference behaviour, branding, language, theme, Workspace state and history when included. Because nothing is stored as a server-side account database, the browser session keeps updating locally as work continues; **exporting** the ZIP at the right moment is how that session becomes a reusable file.
 
 **Full vs clean export.** By default the export is a **full** archive: every contract key is present with the current session values (including history, work in progress, voice-dictation audio refs, Ollama URL and token when confirmed). Choose **clean archive** in the export dialog (below the language flags) to keep the **same keys** while neutralizing personal session values (history, workspace text, dictation blobs, Ollama URL, token) so the ZIP is safer to share. The browser session itself is **not** wiped. Marketplace metadata is **not** written by the browser export UI.
 
@@ -967,7 +967,7 @@ A JSON profile does more than carry prompts: it can **rebrand the whole shell**.
 
 **Header identity.** The terminal-style prompt in the header uses a primary username, an alternate username used by the inversion animation, and a hostname suffix built as `@` + `pdm_workspace_ui.identity.hostname` + `:~#` (not a fixed i18n string). Changing those values in **Configure profile** updates the live header; on a bundled profile, a later pack sync keeps the session chrome already saved.
 
-**Workspace chrome copy.** The profile can replace the product-facing strings on the workbench: Input / Output / thinking placeholders and aria labels; the main Reformulate (submit) label and its “running” state; Stop / Reset labels and Reset tooltip; the empty-history line and history purge tooltip; the LLM-options button titles (open / closed); the guard banner that points to Prompts when nothing is enabled; plus the broader family of Workspace status, confirmation, compression-panel, and media-import messages that ship with the pack. Non-empty custom texts are kept across locale changes and ZIP round-trips; only empty keys are filled from the active UI locale defaults. The result is a consistent voice for buttons, empty states, and blocking feedback — not only a logo swap.
+**Workspace chrome copy.** The profile can replace the product-facing strings on the workbench: Input / Output / thinking placeholders and aria labels; the main **Run inference** (submit) label and its “running” state; Stop / Reset labels and Reset tooltip; the empty-history line and history purge tooltip; the LLM-options button titles (open / closed); the guard banner that points to Prompts when nothing is enabled; plus the broader family of Workspace status, confirmation, compression-panel, and media-import messages that ship with the pack. Non-empty custom texts are kept across locale changes and ZIP round-trips; only empty keys are filled from the active UI locale defaults. The result is a consistent voice for buttons, empty states, and blocking feedback — not only a logo swap.
 
 **Theme.** The chosen theme travels with the profile, so surfaces, accents, and logo fallback colours switch with the pack. Theme can still be changed later in Options; what the archive carried becomes the starting skin after import.
 
@@ -1246,7 +1246,7 @@ Detail and server examples: [Technical documentation](docs/Documentation.md#feat
 
 Keyboard shortcuts keep the hands on the workbench without hunting for every button.
 
-**Reformulate.** With focus on the Workspace, **Ctrl+Enter** (Windows / Linux) or **Cmd+Enter** (macOS) runs **Reformulate** — the same action as the main submit control. That path still respects the usual guards (something to reformulate, system or context prompts enabled, and no conflicting Input mode — **5.1.7**).
+**Run inference.** With focus on the Workspace, **Ctrl+Enter** (Windows / Linux) or **Cmd+Enter** (macOS) starts **Run inference** — the same action as the main submit control. That path still respects the usual guards (raw prompt present, system or context prompts enabled, and no conflicting Input mode — **5.1.7**).
 
 **Correcting voice dictation while speaking.** During an active **voice dictation** session, a dedicated shortcut removes the last spoken word from Input without stopping recognition. The default combination is **Ctrl+Backspace**; Options → Voice dictation (**5.3.5**) can enable or disable it, pick another combination (for example Ctrl+Delete or Alt+Backspace), and choose whether the deletion applies at the end of the text or at the caret. The point is to fix a misheard word on the fly and keep dictating — no need to Stop, edit by mouse, then Start again.
 
@@ -1264,7 +1264,7 @@ Keyboard shortcuts keep the hands on the workbench without hunting for every but
 
 A JSON profile is a **configuration** pack — not a remote “pilot” of the live UI. After import (**5.5.1**), the active pack’s Workspace UI settings (**5.5.2**) rename what the shell shows: button labels, placeholders, header identity, nav brand, theme, and the short synopsis under the header. Header shell animation and the typewriter synopsis simply display what that configuration contains.
 
-That matters for taste as much as for branding. The default Reformulate control still reads something like **“CLEAN UP THIS PILE OF CRAP →”** (the French build is no gentler: **« NETTOYER CE TAS DE MERDE → »**). Plenty of people will want a calmer wording — and yes, that button can be renamed in the profile, along with Stop, Reset, and the other Workspace chrome strings. Surprise: the product lets the punchline be retired without forking the application.
+That matters for taste as much as for branding. The default **Run inference** control still reads something like **“CLEAN UP THIS PILE OF CRAP →”** (the French build is no gentler: **« NETTOYER CE TAS DE MERDE → »**) — humour on the button only; the product itself is prompt engineering, not a cleaning service. Plenty of people will want a calmer wording — and yes, that button can be renamed in the profile, along with Stop, Reset, and the other Workspace chrome strings. Surprise: the product lets the punchline be retired without forking the application.
 
 The two-word nav logo (**Prompt** + **DeMerde** by default) can be retitled the same way. When that logo is reconfigured away from the default PromptDeMerde brand, the trailing **`.com`** is no longer shown in the header — it drops out of the display for that rebranded logo. Colours for the two words can follow the theme or use values set in the pack.
 
@@ -1284,7 +1284,7 @@ How to change it: export with the **maximal** preset, edit the pack, re-import (
 <tr>
 <td width="68%" valign="top">
 
-Under **Options → LLM**, the engine URL points at the Ollama instance used for Reformulate (usually `http://localhost:11434` on the machine that opens the browser). The same field accepts a loopback address (`127.0.0.1`) or a **LAN IP** on the local network when Ollama runs on another machine.
+Under **Options → LLM**, the engine URL points at the Ollama instance used for **Run inference** (usually `http://localhost:11434` on the machine that opens the browser). The same field accepts a loopback address (`127.0.0.1`) or a **LAN IP** on the local network when Ollama runs on another machine.
 
 **Connection test.** The **Test** button is not a “test token”. It **checks the connection** to that Ollama URL: reachability, then a refresh of the models actually returned by the instance so the Workspace model list stays honest. Leaving the URL field (blur) can trigger the same refresh. A successful test reports how many models were found (the count varies with what is installed on that host). On failure, the list is cleared rather than keeping a ghost “saved” model that is no longer there. Status text under the control reports the outcome for a few seconds.
 
@@ -1389,7 +1389,7 @@ Export before wiping site data (**5.7.7**) or moving to another machine: *Option
 
 ## 📋 7. Prerequisites
 
-**Reformulate** always needs a running **Ollama** process that the browser can reach (usually on the same PC as the browser). Voice dictation and file transcription also need the in-browser STT engines (Vosk, Whisper, Parakeet). Where those engines come from depends on the path:
+**Run inference** always needs a running **Ollama** process that the browser can reach (usually on the same PC as the browser). Voice dictation and file transcription also need the in-browser STT engines (Vosk, Whisper, Parakeet). Where those engines come from depends on the path:
 
 | Path | Application UI | Ollama | Voice-dictation / STT binaries |
 | ---- | -------------- | ------ | ------------------------------ |
@@ -1469,7 +1469,7 @@ That script **concatenates** the parts, checks SHA-256 fingerprints, and writes 
 
 **4 — Optional operator knobs.** `PDM_ENV` only labels the footer badge. A proxy token is needed only when the server relay is locked (`PDM_PROXY_TOKEN` — **5.7.3** / **5.7.6**). Day-to-day self-hosters keep **“I don’t have a token”** checked. Extra profile packs ship under `zip/free-profile/` on GitHub (**5.5.6**) — download without Marketplace; copy into that folder on any install (or Import).
 
-Reformulation quality depends on the chosen Ollama model. STT runs as ONNX / WASM in the browser; a dedicated GPU helps Whisper / Parakeet but is optional for Vosk.
+Inference quality depends on the chosen Ollama model. STT runs as ONNX / WASM in the browser; a dedicated GPU helps Whisper / Parakeet but is optional for Vosk.
 
 [Technical documentation](docs/Documentation.md#prereq-7-2) · [`SECURITY.md`](SECURITY.md)
 
@@ -1481,14 +1481,14 @@ Reformulation quality depends on the chosen Ollama model. STT runs as ONNX / WAS
 
 ## ▶ 8. Try it in three steps
 
-Three steps are enough to reformulate a raw prompt on the official site (or on a clone once prerequisites in **7** are met). Install and launch Ollama as in **7.1** (including `OLLAMA_ORIGINS` on the official site). Keep **“I don’t have a token”** checked under *Options → LLM* unless an operator relay is intentionally locked.
+Three steps are enough to **Run inference** on a raw prompt on the official site (or on a clone once prerequisites in **7** are met). Install and launch Ollama as in **7.1** (including `OLLAMA_ORIGINS` on the official site). Keep **“I don’t have a token”** checked under *Options → LLM* unless an operator relay is intentionally locked.
 
 
 | Step  | Action |
 | ----- | ------ |
 | **1** | Install <a href="https://ollama.com/download" target="_blank" rel="noopener noreferrer">Ollama</a> on the same PC as the browser; pull a model |
 | **2** | Open <a href="https://promptdemerde.com/" target="_blank" rel="noopener noreferrer">promptdemerde.com</a> — keep **“I don’t have a token”** checked (*Options → LLM*) |
-| **3** | Import a JSON profile (*Options → JSON profile*) or configure *Prompts* — then write or dictate → **Reformulate** → copy |
+| **3** | Import a JSON profile (*Options → JSON profile*) or configure *Prompts* — then write or dictate → **Run inference** → copy |
 
 **<a href="https://promptdemerde.com/" target="_blank" rel="noopener noreferrer">Open PromptDeMerde →</a>**
 
@@ -1528,7 +1528,7 @@ Published by **<a href="https://dreamproject.online/prj/promptdemerde/" target="
 
 Third-party components (full list: [`THIRD_PARTY_NOTICES.md`](THIRD_PARTY_NOTICES.md)):
 
-- **<a href="https://ollama.com" target="_blank" rel="noopener noreferrer">Ollama</a>** — local LLM runtime for Reformulate and vision (not redistributed in this repo)
+- **<a href="https://ollama.com" target="_blank" rel="noopener noreferrer">Ollama</a>** — local LLM runtime for Run inference and vision (not redistributed in this repo)
 - **JSZip** — profile ZIP in the browser
 - **ONNX Runtime Web**, **Transformers.js**, **Vosk**, **Parakeet** — in-browser speech pipelines
 - **Fonts** shipped locally (Fira Code, Inconsolata, Space Grotesk, Archivo Black, Anton) — OFL

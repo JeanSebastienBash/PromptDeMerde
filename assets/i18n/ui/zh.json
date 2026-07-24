@@ -1,9 +1,9 @@
 {
     "meta": {
-        "title": "PromptDeMerde.com — 把你的烂提示变成狙击手级提示",
-        "description": "把任何糟糕的 AI 指令变成精准命令。免费、开源、零废话。",
+        "title": "PromptDeMerde.com — 本地 Ollama 提示词工程工具",
+        "description": "提示词工程工具：本地 Ollama 推理、系统与上下文提示、语音听写、ZIP 配置导出、零遥测。",
         "titleSocial": "PromptDeMerde — 本地 AI 提示词生成器 Ollama",
-        "keywords": "générateur prompt ia, ollama prompt local, reformuler prompt, optimiser prompt, prompt engineering gratuit, open source, zéro télémétrie, llm local, speech to text, prompt sniper",
+        "keywords": "提示词工程, 本地 ollama, llm 推理, 开源, 零遥测, 语音转文字, zip 配置导出",
         "routes": {
             "documentation": {
                 "title": "PromptDeMerde 文档 — Workspace Ollama STT 指南 | PromptDeMerde",
@@ -32,13 +32,13 @@
             },
             "landing": {
                 "title": "PromptDeMerde — 把烂提示词变成狙击提示词",
-                "description": "通过本地 Ollama 改写草稿。免费、开源、零废话。",
+                "description": "通过本地 Ollama 运行已配置的推理。免费、开源、零废话。",
                 "keywords": "promptdemerde 首页, 狙击提示词"
             },
             "workspace": {
-                "title": "PromptDeMerde 工作区 — 用 Ollama 清理提示词 | PromptDeMerde",
-                "description": "粘贴、听写，并用本地 Ollama 清理提示词。",
-                "keywords": "workspace 提示词, 清理 ollama"
+                "title": "PromptDeMerde 工作区 — Ollama 推理 | PromptDeMerde",
+                "description": "粘贴、听写，并用本地 Ollama 运行推理。",
+                "keywords": "工作区, ollama 推理, 提示词工程"
             },
             "market": {
                 "title": "PromptDeMerde 市场 — 可下载 JSON 配置文件 | PromptDeMerde",
@@ -830,7 +830,7 @@
         "vosk": "Vosk",
         "whisper": "Whisper",
         "badgesAria": "PromptDeMerde 产品承诺",
-        "badgePrompt": "提示词工程 — 本地改写",
+        "badgePrompt": "提示词工程 — 本地推理",
         "badgeLlm": "通过 Ollama 的本地大模型",
         "badgeOllama": "Ollama — 本地 LLM 引擎",
         "badgeVision": "图像分析 — 通过 Ollama vision 描述",

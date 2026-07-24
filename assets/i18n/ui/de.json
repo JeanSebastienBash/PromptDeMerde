@@ -1,9 +1,9 @@
 {
     "meta": {
-        "title": "PromptDeMerde.com — Verwandle deinen Mist-Prompt in einen Sniper-Prompt",
-        "description": "Verwandle jede schlampige KI-Anweisung in einen chirurgischen Befehl. Kostenlos, Open Source, null Bullshit.",
+        "title": "PromptDeMerde.com — Lokales Ollama-Prompt-Engineering-Werkzeug",
+        "description": "Prompt-Engineering-Werkzeug: lokale Ollama-Inferenz, System- und Kontextprompts, Sprachdiktat, ZIP-Profilexport, null Telemetrie.",
         "titleSocial": "PromptDeMerde — Lokaler KI-Prompt-Generator Ollama",
-        "keywords": "générateur prompt ia, ollama prompt local, reformuler prompt, optimiser prompt, prompt engineering gratuit, open source, zéro télémétrie, llm local, speech to text, prompt sniper",
+        "keywords": "prompt engineering, lokales ollama, llm-inferenz, open source, null telemetrie, sprache zu text, zip-profilexport",
         "routes": {
             "documentation": {
                 "title": "PromptDeMerde Dokumentation — Workspace Ollama STT Leitfaden | PromptDeMerde",
@@ -32,13 +32,13 @@
             },
             "landing": {
                 "title": "PromptDeMerde — Mach aus deinem Mist-Prompt einen Sniper-Prompt",
-                "description": "Formuliere Entwürfe lokal mit Ollama um. Kostenlos, Open Source, zero bullshit.",
+                "description": "Starte profilierte Inferenz lokal mit Ollama. Kostenlos, Open Source, zero bullshit.",
                 "keywords": "promptdemerde startseite, sniper prompt"
             },
             "workspace": {
-                "title": "PromptDeMerde Workspace — Prompts mit Ollama bereinigen | PromptDeMerde",
-                "description": "Einfügen, diktieren, Prompt lokal mit Ollama bereinigen.",
-                "keywords": "promptdemerde workspace, prompt ollama bereinigen"
+                "title": "PromptDeMerde Workspace — Ollama-Inferenz | PromptDeMerde",
+                "description": "Einfügen, diktieren, Inferenz lokal mit Ollama starten.",
+                "keywords": "workspace, ollama-inferenz, prompt engineering"
             },
             "market": {
                 "title": "PromptDeMerde Markt — JSON-Profile zum Download | PromptDeMerde",
@@ -830,7 +830,7 @@
         "vosk": "Vosk",
         "whisper": "Whisper",
         "badgesAria": "Produktversprechen von PromptDeMerde",
-        "badgePrompt": "Prompt Engineering — lokale Umformulierung",
+        "badgePrompt": "Prompt Engineering — lokale Inferenz",
         "badgeLlm": "Lokales LLM über Ollama",
         "badgeOllama": "Ollama — lokale LLM-Engine",
         "badgeVision": "Bildanalyse — Beschreibung über Ollama Vision",
