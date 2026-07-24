@@ -68,7 +68,12 @@ PS.setProfileScanUi = function(scanning) {
         PS._zipRejectExpanded = false;
         var msg = PS._scanT('profileScanInProgress', null,
             'Chargement et validation des profils JSON en cours.');
-        st.innerHTML = '<span class="dot wait" aria-hidden="true"></span> ' + msg;
+        st.innerHTML = '';
+        var waitDot = document.createElement('span');
+        waitDot.className = 'dot wait';
+        waitDot.setAttribute('aria-hidden', 'true');
+        st.appendChild(waitDot);
+        st.appendChild(document.createTextNode(' ' + msg));
         st.className = 'conn-status stg-conn-status stg-profile-scan-status';
         st.hidden = false;
         return;
@@ -86,7 +91,12 @@ PS.showProfileScanOk = function() {
     PS._zipRejectExpanded = false;
     if (!st) return;
     var msg = PS._scanT('profileScanArchivesValid', null, 'Toutes les archives JSON sont valides.');
-    st.innerHTML = '<span class="dot ok" aria-hidden="true"></span> ' + msg;
+    st.innerHTML = '';
+    var okDot = document.createElement('span');
+    okDot.className = 'dot ok';
+    okDot.setAttribute('aria-hidden', 'true');
+    st.appendChild(okDot);
+    st.appendChild(document.createTextNode(' ' + msg));
     st.className = 'conn-status stg-conn-status stg-profile-scan-status';
     st.hidden = false;
 };

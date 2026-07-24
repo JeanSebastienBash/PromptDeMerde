@@ -205,9 +205,15 @@ A.syncImagePullHint = function(model) {
     if (!hint) return;
     var id = model || (window.PDM.Storage.getImageModel ? window.PDM.Storage.getImageModel() : 'moondream');
     var I = window.PDM && window.PDM.I18n;
+    var U = window.PDM && window.PDM.UI;
     var html = I ? I.tHtml('prompts.imageConfigPullHint', { model: id }) : '';
     if (!html || String(html).indexOf('prompts.imageConfigPullHint') === 0) {
         html = 'Vous devez installer ce modèle : (<code>ollama pull ' + String(id) + '</code>)';
+    }
+    if (I && typeof I.isUserI18nBundle === 'function' && I.isUserI18nBundle()) {
+        if (U && typeof U.setSafeText === 'function') U.setSafeText(hint, html);
+        else hint.textContent = html;
+        return;
     }
     hint.innerHTML = html;
 };

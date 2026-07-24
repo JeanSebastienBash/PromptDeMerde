@@ -259,11 +259,21 @@ WU.applyWorkspaceTexts = function() {
     var guard = document.getElementById('ws-prompt-guard');
     if (guard) {
         var CS = schema();
+        var cfg = WU.get();
+        var hasSessionGuard = !!(cfg && cfg.texts && cfg.texts.promptGuardHtml != null);
         var guardHtml = WU.text('promptGuardHtml');
-        if (CS && typeof CS.sanitizeWorkspaceHtml === 'function') {
-            guardHtml = CS.sanitizeWorkspaceHtml(guardHtml);
+        var U = window.PDM && window.PDM.UI;
+        var untrusted = U && typeof U.isUntrustedProfileDisplay === 'function' &&
+            U.isUntrustedProfileDisplay();
+        if (untrusted && hasSessionGuard) {
+            if (typeof U.setSafeText === 'function') U.setSafeText(guard, guardHtml);
+            else guard.textContent = guardHtml == null ? '' : String(guardHtml);
+        } else {
+            if (CS && typeof CS.sanitizeWorkspaceHtml === 'function') {
+                guardHtml = CS.sanitizeWorkspaceHtml(guardHtml);
+            }
+            guard.innerHTML = guardHtml;
         }
-        guard.innerHTML = guardHtml;
     }
 
     setTextContent('ws-history-empty', WU.text('historyEmpty'));

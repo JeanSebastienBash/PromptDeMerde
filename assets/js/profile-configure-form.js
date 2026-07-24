@@ -54,12 +54,23 @@ PS._hydrateConfigureForm = function() {
 PS._refreshConfigureBrandPreview = function() {
     var preview = document.getElementById('cfg-brand-preview');
     if (!preview) return;
-    var a = val('cfg-brand-first') || 'Prompt';
-    var b = val('cfg-brand-second') || 'DeMerde';
+    var U = window.PDM && window.PDM.UI;
+    var esc = U && typeof U.escapeHtml === 'function' ? U.escapeHtml : function(s) {
+        return String(s == null ? '' : s)
+            .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+            .replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+    };
+    var a = esc(val('cfg-brand-first') || 'Prompt');
+    var b = esc(val('cfg-brand-second') || 'DeMerde');
     var c1 = val('cfg-brand-color1');
     var c2 = val('cfg-brand-color2');
-    var s1 = c1 ? ' style="color:' + c1 + '"' : '';
-    var s2 = c2 ? ' style="color:' + c2 + '"' : ' class="red"';
+    var safeColor = function(c) {
+        c = String(c || '').trim();
+        if (/^#[0-9A-Fa-f]{3,8}$/.test(c) || /^[a-zA-Z]+$/.test(c)) return esc(c);
+        return '';
+    };
+    var s1 = safeColor(c1) ? ' style="color:' + safeColor(c1) + '"' : '';
+    var s2 = safeColor(c2) ? ' style="color:' + safeColor(c2) + '"' : ' class="red"';
     preview.innerHTML = '<span' + s1 + '>' + a + '</span><span' + s2 + '>' + b + '</span>';
 };
 

@@ -21,7 +21,7 @@ Reconstitue les modèles STT (> 40 Mo) livrés en parts ≤ 30 Mo. Sans cette é
 
 - Workspace + Prompts + Options — **12 langues**, **50 thèmes**
 - STT : Vosk Mini/Maxi, Whisper, Parakeet
-- Export / import **archive ZIP profil** — `{profil}-promptdemerde-profile-v1.24.0.zip`
+- Export / import **archive ZIP profil** — `{profil}-promptdemerde-profile-v1.24.3.zip`
 - Ollama local (visiteur ou auto-hébergement) — voir `SECURITY.md` pour le proxy opérateur
 
 ## Plan de test

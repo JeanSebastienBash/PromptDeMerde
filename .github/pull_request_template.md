@@ -1,22 +1,25 @@
-## Résumé
+## Summary
 
-<!-- Quoi / pourquoi — une ou deux phrases -->
+<!-- What / why — one or two sentences -->
 
 ## Type
 
-- [ ] Correction
-- [ ] Fonctionnalité
+- [ ] Bug fix
 - [ ] Documentation
-- [ ] Refactoring (sans changement de comportement)
+- [ ] Screen polish
+- [ ] Refactor (no behaviour change)
 
-## Vérifications
+> V1 is feature-frozen. New product features are out of scope unless the maintainer asks for them.
 
-- [ ] Workspace, Prompts et Options testés manuellement
-- [ ] Export / import ZIP profil testé si touché
-- [ ] Pas de secret (.env, token proxy, chemins privés) dans le diff
-- [ ] `assets/config/pdm-config.schema.json` mis à jour si nouvelle clé `pdm_*`
-- [ ] README / documentation technique GitHub / SECURITY alignés si impact utilisateur
+## Checks
+
+- [ ] Workspace, Prompts, and Options verified manually
+- [ ] Profile ZIP export / import verified if touched
+- [ ] No secrets (`.env`, proxy token, private paths) in the diff
+- [ ] `assets/config/pdm-config.schema.json` updated if a new `pdm_*` key is added
+- [ ] README / technical docs / SECURITY aligned when user-facing behaviour changes
+- [ ] No new automated product test suite added unless explicitly requested
 
 ## Notes
 
-<!-- Contexte, captures, lien issue -->
+<!-- Context, screenshots, linked issue -->

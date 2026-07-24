@@ -178,7 +178,7 @@ Victim imports on https://promptdemerde.com
 
 ### ZIP integrity (checksum) vs crypto signature
 
-| Layer | Status (v1.24.2) |
+| Layer | Status (v1.24.3) |
 |-------|------------------|
 | SHA-256 on ZIP bytes | **Yes** — export (`buildZipPackage`), creator (`profile-zip-checksum.mjs`) |
 | Import verification | **Yes** if `options.expectedChecksum` / `checksum_sha256` (otherwise unsigned dialog only) |
@@ -237,11 +237,11 @@ LLM prompt injection via system/context Markdown in a ZIP is **out of scope** fo
 
 ## Report a vulnerability
 
-Contact **dreamproject-ai@proton.me** by email (sole support channel).
+Contact **dreamproject-ai@proton.me** by email for security reports (preferred channel for vulnerabilities).
 
-**GitHub is not a project follow-up channel for DreamProjectAI**: no code review or issue triage on our side on the public repository. A security report via GitHub issue will therefore not be handled as a maintained ticket — prefer email.
+**Product bugs and contributions (V1 RC · production-ready):** GitHub **Issues** and **pull requests** are welcome on this repository. The maintainer reviews proposed changes case by case and merges when the code fits. General product questions may also use email.
 
-DreamProjectAI **publishes versioned updates from time to time** on this repository via **<a href="https://github.com/JeanSebastienBash/PromptDeMerde/tags" target="_blank" rel="noopener noreferrer">git tags</a>** only — **no** GitHub Releases. The 1.x line is currently **RC** (not yet stable). No public schedule commitment.
+DreamProjectAI **publishes versioned updates from time to time** on this repository via **<a href="https://github.com/JeanSebastienBash/PromptDeMerde/tags" target="_blank" rel="noopener noreferrer">git tags</a>** only — **no** GitHub Releases. The 1.x line is a **release candidate considered production-ready** (feature-frozen V1; small fixes over time). No public schedule commitment.
 
 ## Public deployment checklist
 

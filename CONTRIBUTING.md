@@ -5,6 +5,18 @@
 </p>
 
 
+## How to contribute
+
+This line is a **release candidate considered production-ready** (see the [official note in README](README.md#menu-official-note)).
+
+| Channel | Use for |
+|---------|---------|
+| **GitHub Issues** | Product bugs and concrete regressions |
+| **Pull requests** | Fixes, documentation, small polish — one topic per PR; English title and description |
+| **Email** `dreamproject-ai@proton.me` | General questions; **security** reports (preferred for vulnerabilities) |
+
+The maintainer reviews proposed changes case by case and merges when the code fits. Response time is best-effort (solo maintainer). There is **no** public schedule for new V1 features — the line is feature-frozen; optional voice-dictation improvements may appear later without commitment.
+
 ## Principles
 
 - **No build step** — vanilla JS IIFE modules on `window.PDM.*` (ES modules only for STT engine entry points).
@@ -38,7 +50,7 @@ When the repository is changed directly, it takes precedence over any external o
 
 ## Structure
 
-**Profile ZIP export (1.24.2)**: **52** `pdm_*` keys in the `pdm-config` object (archive content). Canon: `CS.PDM_KEYS` **≡** `assets/config/pdm-config.schema.json` (same names, including `pdm_output_*`); optional root `i18n` + `langs`. Any new key → core + schema + [`docs/Documentation.md`](docs/Documentation.md#13-the-52-pdm-keys) §13. **Default theme**: `marron-day` (Light Brown) — `CS.DEFAULT_THEME_ID`. **Do not** enumerate keys in `README.md` — point to user documentation and the schema.
+**Profile ZIP export (1.24.3)**: **52** `pdm_*` keys in the `pdm-config` object (archive content). Canon: `CS.PDM_KEYS` **≡** `assets/config/pdm-config.schema.json` (same names, including `pdm_output_*`); optional root `i18n` + `langs`. Any new key → core + schema + [`docs/Documentation.md`](docs/Documentation.md#13-the-52-pdm-keys) §13. **Default theme**: `marron-day` (Light Brown) — `CS.DEFAULT_THEME_ID`. **Do not** enumerate keys in `README.md` — point to user documentation and the schema.
 
 **Privacy**: align `SECURITY.md` with runtime behavior.
 
@@ -122,9 +134,9 @@ Strict scale in `style-base.css` (`:root`) — base `html` 18px: **Fira Code** (
 
 ## Validation
 
-The codebase is structured for upcoming unit and regression tests. Do not reintroduce monolithic files.
+This repository does **not** ship an automated product unit / regression test suite (maintainer choice). Do not add a `tests/` product suite unless the maintainer explicitly asks for one. Do not reintroduce monolithic files.
 
-**Public CI** (`.github/workflows/ci.yml`) — runs on every push/PR:
+**Public CI** (`.github/workflows/ci.yml`) — structural checks on every push/PR:
 
 - shell syntax `install/*.sh`
 - `php -l` on `lib/**/*.php`
@@ -142,7 +154,7 @@ The public repository versions the official `speech2texte` profile under `assets
 
 **Responsive** — breakpoints: `assets/css/style-responsive.css` + `polish-responsive.css`. Workspace layout: `assets/css/style-workspace.css` (`.ws-grid` — 2 columns from 1024px, `minmax(0,1fr)`). Test viewports **375, 390, 414, 768, 1024** px: no unintended horizontal scroll; burger nav; Input/Output stacked below 1024px; Prompts in 2 columns from 1024px; Options in 2 columns from 768px.
 
-## Export / Import — profile ZIP archive (v1.24.2)
+## Export / Import — profile ZIP archive (v1.24.3)
 
 - **Portable container**: **ZIP** archive (`{slug}-promptdemerde-profile-v{CS.VERSION}.zip`) — no standalone `.json` at the root.
 - **UI import**: **`.zip` only** — explicit rejection if JSON (`importJsonDeprecated` in `settings-ui.js`).
@@ -161,7 +173,9 @@ The public repository versions the official `speech2texte` profile under `assets
 ## Pull requests
 
 - One topic per PR when possible.
-- Manually verify workspace, prompts, and options.
+- Manually verify Workspace, Prompts, and Options (and profile ZIP export/import when touched).
+- Prefer English for title, description, and discussion on this repository.
+- Do not expect an automated product test gate beyond the structural CI above.
 
 ## Related documents
 

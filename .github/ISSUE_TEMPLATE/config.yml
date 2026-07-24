@@ -1,5 +1,8 @@
 blank_issues_enabled: false
 contact_links:
-  - name: Support / Maintenance
+  - name: Support / questions
     url: mailto:dreamproject-ai@proton.me
-    about: DreamProjectAI ne fait pas de triage d’issues sur GitHub. Contactez-nous par email.
+    about: General questions about PromptDeMerde. Security reports preferred by email (see SECURITY.md).
+  - name: Official status note
+    url: https://github.com/JeanSebastienBash/PromptDeMerde#menu-official-note
+    about: V1 complete · RC production-ready · Marketplace free · how to contribute

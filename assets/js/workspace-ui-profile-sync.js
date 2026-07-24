@@ -69,6 +69,18 @@ function needsBundleResync(config) {
 }
 
 function applyCustomSynopsis(cp) {
+    var lang = getAssembleLang();
+    var I = window.PDM && window.PDM.I18n;
+    var fromI18n = '';
+    if (I && typeof I.t === 'function' && cp && cp.id) {
+        var key = 'profiles.' + cp.id + '.synopsis';
+        var val = I.t(key);
+        if (val && val.indexOf(key) !== 0) fromI18n = String(val).trim();
+    }
+    if (fromI18n) {
+        window.PDM.Storage.setProfileSynopsis(fromI18n.slice(0, 100));
+        return;
+    }
     if (cp.synopsis) {
         window.PDM.Storage.setProfileSynopsis(cp.synopsis);
     } else if (cp.label) {

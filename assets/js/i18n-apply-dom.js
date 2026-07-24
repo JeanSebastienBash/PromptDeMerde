@@ -24,6 +24,10 @@ function setText(el, text) {
 
 function setHtml(el, html) {
     if (!el || html == null) return;
+    if (I18n.isUserI18nBundle && I18n.isUserI18nBundle()) {
+        el.textContent = html;
+        return;
+    }
     el.innerHTML = html;
 }
 
@@ -579,22 +583,22 @@ function applyStaticIds(root) {
     if (afterLbl) {
         var afterSpan = afterLbl.querySelector('[data-i18n-html="prompts.injectAfter"]');
         if (afterSpan) setHtml(afterSpan, I18n.tHtml('prompts.injectAfter'));
-        else afterLbl.innerHTML = I18n.tHtml('prompts.injectAfter');
+        else if (!(I18n.isUserI18nBundle && I18n.isUserI18nBundle())) {
+            afterLbl.innerHTML = I18n.tHtml('prompts.injectAfter');
+        }
     }
     var beforeLbl = root.querySelector('#context-inject-before') &&
         root.querySelector('#context-inject-before').closest('label');
     if (beforeLbl) {
         var beforeSpan = beforeLbl.querySelector('[data-i18n-html="prompts.injectBefore"]');
         if (beforeSpan) setHtml(beforeSpan, I18n.tHtml('prompts.injectBefore'));
-        else beforeLbl.innerHTML = I18n.tHtml('prompts.injectBefore');
+        else if (!(I18n.isUserI18nBundle && I18n.isUserI18nBundle())) {
+            beforeLbl.innerHTML = I18n.tHtml('prompts.injectBefore');
+        }
     }
     var orderHint = root.querySelector('.profile-order-hint');
     if (orderHint) {
-        if (orderHint.hasAttribute('data-i18n-html')) {
-            setHtml(orderHint, I18n.tHtml('prompts.orderHint'));
-        } else {
-            orderHint.innerHTML = I18n.tHtml('prompts.orderHint');
-        }
+        setHtml(orderHint, I18n.tHtml('prompts.orderHint'));
     }
     var savedTitle = root.querySelector('.prm-context-list .prm-context-section-title span:last-child');
     if (savedTitle) setText(savedTitle, I18n.t('prompts.savedSection'));
@@ -809,7 +813,8 @@ I18n.apply = function(root) {
         var key = el.getAttribute('data-i18n');
         var val = I18n.t(key);
         if (val === key) return;
-        if (el.getAttribute('data-i18n-html') === '1' || el.hasAttribute('data-i18n-allow-html')) {
+        var allowHtml = el.getAttribute('data-i18n-html') === '1' || el.hasAttribute('data-i18n-allow-html');
+        if (allowHtml && !(I18n.isUserI18nBundle && I18n.isUserI18nBundle())) {
             el.innerHTML = val;
         } else {
             el.textContent = val;

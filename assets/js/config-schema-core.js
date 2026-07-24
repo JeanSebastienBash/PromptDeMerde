@@ -8,7 +8,7 @@
 
 var CS = {};
 
-CS.VERSION = '1.24.2';
+CS.VERSION = '1.24.3';
 
 CS.CONFIG_TYPE = 'pdm-config';
 CS.DEFAULT_ACTIVE_PROFILE = '';

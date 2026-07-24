@@ -128,10 +128,18 @@ A.rebuildProfileList = function() {
     var cnt = document.getElementById('profile-count');
     var maxP = window.PDM.Storage.getMaxProfiles();
     if (cnt) {
-        cnt.innerHTML = prTHtml('profileCountHtml', {
+        var countHtml = prTHtml('profileCountHtml', {
             count: list.length,
             max: maxP >= 999 ? '\u221e' : maxP
         });
+        var I = window.PDM && window.PDM.I18n;
+        var U = window.PDM && window.PDM.UI;
+        if (I && typeof I.isUserI18nBundle === 'function' && I.isUserI18nBundle()) {
+            if (U && typeof U.setSafeText === 'function') U.setSafeText(cnt, countHtml);
+            else cnt.textContent = countHtml;
+        } else {
+            cnt.innerHTML = countHtml;
+        }
     }
 
     box.innerHTML = '';

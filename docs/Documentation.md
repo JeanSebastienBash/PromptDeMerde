@@ -6,10 +6,10 @@
 
 <p align="center">
   <a href="../LICENSE"><img src="https://img.shields.io/badge/License-MIT-yellow.svg" alt="License: MIT"></a>
-  <a href="../README.md"><img src="https://img.shields.io/badge/version-1.24.2-blue.svg" alt="Version 1.24.2"></a>
+  <a href="../README.md"><img src="https://img.shields.io/badge/version-1.24.3-blue.svg" alt="Version 1.24.3"></a>
 </p>
 
-> **Application version** : 1.24.2 (`CS.VERSION`)  
+> **Application version** : 1.24.3 (`CS.VERSION`)  
 > **Audience** : developers, code auditors, self-hosting operators, power users  
 > **Language** : English  
 > **Related** : [`README.md`](../README.md) · [`CONTRIBUTING.md`](../CONTRIBUTING.md) · [`SECURITY.md`](../SECURITY.md)
@@ -118,7 +118,7 @@ Technically it is an HTML/CSS/JavaScript **SPA** (IIFE modules under `window.PDM
 
 ### Contracts and versions
 
-- **Version:** `CS.VERSION` = `1.24.2` ([`config-schema-core.js`](../assets/js/config-schema-core.js))
+- **Version:** `CS.VERSION` = `1.24.3` ([`config-schema-core.js`](../assets/js/config-schema-core.js))
 - **Default theme:** `CS.DEFAULT_THEME_ID` (`marron-day`)
 - **Exportable prefs:** `CS.PDM_KEYS` — **52** `pdm_*` keys (full catalogue under [11. Further reading](#menu-further-reading)); schema [`pdm-config.schema.json`](../assets/config/pdm-config.schema.json)
 - **Bump rule:** `CS.VERSION` changes when the `pdm_*` / session contract evolves; the shipped `assets/profiles/speech2texte/` pack is recompiled in the same pass
@@ -1054,7 +1054,7 @@ The **Export** action downloads a **ZIP archive**; a standalone JSON file is not
 
 `slug` is the **PascalCase** profile label (e.g. `Speech2Texte`, `AdsGeneratorPro`) — no hyphens or spaces inside the stem.
 
-Examples: `Speech2Texte-promptdemerde-profile-v1.24.2.zip` (Options export) · `AdsGeneratorPro-JsonProfile-v1.24.1.zip` (free drop). Renaming free-drop files is allowed; listing reads label/version from inside the archive.
+Examples: `Speech2Texte-promptdemerde-profile-v1.24.3.zip` (Options export) · `AdsGeneratorPro-JsonProfile-v1.24.1.zip` (free drop). Renaming free-drop files is allowed; listing reads label/version from inside the archive.
 
 The Options export filename is built by `buildZipFilename()` in [`assets/js/profile-bundle-export.js`](../assets/js/profile-bundle-export.js).
 
@@ -1697,7 +1697,7 @@ A JSON profile is a portable ZIP: prompts, LLM settings, UI/brand, language, the
 
 | Key          | Type         | Role                      |
 | ------------ | ------------ | ------------------------- |
-| `version`    | string       | app semver e.g. `1.24.2`  |
+| `version`    | string       | app semver e.g. `1.24.3`  |
 | `type`       | const        | always `pdm-config`       |
 | `exportedAt` | ISO datetime | export timestamp          |
 
@@ -2340,7 +2340,7 @@ All exportable preferences live in the `pdm-config` object. This object has **52
 
 | Key          | Type         | Role                      |
 | ------------ | ------------ | ------------------------- |
-| `version`    | string       | app semver e.g. `1.24.2`  |
+| `version`    | string       | app semver e.g. `1.24.3`  |
 | `type`       | const        | always `pdm-config`       |
 | `exportedAt` | ISO datetime | export timestamp          |
 
@@ -2552,6 +2552,6 @@ These keys are present in profile archives when `parts/output-schema.json` is in
 
 ---
 
-*Technical documentation — application version 1.24.2.*
+*Technical documentation — application version 1.24.3.*
 
 ---

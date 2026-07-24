@@ -117,6 +117,11 @@ PS.importProfileConfig = function(config, profileId) {
                 }
                 PS._setActiveId(profileId);
                 PS._selectorAppliedId = profileId;
+                if (window.PDM.UI && typeof window.PDM.UI.setUntrustedProfileDisplay === 'function') {
+                    var untrusted = PS.isCustomProfileId(profileId) ||
+                        String(profileId || '').indexOf('custom-') === 0;
+                    window.PDM.UI.setUntrustedProfileDisplay(untrusted);
+                }
                 resolve(profileId);
             } catch (e) {
                 reject(e);
